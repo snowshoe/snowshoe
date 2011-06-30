@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(true);
-    app.setApplicationName(QLatin1String("Lasso"));
+    app.setApplicationName(QLatin1String("Snowshoe"));
 
     QStringList arguments = app.arguments();
     arguments.removeAt(0);
