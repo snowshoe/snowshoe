@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = lasso
+TARGET = snowshoe
 
 SOURCES += \
     main.cpp \
@@ -15,7 +15,7 @@ HEADERS += \
     PageWidget.h \
 
 RESOURCES += \
-    lasso.qrc
+    snowshoe.qrc
 
 MOC_DIR = .moc/
 RCC_DIR = .rcc/
