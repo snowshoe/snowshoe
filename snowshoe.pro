@@ -25,9 +25,15 @@ WEBKIT_SOURCE_DIR = $$(WEBKIT_SOURCE_DIR)
 isEmpty(WEBKIT_SOURCE_DIR) {
     error(Please set WEBKIT_SOURCE_DIR environment variable)
 } else {
-    message(Using WebKit from $$WEBKIT_SOURCE_DIR)
+    message(Using WebKit source from $$WEBKIT_SOURCE_DIR)
 }
-WEBKIT_BUILD_DIR = $$WEBKIT_SOURCE_DIR/WebKitBuild/Release
+
+WEBKIT_BUILD_DIR = $$(WEBKIT_BUILD_DIR)
+isEmpty(WEBKIT_BUILD_DIR) {
+    WEBKIT_BUILD_DIR = $$WEBKIT_SOURCE_DIR/WebKitBuild/Release
+}
+
+message(Using WebKit build from $$WEBKIT_BUILD_DIR)
 
 INCLUDEPATH += $$WEBKIT_SOURCE_DIR/Source/
 INCLUDEPATH += $$WEBKIT_SOURCE_DIR/Source/WebKit2/UIProcess/API/qt
@@ -38,10 +44,13 @@ INCLUDEPATH += $$WEBKIT_SOURCE_DIR/Source/WebKit/qt/Api
 INCLUDEPATH += $$WEBKIT_BUILD_DIR/include/
 INCLUDEPATH += $$WEBKIT_BUILD_DIR/include/WebKit2
 
+# WebKit needs to be the first, just in case the Qt build contains already a QtWebKit.
+QMAKE_LFLAGS = -L$$WEBKIT_BUILD_DIR/lib $$QMAKE_LFLAGS
+
 macx {
-    QMAKE_LFLAGS += -F$$WEBKIT_BUILD_DIR/lib/
     LIBS += -framework QtWebKit
 } else {
-    LIBS += -L$$WEBKIT_BUILD_DIR/lib
+    # Make sure that again the custom WebKit is the first in the rpath otherwise it will not pick the right one.
+    unix : QMAKE_RPATHDIR = $$WEBKIT_BUILD_DIR/lib $$QMAKE_RPATHDIR
     LIBS += -lQtWebKit
 }
