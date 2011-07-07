@@ -21,13 +21,14 @@
 
 #include "CrashGraphicsItem.h"
 #include <QtGui/QGraphicsScene>
-#include <qgraphicswkview.h>
 
-PageGraphicsView::PageGraphicsView(QWKContext* context, QWidget* parent)
+#include "qdesktopwebview.h"
+
+PageGraphicsView::PageGraphicsView(QWidget* parent)
     : QGraphicsView(parent)
     , m_crashItem(0)
 {
-    m_webViewItem = new QGraphicsWKView(context);
+    m_webViewItem = new QDesktopWebView();
     setScene(new QGraphicsScene(this));
     scene()->addItem(m_webViewItem);
     m_webViewItem->setFocus();
@@ -36,7 +37,15 @@ PageGraphicsView::PageGraphicsView(QWKContext* context, QWidget* parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    connect(page(), SIGNAL(engineConnectionChanged(bool)), SLOT(onEngineConnectionChanged(bool)));
+    connect(m_webViewItem, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
+    connect(m_webViewItem, SIGNAL(statusBarMessageChanged(QString)), this, SIGNAL(statusBarMessageChanged(QString)));
+    connect(m_webViewItem, SIGNAL(loadStarted()), this, SIGNAL(loadStarted()));
+    connect(m_webViewItem, SIGNAL(loadSucceeded()), this, SIGNAL(loadSucceeded()));
+    connect(m_webViewItem, SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
+    connect(m_webViewItem, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
+
+    // Keeping this feature commented out until we have support for it in the new API.
+//    connect(page(), SIGNAL(engineConnectionChanged(bool)), SLOT(onEngineConnectionChanged(bool)));
 }
 
 PageGraphicsView::~PageGraphicsView()
@@ -58,11 +67,6 @@ void PageGraphicsView::resizeEvent(QResizeEvent* event)
 void PageGraphicsView::load(const QUrl& url)
 {
     return m_webViewItem->load(url);
-}
-
-QWKPage* PageGraphicsView::page() const
-{
-    return m_webViewItem->page();
 }
 
 void PageGraphicsView::onEngineConnectionChanged(bool connected)

@@ -25,14 +25,12 @@
 class PageGraphicsView;
 class QLineEdit;
 class QUrl;
-class QWKContext;
-class QWKPage;
 
 class PageWidget : public QWidget {
     Q_OBJECT
 
 public:
-    PageWidget(QWKContext*, QWidget* parent = 0);
+    PageWidget(QWidget* parent = 0);
     virtual ~PageWidget();
 
     bool isLoading() const;
@@ -59,9 +57,6 @@ private slots:
     void onUrlEditReturnPressed();
 
 private:
-    QWKPage* page() const;
-    friend QWKPage* newPageCallback(QWKPage*);
-
     QLineEdit* m_urlEdit;
     PageGraphicsView* m_view;
     bool m_loading;

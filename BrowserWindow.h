@@ -25,7 +25,6 @@
 class PageWidget;
 class QTabWidget;
 class QUrl;
-class QWKContext;
 
 class BrowserWindow : public QMainWindow {
     Q_OBJECT
@@ -33,7 +32,7 @@ class BrowserWindow : public QMainWindow {
 public:
     virtual ~BrowserWindow();
 
-    static BrowserWindow* create(QWKContext* context = 0);
+    static BrowserWindow* create();
 
 public slots:
     PageWidget* openInNewTab(const QString& urlFromUserInput);
@@ -57,9 +56,8 @@ private:
     void closePageWidget(PageWidget*);
     virtual void timerEvent(QTimerEvent*);
 
-    BrowserWindow(QWKContext*);
+    BrowserWindow();
     QTabWidget* m_tabs;
-    QWKContext* m_context;
     int m_spinnerIndex;
     int m_spinnerTimer;
 };

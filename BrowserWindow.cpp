@@ -23,12 +23,10 @@
 #include <QtCore/QUrl>
 #include <QtGui/QAction>
 #include <QtGui/QImageReader>
-#include <qwkcontext.h>
-#include <qwkpreferences.h>
 
-BrowserWindow* BrowserWindow::create(QWKContext* context)
+BrowserWindow* BrowserWindow::create()
 {
-    return new BrowserWindow(context);
+    return new BrowserWindow();
 }
 
 static QList<QIcon>& spinnerIcons()
@@ -42,14 +40,11 @@ static QList<QIcon>& spinnerIcons()
     return icons;
 }
 
-BrowserWindow::BrowserWindow(QWKContext* context)
+BrowserWindow::BrowserWindow()
     : QMainWindow(0)
-    , m_context(context)
     , m_spinnerIndex(0)
     , m_spinnerTimer(-1)
 {
-    if (!m_context)
-        m_context = new QWKContext;
 
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -77,7 +72,7 @@ BrowserWindow::BrowserWindow(QWKContext* context)
 
 PageWidget* BrowserWindow::openInNewTab(const QString& urlFromUserInput)
 {
-    PageWidget* pageWidget = new PageWidget(m_context);
+    PageWidget* pageWidget = new PageWidget();
     m_tabs->addTab(pageWidget, tr("New Tab"));
 
     connect(pageWidget, SIGNAL(newWindowRequested()), this, SLOT(openNewWindow()));
@@ -98,7 +93,7 @@ PageWidget* BrowserWindow::openInNewTab(const QString& urlFromUserInput)
 
 BrowserWindow* BrowserWindow::openInNewWindow(const QString& url)
 {
-    BrowserWindow* window = BrowserWindow::create(m_context);
+    BrowserWindow* window = BrowserWindow::create();
     window->openInNewTab(url);
     window->show();
     return window;

@@ -21,22 +21,24 @@
 
 #include "BrowserWindow.h"
 #include "PageGraphicsView.h"
+#include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QLineEdit>
 #include <QtGui/QToolBar>
 #include <QtGui/QVBoxLayout>
-#include <qwkcontext.h>
-#include <qwkpage.h>
 
-QWKPage* newPageCallback(QWKPage* parentPage)
-{
-    BrowserWindow* window = BrowserWindow::create(parentPage->context());
-    PageWidget* page = window->openNewTab();
-    window->show();
-    return page->page();
-}
+#include <QUrl>
 
-PageWidget::PageWidget(QWKContext* context, QWidget* parent)
+// Keeping this feature commented out until we have support for it in the new API.
+//QWKPage* newPageCallback(QWKPage* parentPage)
+//{
+//    BrowserWindow* window = BrowserWindow::create(parentPage->context());
+//    PageWidget* page = window->openNewTab();
+//    window->show();
+//    return page->page();
+//}
+
+PageWidget::PageWidget(QWidget* parent)
     : QWidget(parent)
     , m_urlEdit(0)
     , m_view(0)
@@ -47,15 +49,17 @@ PageWidget::PageWidget(QWKContext* context, QWidget* parent)
     layout->setSpacing(0);
 
     QToolBar* toolBar = new QToolBar;
-    m_view = new PageGraphicsView(context);
+    m_view = new PageGraphicsView();
 
     layout->addWidget(toolBar);
     layout->addWidget(m_view);
 
-    toolBar->addAction(page()->action(QWKPage::Back));
-    toolBar->addAction(page()->action(QWKPage::Forward));
-    toolBar->addAction(page()->action(QWKPage::Reload));
-    toolBar->addAction(page()->action(QWKPage::Stop));
+    // Some features were kept commented out until we have support for them in the new API.
+
+//    toolBar->addAction(page()->action(QWKPage::Back));
+//    toolBar->addAction(page()->action(QWKPage::Forward));
+//    toolBar->addAction(page()->action(QWKPage::Reload));
+//    toolBar->addAction(page()->action(QWKPage::Stop));
 
     QAction* focusLocationBarAction = new QAction(this);
     focusLocationBarAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
@@ -80,26 +84,21 @@ PageWidget::PageWidget(QWKContext* context, QWidget* parent)
     m_urlEdit = new QLineEdit;
     toolBar->addWidget(m_urlEdit);
 
-    connect(page(), SIGNAL(loadStarted()), SLOT(focusWebView()));
-    connect(page(), SIGNAL(loadStarted()), SLOT(onLoadStarted()));
-    connect(page(), SIGNAL(loadFinished(bool)), SLOT(onLoadFinished(bool)));
-    connect(page(), SIGNAL(loadProgress(int)), SLOT(onLoadProgress(int)));
-    connect(page(), SIGNAL(titleChanged(QString)), SLOT(onTitleChanged(QString)));
-    connect(page(), SIGNAL(urlChanged(QUrl)), SLOT(onUrlChanged(QUrl)));
+    connect(m_view, SIGNAL(loadStarted()), SLOT(focusWebView()));
+    connect(m_view, SIGNAL(loadStarted()), SLOT(onLoadStarted()));
+//    connect(m_view, SIGNAL(loadFinished(bool)), SLOT(onLoadFinished(bool)));
+    connect(m_view, SIGNAL(loadProgress(int)), SLOT(onLoadProgress(int)));
+    connect(m_view, SIGNAL(titleChanged(QString)), SLOT(onTitleChanged(QString)));
+    connect(m_view, SIGNAL(urlChanged(QUrl)), SLOT(onUrlChanged(QUrl)));
     connect(m_urlEdit, SIGNAL(returnPressed()), this, SLOT(onUrlEditReturnPressed()));
 
-    page()->setCreateNewPageFunction(newPageCallback);
+//    page()->setCreateNewPageFunction(newPageCallback);
 
     setFocusProxy(m_urlEdit);
 }
 
 PageWidget::~PageWidget()
 {
-}
-
-QWKPage* PageWidget::page() const
-{
-    return m_view->page();
 }
 
 void PageWidget::load(const QUrl& url)

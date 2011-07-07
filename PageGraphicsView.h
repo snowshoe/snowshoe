@@ -23,19 +23,24 @@
 #include <QGraphicsView>
 
 class CrashGraphicsItem;
-class QGraphicsWKView;
-class QWKContext;
-class QWKPage;
+class QDesktopWebView;
 
 class PageGraphicsView : public QGraphicsView {
     Q_OBJECT
 
 public:
-    PageGraphicsView(QWKContext*, QWidget* parent = 0);
+    PageGraphicsView(QWidget* parent = 0);
     virtual ~PageGraphicsView();
 
     void load(const QUrl&);
-    QWKPage* page() const;
+
+Q_SIGNALS:
+    void titleChanged(const QString&);
+    void statusBarMessageChanged(const QString&);
+    void loadStarted();
+    void loadSucceeded();
+    void loadProgress(int progress);
+    void urlChanged(const QUrl&);
 
 protected:
     virtual void resizeEvent(QResizeEvent*);
@@ -45,7 +50,7 @@ private slots:
 
 private:
     CrashGraphicsItem* m_crashItem;
-    QGraphicsWKView* m_webViewItem;
+    QDesktopWebView* m_webViewItem;
 };
 
 #endif
