@@ -20,7 +20,7 @@
 #include "PageWidget.h"
 
 #include "BrowserWindow.h"
-#include "PageGraphicsView.h"
+#include "MainView.h"
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QLineEdit>
@@ -49,7 +49,7 @@ PageWidget::PageWidget(QWidget* parent)
     layout->setSpacing(0);
 
     QToolBar* toolBar = new QToolBar;
-    m_view = new PageGraphicsView();
+    m_view = new MainView();
 
     layout->addWidget(toolBar);
     layout->addWidget(m_view);

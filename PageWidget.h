@@ -22,7 +22,7 @@
 
 #include <QtGui/QWidget>
 
-class PageGraphicsView;
+class MainView;
 class QLineEdit;
 class QUrl;
 
@@ -58,7 +58,7 @@ private slots:
 
 private:
     QLineEdit* m_urlEdit;
-    PageGraphicsView* m_view;
+    MainView* m_view;
     bool m_loading;
 };
 

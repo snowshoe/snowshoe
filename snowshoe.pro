@@ -1,18 +1,22 @@
 TEMPLATE = app
 TARGET = snowshoe
 
+QT += declarative
+
 SOURCES += \
     main.cpp \
     BrowserWindow.cpp \
     CrashGraphicsItem.cpp \
-    PageGraphicsView.cpp \
+    MainView.cpp \
     PageWidget.cpp \
+    DeclarativeDesktopWebView.cpp \
 
 HEADERS += \
     BrowserWindow.h \
     CrashGraphicsItem.h \
-    PageGraphicsView.h \
+    MainView.h \
     PageWidget.h \
+    DeclarativeDesktopWebView.h \
 
 RESOURCES += \
     snowshoe.qrc
@@ -54,3 +58,6 @@ macx {
     unix : QMAKE_RPATHDIR = $$WEBKIT_BUILD_DIR/lib $$QMAKE_RPATHDIR
     LIBS += -lQtWebKit
 }
+
+OTHER_FILES += \
+    qml/main.qml
