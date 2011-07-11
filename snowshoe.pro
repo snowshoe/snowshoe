@@ -6,14 +6,12 @@ QT += declarative
 SOURCES += \
     main.cpp \
     BrowserWindow.cpp \
-    CrashGraphicsItem.cpp \
     MainView.cpp \
     PageWidget.cpp \
     DeclarativeDesktopWebView.cpp \
 
 HEADERS += \
     BrowserWindow.h \
-    CrashGraphicsItem.h \
     MainView.h \
     PageWidget.h \
     DeclarativeDesktopWebView.h \
