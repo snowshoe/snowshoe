@@ -20,7 +20,6 @@
 #include <QtGui/QWidget>
 
 class MainView;
-class QLineEdit;
 class QUrl;
 
 class PageWidget : public QWidget {
@@ -31,9 +30,6 @@ public:
     virtual ~PageWidget();
 
     bool isLoading() const;
-
-public slots:
-    void load(const QUrl&);
 
 signals:
     void titleChanged(const QString&);
@@ -48,13 +44,9 @@ private slots:
 
     void onLoadStarted();
     void onLoadFinished(bool);
-    void onLoadProgress(int);
     void onTitleChanged(const QString&);
-    void onUrlChanged(const QUrl&);
-    void onUrlEditReturnPressed();
 
 private:
-    QLineEdit* m_urlEdit;
     MainView* m_view;
     bool m_loading;
 };

@@ -58,4 +58,6 @@ macx {
 }
 
 OTHER_FILES += \
-    qml/main.qml
+    qml/main.qml \
+    qml/UrlEdit.qml \
+    qml/UrlBar.qml

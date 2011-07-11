@@ -14,9 +14,25 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-import QtQuick 1.0
+import QtQuick 1.1
 import Snowshoe 1.0
 
-DeclarativeDesktopWebView {
-    id: desktopview
+Item {
+    id : root
+    UrlBar {
+        id : urlBar
+        objectName : "urlBar"
+    }
+
+    DeclarativeDesktopWebView {
+        id: desktopview
+        anchors.top: urlBar.bottom
+        anchors.topMargin: 5
+        anchors.bottom: root.bottom
+        anchors.left: root.left
+        anchors.right: root.right
+
+        onUrlChanged: { urlBar.text = url.toString() ; focus = true }
+    }
+
 }

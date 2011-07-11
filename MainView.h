@@ -21,6 +21,7 @@
 #include <QtDeclarative/QDeclarativeView>
 
 class QDeclarativeItem;
+class DeclarativeDesktopWebView;
 
 class MainView : public QDeclarativeView {
     Q_OBJECT
@@ -39,11 +40,16 @@ Q_SIGNALS:
     void loadProgress(int progress);
     void urlChanged(const QUrl&);
 
+protected slots:
+    void onUrlChanged(const QString& url);
+
 protected:
     virtual void resizeEvent(QResizeEvent*);
 
 private:
-    QDeclarativeItem* m_view;
+    QDeclarativeItem* m_root;
+    QDeclarativeItem* m_urlEdit;
+    DeclarativeDesktopWebView* m_view;
 };
 
 #endif

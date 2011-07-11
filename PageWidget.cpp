@@ -37,7 +37,6 @@
 
 PageWidget::PageWidget(QWidget* parent)
     : QWidget(parent)
-    , m_urlEdit(0)
     , m_view(0)
     , m_loading(false)
 {
@@ -78,52 +77,16 @@ PageWidget::PageWidget(QWidget* parent)
     connect(closeTabAction, SIGNAL(triggered()), this, SIGNAL(closeTabRequested()));
     addAction(closeTabAction);
 
-    m_urlEdit = new QLineEdit;
-    toolBar->addWidget(m_urlEdit);
-
     connect(m_view, SIGNAL(loadStarted()), SLOT(focusWebView()));
     connect(m_view, SIGNAL(loadStarted()), SLOT(onLoadStarted()));
 //    connect(m_view, SIGNAL(loadFinished(bool)), SLOT(onLoadFinished(bool)));
-    connect(m_view, SIGNAL(loadProgress(int)), SLOT(onLoadProgress(int)));
     connect(m_view, SIGNAL(titleChanged(QString)), SLOT(onTitleChanged(QString)));
-    connect(m_view, SIGNAL(urlChanged(QUrl)), SLOT(onUrlChanged(QUrl)));
-    connect(m_urlEdit, SIGNAL(returnPressed()), this, SLOT(onUrlEditReturnPressed()));
 
 //    page()->setCreateNewPageFunction(newPageCallback);
-
-    setFocusProxy(m_urlEdit);
 }
 
 PageWidget::~PageWidget()
 {
-}
-
-void PageWidget::load(const QUrl& url)
-{
-    m_urlEdit->setText(url.toString());
-    emit titleChanged(url.toString());
-    m_view->load(url);
-}
-
-void PageWidget::onLoadProgress(int progress)
-{
-    QPalette applicationPalette = QApplication::palette();
-
-    QColor backgroundColor = applicationPalette.color(QPalette::Base);
-    QColor progressColor = applicationPalette.color(QPalette::Highlight);
-    QPalette palette = m_urlEdit->palette();
-
-    if (progress <= 0 || progress >= 100)
-        palette.setBrush(QPalette::Base, backgroundColor);
-    else {
-        QLinearGradient gradient(0, 0, width(), 0);
-        gradient.setColorAt(0, progressColor);
-        gradient.setColorAt(((double) progress) / 100, progressColor);
-        if (progress != 100)
-            gradient.setColorAt((double) progress / 100 + 0.001, backgroundColor);
-        palette.setBrush(QPalette::Base, gradient);
-    }
-    m_urlEdit->setPalette(palette);
 }
 
 void PageWidget::onTitleChanged(const QString& title)
@@ -131,20 +94,9 @@ void PageWidget::onTitleChanged(const QString& title)
     emit titleChanged(title);
 }
 
-void PageWidget::onUrlChanged(const QUrl& url)
-{
-    m_urlEdit->setText(url.toString());
-}
-
-void PageWidget::onUrlEditReturnPressed()
-{
-    load(QUrl::fromUserInput(m_urlEdit->text()));
-}
-
 void PageWidget::focusLocationBar()
 {
-    m_urlEdit->setFocus();
-    m_urlEdit->selectAll();
+    // FIXME.
 }
 
 void PageWidget::focusWebView()

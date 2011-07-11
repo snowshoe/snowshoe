@@ -17,6 +17,8 @@
 
 #include "MainView.h"
 
+#include "DeclarativeDesktopWebView.h"
+
 #include <QtDeclarative/QDeclarativeItem>
 
 MainView::MainView(QWidget* parent)
@@ -25,8 +27,14 @@ MainView::MainView(QWidget* parent)
     setAlignment(Qt::AlignLeft | Qt::AlignTop);
     setSource(QUrl("qrc:/qml/main.qml"));
 
-    m_view = qobject_cast<QDeclarativeItem*>(rootObject());
+    m_root = qobject_cast<QDeclarativeItem*>(rootObject());
+    Q_ASSERT(m_root);
+
+    m_view = m_root->findChild<DeclarativeDesktopWebView*>();
     Q_ASSERT(m_view);
+
+    m_urlEdit = m_root->findChild<QDeclarativeItem*>("urlEdit");
+    Q_ASSERT(m_urlEdit);
 
     connect(m_view, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
     connect(m_view, SIGNAL(statusBarMessageChanged(QString)), this, SIGNAL(statusBarMessageChanged(QString)));
@@ -34,6 +42,8 @@ MainView::MainView(QWidget* parent)
     connect(m_view, SIGNAL(loadSucceeded()), this, SIGNAL(loadSucceeded()));
     connect(m_view, SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
     connect(m_view, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
+
+    connect(m_urlEdit, SIGNAL(urlEntered(QString)), this, SLOT(onUrlChanged(QString)));
 }
 
 MainView::~MainView()
@@ -44,11 +54,11 @@ void MainView::resizeEvent(QResizeEvent* event)
 {
     QDeclarativeView::resizeEvent(event);
 
-    m_view->setWidth(width());
-    m_view->setHeight(height());
+    m_root->setWidth(width());
+    m_root->setHeight(height());
 }
 
-void MainView::load(const QUrl& url)
+void MainView::onUrlChanged(const QString& url)
 {
-    QMetaObject::invokeMethod(m_view, "setUrl", Qt::AutoConnection, Q_ARG(QUrl, url));
+    QMetaObject::invokeMethod(m_view, "setUrl", Qt::AutoConnection, Q_ARG(QUrl, QUrl::fromUserInput(url)));
 }

@@ -2,5 +2,12 @@
     <qresource prefix="/">
         <file>images/spinner.gif</file>
         <file>qml/main.qml</file>
+        <file>qml/UrlEdit.qml</file>
+        <file>images/tab_url_input.png</file>
+        <file>qml/UrlBar.qml</file>
+        <file>images/component_btn_nav_back.png</file>
+        <file>images/component_btn_nav_next.png</file>
+        <file>images/component_btn_nav_refresh.png</file>
+        <file>images/component_divisor.png</file>
     </qresource>
 </RCC>
