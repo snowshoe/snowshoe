@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (c) 2011  Andreas Kling <awesomekling@gmail.com>             *
+ *   Copyright (C) 2011  Andreas Kling <awesomekling@gmail.com>             *
  *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
