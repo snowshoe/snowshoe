@@ -81,10 +81,9 @@ PageWidget* BrowserWindow::openInNewTab(const QString& urlFromUserInput)
     m_tabs->setCurrentWidget(pageWidget);
     pageWidget->setFocus();
 
-    // FIXME: This has to move to QML.
-    /*QUrl url = QUrl::fromUserInput(urlFromUserInput);
+    QUrl url = QUrl::fromUserInput(urlFromUserInput);
     if (!url.isEmpty())
-        pageWidget->load(url);*/
+        pageWidget->setUrl(url);
 
     return pageWidget;
 }

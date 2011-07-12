@@ -6,15 +6,13 @@ QT += declarative
 SOURCES += \
     main.cpp \
     BrowserWindow.cpp \
-    MainView.cpp \
     PageWidget.cpp \
-    DeclarativeDesktopWebView.cpp \
+    DeclarativeDesktopWebView.cpp
 
 HEADERS += \
     BrowserWindow.h \
-    MainView.h \
     PageWidget.h \
-    DeclarativeDesktopWebView.h \
+    DeclarativeDesktopWebView.h
 
 RESOURCES += \
     snowshoe.qrc

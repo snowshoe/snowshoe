@@ -1,5 +1,6 @@
 /****************************************************************************
  *   Copyright (C) 2011  Andreas Kling <awesomekling@gmail.com>             *
+ *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
  *   General Public License version 2.1 as published by the Free Software   *
@@ -17,7 +18,9 @@
 #include "PageWidget.h"
 
 #include "BrowserWindow.h"
-#include "MainView.h"
+#include "DeclarativeDesktopWebView.h"
+
+#include <QtDeclarative/QDeclarativeItem>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QLineEdit>
@@ -36,26 +39,22 @@
 //}
 
 PageWidget::PageWidget(QWidget* parent)
-    : QWidget(parent)
-    , m_view(0)
+    : QDeclarativeView(parent)
     , m_loading(false)
+    , m_view(0)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
 
-    QToolBar* toolBar = new QToolBar;
-    m_view = new MainView();
+    setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    setSource(QUrl("qrc:/qml/main.qml"));
 
-    layout->addWidget(toolBar);
-    layout->addWidget(m_view);
+    m_root = qobject_cast<QDeclarativeItem*>(rootObject());
+    Q_ASSERT(m_root);
 
-    // Some features were kept commented out until we have support for them in the new API.
+    m_view = m_root->findChild<DeclarativeDesktopWebView*>();
+    Q_ASSERT(m_view);
 
-//    toolBar->addAction(page()->action(QWKPage::Back));
-//    toolBar->addAction(page()->action(QWKPage::Forward));
-//    toolBar->addAction(page()->action(QWKPage::Reload));
-//    toolBar->addAction(page()->action(QWKPage::Stop));
+    m_urlEdit = m_root->findChild<QDeclarativeItem*>("urlEdit");
+    Q_ASSERT(m_urlEdit);
 
     QAction* focusLocationBarAction = new QAction(this);
     focusLocationBarAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
@@ -83,6 +82,7 @@ PageWidget::PageWidget(QWidget* parent)
     connect(m_view, SIGNAL(titleChanged(QString)), SLOT(onTitleChanged(QString)));
 
 //    page()->setCreateNewPageFunction(newPageCallback);
+    connect(m_urlEdit, SIGNAL(urlEntered(QString)), this, SLOT(onUrlChanged(QString)));
 }
 
 PageWidget::~PageWidget()
@@ -101,7 +101,7 @@ void PageWidget::focusLocationBar()
 
 void PageWidget::focusWebView()
 {
-    m_view->setFocus();
+    setFocus();
 }
 
 void PageWidget::onLoadStarted()
@@ -119,4 +119,22 @@ void PageWidget::onLoadFinished(bool /*ok*/)
 bool PageWidget::isLoading() const
 {
     return m_loading;
+}
+
+void PageWidget::resizeEvent(QResizeEvent* event)
+{
+    QDeclarativeView::resizeEvent(event);
+
+    m_root->setWidth(width());
+    m_root->setHeight(height());
+}
+
+void PageWidget::setUrl(const QUrl& url)
+{
+    QMetaObject::invokeMethod(m_view, "setUrl", Qt::AutoConnection, Q_ARG(QUrl, url));
+}
+
+void PageWidget::onUrlChanged(const QString& url)
+{
+    QMetaObject::invokeMethod(m_view, "setUrl", Qt::AutoConnection, Q_ARG(QUrl, QUrl::fromUserInput(url)));
 }
