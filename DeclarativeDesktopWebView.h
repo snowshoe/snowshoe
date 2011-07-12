@@ -26,12 +26,15 @@ class DeclarativeDesktopWebView : public QDeclarativeItem
     Q_OBJECT
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
+    Q_PROPERTY(int loadProgress READ loadProgress NOTIFY loadProgressChanged)
 public:
     DeclarativeDesktopWebView(QDeclarativeItem *parent = 0);
     ~DeclarativeDesktopWebView();
 
     QUrl url() const;
     QString title() const;
+
+    int loadProgress();
 
 public Q_SLOTS:
     void setUrl(const QUrl&);
@@ -44,11 +47,15 @@ Q_SIGNALS:
     void statusBarMessageChanged(const QString&);
     void loadStarted();
     void loadSucceeded();
-    void loadProgress(int progress);
+    void loadProgressChanged();
     void urlChanged(const QUrl&);
 
 private:
     DeclarativeDesktopWebViewPrivate* d;
+
+    friend class DeclarativeDesktopWebViewPrivate;
+
+    Q_PRIVATE_SLOT(d, void _q_loadProgressChanged(int))
 };
 
 #endif // DeclarativeDesktopWebView_h

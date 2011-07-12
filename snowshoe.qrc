@@ -9,5 +9,6 @@
         <file>images/component_btn_nav_next.png</file>
         <file>images/component_btn_nav_refresh.png</file>
         <file>images/component_divisor.png</file>
+        <file>images/progress_bar_url.png</file>
     </qresource>
 </RCC>

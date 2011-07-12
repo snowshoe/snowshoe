@@ -22,6 +22,7 @@ class DeclarativeDesktopWebViewPrivate {
 public:
     DeclarativeDesktopWebViewPrivate(DeclarativeDesktopWebView* v)
         : q(v)
+        , loadProgress(0)
         , view(new QDesktopWebView())
     {
         view->setParentItem(q);
@@ -31,7 +32,7 @@ public:
         QObject::connect(view, SIGNAL(statusBarMessageChanged(QString)), q, SIGNAL(statusBarMessageChanged(QString)));
         QObject::connect(view, SIGNAL(loadStarted()), q, SIGNAL(loadStarted()));
         QObject::connect(view, SIGNAL(loadSucceeded()), q, SIGNAL(loadSucceeded()));
-        QObject::connect(view, SIGNAL(loadProgress(int)), q, SIGNAL(loadProgress(int)));
+        QObject::connect(view, SIGNAL(loadProgress(int)), q, SLOT(_q_loadProgressChanged(int)));
         QObject::connect(view, SIGNAL(urlChanged(QUrl)), q, SIGNAL(urlChanged(QUrl)));
     }
 
@@ -40,7 +41,14 @@ public:
         delete view;
     }
 
+    void _q_loadProgressChanged(int progress)
+    {
+        loadProgress = progress;
+        emit q->loadProgressChanged();
+    }
+
     DeclarativeDesktopWebView* q;
+    int loadProgress;
     QDesktopWebView* view;
 };
 
@@ -70,8 +78,15 @@ void DeclarativeDesktopWebView::setUrl(const QUrl& url)
     d->view->load(url);
 }
 
+int DeclarativeDesktopWebView::loadProgress()
+{
+    return d->loadProgress;
+}
+
 void DeclarativeDesktopWebView::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
     d->view->setGeometry(0, 0, newGeometry.width(), newGeometry.height());
 }
+
+#include "moc_DeclarativeDesktopWebView.cpp"

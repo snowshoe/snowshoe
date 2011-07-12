@@ -65,6 +65,7 @@ Item {
         width: parent.width - buttons.width
         anchors.left: buttons.right
         y: verticalMargins / 2
+
         UrlEdit {
             id: urlEdit
             objectName: "urlEdit"
