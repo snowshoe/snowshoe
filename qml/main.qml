@@ -18,10 +18,10 @@ import QtQuick 1.1
 import Snowshoe 1.0
 
 Item {
-    id : root
+    id: root
     UrlBar {
-        id : urlBar
-        objectName : "urlBar"
+        id: urlBar
+        objectName: "urlBar"
     }
 
     DeclarativeDesktopWebView {
