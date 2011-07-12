@@ -34,6 +34,18 @@ Item {
         border { left: 10; top: 10; right: 10; bottom: 10 }
     }
 
+    BorderImage {
+        anchors.top: parent.top
+        anchors.topMargin: 3 // To look "inside" the urlEdit
+        anchors.left: parent.left
+        anchors.leftMargin: 2 // To look "inside" the urlEdit
+        source: "qrc:///images/progress_bar_url.png"
+        border { left: 10; top: 10; right: 10; bottom: 10 }
+        width: (urlEdit.width) * desktopview.loadProgress / 100.0
+        height: urlEdit.height - anchors.topMargin * 2 // To look "inside" the urlEdit
+        opacity: desktopview.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
+    }
+
     TextInput {
         id: urlInput
         focus: true
@@ -52,17 +64,5 @@ Item {
         Keys.onReturnPressed: {
             urlEdit.urlEntered(urlInput.text)
         }
-    }
-
-    BorderImage {
-        anchors.top: parent.top
-        anchors.topMargin: 3 // To look "inside" the urlEdit
-        anchors.left: parent.left
-        anchors.leftMargin: 2 // To look "inside" the urlEdit
-        source: "qrc:///images/progress_bar_url.png"
-        border { left: 10; top: 10; right: 10; bottom: 10 }
-        width: (urlEdit.width) * desktopview.loadProgress / 100.0
-        height: urlEdit.height - anchors.topMargin * 2 // To look "inside" the urlEdit
-        opacity: desktopview.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
     }
 }
