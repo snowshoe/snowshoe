@@ -43,8 +43,7 @@ PageWidget::PageWidget(QWidget* parent)
     , m_loading(false)
     , m_view(0)
 {
-
-    setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    setResizeMode(QDeclarativeView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
 
     m_root = qobject_cast<QDeclarativeItem*>(rootObject());
@@ -119,14 +118,6 @@ void PageWidget::onLoadFinished(bool /*ok*/)
 bool PageWidget::isLoading() const
 {
     return m_loading;
-}
-
-void PageWidget::resizeEvent(QResizeEvent* event)
-{
-    QDeclarativeView::resizeEvent(event);
-
-    m_root->setWidth(width());
-    m_root->setHeight(height());
 }
 
 void PageWidget::setUrl(const QUrl& url)

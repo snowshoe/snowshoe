@@ -52,9 +52,6 @@ private slots:
     void onTitleChanged(const QString&);
     void onUrlChanged(const QString& url);
 
-protected:
-    virtual void resizeEvent(QResizeEvent*);
-
 private:
     bool m_loading;
     QDeclarativeItem* m_root;
