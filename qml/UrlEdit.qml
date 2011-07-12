@@ -39,8 +39,11 @@ Item {
         focus: true
         font.pointSize: 10
         font.bold: true
+        selectByMouse: true
+        mouseSelectionMode: TextInput.SelectCharacters
         y: parent.verticalMargin
         x: parent.horizontalMargin
+        width: parent.width
 
         Keys.onEnterPressed: {
             urlEdit.urlEntered(urlInput.text)
@@ -61,11 +64,5 @@ Item {
         width: (urlEdit.width) * desktopview.loadProgress / 100.0
         height: urlEdit.height - anchors.topMargin * 2 // To look "inside" the urlEdit
         opacity: desktopview.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
-    }
-
-    MouseArea {
-        anchors.fill: urlEdit
-        onDoubleClicked: { urlInput.selectAll(); urlInput.focus = true }
-        onClicked: urlInput.focus = true
     }
 }
