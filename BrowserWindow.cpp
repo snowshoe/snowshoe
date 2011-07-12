@@ -48,6 +48,9 @@ BrowserWindow::BrowserWindow()
     m_tabs = new QTabWidget(this);
     m_tabs->setTabsClosable(true);
 
+    m_tabs->setStyleSheet("QTabBar::tab { width: 200px; height: 20px; }");
+    m_tabs->setElideMode(Qt::ElideRight);
+
     connect(m_tabs, SIGNAL(tabCloseRequested(int)), this, SLOT(onTabCloseRequested(int)));
     connect(m_tabs, SIGNAL(currentChanged(int)), this, SLOT(onCurrentTabChanged(int)));
 
