@@ -33,6 +33,7 @@ Item {
         anchors.right: root.right
 
         onUrlChanged: { urlBar.text = url.toString() ; focus = true }
+        onLoadFailed: { url = "http://www.google.com/search?q=" + urlBar.text }
     }
 
 }
