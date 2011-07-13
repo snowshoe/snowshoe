@@ -77,7 +77,8 @@ PageWidget::PageWidget(QWidget* parent)
 
     connect(m_view, SIGNAL(loadStarted()), SLOT(focusWebView()));
     connect(m_view, SIGNAL(loadStarted()), SLOT(onLoadStarted()));
-//    connect(m_view, SIGNAL(loadFinished(bool)), SLOT(onLoadFinished(bool)));
+    connect(m_view, SIGNAL(loadSucceeded()), SLOT(onLoadSucceeded()));
+    connect(m_view, SIGNAL(loadFailed(QWebError)), SLOT(onLoadFailed(QWebError)));
     connect(m_view, SIGNAL(titleChanged(QString)), SLOT(onTitleChanged(QString)));
 
 //    page()->setCreateNewPageFunction(newPageCallback);
@@ -109,8 +110,17 @@ void PageWidget::onLoadStarted()
     emit loadingStateChanged(true);
 }
 
-void PageWidget::onLoadFinished(bool /*ok*/)
+void PageWidget::onLoadSucceeded()
 {
+    m_loading = false;
+    emit loadingStateChanged(false);
+}
+
+void PageWidget::onLoadFailed(const QWebError& error)
+{
+    Q_UNUSED(error);
+    // FIXME: Do something with the error.
+
     m_loading = false;
     emit loadingStateChanged(false);
 }

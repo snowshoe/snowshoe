@@ -24,6 +24,7 @@ class DeclarativeDesktopWebView;
 class MainView;
 class QDeclarativeItem;
 class QUrl;
+class QWebError;
 
 class PageWidget : public QDeclarativeView {
     Q_OBJECT
@@ -48,7 +49,8 @@ private slots:
     void focusWebView();
 
     void onLoadStarted();
-    void onLoadFinished(bool);
+    void onLoadSucceeded();
+    void onLoadFailed(const QWebError&);
     void onTitleChanged(const QString&);
     void onUrlChanged(const QString& url);
 

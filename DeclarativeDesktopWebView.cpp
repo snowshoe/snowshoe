@@ -32,6 +32,7 @@ public:
         QObject::connect(view, SIGNAL(statusBarMessageChanged(QString)), q, SIGNAL(statusBarMessageChanged(QString)));
         QObject::connect(view, SIGNAL(loadStarted()), q, SIGNAL(loadStarted()));
         QObject::connect(view, SIGNAL(loadSucceeded()), q, SIGNAL(loadSucceeded()));
+        QObject::connect(view, SIGNAL(loadFailed(QWebError)), q, SIGNAL(loadFailed(QWebError)));
         QObject::connect(view, SIGNAL(loadProgress(int)), q, SLOT(_q_loadProgressChanged(int)));
         QObject::connect(view, SIGNAL(urlChanged(QUrl)), q, SIGNAL(urlChanged(QUrl)));
     }

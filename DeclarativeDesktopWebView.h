@@ -20,6 +20,7 @@
 #include <QtDeclarative/QDeclarativeItem>
 
 class DeclarativeDesktopWebViewPrivate;
+class QWebError;
 
 class DeclarativeDesktopWebView : public QDeclarativeItem
 {
@@ -47,6 +48,7 @@ Q_SIGNALS:
     void statusBarMessageChanged(const QString&);
     void loadStarted();
     void loadSucceeded();
+    void loadFailed(const QWebError&);
     void loadProgressChanged();
     void urlChanged(const QUrl&);
 
