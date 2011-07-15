@@ -28,7 +28,7 @@ Item {
 
     BorderImage {
         id: background
-        source: "qrc:///images/tab_url_input.png"
+        source: "qrc:///urlbar/component_url_input"
         anchors.verticalCenter: parent.verticalCenter
         width: parent.width
         border { left: 10; top: 10; right: 10; bottom: 10 }
@@ -39,7 +39,7 @@ Item {
         anchors.topMargin: 3 // To look "inside" the urlEdit
         anchors.left: parent.left
         anchors.leftMargin: 2 // To look "inside" the urlEdit
-        source: "qrc:///images/progress_bar_url.png"
+        source: "qrc:///urlbar/progress_bar_url"
         border { left: 10; top: 10; right: 10; bottom: 10 }
         width: (urlEdit.width) * desktopview.loadProgress / 100.0
         height: urlEdit.height - anchors.topMargin * 2 // To look "inside" the urlEdit

@@ -34,31 +34,31 @@ Item {
         height: parent.height
         Image {
             id: backButton
-            source: "qrc:///images/component_btn_nav_back.png"
+            source: "qrc:///urlbar/button_nav_back"
         }
 
         Image {
             id: divisor1
             anchors.left: backButton.right
-            source: "qrc:///images/component_divisor.png"
+            source: "qrc:///urlbar/component_divisor"
         }
 
         Image {
             id: forwardButton
             anchors.left: divisor1.right
-            source: "qrc:///images/component_btn_nav_next.png"
+            source: "qrc:///urlbar/button_nav_next"
         }
 
         Image {
             id: divisor2
             anchors.left: forwardButton.right
-            source: "qrc:///images/component_divisor.png"
+            source: "qrc:///urlbar/component_divisor"
         }
 
         Image {
             id: refreshButton
             anchors.left: divisor2.right
-            source: "qrc:///images/component_btn_nav_refresh.png"
+            source: "qrc:///urlbar/button_nav_refresh"
         }
     }
     Item {

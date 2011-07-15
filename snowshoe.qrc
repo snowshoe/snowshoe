@@ -1,14 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/spinner.gif</file>
         <file>qml/main.qml</file>
         <file>qml/UrlEdit.qml</file>
-        <file>images/tab_url_input.png</file>
         <file>qml/UrlBar.qml</file>
-        <file>images/component_btn_nav_back.png</file>
-        <file>images/component_btn_nav_next.png</file>
-        <file>images/component_btn_nav_refresh.png</file>
-        <file>images/component_divisor.png</file>
-        <file>images/progress_bar_url.png</file>
+        <file alias="urlbar/button_nav_back">images/urlbar/component_btn_nav_back.png</file>
+        <file alias="urlbar/button_nav_next">images/urlbar/component_btn_nav_next.png</file>
+        <file alias="urlbar/button_nav_refresh">images/urlbar/component_btn_nav_refresh.png</file>
+        <file alias="urlbar/component_url_input">images/urlbar/component_url_input.png</file>
+        <file alias="urlbar/progress_bar_url">images/urlbar/progress_bar_url.png</file>
+        <file alias="urlbar/component_divisor">images/urlbar/component_divisor.png</file>
+        <file alias="spinner.gif">images/tabwidget/spinner.gif</file>
     </qresource>
 </RCC>

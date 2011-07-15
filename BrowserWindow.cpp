@@ -30,7 +30,7 @@ static QList<QIcon>& spinnerIcons()
 {
     static QList<QIcon> icons;
     if (icons.isEmpty()) {
-        QImageReader reader(":/images/spinner.gif", "gif");
+        QImageReader reader(":/spinner.gif", "gif");
         while (reader.canRead())
             icons.append(QIcon(QPixmap::fromImage(reader.read())));
     }
