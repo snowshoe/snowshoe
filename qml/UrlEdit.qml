@@ -18,6 +18,7 @@ import QtQuick 1.1
 
 Item {
     property alias text: urlInput.text
+    property alias textInput : urlInput
     property int verticalMargin: 5
     property int horizontalMargin: 9
 
@@ -41,9 +42,9 @@ Item {
         anchors.leftMargin: 2 // To look "inside" the urlEdit
         source: "qrc:///urlbar/progress_bar_url"
         border { left: 10; top: 10; right: 10; bottom: 10 }
-        width: (urlEdit.width) * desktopview.loadProgress / 100.0
+        width: (urlEdit.width) * desktopView.loadProgress / 100.0
         height: urlEdit.height - anchors.topMargin * 2 // To look "inside" the urlEdit
-        opacity: desktopview.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
+        opacity: desktopView.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
     }
 
     TextInput {

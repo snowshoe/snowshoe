@@ -1,5 +1,4 @@
 /****************************************************************************
- *   Copyright (C) 2011  Andreas Kling <awesomekling@gmail.com>             *
  *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
@@ -15,50 +14,36 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#ifndef PageWidget_h
-#define PageWidget_h
+import QtQuick 1.1
+import Snowshoe 1.0
 
-#include <QtCore/QVariant>
-#include <QtDeclarative/QDeclarativeView>
+Item {
+    id: root
 
-class DeclarativeDesktopWebView;
-class MainView;
-class QDeclarativeItem;
-class QUrl;
-class QWebError;
+    property alias urlBar: urlBar
+    property alias desktopView: desktopView
 
-class PageWidget : public QDeclarativeView {
-    Q_OBJECT
+    property variant tab;
 
-public:
-    PageWidget(QWidget* parent = 0);
-    virtual ~PageWidget();
+    UrlBar {
+        id: urlBar
+        objectName: "urlBar"
+    }
 
-    bool isLoading() const;
+    DeclarativeDesktopWebView {
+        id: desktopView
+        anchors.top: urlBar.bottom
+        anchors.topMargin: 5
+        anchors.bottom: root.bottom
+        anchors.left: root.left
+        anchors.right: root.right
 
-    void openInNewTab(const QString& urlFromUserInput);
-    void jumpToNextTab();
-    void jumpToPreviousTab();
+        onUrlChanged: { urlBar.text = url.toString() ; forceActiveFocus(); }
+        onLoadFailed: { url = "http://www.google.com/search?q=" + urlBar.text }
+        onTitleChanged: { tab.text = title }
+    }
 
-signals:
-    void titleChanged(const QString&);
-    void loadingStateChanged(bool);
-
-private slots:
-    void onTitleChanged(const QString&);
-    void onUrlChanged(const QString& url);
-    void newTabRequested();
-    void closeTabRequested();
-    void focusUrlBarRequested();
-
-    void onTabAdded(QVariant);
-    void onCurrentTabChanged();
-
-private:
-    DeclarativeDesktopWebView* getWebViewForUrlEdit(QObject* urlEdit);
-
-    QDeclarativeItem* m_root;
-    QDeclarativeItem* m_tabWidget;
-};
-
-#endif
+    function focusUrlBar() {
+        urlBar.textInput.forceActiveFocus();
+    }
+}

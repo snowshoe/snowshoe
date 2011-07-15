@@ -18,7 +18,10 @@ import QtQuick 1.1
 
 Item {
     property alias text: urlEdit.text
+    property alias textInput : urlEdit.textInput
     property int verticalMargins: 5
+
+    Component.onCompleted: { urlEdit.view = desktopView }
 
     width: parent.width
     height: urlEdit.height + verticalMargins
@@ -68,6 +71,7 @@ Item {
 
         UrlEdit {
             id: urlEdit
+            property variant view: desktopView
             objectName: "urlEdit"
         }
     }

@@ -34,9 +34,7 @@ int main(int argc, char** argv)
 
     BrowserWindow* window = BrowserWindow::create();
 
-    if (arguments.isEmpty())
-        window->openNewTab();
-    else
+    if (!arguments.isEmpty())
         window->openInNewTab(arguments.at(0));
 
     window->show();

@@ -42,6 +42,12 @@ function setActiveTab(newActiveTab) {
     newActiveTab.updateAssets();
     currentActiveTab = newActiveTab;
     updateMainView(currentActiveTab);
+
+    // FIXME: Do better it breaks the genericity of the tabwidget
+    if (newActiveTab.mainView.desktopView.isUrlEmpty())
+        newActiveTab.mainView.urlBar.textInput.forceActiveFocus();
+    else
+        newActiveTab.mainView.desktopView.forceActiveFocus();
 }
 
 function addTab(newTab)
@@ -121,6 +127,22 @@ function closeTab(tab)
 
 function updateMainView(tab)
 {
-    tab.mainView.y = tab.headerHeight + 5
+    tab.mainView.y = tab.headerHeight
     tab.mainView.x = -tab.x
+}
+
+function jumpToNextTab()
+{
+    var tabIndex = tabArray.indexOf(currentActiveTab) + 1;
+    if (tabIndex >= tabArray.length)
+        tabIndex = 0;
+    setActiveTab(tabArray[tabIndex]);
+}
+
+function jumpToPreviousTab()
+{
+    var tabIndex = tabArray.indexOf(currentActiveTab) - 1;
+    if (tabIndex < 0)
+        tabIndex = tabArray.length - 1;
+    setActiveTab(tabArray[tabIndex]);
 }

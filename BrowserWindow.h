@@ -32,19 +32,14 @@ public:
     static BrowserWindow* create();
 
 public slots:
-    PageWidget* openInNewTab(const QString& urlFromUserInput);
+    void openInNewTab(const QString& urlFromUserInput);
     BrowserWindow* openInNewWindow(const QString& urlFromUserInput);
+    void openNewWindow();
 
-    PageWidget* openNewTab();
-    BrowserWindow* openNewWindow();
-
-    void closeCurrentTab();
     void jumpToNextTab();
     void jumpToPreviousTab();
 
 private slots:
-    void onCurrentTabChanged(int tabIndex);
-    void onTabCloseRequested(int tabIndex);
     void onPageTitleChanged(const QString&);
     void onPageLoadingStateChanged(bool);
 
@@ -54,7 +49,7 @@ private:
     virtual void timerEvent(QTimerEvent*);
 
     BrowserWindow();
-    QTabWidget* m_tabs;
+    PageWidget* m_mainView;
     int m_spinnerIndex;
     int m_spinnerTimer;
 };

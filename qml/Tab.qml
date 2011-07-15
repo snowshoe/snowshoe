@@ -57,16 +57,16 @@ Item {
         function selectAsset() {
             if (tab.isFirstTab) {
                 if (tab.active)
-                    source = "tab_active_left.png";
+                    source = "qrc:///tabwidget/tab_active_left";
                 else
-                    source = "tab_inactive_left.png";
+                    source = "qrc:///tabwidget/tab_inactive_left";
             } else {
                 if (tab.isLeftActive)
-                    source = "tab_active_with_inactive_right.png";
+                    source = "qrc:///tabwidget/tab_active_with_inactive_right";
                 else if (tab.active)
-                    source = "tab_active_with_inactive_left.png";
+                    source = "qrc:///tabwidget/tab_active_with_inactive_left";
                 else
-                    source = "tab_inactive_with_inactive.png";
+                    source = "qrc:///tabwidget/tab_inactive_with_inactive";
             }
         }
     }
@@ -76,7 +76,7 @@ Item {
         width: tab.width - leftImage.width - rightImage.width
         horizontalTileMode: BorderImage.Repeat
         border { left: 0; top: 0; right: 0; bottom: 0 }
-        source: tab.active ? "tab_active_fill.png" : "tab_inactive_fill.png"
+        source: tab.active ? "qrc:///tabwidget/tab_active_fill" : "qrc:///tabwidget/tab_inactive_fill"
         anchors.left: leftImage.right
     }
 
@@ -87,9 +87,9 @@ Item {
         function selectAsset() {
             if (tab.isLastTab) {
                 if (tab.active)
-                    source = "tab_active_right.png";
+                    source = "qrc:///tabwidget/tab_active_right";
                 else
-                    source = "tab_inactive_right.png";
+                    source = "qrc:///tabwidget/tab_inactive_right";
             } else {
                 source = "";
             }
@@ -99,7 +99,10 @@ Item {
     }
 
     MouseArea {
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.bottom: tabTitle.bottom
+        anchors.right: tab.right
+        anchors.left: tab.left
         onClicked: { tabWidget.setActiveTab(tab); }
     }
 
@@ -115,7 +118,7 @@ Item {
 
     Image {
         id: closeImage
-        source: tab.active ? "tab_active_btn_close.png" : "tab_inactive_btn_close.png"
+        source: tab.active ? "qrc:///tabwidget/tab_active_btn_close" : "qrc:///tabwidget/tab_inactive_btn_close"
         x: rightImage.x - width
         MouseArea {
             anchors.fill: parent

@@ -40,8 +40,7 @@
 
 PageWidget::PageWidget(QWidget* parent)
     : QDeclarativeView(parent)
-    , m_loading(false)
-    , m_view(0)
+    , m_tabWidget(0)
 {
     setResizeMode(QDeclarativeView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
@@ -49,44 +48,71 @@ PageWidget::PageWidget(QWidget* parent)
     m_root = qobject_cast<QDeclarativeItem*>(rootObject());
     Q_ASSERT(m_root);
 
-    m_view = m_root->findChild<DeclarativeDesktopWebView*>();
-    Q_ASSERT(m_view);
+    m_tabWidget = m_root->findChild<QDeclarativeItem*>("tabWidget");
+    Q_ASSERT(m_tabWidget);
 
-    m_urlEdit = m_root->findChild<QDeclarativeItem*>("urlEdit");
-    Q_ASSERT(m_urlEdit);
+    connect(m_tabWidget, SIGNAL(tabAdded(QVariant)), this, SLOT(onTabAdded(QVariant)));
+    connect(m_tabWidget, SIGNAL(currentTabChanged()), this, SLOT(onCurrentTabChanged()));
+
+    onTabAdded(m_tabWidget->property("currentActiveTab"));
 
     QAction* focusLocationBarAction = new QAction(this);
     focusLocationBarAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
-    connect(focusLocationBarAction, SIGNAL(triggered()), this, SLOT(focusLocationBar()));
+    connect(focusLocationBarAction, SIGNAL(triggered()), this, SLOT(focusUrlBarRequested()));
     addAction(focusLocationBarAction);
-
-    QAction* newWindowAction = new QAction(this);
-    newWindowAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
-    connect(newWindowAction, SIGNAL(triggered()), this, SIGNAL(newWindowRequested()));
-    addAction(newWindowAction);
 
     QAction* newTabAction = new QAction(this);
     newTabAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_T));
-    connect(newTabAction, SIGNAL(triggered()), this, SIGNAL(newTabRequested()));
+    connect(newTabAction, SIGNAL(triggered()), this, SLOT(newTabRequested()));
     addAction(newTabAction);
 
     QAction* closeTabAction = new QAction(this);
     closeTabAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_W));
-    connect(closeTabAction, SIGNAL(triggered()), this, SIGNAL(closeTabRequested()));
+    connect(closeTabAction, SIGNAL(triggered()), this, SLOT(closeTabRequested()));
     addAction(closeTabAction);
 
-    connect(m_view, SIGNAL(loadStarted()), SLOT(focusWebView()));
-    connect(m_view, SIGNAL(loadStarted()), SLOT(onLoadStarted()));
-    connect(m_view, SIGNAL(loadSucceeded()), SLOT(onLoadSucceeded()));
-    connect(m_view, SIGNAL(loadFailed(QWebError)), SLOT(onLoadFailed(QWebError)));
-    connect(m_view, SIGNAL(titleChanged(QString)), SLOT(onTitleChanged(QString)));
-
 //    page()->setCreateNewPageFunction(newPageCallback);
-    connect(m_urlEdit, SIGNAL(urlEntered(QString)), this, SLOT(onUrlChanged(QString)));
 }
 
 PageWidget::~PageWidget()
 {
+}
+
+void PageWidget::openInNewTab(const QString& urlFromUserInput)
+{
+    QUrl url = QUrl::fromUserInput(urlFromUserInput);
+    if (!url.isEmpty()) {
+        QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
+        QObject* mainView = currentActiveTab->property("mainView").value<QObject*>();
+        QObject* urlEdit = mainView->findChild<QDeclarativeItem*>("urlEdit");
+        urlEdit->setProperty("text", url.toString());
+        getWebViewForUrlEdit(urlEdit)->setUrl(url);
+    }
+}
+
+void PageWidget::jumpToNextTab()
+{
+    QMetaObject::invokeMethod(m_tabWidget, "jumpToNextTab");
+}
+
+void PageWidget::jumpToPreviousTab()
+{
+    QMetaObject::invokeMethod(m_tabWidget, "jumpToPreviousTab");
+}
+
+void PageWidget::onTabAdded(QVariant tab)
+{
+    QObject* mainView = tab.value<QObject*>()->property("mainView").value<QObject*>();
+    QDeclarativeItem* urlEdit = mainView->findChild<QDeclarativeItem*>("urlEdit");
+    connect(urlEdit, SIGNAL(urlEntered(QString)), this, SLOT(onUrlChanged(QString)));
+    QObject* webView = getWebViewForUrlEdit(urlEdit);
+    connect(webView, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
+}
+
+void PageWidget::onCurrentTabChanged()
+{
+    QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
+    emit titleChanged(currentActiveTab->property("text").toString());
 }
 
 void PageWidget::onTitleChanged(const QString& title)
@@ -94,48 +120,30 @@ void PageWidget::onTitleChanged(const QString& title)
     emit titleChanged(title);
 }
 
-void PageWidget::focusLocationBar()
+DeclarativeDesktopWebView* PageWidget::getWebViewForUrlEdit(QObject* urlEdit)
 {
-    // FIXME.
-}
-
-void PageWidget::focusWebView()
-{
-    setFocus();
-}
-
-void PageWidget::onLoadStarted()
-{
-    m_loading = true;
-    emit loadingStateChanged(true);
-}
-
-void PageWidget::onLoadSucceeded()
-{
-    m_loading = false;
-    emit loadingStateChanged(false);
-}
-
-void PageWidget::onLoadFailed(const QWebError& error)
-{
-    Q_UNUSED(error);
-    // FIXME: Do something with the error.
-
-    m_loading = false;
-    emit loadingStateChanged(false);
-}
-
-bool PageWidget::isLoading() const
-{
-    return m_loading;
-}
-
-void PageWidget::setUrl(const QUrl& url)
-{
-    m_view->setUrl(url);
+    QObject* view = urlEdit->property("view").value<QObject*>();
+    return qobject_cast<DeclarativeDesktopWebView* >(view);
 }
 
 void PageWidget::onUrlChanged(const QString& url)
 {
-    m_view->setUrl(QUrl::fromUserInput(url));
+    getWebViewForUrlEdit(sender())->setUrl(QUrl::fromUserInput(url));
+}
+
+void PageWidget::newTabRequested()
+{
+    QMetaObject::invokeMethod(m_tabWidget, "addNewTab");
+}
+
+void PageWidget::closeTabRequested()
+{
+    QMetaObject::invokeMethod(m_tabWidget, "closeTab", Q_ARG(QVariant, m_tabWidget->property("currentActiveTab")));
+}
+
+void PageWidget::focusUrlBarRequested()
+{
+    QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
+    QObject* mainView = currentActiveTab->property("mainView").value<QObject*>();
+    QMetaObject::invokeMethod(mainView, "focusUrlBar");
 }

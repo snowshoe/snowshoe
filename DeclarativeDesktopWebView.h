@@ -37,6 +37,8 @@ public:
 
     int loadProgress();
 
+    Q_INVOKABLE bool isUrlEmpty() { return url().isEmpty(); }
+
 public Q_SLOTS:
     void setUrl(const QUrl&);
 

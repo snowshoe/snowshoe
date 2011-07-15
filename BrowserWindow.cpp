@@ -30,7 +30,7 @@ static QList<QIcon>& spinnerIcons()
 {
     static QList<QIcon> icons;
     if (icons.isEmpty()) {
-        QImageReader reader(":/spinner.gif", "gif");
+        QImageReader reader(":/tabwidget/spinner.gif", "gif");
         while (reader.canRead())
             icons.append(QIcon(QPixmap::fromImage(reader.read())));
     }
@@ -45,14 +45,9 @@ BrowserWindow::BrowserWindow()
 
     setAttribute(Qt::WA_DeleteOnClose);
 
-    m_tabs = new QTabWidget(this);
-    m_tabs->setTabsClosable(true);
+    m_mainView = new PageWidget(this);
 
-    m_tabs->setStyleSheet("QTabBar::tab { width: 200px; height: 20px; }");
-    m_tabs->setElideMode(Qt::ElideRight);
-
-    connect(m_tabs, SIGNAL(tabCloseRequested(int)), this, SLOT(onTabCloseRequested(int)));
-    connect(m_tabs, SIGNAL(currentChanged(int)), this, SLOT(onCurrentTabChanged(int)));
+    connect(m_mainView, SIGNAL(titleChanged(QString)), this, SLOT(onPageTitleChanged(QString)));
 
     QAction* nextTabAction = new QAction(this);
     nextTabAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageDown));
@@ -64,71 +59,32 @@ BrowserWindow::BrowserWindow()
     connect(previousTabAction, SIGNAL(triggered()), this, SLOT(jumpToPreviousTab()));
     addAction(previousTabAction);
 
-    setCentralWidget(m_tabs);
-    m_tabs->setFocusPolicy(Qt::NoFocus);
+    QAction* newWindowAction = new QAction(this);
+    newWindowAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
+    connect(newWindowAction, SIGNAL(triggered()), this, SLOT(openNewWindow()));
+    addAction(newWindowAction);
+
+    setCentralWidget(m_mainView);
 
     resize(800, 600);
 }
 
-PageWidget* BrowserWindow::openInNewTab(const QString& urlFromUserInput)
+void BrowserWindow::openInNewTab(const QString& urlFromUserInput)
 {
-    PageWidget* pageWidget = new PageWidget();
-    m_tabs->addTab(pageWidget, tr("New Tab"));
-
-    connect(pageWidget, SIGNAL(newWindowRequested()), this, SLOT(openNewWindow()));
-    connect(pageWidget, SIGNAL(newTabRequested()), this, SLOT(openNewTab()));
-    connect(pageWidget, SIGNAL(closeTabRequested()), this, SLOT(closeCurrentTab()));
-    connect(pageWidget, SIGNAL(titleChanged(QString)), this, SLOT(onPageTitleChanged(QString)));
-    connect(pageWidget, SIGNAL(loadingStateChanged(bool)), this, SLOT(onPageLoadingStateChanged(bool)));
-
-    m_tabs->setCurrentWidget(pageWidget);
-    pageWidget->setFocus();
-
-    QUrl url = QUrl::fromUserInput(urlFromUserInput);
-    if (!url.isEmpty())
-        pageWidget->setUrl(url);
-
-    return pageWidget;
+    m_mainView->openInNewTab(urlFromUserInput);
 }
 
 BrowserWindow* BrowserWindow::openInNewWindow(const QString& url)
 {
     BrowserWindow* window = BrowserWindow::create();
-    window->openInNewTab(url);
+    openInNewTab(url);
     window->show();
     return window;
 }
 
-PageWidget* BrowserWindow::openNewTab()
+void BrowserWindow::openNewWindow()
 {
-    return openInNewTab(QString());
-}
-
-BrowserWindow* BrowserWindow::openNewWindow()
-{
-    return openInNewWindow(QString());
-}
-
-void BrowserWindow::closePageWidget(PageWidget* pageWidget)
-{
-    if (!pageWidget)
-        return;
-
-    int tabIndex = m_tabs->indexOf(pageWidget);
-
-    if (tabIndex == -1)
-        return;
-
-    m_tabs->removeTab(tabIndex);
-    delete pageWidget;
-
-    if (!m_tabs->count())
-        close();
-}
-
-void BrowserWindow::closeCurrentTab()
-{
-    closePageWidget(qobject_cast<PageWidget*>(m_tabs->currentWidget()));
+    openInNewWindow(QString());
 }
 
 BrowserWindow::~BrowserWindow()
@@ -137,43 +93,17 @@ BrowserWindow::~BrowserWindow()
 
 void BrowserWindow::jumpToNextTab()
 {
-    int tabIndex = m_tabs->currentIndex() + 1;
-    if (tabIndex >= m_tabs->count())
-        tabIndex = 0;
-
-    m_tabs->setCurrentIndex(tabIndex);
+    m_mainView->jumpToNextTab();
 }
 
 void BrowserWindow::jumpToPreviousTab()
 {
-    int tabIndex = m_tabs->currentIndex() - 1;
-    if (tabIndex < 0)
-        tabIndex = m_tabs->count() - 1;
-
-    m_tabs->setCurrentIndex(tabIndex);
-}
-
-void BrowserWindow::onTabCloseRequested(int tabIndex)
-{
-    closePageWidget(qobject_cast<PageWidget*>(m_tabs->widget(tabIndex)));
+    m_mainView->jumpToPreviousTab();
 }
 
 void BrowserWindow::onPageTitleChanged(const QString& title)
 {
-    PageWidget* pageWidget = qobject_cast<PageWidget*>(QObject::sender());
-
-    Q_ASSERT(pageWidget);
-    if (!pageWidget)
-        return;
-
-    int tabIndex = m_tabs->indexOf(pageWidget);
-    if (tabIndex == -1)
-        return;
-
-    m_tabs->setTabText(tabIndex, title);
-
-    if (tabIndex == m_tabs->currentIndex())
-        setFancyWindowTitle(title);
+    setFancyWindowTitle(title);
 }
 
 void BrowserWindow::onPageLoadingStateChanged(bool /*loading*/)
@@ -190,27 +120,22 @@ void BrowserWindow::timerEvent(QTimerEvent*)
 
     int loadingPages = 0;
 
-    for (int i = 0; i < m_tabs->count(); ++i) {
+    /*for (int i = 0; i < m_tabs->count(); ++i) {
         PageWidget* pageWidget = qobject_cast<PageWidget*>(m_tabs->widget(i));
         Q_ASSERT(pageWidget);
         if (!pageWidget->isLoading()) {
             // FIXME: Revert to page favicon once Qt/WebKit2 has API for that.
-            m_tabs->setTabIcon(i, QIcon());
+            //m_tabs->setTabIcon(i, QIcon());
             continue;
         }
         ++loadingPages;
-        m_tabs->setTabIcon(i, spinnerIcons().at(m_spinnerIndex));
-    }
+        //m_tabs->setTabIcon(i, spinnerIcons().at(m_spinnerIndex));
+    }*/
 
     if (!loadingPages && m_spinnerTimer >= 0) {
         killTimer(m_spinnerTimer);
         m_spinnerTimer = -1;
     }
-}
-
-void BrowserWindow::onCurrentTabChanged(int tabIndex)
-{
-    setFancyWindowTitle(m_tabs->tabText(tabIndex));
 }
 
 void BrowserWindow::setFancyWindowTitle(const QString& title)

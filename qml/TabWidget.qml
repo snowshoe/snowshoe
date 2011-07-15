@@ -18,19 +18,28 @@ import QtQuick 1.1
 import "TabWidget.js" as Core
 
 Item {
-    property Tab currentActiveTab: Tab {}
+    property variant currentActiveTab: Tab {}
 
     function setActiveTab(newActiveTab)
     {
         Core.setActiveTab(newActiveTab);
+        currentTabChanged();
     }
+
+    signal tabAdded(variant newTab)
+    signal currentTabChanged()
+    signal newTabRequested()
 
     BorderImage {
         id: base
         width: parent.width
         horizontalTileMode: BorderImage.Repeat
         border { left: 0; top: 0; right: 0; bottom: 0 }
-        source: "tab_base_fill.png"
+        source: "qrc:///tabwidget/tab_base_fill"
+        MouseArea {
+            anchors.fill: parent
+            onDoubleClicked: { tabWidget.newTabRequested() }
+        }
     }
 
     function addTab(tab)
@@ -43,6 +52,7 @@ Item {
         tab.anchors.top = this.top;
         tab.tabWidget = this;
         Core.updateMainView(tab);
+        tabAdded(tab);
     }
 
     function closeTab(tab)
@@ -55,6 +65,16 @@ Item {
             Core.shrinkTabs(width);
             Core.updateMainView(currentActiveTab);
         }
+    }
+
+    function jumpToNextTab()
+    {
+        Core.jumpToNextTab();
+    }
+
+    function jumpToPreviousTab()
+    {
+        Core.jumpToPreviousTab();
     }
 
     onWidthChanged: { Core.shrinkTabs(width); Core.updateMainView(currentActiveTab); }
