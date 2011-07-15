@@ -132,10 +132,10 @@ bool PageWidget::isLoading() const
 
 void PageWidget::setUrl(const QUrl& url)
 {
-    QMetaObject::invokeMethod(m_view, "setUrl", Qt::AutoConnection, Q_ARG(QUrl, url));
+    m_view->setUrl(url);
 }
 
 void PageWidget::onUrlChanged(const QString& url)
 {
-    QMetaObject::invokeMethod(m_view, "setUrl", Qt::AutoConnection, Q_ARG(QUrl, QUrl::fromUserInput(url)));
+    m_view->setUrl(QUrl::fromUserInput(url));
 }
