@@ -49,7 +49,7 @@ PageWidget::PageWidget(QWidget* parent)
     m_root = qobject_cast<QDeclarativeItem*>(rootObject());
     Q_ASSERT(m_root);
 
-    /*m_view = m_root->findChild<DeclarativeDesktopWebView*>();
+    m_view = m_root->findChild<DeclarativeDesktopWebView*>();
     Q_ASSERT(m_view);
 
     m_urlEdit = m_root->findChild<QDeclarativeItem*>("urlEdit");
@@ -82,7 +82,7 @@ PageWidget::PageWidget(QWidget* parent)
     connect(m_view, SIGNAL(titleChanged(QString)), SLOT(onTitleChanged(QString)));
 
 //    page()->setCreateNewPageFunction(newPageCallback);
-    connect(m_urlEdit, SIGNAL(urlEntered(QString)), this, SLOT(onUrlChanged(QString)));*/
+    connect(m_urlEdit, SIGNAL(urlEntered(QString)), this, SLOT(onUrlChanged(QString)));
 }
 
 PageWidget::~PageWidget()

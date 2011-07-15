@@ -9,21 +9,6 @@
         <file alias="urlbar/component_url_input">images/urlbar/component_url_input.png</file>
         <file alias="urlbar/progress_bar_url">images/urlbar/progress_bar_url.png</file>
         <file alias="urlbar/component_divisor">images/urlbar/component_divisor.png</file>
-        <file alias="tabwidget/spinner.gif">images/tabwidget/spinner.gif</file>
-        <file>qml/TabWidget.qml</file>
-        <file>qml/Tab.qml</file>
-        <file>qml/TabWidget.js</file>
-        <file alias="tabwidget/tab_active_btn_close">images/tabwidget/tab_active_btn_close.png</file>
-        <file alias="tabwidget/tab_active_fill">images/tabwidget/tab_active_fill.png</file>
-        <file alias="tabwidget/tab_active_left">images/tabwidget/tab_active_left.png</file>
-        <file alias="tabwidget/tab_active_right">images/tabwidget/tab_active_right.png</file>
-        <file alias="tabwidget/tab_active_with_inactive_left">images/tabwidget/tab_active_with_inactive_left.png</file>
-        <file alias="tabwidget/tab_active_with_inactive_right">images/tabwidget/tab_active_with_inactive_right.png</file>
-        <file alias="tabwidget/tab_base_fill">images/tabwidget/tab_base_fill.png</file>
-        <file alias="tabwidget/tab_inactive_btn_close">images/tabwidget/tab_inactive_btn_close.png</file>
-        <file alias="tabwidget/tab_inactive_fill">images/tabwidget/tab_inactive_fill.png</file>
-        <file alias="tabwidget/tab_inactive_left">images/tabwidget/tab_inactive_left.png</file>
-        <file alias="tabwidget/tab_inactive_right">images/tabwidget/tab_inactive_right.png</file>
-        <file alias="tabwidget/tab_inactive_with_inactive">images/tabwidget/tab_inactive_with_inactive.png</file>
+        <file alias="spinner.gif">images/tabwidget/spinner.gif</file>
     </qresource>
 </RCC>

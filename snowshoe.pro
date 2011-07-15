@@ -57,9 +57,5 @@ macx {
 
 OTHER_FILES += \
     qml/main.qml \
-    qml/Tab.qml \
-    qml/TabWidget.qml \
-    qml/TabWidget.js \
     qml/UrlEdit.qml \
-    qml/UrlBar.qml \
-    qml/PageWidget.qml
+    qml/UrlBar.qml

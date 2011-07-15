@@ -30,7 +30,7 @@ Item {
         width: parent.width
         horizontalTileMode: BorderImage.Repeat
         border { left: 0; top: 0; right: 0; bottom: 0 }
-        source: "qrc:///tabwidget/tab_base_fill"
+        source: "tab_base_fill.png"
     }
 
     function addTab(tab)

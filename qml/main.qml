@@ -19,25 +19,21 @@ import Snowshoe 1.0
 
 Item {
     id: root
-
-    TabWidget {
-        id: tabWidget
-        objectName: "tabWidget"
-        anchors.fill: parent
-
-        Component.onCompleted: {
-            var component = Qt.createComponent("Tab.qml");
-            if (component.status == Component.Ready) {
-                var tab = component.createObject(tabWidget);
-                var componentView = Qt.createComponent("PageWidget.qml");
-                if (componentView.status == Component.Ready) {
-                    var view = componentView.createQmlObject(tab);
-                    tab.mainView = view;
-                    tab.text = view.desktopview.titleName;
-                    tabWidget.addTab(tab);
-                    tabWidget.setActiveTab(tab);
-                }
-            }
-        }
+    UrlBar {
+        id: urlBar
+        objectName: "urlBar"
     }
+
+    DeclarativeDesktopWebView {
+        id: desktopview
+        anchors.top: urlBar.bottom
+        anchors.topMargin: 5
+        anchors.bottom: root.bottom
+        anchors.left: root.left
+        anchors.right: root.right
+
+        onUrlChanged: { urlBar.text = url.toString() ; focus = true }
+        onLoadFailed: { url = "http://www.google.com/search?q=" + urlBar.text }
+    }
+
 }
