@@ -54,7 +54,7 @@ private:
     virtual void timerEvent(QTimerEvent*);
 
     BrowserWindow();
-    QTabWidget* m_tabs;
+    PageWidget* m_mainView;
     int m_spinnerIndex;
     int m_spinnerTimer;
 };
