@@ -19,6 +19,7 @@
 
 #include "BrowserWindow.h"
 #include "DeclarativeDesktopWebView.h"
+#include "TripleClickMonitor.h"
 
 #include <QtDeclarative/QDeclarativeItem>
 #include <QtGui/QAction>
@@ -107,6 +108,10 @@ void MainView::onTabAdded(QVariant tab)
     connect(urlEdit, SIGNAL(urlEntered(QString)), this, SLOT(onUrlChanged(QString)));
     QObject* webView = getWebViewForUrlEdit(urlEdit);
     connect(webView, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
+    QDeclarativeItem* urlInput = urlEdit->findChild<QDeclarativeItem*>("urlInput");
+    TripleClickMonitor* urlEditMonitor = new TripleClickMonitor(mainView);
+    urlInput->installEventFilter(urlEditMonitor);
+    connect(urlEditMonitor, SIGNAL(tripleClicked()), urlInput, SLOT(selectAll()));
 }
 
 void MainView::onCurrentTabChanged()

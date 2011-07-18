@@ -49,6 +49,7 @@ Item {
 
     TextInput {
         id: urlInput
+        objectName: "urlInput"
         focus: true
         font.pointSize: 10
         font.bold: true

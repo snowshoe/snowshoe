@@ -7,12 +7,14 @@ SOURCES += \
     main.cpp \
     BrowserWindow.cpp \
     MainView.cpp \
-    DeclarativeDesktopWebView.cpp
+    DeclarativeDesktopWebView.cpp \
+    TripleClickMonitor.cpp
 
 HEADERS += \
     BrowserWindow.h \
     MainView.h \
-    DeclarativeDesktopWebView.h
+    DeclarativeDesktopWebView.h \
+    TripleClickMonitor.h
 
 RESOURCES += \
     snowshoe.qrc
