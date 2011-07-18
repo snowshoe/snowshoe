@@ -15,24 +15,23 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#ifndef PageWidget_h
-#define PageWidget_h
+#ifndef MainView_h
+#define MainView_h
 
 #include <QtCore/QVariant>
 #include <QtDeclarative/QDeclarativeView>
 
 class DeclarativeDesktopWebView;
-class MainView;
 class QDeclarativeItem;
 class QUrl;
 class QWebError;
 
-class PageWidget : public QDeclarativeView {
+class MainView : public QDeclarativeView {
     Q_OBJECT
 
 public:
-    PageWidget(QWidget* parent = 0);
-    virtual ~PageWidget();
+    MainView(QWidget* parent = 0);
+    virtual ~MainView();
 
     bool isLoading() const;
 

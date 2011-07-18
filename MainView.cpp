@@ -15,7 +15,7 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#include "PageWidget.h"
+#include "MainView.h"
 
 #include "BrowserWindow.h"
 #include "DeclarativeDesktopWebView.h"
@@ -38,7 +38,7 @@
 //    return page->page();
 //}
 
-PageWidget::PageWidget(QWidget* parent)
+MainView::MainView(QWidget* parent)
     : QDeclarativeView(parent)
     , m_tabWidget(0)
 {
@@ -74,11 +74,11 @@ PageWidget::PageWidget(QWidget* parent)
 //    page()->setCreateNewPageFunction(newPageCallback);
 }
 
-PageWidget::~PageWidget()
+MainView::~MainView()
 {
 }
 
-void PageWidget::openInNewTab(const QString& urlFromUserInput)
+void MainView::openInNewTab(const QString& urlFromUserInput)
 {
     QUrl url = QUrl::fromUserInput(urlFromUserInput);
     if (!url.isEmpty()) {
@@ -90,17 +90,17 @@ void PageWidget::openInNewTab(const QString& urlFromUserInput)
     }
 }
 
-void PageWidget::jumpToNextTab()
+void MainView::jumpToNextTab()
 {
     QMetaObject::invokeMethod(m_tabWidget, "jumpToNextTab");
 }
 
-void PageWidget::jumpToPreviousTab()
+void MainView::jumpToPreviousTab()
 {
     QMetaObject::invokeMethod(m_tabWidget, "jumpToPreviousTab");
 }
 
-void PageWidget::onTabAdded(QVariant tab)
+void MainView::onTabAdded(QVariant tab)
 {
     QObject* mainView = tab.value<QObject*>()->property("mainView").value<QObject*>();
     QDeclarativeItem* urlEdit = mainView->findChild<QDeclarativeItem*>("urlEdit");
@@ -109,39 +109,39 @@ void PageWidget::onTabAdded(QVariant tab)
     connect(webView, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 }
 
-void PageWidget::onCurrentTabChanged()
+void MainView::onCurrentTabChanged()
 {
     QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
     emit titleChanged(currentActiveTab->property("text").toString());
 }
 
-void PageWidget::onTitleChanged(const QString& title)
+void MainView::onTitleChanged(const QString& title)
 {
     emit titleChanged(title);
 }
 
-DeclarativeDesktopWebView* PageWidget::getWebViewForUrlEdit(QObject* urlEdit)
+DeclarativeDesktopWebView* MainView::getWebViewForUrlEdit(QObject* urlEdit)
 {
     QObject* view = urlEdit->property("view").value<QObject*>();
     return qobject_cast<DeclarativeDesktopWebView* >(view);
 }
 
-void PageWidget::onUrlChanged(const QString& url)
+void MainView::onUrlChanged(const QString& url)
 {
     getWebViewForUrlEdit(sender())->setUrl(QUrl::fromUserInput(url));
 }
 
-void PageWidget::newTabRequested()
+void MainView::newTabRequested()
 {
     QMetaObject::invokeMethod(m_tabWidget, "addNewTab");
 }
 
-void PageWidget::closeTabRequested()
+void MainView::closeTabRequested()
 {
     QMetaObject::invokeMethod(m_tabWidget, "closeTab", Q_ARG(QVariant, m_tabWidget->property("currentActiveTab")));
 }
 
-void PageWidget::focusUrlBarRequested()
+void MainView::focusUrlBarRequested()
 {
     QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
     QObject* mainView = currentActiveTab->property("mainView").value<QObject*>();

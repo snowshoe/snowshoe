@@ -15,7 +15,7 @@
  ****************************************************************************/
 
 #include "BrowserWindow.h"
-#include "PageWidget.h"
+#include "MainView.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QUrl>
 #include <QtGui/QAction>
@@ -45,7 +45,7 @@ BrowserWindow::BrowserWindow()
 
     setAttribute(Qt::WA_DeleteOnClose);
 
-    m_mainView = new PageWidget(this);
+    m_mainView = new MainView(this);
 
     connect(m_mainView, SIGNAL(titleChanged(QString)), this, SLOT(onPageTitleChanged(QString)));
 
@@ -121,9 +121,9 @@ void BrowserWindow::timerEvent(QTimerEvent*)
     int loadingPages = 0;
 
     /*for (int i = 0; i < m_tabs->count(); ++i) {
-        PageWidget* pageWidget = qobject_cast<PageWidget*>(m_tabs->widget(i));
-        Q_ASSERT(pageWidget);
-        if (!pageWidget->isLoading()) {
+        MainView* mainView = qobject_cast<MainView*>(m_tabs->widget(i));
+        Q_ASSERT(mainView);
+        if (!mainView->isLoading()) {
             // FIXME: Revert to page favicon once Qt/WebKit2 has API for that.
             //m_tabs->setTabIcon(i, QIcon());
             continue;

@@ -19,7 +19,7 @@
 
 #include <QtGui/QMainWindow>
 
-class PageWidget;
+class MainView;
 class QTabWidget;
 class QUrl;
 
@@ -45,11 +45,10 @@ private slots:
 
 private:
     void setFancyWindowTitle(const QString&);
-    void closePageWidget(PageWidget*);
     virtual void timerEvent(QTimerEvent*);
 
     BrowserWindow();
-    PageWidget* m_mainView;
+    MainView* m_mainView;
     int m_spinnerIndex;
     int m_spinnerTimer;
 };
