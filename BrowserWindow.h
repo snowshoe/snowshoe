@@ -41,16 +41,12 @@ public slots:
 
 private slots:
     void onPageTitleChanged(const QString&);
-    void onPageLoadingStateChanged(bool);
 
 private:
     void setFancyWindowTitle(const QString&);
-    virtual void timerEvent(QTimerEvent*);
 
     BrowserWindow();
     MainView* m_mainView;
-    int m_spinnerIndex;
-    int m_spinnerTimer;
 };
 
 #endif

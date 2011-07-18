@@ -38,8 +38,10 @@ Item {
         anchors.left: root.left
         anchors.right: root.right
 
+        onLoadStarted: { tab.startSpinner(); }
+        onLoadSucceeded: { tab.stopSpinner(); }
         onUrlChanged: { urlBar.text = url.toString() ; forceActiveFocus(); }
-        onLoadFailed: { url = "http://www.google.com/search?q=" + urlBar.text }
+        onLoadFailed: { url = "http://www.google.com/search?q=" + urlBar.text ; tab.stopSpinner(); }
         onTitleChanged: { tab.text = title }
     }
 

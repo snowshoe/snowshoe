@@ -33,6 +33,16 @@ Item {
 
     property variant mainView: Item {}
 
+    function startSpinner() {
+        spinner.visible = true;
+        spinner.playing = true;
+    }
+
+    function stopSpinner() {
+        spinner.visible = false;
+        spinner.playing = false;
+    }
+
     Binding {
         property: "height"
         value: tab.height - tab.headerHeight
@@ -106,14 +116,27 @@ Item {
         onClicked: { tabWidget.setActiveTab(tab); }
     }
 
+    AnimatedImage {
+        id: spinner
+        source: "qrc:///tabwidget/spinner.gif"
+        width: 15
+        anchors.top: parent.top
+        anchors.left: leftImage.left
+        anchors.topMargin: 10
+        anchors.leftMargin: 12
+        playing: false
+        visible: false
+    }
+
     Text {
         id: tabText
         width: parent.width
         elide: Text.ElideRight
         anchors.top: parent.top
-        anchors.left: leftImage.right
+        anchors.left: spinner.right
         anchors.right: closeImage.left
         anchors.topMargin: 10
+        anchors.leftMargin: 5
     }
 
     Image {

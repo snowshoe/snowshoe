@@ -26,21 +26,8 @@ BrowserWindow* BrowserWindow::create()
     return new BrowserWindow();
 }
 
-static QList<QIcon>& spinnerIcons()
-{
-    static QList<QIcon> icons;
-    if (icons.isEmpty()) {
-        QImageReader reader(":/tabwidget/spinner.gif", "gif");
-        while (reader.canRead())
-            icons.append(QIcon(QPixmap::fromImage(reader.read())));
-    }
-    return icons;
-}
-
 BrowserWindow::BrowserWindow()
     : QMainWindow(0)
-    , m_spinnerIndex(0)
-    , m_spinnerTimer(-1)
 {
 
     setAttribute(Qt::WA_DeleteOnClose);
@@ -104,38 +91,6 @@ void BrowserWindow::jumpToPreviousTab()
 void BrowserWindow::onPageTitleChanged(const QString& title)
 {
     setFancyWindowTitle(title);
-}
-
-void BrowserWindow::onPageLoadingStateChanged(bool /*loading*/)
-{
-    if (m_spinnerTimer < 0)
-        m_spinnerTimer = startTimer(150);
-}
-
-void BrowserWindow::timerEvent(QTimerEvent*)
-{
-    ++m_spinnerIndex;
-    if (m_spinnerIndex >= spinnerIcons().count())
-        m_spinnerIndex = 0;
-
-    int loadingPages = 0;
-
-    /*for (int i = 0; i < m_tabs->count(); ++i) {
-        MainView* mainView = qobject_cast<MainView*>(m_tabs->widget(i));
-        Q_ASSERT(mainView);
-        if (!mainView->isLoading()) {
-            // FIXME: Revert to page favicon once Qt/WebKit2 has API for that.
-            //m_tabs->setTabIcon(i, QIcon());
-            continue;
-        }
-        ++loadingPages;
-        //m_tabs->setTabIcon(i, spinnerIcons().at(m_spinnerIndex));
-    }*/
-
-    if (!loadingPages && m_spinnerTimer >= 0) {
-        killTimer(m_spinnerTimer);
-        m_spinnerTimer = -1;
-    }
 }
 
 void BrowserWindow::setFancyWindowTitle(const QString& title)
