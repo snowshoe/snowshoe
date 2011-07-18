@@ -21,6 +21,7 @@ Item {
     width: 150
     height: tabWidget.height
 
+    property int headerWidth: width + rightImage.width
     property int headerHeight: leftImage.height
     property bool active: true
     property alias text: tabText.text
@@ -83,7 +84,7 @@ Item {
 
     BorderImage {
         id: tabTitle
-        width: tab.width - leftImage.width - rightImage.width
+        width: tab.width - leftImage.width
         horizontalTileMode: BorderImage.Repeat
         border { left: 0; top: 0; right: 0; bottom: 0 }
         source: tab.active ? "qrc:///tabwidget/tab_active_fill" : "qrc:///tabwidget/tab_inactive_fill"
@@ -154,6 +155,6 @@ Item {
         if (sizeToShrink > 150)
             tab.width = 150;
         else
-            tab.width = Math.round(sizeToShrink);
+            tab.width = Math.floor(sizeToShrink);
     }
 }

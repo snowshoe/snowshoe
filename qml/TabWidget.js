@@ -70,7 +70,7 @@ function tabsHeadersWidth()
     var size = 0;
     for(var index in tabArray)
     {
-        size += tabArray[index].width;
+        size += tabArray[index].headerWidth;
     }
     return size;
 }
