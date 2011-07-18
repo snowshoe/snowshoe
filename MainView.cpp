@@ -21,6 +21,7 @@
 #include "DeclarativeDesktopWebView.h"
 #include "TripleClickMonitor.h"
 
+#include <QtDeclarative/QDeclarativeEngine>
 #include <QtDeclarative/QDeclarativeItem>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -45,6 +46,8 @@ MainView::MainView(QWidget* parent)
 {
     setResizeMode(QDeclarativeView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
+
+    connect(engine(), SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
 
     m_root = qobject_cast<QDeclarativeItem*>(rootObject());
     Q_ASSERT(m_root);

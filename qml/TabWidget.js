@@ -89,6 +89,7 @@ function closeTab(tab)
 
     if (tabArray.length == 1) {
         tabArray.pop();
+        Qt.quit();
         return;
     }
 
