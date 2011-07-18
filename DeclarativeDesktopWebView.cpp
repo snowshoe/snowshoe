@@ -79,6 +79,26 @@ void DeclarativeDesktopWebView::setUrl(const QUrl& url)
     d->view->load(url);
 }
 
+void DeclarativeDesktopWebView::back()
+{
+    d->view->navigationAction(QtWebKit::Back)->trigger();
+}
+
+void DeclarativeDesktopWebView::forward()
+{
+    d->view->navigationAction(QtWebKit::Forward)->trigger();
+}
+
+void DeclarativeDesktopWebView::reload()
+{
+    d->view->navigationAction(QtWebKit::Reload)->trigger();
+}
+
+void DeclarativeDesktopWebView::stop()
+{
+    d->view->navigationAction(QtWebKit::Stop)->trigger();
+}
+
 int DeclarativeDesktopWebView::loadProgress()
 {
     return d->loadProgress;

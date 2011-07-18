@@ -41,6 +41,10 @@ public:
 
 public Q_SLOTS:
     void setUrl(const QUrl&);
+    void back();
+    void forward();
+    void reload();
+    void stop();
 
 protected:
     virtual void geometryChanged(const QRectF&, const QRectF&);

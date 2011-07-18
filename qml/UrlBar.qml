@@ -38,6 +38,11 @@ Item {
         Image {
             id: backButton
             source: "qrc:///urlbar/button_nav_back"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: { desktopView.back(); }
+            }
         }
 
         Image {
@@ -50,6 +55,11 @@ Item {
             id: forwardButton
             anchors.left: divisor1.right
             source: "qrc:///urlbar/button_nav_next"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: { desktopView.forward(); }
+            }
         }
 
         Image {
@@ -62,6 +72,11 @@ Item {
             id: refreshButton
             anchors.left: divisor2.right
             source: "qrc:///urlbar/button_nav_refresh"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: { desktopView.reload(); }
+            }
         }
     }
     Item {

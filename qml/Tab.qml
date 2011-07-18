@@ -152,7 +152,7 @@ Item {
     function shrink(sizeToShrink)
     {
         if (sizeToShrink > 150)
-            tab.width = 150
+            tab.width = 150;
         else
             tab.width = Math.round(sizeToShrink);
     }
