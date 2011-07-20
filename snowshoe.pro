@@ -5,16 +5,22 @@ QT += declarative
 
 SOURCES += \
     main.cpp \
+    AbstractDataBaseType.cpp \
     BrowserObject.cpp \
+    Bookmark.cpp \
     BrowserWindow.cpp \
     MainView.cpp \
+    BookmarkDataBaseManager.cpp \
     DeclarativeDesktopWebView.cpp \
     TripleClickMonitor.cpp
 
 HEADERS += \
+    AbstractDataBaseType.h \
     BrowserObject.h \
+    Bookmark.h \
     BrowserWindow.h \
     MainView.h \
+    BookmarkDataBaseManager.h \
     DeclarativeDesktopWebView.h \
     TripleClickMonitor.h
 
