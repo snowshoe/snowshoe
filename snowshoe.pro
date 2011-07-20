@@ -1,19 +1,23 @@
 TEMPLATE = app
 TARGET = snowshoe
 
-QT += declarative
+QT += declarative sql
 
 SOURCES += \
     main.cpp \
+    BookmarkModel.cpp \
     BrowserObject.cpp \
     BrowserWindow.cpp \
+    DatabaseManager.cpp \
     MainView.cpp \
     DeclarativeDesktopWebView.cpp \
     TripleClickMonitor.cpp
 
 HEADERS += \
+    BookmarkModel.h \
     BrowserObject.h \
     BrowserWindow.h \
+    DatabaseManager.h \
     MainView.h \
     DeclarativeDesktopWebView.h \
     TripleClickMonitor.h
