@@ -18,6 +18,8 @@ import QtQuick 1.1
 import "TabWidget.js" as Core
 
 Item {
+    id: root
+
     property variant currentActiveTab: Tab {}
 
     function setActiveTab(newActiveTab)
@@ -38,7 +40,7 @@ Item {
         source: "qrc:///tabwidget/tab_base_fill"
         MouseArea {
             anchors.fill: parent
-            onDoubleClicked: { tabWidget.newTabRequested() }
+            onDoubleClicked: root.newTabRequested()
         }
     }
 
@@ -49,8 +51,8 @@ Item {
             // Shrink the tabs
             Core.shrinkTabs(width);
         }
-        tab.anchors.top = this.top;
-        tab.tabWidget = this;
+        tab.anchors.top = root.top;
+        tab.tabWidget = root;
         Core.updateMainView(tab);
         tabAdded(tab);
     }
