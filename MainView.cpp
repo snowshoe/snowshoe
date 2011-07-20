@@ -31,15 +31,6 @@
 
 #include <QUrl>
 
-// Keeping this feature commented out until we have support for it in the new API.
-//QWKPage* newPageCallback(QWKPage* parentPage)
-//{
-//    BrowserWindow* window = BrowserWindow::create(parentPage->context());
-//    PageWidget* page = window->openNewTab();
-//    window->show();
-//    return page->page();
-//}
-
 MainView::MainView(QWidget* parent)
     : QDeclarativeView(parent)
     , m_tabWidget(0)
@@ -71,8 +62,6 @@ MainView::MainView(QWidget* parent)
     closeTabAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_W));
     connect(closeTabAction, SIGNAL(triggered()), this, SLOT(closeTabRequested()));
     addAction(closeTabAction);
-
-//    page()->setCreateNewPageFunction(newPageCallback);
 }
 
 MainView::~MainView()
