@@ -68,6 +68,16 @@ Item {
         }
     }
 
+    function updateSiblingTabsForDragging(tab, draggingEnable)
+    {
+        Core.updateSiblingTabsForDragging(tab, draggingEnable);
+    }
+
+    function updateTabsLayout(tab)
+    {
+        Core.updateTabsLayout(tab);
+    }
+
     function jumpToNextTab()
     {
         Core.jumpToNextTab();
@@ -76,6 +86,11 @@ Item {
     function jumpToPreviousTab()
     {
         Core.jumpToPreviousTab();
+    }
+
+    function resetTabsToNonDraggingState()
+    {
+        Core.resetTabsToNonDraggingState();
     }
 
     onWidthChanged: { Core.shrinkTabs(width); Core.updateMainView(currentActiveTab); }

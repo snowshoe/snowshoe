@@ -18,21 +18,37 @@ import QtQuick 1.1
 
 Item {
     id: tab
-    width: 150
-    height: tabWidget.height
 
-    property int headerWidth: width + rightImage.width
+    property alias content:  content
+    property int headerWidth: content.width + rightImage.width
     property int headerHeight: leftImage.height
+    property alias tabHeader: tabHeader
+
     property bool active: true
     property alias text: tabText.text
 
-    property bool isFirstTab
     property bool isLastTab
-    property bool isLeftActive
+
+    property bool isLeftDragging
+    property bool isRightDragging
+
+    property variant previousTab: undefined
 
     property variant tabWidget: Item {}
 
     property variant mainView: Item {}
+
+    function isLeftActive() {
+        if (previousTab != undefined) {
+            return previousTab.active;
+        }
+        else
+            return false;
+    }
+
+    function isFirstTab() {
+        return (previousTab == undefined);
+    }
 
     function startSpinner() {
         spinner.visible = true;
@@ -46,7 +62,7 @@ Item {
 
     Binding {
         property: "height"
-        value: tab.height - tab.headerHeight
+        value: tab.content.height - tab.headerHeight
         target: mainView
     }
 
@@ -56,105 +72,148 @@ Item {
         target: mainView
     }
 
-    function updateAssets() {
-        leftImage.selectAsset();
-        rightImage.selectAsset();
+    function syncHeader() {
+        tabHeader.x = content.x;
+        tabHeader.y = content.y;
+        tabHeader.width = content.width;
+        tabHeader.height = content.height;
     }
 
-    Image {
-        id: leftImage
-        Component.onCompleted: selectAsset()
+    Item {
+        id: tabHeader
+        height: content.height
+        width: content.width
+        Image {
+            id: leftImage
+            source: {
+                if (tab.isFirstTab() || mouseArea.drag.active || isLeftDragging) {
+                    if (tab.active)
+                        return "qrc:///tabwidget/tab_active_left";
+                    return "qrc:///tabwidget/tab_inactive_left";
+                }
 
-        function selectAsset() {
-            if (tab.isFirstTab) {
+                if (tab.isLeftActive())
+                    return "qrc:///tabwidget/tab_active_with_inactive_right";
+
                 if (tab.active)
-                    source = "qrc:///tabwidget/tab_active_left";
-                else
-                    source = "qrc:///tabwidget/tab_inactive_left";
-            } else {
-                if (tab.isLeftActive)
-                    source = "qrc:///tabwidget/tab_active_with_inactive_right";
-                else if (tab.active)
-                    source = "qrc:///tabwidget/tab_active_with_inactive_left";
-                else
-                    source = "qrc:///tabwidget/tab_inactive_with_inactive";
-            }
-        }
-    }
+                    return "qrc:///tabwidget/tab_active_with_inactive_left";
 
-    BorderImage {
-        id: tabTitle
-        width: tab.width - leftImage.width
-        horizontalTileMode: BorderImage.Repeat
-        border { left: 0; top: 0; right: 0; bottom: 0 }
-        source: tab.active ? "qrc:///tabwidget/tab_active_fill" : "qrc:///tabwidget/tab_inactive_fill"
-        anchors.left: leftImage.right
-    }
-
-    Image {
-        id: rightImage
-        Component.onCompleted: selectAsset()
-
-        function selectAsset() {
-            if (tab.isLastTab) {
-                if (tab.active)
-                    source = "qrc:///tabwidget/tab_active_right";
-                else
-                    source = "qrc:///tabwidget/tab_inactive_right";
-            } else {
-                source = "";
+                return "qrc:///tabwidget/tab_inactive_with_inactive";
             }
         }
 
-        anchors.left: tabTitle.right
-    }
+        BorderImage {
+            id: tabTitle
+            width: content.width - leftImage.width
+            horizontalTileMode: BorderImage.Repeat
+            border { left: 0; top: 0; right: 0; bottom: 0 }
+            source: tab.active ? "qrc:///tabwidget/tab_active_fill" : "qrc:///tabwidget/tab_inactive_fill"
+            anchors.left: leftImage.right
+        }
 
-    MouseArea {
-        anchors.top: parent.top
-        anchors.bottom: tabTitle.bottom
-        anchors.right: tab.right
-        anchors.left: tab.left
-        onClicked: { tabWidget.setActiveTab(tab); }
-    }
+        Image {
+            id: rightImage
+            source: {
+                if (tab.isLastTab || mouseArea.drag.active || isRightDragging) {
+                    if (tab.active)
+                        return "qrc:///tabwidget/tab_active_right";
+                    return "qrc:///tabwidget/tab_inactive_right";
+                }
+                return "";
+            }
 
-    AnimatedImage {
-        id: spinner
-        source: "qrc:///tabwidget/spinner.gif"
-        width: 15
-        anchors.top: parent.top
-        anchors.left: leftImage.left
-        anchors.topMargin: 10
-        anchors.leftMargin: 12
-        playing: false
-        visible: false
-    }
+            anchors.left: tabTitle.right
+        }
 
-    Text {
-        id: tabText
-        width: parent.width
-        elide: Text.ElideRight
-        anchors.top: parent.top
-        anchors.left: spinner.right
-        anchors.right: closeImage.left
-        anchors.topMargin: 10
-        anchors.leftMargin: 5
-    }
-
-    Image {
-        id: closeImage
-        source: tab.active ? "qrc:///tabwidget/tab_active_btn_close" : "qrc:///tabwidget/tab_inactive_btn_close"
-        x: rightImage.x - width
         MouseArea {
-            anchors.fill: parent
-            onClicked: { tabWidget.closeTab(tab) }
+            id: mouseArea
+            anchors.top: parent.top
+            anchors.bottom: tabTitle.bottom
+            anchors.right: parent.right
+            anchors.left: parent.left
+            onClicked: { tabWidget.setActiveTab(tab); }
+            onReleased: { tab.syncHeader(); tabWidget.resetTabsToNonDraggingState(); }
+            drag.target: tabHeader
+            drag.axis: Drag.XAxis
+            drag.minimumX: 0
+            drag.maximumX: tabWidget.width - tab.headerWidth
+            drag.onActiveChanged: {
+                tab.z = drag.active;
+                tabWidget.updateSiblingTabsForDragging(tab, drag.active);
+            }
+            onPositionChanged: {
+                if (drag.active)
+                {
+                    tabWidget.updateTabsLayout(tab);
+                }
+            }
+        }
+
+        AnimatedImage {
+            id: spinner
+            source: "qrc:///tabwidget/spinner.gif"
+            width: 15
+            anchors.top: parent.top
+            anchors.left: leftImage.left
+            anchors.topMargin: 10
+            anchors.leftMargin: 12
+            playing: false
+            visible: false
+        }
+
+        Text {
+            id: tabText
+            width: parent.width
+            elide: Text.ElideRight
+            anchors.top: parent.top
+            anchors.left: spinner.right
+            anchors.right: closeImage.left
+            anchors.topMargin: 10
+            anchors.leftMargin: 5
+        }
+
+        Image {
+            id: closeImage
+            source: tab.active ? "qrc:///tabwidget/tab_active_btn_close" : "qrc:///tabwidget/tab_inactive_btn_close"
+            x: rightImage.x - width
+            MouseArea {
+                anchors.fill: parent
+                onClicked: { tabWidget.closeTab(tab) }
+            }
         }
     }
 
-    function shrink(sizeToShrink)
-    {
-        if (sizeToShrink > 150)
-            tab.width = 150;
-        else
-            tab.width = Math.floor(sizeToShrink);
+    Item {
+        id: content;
+        width: 50
+        x: {
+            if (tab.previousTab != undefined) {
+                return tab.previousTab.content.x +  tab.previousTab.content.width;
+            } else
+                return 0;
+        }
+        height: tabWidget.height
+
+        property bool headerFollowContent: true;
+        property alias widthBehavior: widthBehavior
+
+        property int effectiveWidth;
+
+        Behavior on width {
+            id: widthBehavior;
+            function complete()
+            {
+                return widthAnimation.complete();
+            }
+
+            PropertyAnimation {
+                id: widthAnimation;
+                easing.type: Easing.Linear;
+                duration: 150;
+            }
+        }
+
+        onWidthChanged: syncHeader();
+        onXChanged: { if (headerFollowContent) syncHeader(); }
     }
 }
