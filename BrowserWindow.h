@@ -36,9 +36,6 @@ public slots:
     BrowserWindow* openInNewWindow(const QString& urlFromUserInput);
     void openNewWindow();
 
-    void jumpToNextTab();
-    void jumpToPreviousTab();
-
 private slots:
     void onPageTitleChanged(const QString&);
 

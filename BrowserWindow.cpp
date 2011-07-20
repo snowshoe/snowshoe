@@ -36,16 +36,6 @@ BrowserWindow::BrowserWindow()
 
     connect(m_mainView, SIGNAL(titleChanged(QString)), this, SLOT(onPageTitleChanged(QString)));
 
-    QAction* nextTabAction = new QAction(this);
-    nextTabAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageDown));
-    connect(nextTabAction, SIGNAL(triggered()), this, SLOT(jumpToNextTab()));
-    addAction(nextTabAction);
-
-    QAction* previousTabAction = new QAction(this);
-    previousTabAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageUp));
-    connect(previousTabAction, SIGNAL(triggered()), this, SLOT(jumpToPreviousTab()));
-    addAction(previousTabAction);
-
     QAction* newWindowAction = new QAction(this);
     newWindowAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
     connect(newWindowAction, SIGNAL(triggered()), this, SLOT(openNewWindow()));
@@ -76,16 +66,6 @@ void BrowserWindow::openNewWindow()
 
 BrowserWindow::~BrowserWindow()
 {
-}
-
-void BrowserWindow::jumpToNextTab()
-{
-    m_mainView->jumpToNextTab();
-}
-
-void BrowserWindow::jumpToPreviousTab()
-{
-    m_mainView->jumpToPreviousTab();
 }
 
 void BrowserWindow::onPageTitleChanged(const QString& title)

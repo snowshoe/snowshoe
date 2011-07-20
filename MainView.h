@@ -20,6 +20,7 @@
 
 #include <QtCore/QVariant>
 #include <QtDeclarative/QDeclarativeView>
+#include <QtGui/QKeySequence>
 
 class DeclarativeDesktopWebView;
 class QDeclarativeItem;
@@ -46,14 +47,14 @@ signals:
 private slots:
     void onTitleChanged(const QString&);
     void onUrlChanged(const QString& url);
-    void newTabRequested();
-    void closeTabRequested();
-    void focusUrlBarRequested();
 
     void onTabAdded(QVariant);
     void onCurrentTabChanged();
 
 private:
+    QAction* createActionWithShortcut(const QKeySequence&);
+    void setupActions();
+
     DeclarativeDesktopWebView* getWebViewForUrlEdit(QObject* urlEdit);
 
     QDeclarativeItem* m_tabWidget;

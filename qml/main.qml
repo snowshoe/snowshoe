@@ -19,6 +19,14 @@ import QtQuick 1.1
 TabWidget {
     id: tabWidget
 
+    function focusUrlBar() {
+        currentActiveTab.mainView.focusUrlBar()
+    }
+
+    function closeActiveTab() {
+        closeTab(currentActiveTab)
+    }
+
     onNewTabRequested: addNewTab()
     Component.onCompleted: addNewTab()
 

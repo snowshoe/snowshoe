@@ -48,20 +48,7 @@ MainView::MainView(QWidget* parent)
 
     onTabAdded(m_tabWidget->property("currentActiveTab"));
 
-    QAction* focusLocationBarAction = new QAction(this);
-    focusLocationBarAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
-    connect(focusLocationBarAction, SIGNAL(triggered()), this, SLOT(focusUrlBarRequested()));
-    addAction(focusLocationBarAction);
-
-    QAction* newTabAction = new QAction(this);
-    newTabAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_T));
-    connect(newTabAction, SIGNAL(triggered()), this, SLOT(newTabRequested()));
-    addAction(newTabAction);
-
-    QAction* closeTabAction = new QAction(this);
-    closeTabAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_W));
-    connect(closeTabAction, SIGNAL(triggered()), this, SLOT(closeTabRequested()));
-    addAction(closeTabAction);
+    setupActions();
 }
 
 MainView::~MainView()
@@ -78,16 +65,6 @@ void MainView::openInNewTab(const QString& urlFromUserInput)
         urlEdit->setProperty("text", url.toString());
         getWebViewForUrlEdit(urlEdit)->setUrl(url);
     }
-}
-
-void MainView::jumpToNextTab()
-{
-    QMetaObject::invokeMethod(m_tabWidget, "jumpToNextTab");
-}
-
-void MainView::jumpToPreviousTab()
-{
-    QMetaObject::invokeMethod(m_tabWidget, "jumpToPreviousTab");
 }
 
 void MainView::onTabAdded(QVariant tab)
@@ -125,19 +102,28 @@ void MainView::onUrlChanged(const QString& url)
     getWebViewForUrlEdit(sender())->setUrl(QUrl::fromUserInput(url));
 }
 
-void MainView::newTabRequested()
+QAction* MainView::createActionWithShortcut(const QKeySequence& shortcut)
 {
-    QMetaObject::invokeMethod(m_tabWidget, "addNewTab");
+    QAction* action = new QAction(this);
+    action->setShortcut(shortcut);
+    addAction(action);
+    return action;
 }
 
-void MainView::closeTabRequested()
+void MainView::setupActions()
 {
-    QMetaObject::invokeMethod(m_tabWidget, "closeTab", Q_ARG(QVariant, m_tabWidget->property("currentActiveTab")));
-}
+    QAction* focusLocationBarAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
+    connect(focusLocationBarAction, SIGNAL(triggered()), m_tabWidget, SLOT(focusUrlBar()));
 
-void MainView::focusUrlBarRequested()
-{
-    QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
-    QObject* mainView = currentActiveTab->property("mainView").value<QObject*>();
-    QMetaObject::invokeMethod(mainView, "focusUrlBar");
+    QAction* newTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_T));
+    connect(newTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(addNewTab()));
+
+    QAction* closeTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_W));
+    connect(closeTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(closeActiveTab()));
+
+    QAction* nextTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageDown));
+    connect(nextTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(jumpToNextTab()));
+
+    QAction* previousTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageUp));
+    connect(previousTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(jumpToPreviousTab()));
 }
