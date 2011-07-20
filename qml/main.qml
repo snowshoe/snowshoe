@@ -16,32 +16,28 @@
 
 import QtQuick 1.1
 
-Item {
-    id: root
+TabWidget {
+    id: tabWidget
 
-    TabWidget {
-        id: tabWidget
-        objectName: "tabWidget"
-        anchors.fill: parent
+    onNewTabRequested: addNewTab()
+    Component.onCompleted: addNewTab()
 
-        Component.onCompleted: { addNewTab(); newTabRequested.connect(addNewTab); }
+    function addNewTab() {
+        var tab = tabComponent.createObject(tabWidget)
+        tabWidget.addTab(tab)
+        tabWidget.setActiveTab(tab)
+    }
 
-        function addNewTab()
-        {
-            var component = Qt.createComponent("Tab.qml");
-            if (component.status == Component.Ready) {
-                var tab = component.createObject(tabWidget);
-                var componentView = Qt.createComponent("PageWidget.qml");
-                if (componentView.status == Component.Error)
-                    console.log(componentView.errorString())
-                if (componentView.status == Component.Ready) {
-                    var view = componentView.createObject(tab);
-                    tab.mainView = view;
-                    tab.text = "New Tab";
-                    view.tab = tab;
-                    tabWidget.addTab(tab);
-                    tabWidget.setActiveTab(tab);
-                }
+    Component {
+        id: tabComponent
+        Tab {
+            id: tab
+            text: "New Tab"
+            mainView: page
+
+            PageWidget {
+                id: page
+                tab: tab
             }
         }
     }

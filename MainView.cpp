@@ -49,10 +49,7 @@ MainView::MainView(QWidget* parent)
 
     connect(engine(), SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
 
-    m_root = qobject_cast<QDeclarativeItem*>(rootObject());
-    Q_ASSERT(m_root);
-
-    m_tabWidget = m_root->findChild<QDeclarativeItem*>("tabWidget");
+    m_tabWidget = qobject_cast<QDeclarativeItem*>(rootObject());
     Q_ASSERT(m_tabWidget);
 
     connect(m_tabWidget, SIGNAL(tabAdded(QVariant)), this, SLOT(onTabAdded(QVariant)));

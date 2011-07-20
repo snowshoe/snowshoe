@@ -56,7 +56,6 @@ private slots:
 private:
     DeclarativeDesktopWebView* getWebViewForUrlEdit(QObject* urlEdit);
 
-    QDeclarativeItem* m_root;
     QDeclarativeItem* m_tabWidget;
 };
 
