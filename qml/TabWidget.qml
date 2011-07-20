@@ -25,7 +25,6 @@ Item {
     function setActiveTab(newActiveTab)
     {
         Core.setActiveTab(newActiveTab);
-        currentTabChanged();
     }
 
     signal tabAdded(variant newTab)

@@ -48,6 +48,8 @@ function setActiveTab(newActiveTab) {
         newActiveTab.mainView.urlBar.textInput.forceActiveFocus();
     else
         newActiveTab.mainView.desktopView.forceActiveFocus();
+
+    tabWidget.currentTabChanged();
 }
 
 function addTab(newTab)
