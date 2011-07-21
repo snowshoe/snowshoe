@@ -45,8 +45,6 @@ signals:
     void loadingStateChanged(bool);
 
 private slots:
-    void onUrlChanged(const QString& url);
-
     void onTabAdded(QVariant);
 
 private:

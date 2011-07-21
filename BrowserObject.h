@@ -18,6 +18,7 @@
 #define BrowserObject_h
 
 #include <QtCore/QObject>
+#include <QtCore/QUrl>
 
 class BrowserWindow;
 
@@ -28,6 +29,8 @@ class BrowserObject : public QObject {
 public:
     QString windowTitle() const;
     void setWindowTitle(const QString&);
+
+    Q_INVOKABLE QUrl urlFromUserInput(const QString&);
 
 signals:
     void windowTitleChanged();

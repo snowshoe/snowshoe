@@ -73,7 +73,6 @@ void MainView::onTabAdded(QVariant tab)
 {
     QObject* mainView = tab.value<QObject*>()->property("mainView").value<QObject*>();
     QDeclarativeItem* urlEdit = mainView->findChild<QDeclarativeItem*>("urlEdit");
-    connect(urlEdit, SIGNAL(urlEntered(QString)), this, SLOT(onUrlChanged(QString)));
     QDeclarativeItem* urlInput = urlEdit->findChild<QDeclarativeItem*>("urlInput");
     TripleClickMonitor* urlEditMonitor = new TripleClickMonitor(mainView);
     urlInput->installEventFilter(urlEditMonitor);
@@ -84,11 +83,6 @@ DeclarativeDesktopWebView* MainView::getWebViewForUrlEdit(QObject* urlEdit)
 {
     QObject* view = urlEdit->property("view").value<QObject*>();
     return qobject_cast<DeclarativeDesktopWebView* >(view);
-}
-
-void MainView::onUrlChanged(const QString& url)
-{
-    getWebViewForUrlEdit(sender())->setUrl(QUrl::fromUserInput(url));
 }
 
 QAction* MainView::createActionWithShortcut(const QKeySequence& shortcut)

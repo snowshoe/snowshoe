@@ -35,3 +35,8 @@ void BrowserObject::setWindowTitle(const QString& title)
     m_window->setWindowTitle(title);
     emit windowTitleChanged();
 }
+
+QUrl BrowserObject::urlFromUserInput(const QString& url)
+{
+    return QUrl::fromUserInput(url);
+}
