@@ -20,8 +20,8 @@
 
 TripleClickMonitor::TripleClickMonitor(QObject* parent)
     : QObject(parent)
-    , m_watchTripleClick(false)
     , m_timer(this)
+    , m_target(0)
 {
     m_timer.setSingleShot(true);
 }
@@ -30,22 +30,46 @@ TripleClickMonitor::~TripleClickMonitor()
 {
 }
 
+void TripleClickMonitor::setTarget(QDeclarativeItem* target)
+{
+    if (target == m_target)
+        return;
+    QDeclarativeItem* oldTarget = m_target;
+    if (oldTarget)
+        oldTarget->removeEventFilter(this);
+    m_target = target;
+    stopWatching();
+    if (m_target)
+        m_target->installEventFilter(this);
+    emit targetChanged();
+}
+
+bool TripleClickMonitor::isWatching() const
+{
+    return m_timer.isActive();
+}
+
+void TripleClickMonitor::startWatching()
+{
+    m_timer.start(QApplication::doubleClickInterval());
+}
+
+void TripleClickMonitor::stopWatching()
+{
+    m_timer.stop();
+}
+
 bool TripleClickMonitor::eventFilter(QObject*, QEvent* event)
 {
-    if (event->type() == QEvent::GraphicsSceneMouseDoubleClick
-        || event->type() == QEvent::GraphicsSceneMousePress) {
-        if (m_watchTripleClick) {
-            m_watchTripleClick = false;
-            if (m_timer.isActive()) {
-                m_timer.stop();
-                emit tripleClicked();
-                return true;
-            }
+    const bool isDoubleClick = event->type() == QEvent::GraphicsSceneMouseDoubleClick;
+    if (isDoubleClick || event->type() == QEvent::GraphicsSceneMousePress) {
+        if (isWatching()) {
+            stopWatching();
+            emit tripleClicked();
+            return true;
         }
-        if (event->type() == QEvent::GraphicsSceneMouseDoubleClick) {
-            m_watchTripleClick = true;
-            m_timer.start(QApplication::doubleClickInterval());
-        }
+        if (isDoubleClick)
+            startWatching();
     }
     return false;
 }

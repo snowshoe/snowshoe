@@ -27,7 +27,6 @@ Item {
 
     UrlBar {
         id: urlBar
-        objectName: "urlBar"
         onUrlEntered: desktopView.setUrl(BrowserObject.urlFromUserInput(url))
     }
 

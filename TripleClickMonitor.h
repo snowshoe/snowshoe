@@ -20,23 +20,33 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
+#include <QtDeclarative/QDeclarativeItem>
 
 class TripleClickMonitor : public QObject {
     Q_OBJECT
+    Q_PROPERTY(QDeclarativeItem* target READ target WRITE setTarget NOTIFY targetChanged)
 
 public:
     TripleClickMonitor(QObject* parent = 0);
     ~TripleClickMonitor();
 
+    QDeclarativeItem* target() const { return m_target; }
+    void setTarget(QDeclarativeItem*);
+
 signals:
+    void targetChanged();
     void tripleClicked();
 
 protected:
     bool eventFilter(QObject* object, QEvent* event);
 
 private:
-    bool m_watchTripleClick;
+    bool isWatching() const;
+    void startWatching();
+    void stopWatching();
+
     QTimer m_timer;
+    QDeclarativeItem* m_target;
 };
 
 #endif // TripleClickMonitor_h

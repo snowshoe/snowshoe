@@ -42,9 +42,6 @@ public:
 signals:
     void loadingStateChanged(bool);
 
-private slots:
-    void onTabAdded(QVariant);
-
 private:
     QAction* createActionWithShortcut(const QKeySequence&);
     void setupActions();

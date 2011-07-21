@@ -16,10 +16,10 @@
 
 #include "BrowserWindow.h"
 
+#include "DeclarativeDesktopWebView.h"
+#include "TripleClickMonitor.h"
 #include <QtCore/QLatin1String>
 #include <QtGui/QApplication>
-
-#include "DeclarativeDesktopWebView.h"
 
 int main(int argc, char** argv)
 {
@@ -28,6 +28,7 @@ int main(int argc, char** argv)
     app.setApplicationName(QLatin1String("Snowshoe"));
 
     qmlRegisterType<DeclarativeDesktopWebView>("Snowshoe", 1, 0, "DeclarativeDesktopWebView");
+    qmlRegisterType<TripleClickMonitor>("Snowshoe", 1, 0, "TripleClickMonitor");
 
     QStringList arguments = app.arguments();
     arguments.removeAt(0);

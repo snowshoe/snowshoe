@@ -20,7 +20,6 @@
 #include "BrowserObject.h"
 #include "BrowserWindow.h"
 #include "DeclarativeDesktopWebView.h"
-#include "TripleClickMonitor.h"
 
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
@@ -46,10 +45,6 @@ MainView::MainView(BrowserWindow* parent)
     m_tabWidget = qobject_cast<QDeclarativeItem*>(rootObject());
     Q_ASSERT(m_tabWidget);
 
-    connect(m_tabWidget, SIGNAL(tabAdded(QVariant)), this, SLOT(onTabAdded(QVariant)));
-
-    onTabAdded(m_tabWidget->property("currentActiveTab"));
-
     setupActions();
 }
 
@@ -67,16 +62,6 @@ void MainView::openInNewTab(const QString& urlFromUserInput)
         urlEdit->setProperty("text", url.toString());
         getWebViewForUrlEdit(urlEdit)->setUrl(url);
     }
-}
-
-void MainView::onTabAdded(QVariant tab)
-{
-    QObject* mainView = tab.value<QObject*>()->property("mainView").value<QObject*>();
-    QDeclarativeItem* urlEdit = mainView->findChild<QDeclarativeItem*>("urlEdit");
-    QDeclarativeItem* urlInput = urlEdit->findChild<QDeclarativeItem*>("urlInput");
-    TripleClickMonitor* urlEditMonitor = new TripleClickMonitor(mainView);
-    urlInput->installEventFilter(urlEditMonitor);
-    connect(urlEditMonitor, SIGNAL(tripleClicked()), urlInput, SLOT(selectAll()));
 }
 
 DeclarativeDesktopWebView* MainView::getWebViewForUrlEdit(QObject* urlEdit)

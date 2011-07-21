@@ -15,6 +15,7 @@
  ****************************************************************************/
 
 import QtQuick 1.1
+import Snowshoe 1.0
 
 Item {
     property alias text: urlInput.text
@@ -47,9 +48,13 @@ Item {
         opacity: desktopView.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
     }
 
+    TripleClickMonitor {
+        target: urlInput
+        onTripleClicked: urlInput.selectAll()
+    }
+
     TextInput {
         id: urlInput
-        objectName: "urlInput"
         focus: true
         font.pointSize: 10
         font.bold: true
