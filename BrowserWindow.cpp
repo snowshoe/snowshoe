@@ -15,6 +15,8 @@
  ****************************************************************************/
 
 #include "BrowserWindow.h"
+
+#include "BrowserObject.h"
 #include "MainView.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QUrl>
@@ -28,13 +30,12 @@ BrowserWindow* BrowserWindow::create()
 
 BrowserWindow::BrowserWindow()
     : QMainWindow(0)
+    , m_browserObject(new BrowserObject(this))
 {
 
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_mainView = new MainView(this);
-
-    connect(m_mainView, SIGNAL(titleChanged(QString)), this, SLOT(onPageTitleChanged(QString)));
 
     QAction* newWindowAction = new QAction(this);
     newWindowAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
@@ -66,14 +67,4 @@ void BrowserWindow::openNewWindow()
 
 BrowserWindow::~BrowserWindow()
 {
-}
-
-void BrowserWindow::onPageTitleChanged(const QString& title)
-{
-    setFancyWindowTitle(title);
-}
-
-void BrowserWindow::setFancyWindowTitle(const QString& title)
-{
-    setWindowTitle(QString::fromLatin1("%1 ~ %2").arg(title, QCoreApplication::applicationName()));
 }

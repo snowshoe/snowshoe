@@ -19,6 +19,7 @@
 
 #include <QtGui/QMainWindow>
 
+class BrowserObject;
 class MainView;
 class QTabWidget;
 class QUrl;
@@ -31,19 +32,19 @@ public:
 
     static BrowserWindow* create();
 
+    BrowserObject* browserObject() { return m_browserObject; }
+
 public slots:
     void openInNewTab(const QString& urlFromUserInput);
     BrowserWindow* openInNewWindow(const QString& urlFromUserInput);
     void openNewWindow();
 
-private slots:
-    void onPageTitleChanged(const QString&);
-
 private:
-    void setFancyWindowTitle(const QString&);
+    friend class BrowserObject;
 
     BrowserWindow();
     MainView* m_mainView;
+    BrowserObject* m_browserObject;
 };
 
 #endif

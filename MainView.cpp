@@ -17,10 +17,12 @@
 
 #include "MainView.h"
 
+#include "BrowserObject.h"
 #include "BrowserWindow.h"
 #include "DeclarativeDesktopWebView.h"
 #include "TripleClickMonitor.h"
 
+#include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QtDeclarative/QDeclarativeItem>
 #include <QtGui/QAction>
@@ -31,10 +33,11 @@
 
 #include <QUrl>
 
-MainView::MainView(QWidget* parent)
+MainView::MainView(BrowserWindow* parent)
     : QDeclarativeView(parent)
     , m_tabWidget(0)
 {
+    rootContext()->setContextProperty("BrowserObject", parent->browserObject());
     setResizeMode(QDeclarativeView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
 
@@ -44,7 +47,6 @@ MainView::MainView(QWidget* parent)
     Q_ASSERT(m_tabWidget);
 
     connect(m_tabWidget, SIGNAL(tabAdded(QVariant)), this, SLOT(onTabAdded(QVariant)));
-    connect(m_tabWidget, SIGNAL(currentTabChanged()), this, SLOT(onCurrentTabChanged()));
 
     onTabAdded(m_tabWidget->property("currentActiveTab"));
 
@@ -72,23 +74,10 @@ void MainView::onTabAdded(QVariant tab)
     QObject* mainView = tab.value<QObject*>()->property("mainView").value<QObject*>();
     QDeclarativeItem* urlEdit = mainView->findChild<QDeclarativeItem*>("urlEdit");
     connect(urlEdit, SIGNAL(urlEntered(QString)), this, SLOT(onUrlChanged(QString)));
-    QObject* webView = getWebViewForUrlEdit(urlEdit);
-    connect(webView, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
     QDeclarativeItem* urlInput = urlEdit->findChild<QDeclarativeItem*>("urlInput");
     TripleClickMonitor* urlEditMonitor = new TripleClickMonitor(mainView);
     urlInput->installEventFilter(urlEditMonitor);
     connect(urlEditMonitor, SIGNAL(tripleClicked()), urlInput, SLOT(selectAll()));
-}
-
-void MainView::onCurrentTabChanged()
-{
-    QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
-    emit titleChanged(currentActiveTab->property("text").toString());
-}
-
-void MainView::onTitleChanged(const QString& title)
-{
-    emit titleChanged(title);
 }
 
 DeclarativeDesktopWebView* MainView::getWebViewForUrlEdit(QObject* urlEdit)

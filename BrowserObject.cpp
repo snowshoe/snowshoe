@@ -14,45 +14,24 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-import QtQuick 1.1
+#include "BrowserObject.h"
 
-TabWidget {
-    id: tabWidget
+#include "BrowserWindow.h"
 
-    Binding {
-        target: BrowserObject
-        property: "windowTitle"
-        value: currentActiveTab.text + " ~ Snowshoe"
-    }
 
-    function focusUrlBar() {
-        currentActiveTab.mainView.focusUrlBar()
-    }
+BrowserObject::BrowserObject(BrowserWindow* window)
+    : QObject(window)
+    , m_window(window)
+{
+}
 
-    function closeActiveTab() {
-        closeTab(currentActiveTab)
-    }
+QString BrowserObject::windowTitle() const
+{
+    return m_window->windowTitle();
+}
 
-    onNewTabRequested: addNewTab()
-    Component.onCompleted: addNewTab()
-
-    function addNewTab() {
-        var tab = tabComponent.createObject(tabWidget)
-        tabWidget.addTab(tab)
-        tabWidget.setActiveTab(tab)
-    }
-
-    Component {
-        id: tabComponent
-        Tab {
-            id: tab
-            text: "New Tab"
-            mainView: page
-
-            PageWidget {
-                id: page
-                tab: tab
-            }
-        }
-    }
+void BrowserObject::setWindowTitle(const QString& title)
+{
+    m_window->setWindowTitle(title);
+    emit windowTitleChanged();
 }

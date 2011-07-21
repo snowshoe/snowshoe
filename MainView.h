@@ -22,6 +22,7 @@
 #include <QtDeclarative/QDeclarativeView>
 #include <QtGui/QKeySequence>
 
+class BrowserWindow;
 class DeclarativeDesktopWebView;
 class QDeclarativeItem;
 class QUrl;
@@ -31,7 +32,7 @@ class MainView : public QDeclarativeView {
     Q_OBJECT
 
 public:
-    MainView(QWidget* parent = 0);
+    MainView(BrowserWindow*);
     virtual ~MainView();
 
     bool isLoading() const;
@@ -41,15 +42,12 @@ public:
     void jumpToPreviousTab();
 
 signals:
-    void titleChanged(const QString&);
     void loadingStateChanged(bool);
 
 private slots:
-    void onTitleChanged(const QString&);
     void onUrlChanged(const QString& url);
 
     void onTabAdded(QVariant);
-    void onCurrentTabChanged();
 
 private:
     QAction* createActionWithShortcut(const QKeySequence&);

@@ -5,12 +5,14 @@ QT += declarative
 
 SOURCES += \
     main.cpp \
+    BrowserObject.cpp \
     BrowserWindow.cpp \
     MainView.cpp \
     DeclarativeDesktopWebView.cpp \
     TripleClickMonitor.cpp
 
 HEADERS += \
+    BrowserObject.h \
     BrowserWindow.h \
     MainView.h \
     DeclarativeDesktopWebView.h \
