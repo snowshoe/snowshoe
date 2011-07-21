@@ -38,8 +38,6 @@ public:
     bool isLoading() const;
 
     void openInNewTab(const QString& urlFromUserInput);
-    void jumpToNextTab();
-    void jumpToPreviousTab();
 
 signals:
     void loadingStateChanged(bool);
