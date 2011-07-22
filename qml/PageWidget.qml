@@ -22,6 +22,7 @@ Item {
 
     property alias urlBar: urlBar
     property alias desktopView: desktopView
+    property bool isLoading: false
 
     property variant tab;
 
@@ -44,10 +45,20 @@ Item {
         anchors.left: root.left
         anchors.right: root.right
 
-        onLoadStarted: { tab.startSpinner(); }
-        onLoadSucceeded: { tab.stopSpinner(); }
+        onLoadStarted: {
+            root.isLoading = true
+        }
+
+        onLoadSucceeded: {
+            root.isLoading = false
+        }
+
         onUrlChanged: { urlBar.text = url.toString() }
-        onLoadFailed: { url = fallbackUrl(urlBar.text); tab.stopSpinner(); }
+
+        onLoadFailed: {
+            root.isLoading = false
+            url = fallbackUrl(urlBar.text)
+        }
 
         onTitleChanged: { tab.text = title }
     }

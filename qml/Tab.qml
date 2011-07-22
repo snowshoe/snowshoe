@@ -54,16 +54,6 @@ Item {
         return (previousTab == undefined);
     }
 
-    function startSpinner() {
-        spinner.visible = true;
-        spinner.playing = true;
-    }
-
-    function stopSpinner() {
-        spinner.visible = false;
-        spinner.playing = false;
-    }
-
     Binding {
         property: "height"
         value: tab.content.height - tab.headerHeight
@@ -161,8 +151,8 @@ Item {
             anchors.left: leftImage.left
             anchors.topMargin: 10
             anchors.leftMargin: 12
-            playing: false
-            visible: false
+            playing: visible
+            visible: mainView.isLoading === true
         }
 
         Text {
