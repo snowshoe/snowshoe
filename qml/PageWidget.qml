@@ -40,7 +40,7 @@ Item {
 
         onLoadStarted: { tab.startSpinner(); }
         onLoadSucceeded: { tab.stopSpinner(); }
-        onUrlChanged: { urlBar.text = url.toString() ; forceActiveFocus(); }
+        onUrlChanged: { urlBar.text = url.toString() }
         onLoadFailed: { url = "http://www.google.com/search?q=" + urlBar.text ; tab.stopSpinner(); }
         onTitleChanged: { tab.text = title }
     }
