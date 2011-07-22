@@ -168,6 +168,7 @@ Item {
             anchors.top: parent.top
             anchors.left: spinner.right
             anchors.right: closeImage.left
+            font.pixelSize: 12
             anchors.topMargin: 10
             anchors.leftMargin: 5
         }
