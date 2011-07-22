@@ -22,6 +22,8 @@ Item {
 
     property variant currentActiveTab: Tab {}
 
+    property variant currentTabAnimate;
+
     function setActiveTab(newActiveTab)
     {
         Core.setActiveTab(newActiveTab);

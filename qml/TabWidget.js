@@ -47,6 +47,7 @@ function addTab(newTab)
         previousTab.isLastTab = false;
         previousTab.content.widthBehavior.complete();
         newTab.previousTab = previousTab;
+        newTab.content.x = previousTab.rightEdge();
     }
 
     newTab.content.width = 150;
@@ -80,9 +81,9 @@ function shrinkTabs(tabWidgetSize)
             tabArray[index].content.width = Math.floor(sizeToShrink);
             tabArray[index].content.effectiveWidth = Math.floor(sizeToShrink);
         }
-        tabArray[index].syncHeader();
         tabArray[index].content.widthBehavior.enabled = true;
     }
+    updateGeometryFollowingTabs(tabArray[0]);
 }
 
 function getRightTab(tab)
@@ -128,14 +129,16 @@ function closeTab(tab)
             }
         } else {
             rightTab.previousTab = leftTab;
-            rightTab.syncHeader();
+            rightTab.content.x = leftTab.rightEdge();
+            updateGeometryFollowingTabs(rightTab);
             if (tab.active) {
                 setActiveTab(rightTab);
             }
         }
     } else {
         rightTab.previousTab = undefined;
-        rightTab.syncHeader();
+        rightTab.content.x = 0;
+        updateGeometryFollowingTabs(rightTab);
         if (tab.active) {
             setActiveTab(rightTab);
         }
@@ -143,6 +146,14 @@ function closeTab(tab)
     }
 
     tabArray.splice(tabIndex, 1);
+}
+
+function updateGeometryFollowingTabs(tab)
+{
+    var tabIndex = tabArray.indexOf(tab);
+    for (var index = tabIndex + 1 ; index < tabArray.length ; index++) {
+        tabArray[index].content.x = tabArray[index - 1].rightEdge();
+    }
 }
 
 function getTabToReplace(tab, tabIndex)
@@ -169,7 +180,11 @@ function updateTabsLayout(tab)
     var oldTabPreviousTab = tab.previousTab;
     var rightTab = getRightTab(tab);
     var tabToReplace = tabArray[tabToReplaceIndex];
+    if(currentTabAnimate)
+        currentTabAnimate.content.xAnimation.complete();
     tab.content.headerFollowContent = false;
+
+    var followingTabToRelayout = undefined;
 
     if (tabToReplaceIndex < tabIndex) {
         if (tabToReplaceIndex == tabIndex - 1) {
@@ -177,22 +192,42 @@ function updateTabsLayout(tab)
             tab.previousTab = undefined;
             tabToReplace.previousTab = tab;
             tab.previousTab = oldTabToReplacePrevious;
+            if (oldTabToReplacePrevious)
+                tab.content.x = oldTabToReplacePrevious.rightEdge();
+            else
+                tab.content.x = 0;
 
-            if (rightTab != undefined) {
+            tabToReplace.content.xAnimation.to = tab.rightEdge();
+            tabToReplace.content.xAnimation.running = true;
+            currentTabAnimate = tabToReplace;
+
+            if (rightTab != undefined)
                 rightTab.previousTab = tabToReplace;
-            }
 
         } else {
             tab.previousTab = tabToReplace.previousTab;
+            if (tabToReplace.previousTab)
+                tab.content.x = tabToReplace.previousTab.rightEdge();
+            else
+                tab.content.x = 0;
+            tabToReplace.content.x = tab.rightEdge();
             tabToReplace.previousTab = tab;
             if (rightTab != undefined) {
                 rightTab.previousTab = oldTabPreviousTab;
             }
+            followingTabToRelayout = tab;
         }
 
     } else {
         if (tabToReplaceIndex == tabIndex + 1) {
             tabToReplace.previousTab = tab.previousTab;
+            tab.content.x = tabToReplace.content.x;
+            if (tab.previousTab)
+                tabToReplace.content.xAnimation.to = tab.previousTab.rightEdge();
+            else
+                tabToReplace.content.xAnimation.to = 0;
+            tabToReplace.content.xAnimation.running = true;
+            currentTabAnimate = tabToReplace;
             tab.previousTab = tabToReplace;
 
             var rightTabOfTabToReplace = getRightTab(tabToReplace);
@@ -202,7 +237,15 @@ function updateTabsLayout(tab)
 
         } else {
             rightTab.previousTab = tab.previousTab;
+            if (tab.previousTab)
+                rightTab.content.x = tab.previousTab.rightEdge();
+            else
+                rightTab.content.x = 0;
+
             tab.previousTab = tabToReplace;
+            tab.content.x = tabToReplace.rightEdge();
+
+            followingTabToRelayout = rightTab;
 
             var rightTabOfTabToReplace = getRightTab(tabToReplace);
             if (rightTabOfTabToReplace != undefined) {
@@ -215,6 +258,9 @@ function updateTabsLayout(tab)
     tabArray.splice(tabIndex, 1);
     tabArray.splice(tabToReplaceIndex, 0, tab);
     tabArray[tabArray.length - 1].isLastTab = true;
+
+    if (followingTabToRelayout != undefined)
+        updateGeometryFollowingTabs(followingTabToRelayout);
 
     tab.content.headerFollowContent = true;
     updateSiblingTabsForDragging(tab, true);

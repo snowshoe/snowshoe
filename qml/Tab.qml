@@ -38,6 +38,10 @@ Item {
 
     property variant mainView: Item {}
 
+    function rightEdge() {
+        return content.x + content.width;
+    }
+
     function isLeftActive() {
         if (previousTab != undefined) {
             return previousTab.active;
@@ -136,7 +140,7 @@ Item {
             drag.target: tabHeader
             drag.axis: Drag.XAxis
             drag.minimumX: 0
-            drag.maximumX: tabWidget.width - tab.headerWidth
+            drag.maximumX: tabWidget.width - content.width
             drag.onActiveChanged: {
                 tab.z = drag.active;
                 tabWidget.updateSiblingTabsForDragging(tab, drag.active);
@@ -185,33 +189,37 @@ Item {
     }
 
     Item {
-        id: content;
+        id: content
         width: 50
-        x: {
-            if (tab.previousTab != undefined) {
-                return tab.previousTab.content.x +  tab.previousTab.content.width;
-            } else
-                return 0;
-        }
         height: tabWidget.height
 
-        property bool headerFollowContent: true;
+        property bool headerFollowContent: true
         property alias widthBehavior: widthBehavior
+        property alias xAnimation: xAnimation
 
-        property int effectiveWidth;
+        property int effectiveWidth
 
         Behavior on width {
-            id: widthBehavior;
+            id: widthBehavior
             function complete()
             {
                 return widthAnimation.complete();
             }
 
             PropertyAnimation {
-                id: widthAnimation;
-                easing.type: Easing.Linear;
-                duration: 150;
+                id: widthAnimation
+                easing.type: Easing.Linear
+                duration: 150
             }
+        }
+
+        PropertyAnimation {
+            id: xAnimation
+            target: content
+            property: "x"
+            easing.type: Easing.Linear
+            duration: 200
+            onRunningChanged: { if (running == false) { tabWidget.currentTabAnimate = undefined } }
         }
 
         onWidthChanged: syncHeader();
