@@ -26,7 +26,6 @@ function setActiveTab(newActiveTab) {
         currentActiveTab.active = false;
 
     currentActiveTab = newActiveTab;
-    updateMainView(currentActiveTab);
 
     // FIXME: Do better it breaks the genericity of the tabwidget
     if (newActiveTab.mainView.desktopView.isUrlEmpty())
@@ -280,11 +279,6 @@ function resetTabsToNonDraggingState()
         tabArray[index].isLeftDragging = false;
         tabArray[index].isRightDragging = false;
     }
-}
-
-function updateMainView(tab)
-{
-    tab.mainView.y = tab.headerHeight
 }
 
 function jumpToNextTab()

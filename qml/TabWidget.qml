@@ -54,7 +54,6 @@ Item {
         }
         tab.anchors.top = root.top;
         tab.tabWidget = root;
-        Core.updateMainView(tab);
         tabAdded(tab);
     }
 
@@ -62,11 +61,9 @@ Item {
     {
         Core.closeTab(tab);
         tab.destroy();
-        Core.updateMainView(currentActiveTab);
         if (Core.tabsHeadersWidth() < width) {
             // Shrink the tabs
             Core.shrinkTabs(width);
-            Core.updateMainView(currentActiveTab);
         }
     }
 
@@ -95,5 +92,5 @@ Item {
         Core.resetTabsToNonDraggingState();
     }
 
-    onWidthChanged: { Core.shrinkTabs(width); Core.updateMainView(currentActiveTab); }
+    onWidthChanged: Core.shrinkTabs(width)
 }

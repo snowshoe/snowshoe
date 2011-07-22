@@ -51,6 +51,7 @@ TabWidget {
 
             PageWidget {
                 id: page
+                y: tab.headerHeight
                 visible: tab.active
                 tab: tab
             }
