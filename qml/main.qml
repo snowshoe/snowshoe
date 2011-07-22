@@ -51,6 +51,7 @@ TabWidget {
 
             PageWidget {
                 id: page
+                visible: tab.active
                 tab: tab
             }
         }

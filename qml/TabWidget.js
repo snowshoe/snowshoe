@@ -20,13 +20,10 @@ function setActiveTab(newActiveTab) {
     if (currentActiveTab === newActiveTab)
         return;
     newActiveTab.active = true;
-    newActiveTab.mainView.visible = true;
 
     // Update the old active tab.
-    if (currentActiveTab) {
-        currentActiveTab.mainView.visible = false;
+    if (currentActiveTab)
         currentActiveTab.active = false;
-    }
 
     currentActiveTab = newActiveTab;
     updateMainView(currentActiveTab);
