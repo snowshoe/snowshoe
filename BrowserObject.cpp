@@ -18,7 +18,6 @@
 
 #include "BrowserWindow.h"
 
-
 BrowserObject::BrowserObject(BrowserWindow* window)
     : QObject(window)
     , m_window(window)
@@ -39,4 +38,9 @@ void BrowserObject::setWindowTitle(const QString& title)
 QUrl BrowserObject::urlFromUserInput(const QString& url)
 {
     return QUrl::fromUserInput(url);
+}
+
+bool BrowserObject::isUrlValid(const QUrl& url)
+{
+    return url.isValid();
 }

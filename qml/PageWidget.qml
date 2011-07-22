@@ -27,7 +27,13 @@ Item {
 
     UrlBar {
         id: urlBar
-        onUrlEntered: desktopView.setUrl(BrowserObject.urlFromUserInput(url))
+        onUrlEntered: {
+            var urlToBrowse = BrowserObject.urlFromUserInput(url);
+            if (BrowserObject.isUrlValid(urlToBrowse))
+                desktopView.setUrl(urlToBrowse);
+            else
+                desktopView.setUrl(fallbackUrl(url));
+        }
     }
 
     DeclarativeDesktopWebView {
@@ -41,8 +47,14 @@ Item {
         onLoadStarted: { tab.startSpinner(); }
         onLoadSucceeded: { tab.stopSpinner(); }
         onUrlChanged: { urlBar.text = url.toString() }
-        onLoadFailed: { url = "http://www.google.com/search?q=" + urlBar.text ; tab.stopSpinner(); }
+        onLoadFailed: { url = fallbackUrl(urlBar.text); tab.stopSpinner(); }
+
         onTitleChanged: { tab.text = title }
+    }
+
+    function fallbackUrl(url)
+    {
+        return "http://www.google.com/search?q=" + url;
     }
 
     function focusUrlBar() {

@@ -31,6 +31,7 @@ public:
     void setWindowTitle(const QString&);
 
     Q_INVOKABLE QUrl urlFromUserInput(const QString&);
+    Q_INVOKABLE bool isUrlValid(const QUrl&);
 
 signals:
     void windowTitleChanged();
