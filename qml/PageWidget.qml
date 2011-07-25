@@ -51,8 +51,8 @@ Item {
 
         onLoadSucceeded: {
             root.isLoading = false
-            if (tab.active)
-                forceActiveFocus();
+            if (tab.active && !hasViewFocus())
+                setFocusOnView();
         }
 
         onUrlChanged: { urlBar.text = url.toString() }

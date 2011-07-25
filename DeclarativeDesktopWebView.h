@@ -38,6 +38,8 @@ public:
     int loadProgress();
 
     Q_INVOKABLE bool isUrlEmpty() { return url().isEmpty(); }
+    Q_INVOKABLE bool hasViewFocus();
+    Q_INVOKABLE void setFocusOnView();
 
 public Q_SLOTS:
     void setUrl(const QUrl&);

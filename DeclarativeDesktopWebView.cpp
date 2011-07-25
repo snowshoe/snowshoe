@@ -110,4 +110,14 @@ void DeclarativeDesktopWebView::geometryChanged(const QRectF &newGeometry, const
     d->view->setGeometry(0, 0, newGeometry.width(), newGeometry.height());
 }
 
+void DeclarativeDesktopWebView::setFocusOnView()
+{
+    d->view->setFocus();
+}
+
+bool DeclarativeDesktopWebView::hasViewFocus()
+{
+    return d->view->hasFocus();
+}
+
 #include "moc_DeclarativeDesktopWebView.cpp"
