@@ -19,7 +19,7 @@ import Snowshoe 1.0
 
 Item {
     property alias text: urlInput.text
-    property alias textInput : urlInput
+    property alias textInput: urlInput
     property int verticalMargin: 5
     property int horizontalMargin: 9
 

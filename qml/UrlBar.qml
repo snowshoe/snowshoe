@@ -20,7 +20,7 @@ Item {
     id: root
 
     property alias text: urlEdit.text
-    property alias textInput : urlEdit.textInput
+    property alias textInput: urlEdit.textInput
     property int verticalMargins: 5
 
     signal urlEntered(string url)
