@@ -30,9 +30,10 @@ Item {
     width: parent.width
     height: urlEdit.height + verticalMargins
 
-    Rectangle {
+    Image {
         anchors.fill: parent
-        color: "#c9cacb"
+        fillMode: Image.TileHorizontally
+        source: "qrc:///urlbar/url_bg_base_fill"
     }
 
     Item {

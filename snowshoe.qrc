@@ -26,5 +26,6 @@
         <file alias="tabwidget/tab_inactive_right">images/tabwidget/tab_inactive_right.png</file>
         <file alias="tabwidget/tab_inactive_with_inactive">images/tabwidget/tab_inactive_with_inactive.png</file>
         <file>qml/PageWidget.qml</file>
+        <file alias="urlbar/url_bg_base_fill">images/urlbar/url_bg_base_fill.png</file>
     </qresource>
 </RCC>
