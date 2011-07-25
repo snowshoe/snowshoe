@@ -21,7 +21,7 @@ Item {
 
     property alias text: urlEdit.text
     property alias textInput: urlEdit.textInput
-    property int verticalMargins: 5
+    property int verticalMargins: 7
 
     signal urlEntered(string url)
 

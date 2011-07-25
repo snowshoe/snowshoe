@@ -20,11 +20,10 @@ import Snowshoe 1.0
 Item {
     property alias text: urlInput.text
     property alias textInput: urlInput
-    property int verticalMargin: 5
     property int horizontalMargin: 9
 
     width: parent.width
-    height: urlInput.height + verticalMargin * 2
+    height: urlInput.height + verticalMargins * 2
 
     signal urlEntered(string url)
 
@@ -37,14 +36,17 @@ Item {
     }
 
     BorderImage {
-        anchors.top: parent.top
-        anchors.topMargin: 3 // To look "inside" the urlEdit
-        anchors.left: parent.left
-        anchors.leftMargin: 2 // To look "inside" the urlEdit
+        anchors.top: background.top
+        // Those margins are there to make the progress bar look "inside" the url input.
+        anchors.topMargin: 2
+        anchors.bottom: background.bottom
+        anchors.bottomMargin: 3
+        anchors.left: background.left
+        anchors.leftMargin: 2
         source: "qrc:///urlbar/progress_bar_url"
-        border { left: 10; top: 10; right: 10; bottom: 10 }
+        border { left: 3; top: 3; right: 3; bottom: 3 }
+        horizontalTileMode: BorderImage.Repeat
         width: (urlEdit.width) * desktopView.loadProgress / 100.0
-        height: urlEdit.height - anchors.topMargin * 2 // To look "inside" the urlEdit
         opacity: desktopView.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
     }
 
@@ -56,11 +58,11 @@ Item {
     TextInput {
         id: urlInput
         focus: true
-        font.pointSize: 10
+        font.pixelSize: 12
         font.bold: true
         selectByMouse: true
         mouseSelectionMode: TextInput.SelectCharacters
-        y: parent.verticalMargin
+        y: verticalMargins
         x: parent.horizontalMargin
         width: parent.width
 
