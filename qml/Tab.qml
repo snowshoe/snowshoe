@@ -96,11 +96,10 @@ Item {
             }
         }
 
-        BorderImage {
+        Image {
             id: tabTitle
             width: content.width - leftImage.width
-            horizontalTileMode: BorderImage.Repeat
-            border { left: 0; top: 0; right: 0; bottom: 0 }
+            fillMode: Image.TileHorizontally
             source: tab.active ? "qrc:///tabwidget/tab_active_fill" : "qrc:///tabwidget/tab_inactive_fill"
             anchors.left: leftImage.right
         }
