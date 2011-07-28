@@ -44,3 +44,8 @@ bool BrowserObject::isUrlValid(const QUrl& url)
 {
     return url.isValid();
 }
+
+bool BrowserObject::isUrlEmpty(const QUrl& url)
+{
+    return url.isEmpty();
+}

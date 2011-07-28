@@ -10,7 +10,6 @@ SOURCES += \
     BrowserWindow.cpp \
     DatabaseManager.cpp \
     MainView.cpp \
-    DeclarativeDesktopWebView.cpp \
     TripleClickMonitor.cpp
 
 HEADERS += \
@@ -19,7 +18,6 @@ HEADERS += \
     BrowserWindow.h \
     DatabaseManager.h \
     MainView.h \
-    DeclarativeDesktopWebView.h \
     TripleClickMonitor.h
 
 RESOURCES += \

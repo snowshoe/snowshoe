@@ -14,7 +14,7 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
 import Snowshoe 1.0
 
 Item {

@@ -14,7 +14,8 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
+import QtWebKit.experimental 5.0
 import Snowshoe 1.0
 
 Item {
@@ -31,13 +32,13 @@ Item {
         onUrlEntered: {
             var urlToBrowse = BrowserObject.urlFromUserInput(url);
             if (BrowserObject.isUrlValid(urlToBrowse))
-                desktopView.setUrl(urlToBrowse);
+                desktopView.load(urlToBrowse);
             else
-                desktopView.setUrl(fallbackUrl(url));
+                desktopView.load(fallbackUrl(url));
         }
     }
 
-    DeclarativeDesktopWebView {
+    DesktopWebView {
         id: desktopView
         anchors.top: urlBar.bottom
         anchors.topMargin: 5
@@ -51,15 +52,15 @@ Item {
 
         onLoadSucceeded: {
             root.isLoading = false
-            if (tab.active && !hasViewFocus())
-                setFocusOnView();
+            if (tab.active && !focus)
+                forceActiveFocus();
         }
 
         onUrlChanged: { urlBar.text = url.toString() }
 
         onLoadFailed: {
             root.isLoading = false
-            url = fallbackUrl(urlBar.text)
+            load(fallbackUrl(urlBar.text))
         }
 
         onTitleChanged: { tab.text = title }

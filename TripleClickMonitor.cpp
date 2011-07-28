@@ -30,11 +30,11 @@ TripleClickMonitor::~TripleClickMonitor()
 {
 }
 
-void TripleClickMonitor::setTarget(QDeclarativeItem* target)
+void TripleClickMonitor::setTarget(QSGItem* target)
 {
     if (target == m_target)
         return;
-    QDeclarativeItem* oldTarget = m_target;
+    QSGItem* oldTarget = m_target;
     if (oldTarget)
         oldTarget->removeEventFilter(this);
     m_target = target;

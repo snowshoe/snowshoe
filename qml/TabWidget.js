@@ -28,7 +28,7 @@ function setActiveTab(newActiveTab) {
     currentActiveTab = newActiveTab;
 
     // FIXME: Do better it breaks the genericity of the tabwidget
-    if (newActiveTab.mainView.desktopView.isUrlEmpty())
+    if (BrowserObject.isUrlEmpty(newActiveTab.mainView.desktopView.url))
         newActiveTab.mainView.urlBar.textInput.forceActiveFocus();
     else
         newActiveTab.mainView.desktopView.forceActiveFocus();

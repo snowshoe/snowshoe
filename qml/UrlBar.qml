@@ -14,7 +14,8 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
+import QtWebKit.experimental 5.0
 
 Item {
     id: root
@@ -46,7 +47,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: { desktopView.back(); }
+                onClicked: { desktopView.navigation.back(); }
             }
         }
 
@@ -63,7 +64,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: { desktopView.forward(); }
+                onClicked: { desktopView.navigation.forward(); }
             }
         }
 
@@ -80,7 +81,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: { desktopView.reload(); }
+                onClicked: { desktopView.navigation.reload(); }
             }
         }
     }

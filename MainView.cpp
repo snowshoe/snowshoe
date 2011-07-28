@@ -19,11 +19,11 @@
 
 #include "BrowserObject.h"
 #include "BrowserWindow.h"
-#include "DeclarativeDesktopWebView.h"
+#include "qdesktopwebview.h"
 
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
-#include <QtDeclarative/QDeclarativeItem>
+#include <QtDeclarative/QSGItem>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QLineEdit>
@@ -33,16 +33,16 @@
 #include <QUrl>
 
 MainView::MainView(BrowserWindow* parent)
-    : QDeclarativeView(parent)
+    : QSGView(parent)
     , m_tabWidget(0)
 {
     rootContext()->setContextProperty("BrowserObject", parent->browserObject());
-    setResizeMode(QDeclarativeView::SizeRootObjectToView);
+    setResizeMode(QSGView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
 
     connect(engine(), SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
 
-    m_tabWidget = qobject_cast<QDeclarativeItem*>(rootObject());
+    m_tabWidget = qobject_cast<QSGItem*>(rootObject());
     Q_ASSERT(m_tabWidget);
 
     setupActions();
@@ -58,16 +58,16 @@ void MainView::openInNewTab(const QString& urlFromUserInput)
     if (!url.isEmpty()) {
         QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
         QObject* mainView = currentActiveTab->property("mainView").value<QObject*>();
-        QObject* urlEdit = mainView->findChild<QDeclarativeItem*>("urlEdit");
+        QObject* urlEdit = mainView->findChild<QSGItem*>("urlEdit");
         urlEdit->setProperty("text", url.toString());
-        getWebViewForUrlEdit(urlEdit)->setUrl(url);
+        getWebViewForUrlEdit(urlEdit)->load(url);
     }
 }
 
-DeclarativeDesktopWebView* MainView::getWebViewForUrlEdit(QObject* urlEdit)
+QDesktopWebView* MainView::getWebViewForUrlEdit(QObject* urlEdit)
 {
     QObject* view = urlEdit->property("view").value<QObject*>();
-    return qobject_cast<DeclarativeDesktopWebView* >(view);
+    return qobject_cast<QDesktopWebView* >(view);
 }
 
 QAction* MainView::createActionWithShortcut(const QKeySequence& shortcut)

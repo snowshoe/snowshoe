@@ -14,7 +14,7 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-import QtQuick 1.1
+import QtQuick 2.0
 
 Item {
     id: tab
@@ -36,7 +36,10 @@ Item {
 
     property variant tabWidget: Item {}
 
-    property variant mainView: Item {}
+    property variant mainView;
+
+    // Binding's target can't be changed on the fly let's affect it once.
+    onMainViewChanged: { heightBinding.target = widthBinding.target = mainView;}
 
     function rightEdge() {
         return content.x + content.width;
@@ -55,15 +58,15 @@ Item {
     }
 
     Binding {
+        id: heightBinding
         property: "height"
         value: tab.content.height - tab.headerHeight
-        target: mainView
     }
 
     Binding {
+        id: widthBinding
         property: "width"
         value: tabWidget.width
-        target: mainView
     }
 
     function syncHeader() {
@@ -151,7 +154,7 @@ Item {
             anchors.topMargin: 10
             anchors.leftMargin: 12
             playing: visible
-            visible: mainView.isLoading === true
+            visible: mainView != undefined && mainView.isLoading;
         }
 
         Text {

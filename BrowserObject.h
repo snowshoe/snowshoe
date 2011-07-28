@@ -32,6 +32,7 @@ public:
 
     Q_INVOKABLE QUrl urlFromUserInput(const QString&);
     Q_INVOKABLE bool isUrlValid(const QUrl&);
+    Q_INVOKABLE bool isUrlEmpty(const QUrl& url);
 
 signals:
     void windowTitleChanged();

@@ -16,18 +16,20 @@
 
 #include "BrowserWindow.h"
 
-#include "DeclarativeDesktopWebView.h"
+#include "qdesktopwebview.h"
 #include "TripleClickMonitor.h"
 #include <QtCore/QLatin1String>
 #include <QtGui/QApplication>
 
 int main(int argc, char** argv)
 {
+    // FIXME: This need to be reverted when WebKit works with it.
+    qputenv("QML_NO_THREADED_RENDERER", QByteArray("1"));
+
     QApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(true);
     app.setApplicationName(QLatin1String("Snowshoe"));
 
-    qmlRegisterType<DeclarativeDesktopWebView>("Snowshoe", 1, 0, "DeclarativeDesktopWebView");
     qmlRegisterType<TripleClickMonitor>("Snowshoe", 1, 0, "TripleClickMonitor");
 
     QStringList arguments = app.arguments();

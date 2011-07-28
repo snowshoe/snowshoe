@@ -19,16 +19,16 @@
 #define MainView_h
 
 #include <QtCore/QVariant>
-#include <QtDeclarative/QDeclarativeView>
+#include <QtDeclarative/QSGView>
 #include <QtGui/QKeySequence>
 
 class BrowserWindow;
-class DeclarativeDesktopWebView;
-class QDeclarativeItem;
+class QDesktopWebView;
+class QSGItem;
 class QUrl;
 class QWebError;
 
-class MainView : public QDeclarativeView {
+class MainView : public QSGView {
     Q_OBJECT
 
 public:
@@ -46,9 +46,9 @@ private:
     QAction* createActionWithShortcut(const QKeySequence&);
     void setupActions();
 
-    DeclarativeDesktopWebView* getWebViewForUrlEdit(QObject* urlEdit);
+    QDesktopWebView* getWebViewForUrlEdit(QObject* urlEdit);
 
-    QDeclarativeItem* m_tabWidget;
+    QSGItem* m_tabWidget;
 };
 
 #endif
