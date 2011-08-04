@@ -11,7 +11,8 @@ SOURCES += \
     DatabaseManager.cpp \
     MainView.cpp \
     PopupMenu.cpp \
-    TripleClickMonitor.cpp
+    TripleClickMonitor.cpp \
+    BookmarkFilter.cpp
 
 HEADERS += \
     BookmarkModel.h \
@@ -20,7 +21,8 @@ HEADERS += \
     DatabaseManager.h \
     MainView.h \
     PopupMenu.h \
-    TripleClickMonitor.h
+    TripleClickMonitor.h \
+    BookmarkFilter.h
 
 RESOURCES += \
     snowshoe.qrc
