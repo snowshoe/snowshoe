@@ -41,7 +41,6 @@ Item {
     DesktopWebView {
         id: desktopView
         anchors.top: urlBar.bottom
-        anchors.topMargin: 5
         anchors.bottom: root.bottom
         anchors.left: root.left
         anchors.right: root.right
