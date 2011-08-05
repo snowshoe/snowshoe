@@ -39,6 +39,9 @@ public slots:
     BrowserWindow* openInNewWindow(const QString& urlFromUserInput);
     void openNewWindow();
 
+protected:
+    void closeEvent(QCloseEvent*);
+
 private:
     friend class BrowserObject;
 

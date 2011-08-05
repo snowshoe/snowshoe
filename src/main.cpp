@@ -29,6 +29,9 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(true);
     app.setApplicationName(QLatin1String("Snowshoe"));
+    app.setOrganizationDomain(QLatin1String("Snowshoe"));
+    app.setOrganizationName(QLatin1String("Snowshoe"));
+    app.setApplicationVersion("1.0.0");
 
     qmlRegisterType<TripleClickMonitor>("Snowshoe", 1, 0, "TripleClickMonitor");
 

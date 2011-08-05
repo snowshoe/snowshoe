@@ -19,6 +19,7 @@
 #include "BrowserObject.h"
 #include "MainView.h"
 #include <QtCore/QCoreApplication>
+#include <QtCore/QSettings>
 #include <QtCore/QUrl>
 #include <QtGui/QAction>
 #include <QtGui/QImageReader>
@@ -44,7 +45,12 @@ BrowserWindow::BrowserWindow()
 
     setCentralWidget(m_mainView);
 
-    resize(800, 600);
+    QSettings settings;
+
+    if (!restoreGeometry(settings.value("mainWindowGeometry").toByteArray()))
+        resize(800, 600);
+
+    restoreState(settings.value("mainWindowState").toByteArray());
 }
 
 void BrowserWindow::openInNewTab(const QString& urlFromUserInput)
@@ -67,4 +73,11 @@ void BrowserWindow::openNewWindow()
 
 BrowserWindow::~BrowserWindow()
 {
+}
+
+void BrowserWindow::closeEvent(QCloseEvent*)
+{
+    QSettings settings;
+    settings.setValue("mainWindowGeometry", saveGeometry());
+    settings.setValue("mainWindowState", saveState());
 }
