@@ -27,5 +27,21 @@
         <file alias="tabwidget/tab_inactive_with_inactive">images/tabwidget/tab_inactive_with_inactive.png</file>
         <file>qml/PageWidget.qml</file>
         <file alias="urlbar/url_bg_base_fill">images/urlbar/url_bg_base_fill.png</file>
+        <file alias="bookmarks/btn_dropdown_menu_over">images/bookmark/bookmark_btn_dropdown_menu_over.png</file>
+        <file alias="bookmarks/btn_dropdown_menu_static">images/bookmark/bookmark_btn_dropdown_menu_static.png</file>
+        <file alias="bookmark/header_bg">images/bookmark/bookmark_header_bg.png</file>
+        <file alias="bookmark/over_bg">images/bookmark/bookmark_over_bg.png</file>
+        <file alias="bookmark/over_mask">images/bookmark/bookmark_over_mask.png</file>
+        <file alias="bookmark/static_bg">images/bookmark/bookmark_static_bg.png</file>
+        <file alias="boomark/static_mask">images/bookmark/bookmark_static_mask.png</file>
+        <file alias="combobox/icon_scroll_down_over">images/combobox/combo_icon_scroll_down_over.png</file>
+        <file alias="combobox/icon_scroll_down_static">images/combobox/combo_icon_scroll_down_static.png</file>
+        <file alias="combobox/icon_scroll_up_over">images/combobox/combo_icon_scroll_up_over.png</file>
+        <file alias="combobox/icon_scroll_up_static">images/combobox/combo_icon_scroll_up_static.png</file>
+        <file alias="combobox/base_bg">images/combobox/combobox_base_bg.png</file>
+        <file alias="combobox/btn_scroll_over">images/combobox/combobox_btn_scroll_over.png</file>
+        <file alias="combobox/btn_scroll_static">images/combobox/combobox_btn_scroll_static.png</file>
+        <file alias="combobox/divisor">images/combobox/combobox_divisor.png</file>
+        <file alias="combobox/item_over_bg">images/combobox/combobox_item_over_bg.png</file>
     </qresource>
 </RCC>
