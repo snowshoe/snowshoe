@@ -41,6 +41,7 @@ public slots:
 private slots:
     void initialization();
     void insert();
+    void remove();
     void update();
 
 private:
@@ -99,10 +100,21 @@ void tst_DataBase::insert()
         const QString url = record.value("url").toString();
         QCOMPARE(url, QLatin1String("http://www.nokia.com"));
 
+        QVERIFY(bookmarkModel->contains("http://www.nokia.com"));
+
         const int date = record.value("dateAdded").toInt();
         QVERIFY(date != 0);
     }
 }
+
+void tst_DataBase::remove()
+{
+    BookmarkModel* bookmarkModel = DatabaseManager::instance()->bookmarkDataBaseModel();
+
+    bookmarkModel->remove("http://www.nokia.com");
+    QVERIFY(!bookmarkModel->contains("http://www.nokia.com"));
+}
+
 
 void tst_DataBase::update()
 {

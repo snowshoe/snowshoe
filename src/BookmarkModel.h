@@ -36,8 +36,10 @@ public:
     Q_INVOKABLE bool select();
 
     Q_INVOKABLE void insert(const QString& name, const QString& url);
-    Q_INVOKABLE void remove(int index);
+    Q_INVOKABLE void remove(const QString& url);
     Q_INVOKABLE void update(int index, const QString& name, const QString& url);
+    Q_INVOKABLE bool contains(const QString& url);
+    Q_INVOKABLE int rowCount() { return QSqlTableModel::rowCount(); };
 
 private:
     QHash<int, QByteArray> m_roles;

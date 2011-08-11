@@ -17,6 +17,7 @@
 #include "BookmarkModel.h"
 
 #include <QtSql/QSqlError>
+#include <QtSql/QSqlQuery>
 #include <QtSql/QSqlRecord>
 
 BookmarkModel::BookmarkModel(QSqlDatabase database, QObject *parent)
@@ -53,6 +54,8 @@ bool BookmarkModel::select()
 
 void BookmarkModel::insert(const QString& name, const QString& url)
 {
+    if (contains(url))
+        return;
     QSqlRecord record = this->record();
     record.setValue("name", name);
     record.setValue("url", url);
@@ -60,15 +63,36 @@ void BookmarkModel::insert(const QString& name, const QString& url)
     insertRecord(-1, record);
 }
 
-void BookmarkModel::remove(int index)
+void BookmarkModel::remove(const QString& url)
 {
-    removeRow(index);
+    if (!contains(url))
+        return;
+    QSqlQuery sqlQuery(database());
+    sqlQuery.prepare(QString("SELECT id FROM bookmarks WHERE url = '%1'").arg(url));
+    sqlQuery.exec();
+    sqlQuery.first();
+    int indexToDelete = -1;
+    for (int row = 0; row < rowCount(); ++row) {
+        if (index(row, 0).data(Qt::DisplayRole).toInt() == sqlQuery.value(0).toInt()) {
+            indexToDelete = row;
+            break;
+        }
+    }
+    removeRow(indexToDelete);
 }
 
 void BookmarkModel::update(int index, const QString& name, const QString& url)
 {
     setData(this->index(index, 1), name);
     setData(this->index(index, 2), url);
+}
+
+bool BookmarkModel::contains(const QString& url)
+{
+    QSqlQuery sqlQuery(database());
+    sqlQuery.prepare(QString("SELECT id FROM bookmarks WHERE url = '%1'").arg(url));
+    sqlQuery.exec();
+    return sqlQuery.first();
 }
 
 QVariant BookmarkModel::data(const QModelIndex& index, int role) const
