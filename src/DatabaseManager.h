@@ -27,9 +27,8 @@ class DatabaseManager
 {
 
 public:
-    DatabaseManager();
-    ~DatabaseManager();
-
+    static DatabaseManager* instance();
+    static void destroy();
     bool initialize();
 
     BookmarkModel* bookmarkDataBaseModel() const;
@@ -38,6 +37,10 @@ protected:
     bool createTables();
 
 private:
+    DatabaseManager();
+    ~DatabaseManager();
+
+    static DatabaseManager* m_instance;
     QSqlDatabase m_database;
     BookmarkModel* m_bookmarkModel;
 };

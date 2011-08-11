@@ -44,7 +44,6 @@ private slots:
     void update();
 
 private:
-    DatabaseManager* m_manager;
     QByteArray m_XdgDataHome;
 };
 
@@ -62,8 +61,6 @@ void tst_DataBase::initTestCase()
 
     m_XdgDataHome = qgetenv("XDG_DATA_HOME");
     setenv("XDG_DATA_HOME", QDir::tempPath().toLatin1().data(), 1);
-
-    m_manager = new DatabaseManager();
 }
 
 void tst_DataBase::cleanupTestCase()
@@ -72,7 +69,6 @@ void tst_DataBase::cleanupTestCase()
     databaseDir.remove(QSqlDatabase::database().databaseName());
 
     setenv("XDG_DATA_HOME", m_XdgDataHome.data(), 1);
-    delete m_manager;
 }
 
 void tst_DataBase::cleanup()
@@ -83,12 +79,13 @@ void tst_DataBase::cleanup()
 
 void tst_DataBase::initialization()
 {
-    QCOMPARE(m_manager->initialize(), true);
+    QCOMPARE(DatabaseManager::instance(), DatabaseManager::instance());
+    QCOMPARE(DatabaseManager::instance()->initialize(), true);
 }
 
 void tst_DataBase::insert()
 {
-    BookmarkModel* bookmarkModel = m_manager->bookmarkDataBaseModel();
+    BookmarkModel* bookmarkModel = DatabaseManager::instance()->bookmarkDataBaseModel();
     QSqlRecord record;
 
     {
@@ -109,7 +106,7 @@ void tst_DataBase::insert()
 
 void tst_DataBase::update()
 {
-    BookmarkModel* bookmarkModel = m_manager->bookmarkDataBaseModel();
+    BookmarkModel* bookmarkModel = DatabaseManager::instance()->bookmarkDataBaseModel();
     QSqlRecord record;
 
     bookmarkModel->insert("Google", "http://www.google.com");

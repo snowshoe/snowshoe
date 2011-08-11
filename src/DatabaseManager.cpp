@@ -22,6 +22,23 @@
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 
+DatabaseManager* DatabaseManager::m_instance = 0;
+
+DatabaseManager* DatabaseManager::instance()
+{
+    if (!m_instance)
+        m_instance = new DatabaseManager;
+    return m_instance;
+}
+
+void DatabaseManager::destroy()
+{
+    if (m_instance) {
+        delete m_instance;
+        m_instance = 0;
+    }
+}
+
 DatabaseManager::DatabaseManager()
 {
     const QString storagePath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
@@ -60,6 +77,8 @@ bool DatabaseManager::initialize()
         return false;
 
     m_bookmarkModel->generateRoleNames();
+    // Populate the model.
+    m_bookmarkModel->select();
 
     return createdTables;
 }
