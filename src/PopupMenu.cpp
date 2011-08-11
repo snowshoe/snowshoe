@@ -40,9 +40,16 @@ PopupMenu::PopupMenu(QWidget* parent)
 {
     m_view->setResizeMode(QSGView::SizeViewToRootObject);
     m_view->rootContext()->setContextProperty("View", this);
+    m_view->setAutoFillBackground(false);
+    m_view->setAttribute(Qt::WA_TranslucentBackground, true);
+    setAttribute(Qt::WA_TranslucentBackground, true);
+    setAutoFillBackground(false);
     setModal(true);
     setWindowFlags(Qt::Popup);
     hide();
+
+    connect(QApplication::desktop(), SIGNAL(resized(int)), this, SIGNAL(maxWidthChanged()));
+    connect(QApplication::desktop(), SIGNAL(resized(int)), this, SIGNAL(maxHeightChanged()));
 }
 
 void PopupMenu::setQmlComponent(const QString& qmlComponent)
@@ -52,9 +59,19 @@ void PopupMenu::setQmlComponent(const QString& qmlComponent)
     emit qmlComponentChanged();
 }
 
-QString PopupMenu::qmlComponent()
+QString PopupMenu::qmlComponent() const
 {
     return m_qmlComponent;
+}
+
+int PopupMenu::maxWidth() const
+{
+   return QApplication::desktop()->screenGeometry().width();
+}
+
+int PopupMenu::maxHeight() const
+{
+    return QApplication::desktop()->screenGeometry().height();
 }
 
 void PopupMenu::movePopup(int x, int y)

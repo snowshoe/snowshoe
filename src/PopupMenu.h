@@ -26,15 +26,22 @@ QT_END_NAMESPACE
 class PopupMenu : public QDialog
 {
     Q_PROPERTY(QString qmlComponent READ qmlComponent WRITE setQmlComponent NOTIFY qmlComponentChanged)
+    Q_PROPERTY(int maxWidth READ maxWidth NOTIFY maxWidthChanged)
+    Q_PROPERTY(int maxHeight READ maxHeight NOTIFY maxHeightChanged)
     Q_OBJECT
 public:
     PopupMenu(QWidget* parent = 0);
 
     void setQmlComponent(const QString&);
-    QString qmlComponent();
+    QString qmlComponent() const;
+
+    int maxWidth() const;
+    int maxHeight() const;
 
 Q_SIGNALS:
     void qmlComponentChanged();
+    void maxWidthChanged();
+    void maxHeightChanged();
 
 public slots:
     void movePopup(int, int);
