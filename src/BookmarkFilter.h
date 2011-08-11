@@ -25,6 +25,7 @@ class BookmarkFilter : public QSortFilterProxyModel
     Q_PROPERTY(QAbstractItemModel* sourceModel READ sourceModel WRITE setSourceModel)
     Q_PROPERTY(int startRow READ startRow WRITE setStartRow NOTIFY startRowChanged)
     Q_PROPERTY(int endRow READ endRow WRITE setEndRow NOTIFY endRowChanged)
+    Q_PROPERTY(int rowCount READ rowCount NOTIFY rowCountChanged)
 
 public:
     BookmarkFilter(QObject *parent = 0);
@@ -40,6 +41,10 @@ public:
 signals:
     void startRowChanged();
     void endRowChanged();
+    void rowCountChanged();
+
+private slots:
+    void onRowsChanged(QModelIndex, int, int);
 
 private:
     int m_startRow;

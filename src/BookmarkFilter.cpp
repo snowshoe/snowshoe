@@ -21,7 +21,9 @@ BookmarkFilter::BookmarkFilter(QObject *parent)
     , m_startRow(-1)
     , m_endRow(-1)
 {
-
+    connect(this, SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(onRowsChanged(QModelIndex, int, int)));
+    connect(this, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(onRowsChanged(QModelIndex, int, int)));
+    connect(this, SIGNAL(modelReset()), this, SIGNAL(rowCountChanged()));
 }
 
 bool BookmarkFilter::filterAcceptsRow(int sourceRow, const QModelIndex&) const
@@ -39,7 +41,7 @@ void BookmarkFilter::setStartRow(int row)
     m_startRow = row;
     emit startRowChanged();
     invalidate();
-    reset();
+    emit rowCountChanged();
 }
 
 int BookmarkFilter::endRow() const
@@ -52,5 +54,10 @@ void BookmarkFilter::setEndRow(int row)
     m_endRow = row;
     emit endRowChanged();
     invalidate();
-    reset();
+    emit rowCountChanged();
+}
+
+void BookmarkFilter::onRowsChanged(QModelIndex, int, int)
+{
+    emit rowCountChanged();
 }
