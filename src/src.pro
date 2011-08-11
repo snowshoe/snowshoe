@@ -72,4 +72,9 @@ OTHER_FILES += \
     qml/TabWidget.js \
     qml/UrlEdit.qml \
     qml/UrlBar.qml \
-    qml/PageWidget.qml
+    qml/PageWidget.qml \
+    qml/NewTab.qml \
+    qml/BookmarBar.qml \
+    qml/DrowDownMenuBookmark.qml \
+    qml/BookmarkBarDelegate.qml \
+    qml/DrowDownMenuBookmarkDelegate.qml

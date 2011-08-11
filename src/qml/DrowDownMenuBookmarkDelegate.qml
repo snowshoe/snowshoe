@@ -1,5 +1,4 @@
 /****************************************************************************
- *   Copyright (C) 2011  Andreas Kling <awesomekling@gmail.com>             *
  *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
@@ -15,45 +14,37 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#ifndef MainView_h
-#define MainView_h
+import QtQuick 2.0
 
-#include <QtCore/QVariant>
-#include <QtDeclarative/QSGView>
-#include <QtGui/QKeySequence>
+Item {
+    width: listView.width
+    height: listView.elementHeight
+    BorderImage {
+        anchors.fill: parent
+        id: overlay
+        source: "qrc:///combobox/item_over_bg"
+        border { left: 2; top: 2; right: 2; bottom: 2 }
+        visible: false
+    }
 
-class BrowserWindow;
-class PopupMenu;
-class QDesktopWebView;
-class QSGItem;
-class QUrl;
-class QWebError;
+    Text {
+        id: text
+        font.pixelSize: 11
+        text: name
+        elide: Text.ElideRight
+        anchors.verticalCenter: parent.verticalCenter
+        onWidthChanged: {
+            if (width > listView.width)
+                listView.width = width
+        }
 
-class MainView : public QSGView {
-    Q_OBJECT
+    }
 
-public:
-    MainView(BrowserWindow*);
-    virtual ~MainView();
-
-    bool isLoading() const;
-
-    void openInNewTab(const QString& urlFromUserInput);
-
-public slots:
-    QPoint mapToGlobal(int x, int y);
-
-signals:
-    void loadingStateChanged(bool);
-
-private:
-    QAction* createActionWithShortcut(const QKeySequence&);
-    void setupActions();
-
-    QDesktopWebView* getWebViewForUrlEdit(QObject* urlEdit);
-
-    QSGItem* m_tabWidget;
-    PopupMenu* m_popupMenu;
-};
-
-#endif
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        onEntered: { overlay.visible = true; }
+        onExited: overlay.visible = false
+        onClicked: { WebView.load(url); View.hide(); }
+    }
+}

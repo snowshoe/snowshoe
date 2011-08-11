@@ -33,7 +33,7 @@
         <file alias="bookmark/over_bg">images/bookmark/bookmark_over_bg.png</file>
         <file alias="bookmark/over_mask">images/bookmark/bookmark_over_mask.png</file>
         <file alias="bookmark/static_bg">images/bookmark/bookmark_static_bg.png</file>
-        <file alias="boomark/static_mask">images/bookmark/bookmark_static_mask.png</file>
+        <file alias="bookmark/static_mask">images/bookmark/bookmark_static_mask.png</file>
         <file alias="combobox/icon_scroll_down_over">images/combobox/combo_icon_scroll_down_over.png</file>
         <file alias="combobox/icon_scroll_down_static">images/combobox/combo_icon_scroll_down_static.png</file>
         <file alias="combobox/icon_scroll_up_over">images/combobox/combo_icon_scroll_up_over.png</file>
@@ -43,5 +43,13 @@
         <file alias="combobox/btn_scroll_static">images/combobox/combobox_btn_scroll_static.png</file>
         <file alias="combobox/divisor">images/combobox/combobox_divisor.png</file>
         <file alias="combobox/item_over_bg">images/combobox/combobox_item_over_bg.png</file>
+        <file>qml/BookmarBar.qml</file>
+        <file>qml/NewTab.qml</file>
+        <file>qml/DrowDownMenuBookmark.qml</file>
+        <file alias="urlbar/fav_icon_off">images/urlbar/fav_icon_off.png</file>
+        <file alias="urlbar/fav_icon_on">images/urlbar/fav_icon_on.png</file>
+        <file alias="bookmark/bookmark_header_divisor">images/bookmark/bookmark_header_divisor.png</file>
+        <file>qml/BookmarkBarDelegate.qml</file>
+        <file>qml/DrowDownMenuBookmarkDelegate.qml</file>
     </qresource>
 </RCC>

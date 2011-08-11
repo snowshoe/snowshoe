@@ -20,6 +20,7 @@ import Snowshoe 1.0
 Item {
     property alias text: urlInput.text
     property alias textInput: urlInput
+    property alias bookmarkButton: bookmarkButton
     property int horizontalMargin: 9
 
     width: parent.width
@@ -64,7 +65,7 @@ Item {
         mouseSelectionMode: TextInput.SelectCharacters
         y: verticalMargins
         x: parent.horizontalMargin
-        width: parent.width
+        width: parent.width - bookmarkButton.width
 
         Keys.onEnterPressed: {
             urlEdit.urlEntered(urlInput.text)
@@ -72,6 +73,34 @@ Item {
 
         Keys.onReturnPressed: {
             urlEdit.urlEntered(urlInput.text)
+        }
+    }
+
+    Image {
+        id: bookmarkButton
+        x: urlInput.width - 2
+        visible:  false
+        anchors.top: background.top
+        // Those margins are there to make the progress bar look "inside" the url input.
+        anchors.topMargin: 2
+
+        property variant isBookmarked
+        onIsBookmarkedChanged: { BrowserObject.isUrlEmpty(desktopView.url) ? visible = false : visible = true }
+        source: { isBookmarked ? "qrc:///urlbar/fav_icon_on" :"qrc:///urlbar/fav_icon_off" }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                if (BrowserObject.isUrlEmpty(desktopView.url))
+                    return;
+                if (BookmarkModel.contains(desktopView.url)) {
+                    parent.isBookmarked = false;
+                    BookmarkModel.remove(desktopView.url)
+                } else {
+                    parent.isBookmarked = true;
+                    BookmarkModel.insert(desktopView.title, desktopView.url);
+                }
+            }
         }
     }
 }

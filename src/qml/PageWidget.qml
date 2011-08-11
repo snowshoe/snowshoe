@@ -40,19 +40,24 @@ Item {
 
     DesktopWebView {
         id: desktopView
-        anchors.top: urlBar.bottom
-        anchors.bottom: root.bottom
-        anchors.left: root.left
-        anchors.right: root.right
+        anchors {
+            top: urlBar.bottom
+            bottom: root.bottom
+            left: root.left
+            right: root.right
+        }
 
         onLoadStarted: {
-            root.isLoading = true
+            root.isLoading = true;
+            newTab.visible = false;
+            urlBar.bookmarkButton.visible = false;
         }
 
         onLoadSucceeded: {
             root.isLoading = false
             if (tab.active && !focus)
                 forceActiveFocus();
+            urlBar.bookmarkButton.isBookmarked = BookmarkModel.contains(url);
         }
 
         onUrlChanged: { urlBar.text = url.toString() }
@@ -72,5 +77,13 @@ Item {
 
     function focusUrlBar() {
         urlBar.textInput.forceActiveFocus();
+    }
+
+    NewTab {
+        id: newTab
+        anchors.top: urlBar.bottom
+        anchors.bottom: root.bottom
+        anchors.left: root.left
+        anchors.right: root.right
     }
 }

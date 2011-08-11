@@ -17,9 +17,12 @@
 
 #include "MainView.h"
 
+#include "BookmarkModel.h"
 #include "BrowserObject.h"
 #include "BrowserWindow.h"
+#include "DatabaseManager.h"
 #include "qdesktopwebview.h"
+#include "PopupMenu.h"
 
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
@@ -35,8 +38,12 @@
 MainView::MainView(BrowserWindow* parent)
     : QSGView(parent)
     , m_tabWidget(0)
+    , m_popupMenu(new PopupMenu(this))
 {
     rootContext()->setContextProperty("BrowserObject", parent->browserObject());
+    rootContext()->setContextProperty("BookmarkModel", DatabaseManager::instance()->bookmarkDataBaseModel());
+    rootContext()->setContextProperty("PopupMenu", m_popupMenu);
+    rootContext()->setContextProperty("View", this);
     setResizeMode(QSGView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
 
@@ -62,6 +69,11 @@ void MainView::openInNewTab(const QString& urlFromUserInput)
         urlEdit->setProperty("text", url.toString());
         getWebViewForUrlEdit(urlEdit)->load(url);
     }
+}
+
+QPoint MainView::mapToGlobal(int x, int y)
+{
+    return QWidget::mapToGlobal(QPoint(x, y));
 }
 
 QDesktopWebView* MainView::getWebViewForUrlEdit(QObject* urlEdit)
