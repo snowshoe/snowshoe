@@ -83,6 +83,7 @@ Item {
         anchors.top: background.top
         // Those margins are there to make the progress bar look "inside" the url input.
         anchors.topMargin: 2
+        smooth: true
 
         property variant isBookmarked
         onIsBookmarkedChanged: { BrowserObject.isUrlEmpty(desktopView.url) ? visible = false : visible = true }
