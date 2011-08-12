@@ -94,7 +94,7 @@ Item {
             onClicked: {
                 if (BrowserObject.isUrlEmpty(desktopView.url))
                     return;
-                if (BookmarkModel.contains(desktopView.url)) {
+                if (parent.isBookmarked) {
                     parent.isBookmarked = false;
                     BookmarkModel.remove(desktopView.url)
                 } else {
