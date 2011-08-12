@@ -60,6 +60,7 @@ Item {
             root.isLoading = false
             if (tab.active && !focus)
                 forceActiveFocus();
+            urlBar.bookmarkButton.visible = true;
             urlBar.bookmarkButton.isBookmarked = BookmarkModel.contains(url);
         }
 
