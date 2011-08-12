@@ -47,8 +47,11 @@ Item {
             right: root.right
         }
 
+        visible: false
+
         onLoadStarted: {
             root.isLoading = true;
+            visible = true;
             newTab.visible = false;
             urlBar.bookmarkButton.visible = false;
         }
