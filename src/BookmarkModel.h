@@ -17,7 +17,6 @@
 #ifndef BookmarkModel_h
 #define BookmarkModel_h
 
-#include <QtScript/QScriptValue>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlTableModel>
 
