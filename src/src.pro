@@ -58,6 +58,7 @@ INCLUDEPATH += $$WEBKIT_BUILD_DIR/include/WebKit2
 QMAKE_LFLAGS = -L$$WEBKIT_BUILD_DIR/lib $$QMAKE_LFLAGS
 
 macx {
+    QMAKE_LFLAGS = -F$$WEBKIT_BUILD_DIR/lib $$QMAKE_LFLAGS
     LIBS += -framework QtWebKit
 } else {
     # Make sure that again the custom WebKit is the first in the rpath otherwise it will not pick the right one.
