@@ -23,7 +23,7 @@ Item {
     property alias text: urlEdit.text
     property alias textInput: urlEdit.textInput
     property alias bookmarkButton: urlEdit.bookmarkButton
-    property int verticalMargins: 7
+    property int verticalMargins: 8
 
     signal urlEntered(string url)
 
