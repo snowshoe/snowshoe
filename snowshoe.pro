@@ -2,7 +2,7 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS = \
-    src/
+    src
 
 contains(CONFIG, test) {
     SUBDIRS += \
