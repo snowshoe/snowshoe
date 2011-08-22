@@ -1,5 +1,6 @@
 /****************************************************************************
  *   Copyright (C) 2011  Andreas Kling <awesomekling@gmail.com>             *
+ *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
  *   General Public License version 2.1 as published by the Free Software   *
@@ -17,10 +18,13 @@
 #ifndef BrowserWindow_h
 #define BrowserWindow_h
 
+#include <QtDeclarative/QSGView>
+#include <QtGui/QKeySequence>
 #include <QtGui/QMainWindow>
 
 class BrowserObject;
-class MainView;
+class PopupMenu;
+class QSGItem;
 
 class BrowserWindow : public QMainWindow {
     Q_OBJECT
@@ -33,14 +37,27 @@ public:
 
     void openInCurrentTab(const QString& urlFromUserInput);
 
+public slots:
+    QPoint mapToGlobal(int x, int y);
+
 protected:
     void closeEvent(QCloseEvent*);
 
 private:
     friend class BrowserObject;
 
-    MainView* m_mainView;
+    void saveSettings();
+    void restoreSettings();
+
+    void setupDeclarativeEnvironment();
+
+    QAction* createActionWithShortcut(const QKeySequence&);
+    void setupShortcuts();
+
     BrowserObject* m_browserObject;
+    QSGView* m_view;
+    QSGItem* m_tabWidget;
+    PopupMenu* m_popupMenu;
 };
 
 #endif

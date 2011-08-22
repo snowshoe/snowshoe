@@ -9,7 +9,6 @@ SOURCES += \
     BrowserObject.cpp \
     BrowserWindow.cpp \
     DatabaseManager.cpp \
-    MainView.cpp \
     PopupMenu.cpp \
     TripleClickMonitor.cpp \
     BookmarkFilter.cpp
@@ -19,7 +18,6 @@ HEADERS += \
     BrowserObject.h \
     BrowserWindow.h \
     DatabaseManager.h \
-    MainView.h \
     PopupMenu.h \
     TripleClickMonitor.h \
     BookmarkFilter.h
