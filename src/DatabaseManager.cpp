@@ -18,6 +18,7 @@
 #include "DatabaseManager.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QString>
 #include <QtGui/QDesktopServices>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>

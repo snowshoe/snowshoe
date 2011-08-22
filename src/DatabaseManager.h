@@ -17,8 +17,6 @@
 #ifndef DatabaseManager_h
 #define DatabaseManager_h
 
-#include <QtCore/QList>
-#include <QtCore/QString>
 #include <QtSql/QSqlDatabase>
 
 class BookmarkModel;

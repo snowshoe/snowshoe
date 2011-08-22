@@ -21,8 +21,6 @@
 
 class BrowserObject;
 class MainView;
-class QTabWidget;
-class QUrl;
 
 class BrowserWindow : public QMainWindow {
     Q_OBJECT

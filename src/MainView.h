@@ -18,16 +18,12 @@
 #ifndef MainView_h
 #define MainView_h
 
-#include <QtCore/QVariant>
 #include <QtDeclarative/QSGView>
 #include <QtGui/QKeySequence>
 
 class BrowserWindow;
 class PopupMenu;
-class QDesktopWebView;
 class QSGItem;
-class QUrl;
-class QWebError;
 
 class MainView : public QSGView {
     Q_OBJECT

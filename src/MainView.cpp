@@ -24,17 +24,14 @@
 #include "qdesktopwebview.h"
 #include "PopupMenu.h"
 
+#include <QtCore/QUrl>
+#include <QtCore/QCoreApplication>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QtDeclarative/QDeclarativeProperty>
 #include <QtDeclarative/QSGItem>
 #include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QLineEdit>
-#include <QtGui/QToolBar>
-#include <QtGui/QVBoxLayout>
 
-#include <QUrl>
 
 MainView::MainView(BrowserWindow* parent)
     : QSGView(parent)

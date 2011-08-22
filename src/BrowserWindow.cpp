@@ -18,10 +18,7 @@
 
 #include "BrowserObject.h"
 #include "MainView.h"
-#include <QtCore/QCoreApplication>
 #include <QtCore/QSettings>
-#include <QtCore/QUrl>
-#include <QtGui/QImageReader>
 
 BrowserWindow::BrowserWindow()
     : QMainWindow(0)
