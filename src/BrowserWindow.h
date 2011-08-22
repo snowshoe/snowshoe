@@ -34,8 +34,7 @@ public:
 
     BrowserObject* browserObject() { return m_browserObject; }
 
-public slots:
-    void openInNewTab(const QString& urlFromUserInput);
+    void openInCurrentTab(const QString& urlFromUserInput);
 
 protected:
     void closeEvent(QCloseEvent*);

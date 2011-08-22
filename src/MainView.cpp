@@ -26,6 +26,7 @@
 
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
+#include <QtDeclarative/QDeclarativeProperty>
 #include <QtDeclarative/QSGItem>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -59,27 +60,26 @@ MainView::~MainView()
 {
 }
 
-void MainView::openInNewTab(const QString& urlFromUserInput)
+QDesktopWebView* getWebViewForTab(QObject* tab)
+{
+    QObject* mainView = tab->property("mainView").value<QObject*>();
+    // ### Using QObject::property() is giving me 0 here.
+    QObject* webView = QDeclarativeProperty::read(mainView, "desktopView").value<QObject*>();
+    return qobject_cast<QDesktopWebView*>(webView);
+}
+
+void MainView::openInCurrentTab(const QString& urlFromUserInput)
 {
     QUrl url = QUrl::fromUserInput(urlFromUserInput);
-    if (!url.isEmpty()) {
-        QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
-        QObject* mainView = currentActiveTab->property("mainView").value<QObject*>();
-        QObject* urlEdit = mainView->findChild<QSGItem*>("urlEdit");
-        urlEdit->setProperty("text", url.toString());
-        getWebViewForUrlEdit(urlEdit)->load(url);
-    }
+    if (url.isEmpty())
+        return;
+    QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
+    getWebViewForTab(currentActiveTab)->load(url);
 }
 
 QPoint MainView::mapToGlobal(int x, int y)
 {
     return QWidget::mapToGlobal(QPoint(x, y));
-}
-
-QDesktopWebView* MainView::getWebViewForUrlEdit(QObject* urlEdit)
-{
-    QObject* view = urlEdit->property("view").value<QObject*>();
-    return qobject_cast<QDesktopWebView* >(view);
 }
 
 QAction* MainView::createActionWithShortcut(const QKeySequence& shortcut)

@@ -36,7 +36,7 @@ public:
     MainView(BrowserWindow*);
     virtual ~MainView();
 
-    void openInNewTab(const QString& urlFromUserInput);
+    void openInCurrentTab(const QString& urlFromUserInput);
 
 public slots:
     QPoint mapToGlobal(int x, int y);
@@ -44,8 +44,6 @@ public slots:
 private:
     QAction* createActionWithShortcut(const QKeySequence&);
     void setupActions();
-
-    QDesktopWebView* getWebViewForUrlEdit(QObject* urlEdit);
 
     QSGItem* m_tabWidget;
     PopupMenu* m_popupMenu;

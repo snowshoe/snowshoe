@@ -46,9 +46,9 @@ BrowserWindow::BrowserWindow()
     restoreState(settings.value("mainWindowState").toByteArray());
 }
 
-void BrowserWindow::openInNewTab(const QString& urlFromUserInput)
+void BrowserWindow::openInCurrentTab(const QString& urlFromUserInput)
 {
-    m_mainView->openInNewTab(urlFromUserInput);
+    m_mainView->openInCurrentTab(urlFromUserInput);
 }
 
 BrowserWindow::~BrowserWindow()
