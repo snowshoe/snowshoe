@@ -40,6 +40,7 @@ TabWidget {
         var tab = tabComponent.createObject(tabWidget)
         tabWidget.addTab(tab)
         tabWidget.setActiveTab(tab)
+        return tab
     }
 
     Component {

@@ -72,6 +72,16 @@ Item {
         }
 
         onTitleChanged: { tab.text = title }
+
+        function navigationPolicyForUrl(url, button, modifiers) {
+            if (button == Qt.MiddleButton
+                || (button == Qt.LeftButton && modifiers & Qt.ControlModifier)) {
+                var tabForLink = tab.tabWidget.addNewTab()
+                tabForLink.mainView.desktopView.load(url)
+                return DesktopWebView.IgnorePolicy
+            }
+            return DesktopWebView.UsePolicy
+        }
     }
 
     function fallbackUrl(url)
