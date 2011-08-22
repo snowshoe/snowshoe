@@ -20,12 +20,11 @@
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlTableModel>
 
-class BookmarkModel : public QSqlTableModel
-{
+class BookmarkModel : public QSqlTableModel {
     Q_OBJECT
 
 public:
-    BookmarkModel(QSqlDatabase database, QObject* parent = 0);
+    BookmarkModel(QSqlDatabase, QObject* parent = 0);
     void generateRoleNames();
     QString tableCreateQuery() const;
 

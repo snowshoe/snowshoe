@@ -23,12 +23,11 @@ QT_BEGIN_NAMESPACE
 class QSGView;
 QT_END_NAMESPACE
 
-class PopupMenu : public QDialog
-{
+class PopupMenu : public QDialog {
+    Q_OBJECT
     Q_PROPERTY(QString qmlComponent READ qmlComponent WRITE setQmlComponent NOTIFY qmlComponentChanged)
     Q_PROPERTY(int maxWidth READ maxWidth NOTIFY maxWidthChanged)
     Q_PROPERTY(int maxHeight READ maxHeight NOTIFY maxHeightChanged)
-    Q_OBJECT
 public:
     PopupMenu(QWidget* parent = 0);
 

@@ -21,9 +21,7 @@
 
 class BookmarkModel;
 
-class DatabaseManager
-{
-
+class DatabaseManager {
 public:
     static DatabaseManager* instance();
     static void destroy();

@@ -19,8 +19,7 @@
 
 #include <QtGui/QSortFilterProxyModel>
 
-class BookmarkFilter : public QSortFilterProxyModel
-{
+class BookmarkFilter : public QSortFilterProxyModel {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel* sourceModel READ sourceModel WRITE setSourceModel)
     Q_PROPERTY(int startRow READ startRow WRITE setStartRow NOTIFY startRowChanged)
@@ -33,10 +32,10 @@ public:
     bool filterAcceptsRow(int, const QModelIndex&) const;
 
     int startRow() const;
-    void setStartRow(int row);
+    void setStartRow(int);
 
     int endRow() const;
-    void setEndRow(int row);
+    void setEndRow(int);
 
 signals:
     void startRowChanged();

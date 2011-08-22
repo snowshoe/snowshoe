@@ -21,11 +21,9 @@
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopWidget>
 
-class SGView : public QSGView
-{
+class SGView : public QSGView {
 public:
-    SGView(QWidget* parent = 0) : QSGView(parent)
-    {}
+    SGView(QWidget* parent = 0) : QSGView(parent) { }
 protected:
     void resizeEvent(QResizeEvent* event)
     {
@@ -66,7 +64,7 @@ QString PopupMenu::qmlComponent() const
 
 int PopupMenu::maxWidth() const
 {
-   return QApplication::desktop()->screenGeometry().width();
+    return QApplication::desktop()->screenGeometry().width();
 }
 
 int PopupMenu::maxHeight() const

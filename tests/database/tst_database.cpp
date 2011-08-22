@@ -25,8 +25,7 @@
 #include "DatabaseManager.h"
 #include "BookmarkModel.h"
 
-class tst_DataBase : public QObject
-{
+class tst_DataBase : public QObject {
     Q_OBJECT
 
 public:
@@ -103,7 +102,7 @@ void tst_DataBase::insert()
         QVERIFY(bookmarkModel->contains("http://www.nokia.com"));
 
         const int date = record.value("dateAdded").toInt();
-        QVERIFY(date != 0);
+        QVERIFY(date);
     }
 }
 

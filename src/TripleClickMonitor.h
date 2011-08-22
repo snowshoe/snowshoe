@@ -38,7 +38,7 @@ signals:
     void tripleClicked();
 
 protected:
-    bool eventFilter(QObject* object, QEvent* event);
+    bool eventFilter(QObject*, QEvent*);
 
 private:
     bool isWatching() const;

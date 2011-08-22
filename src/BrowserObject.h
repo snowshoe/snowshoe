@@ -32,14 +32,14 @@ public:
 
     Q_INVOKABLE QUrl urlFromUserInput(const QString&);
     Q_INVOKABLE bool isUrlValid(const QUrl&);
-    Q_INVOKABLE bool isUrlEmpty(const QUrl& url);
+    Q_INVOKABLE bool isUrlEmpty(const QUrl&);
 
 signals:
     void windowTitleChanged();
 
 private:
     friend class BrowserWindow;
-    BrowserObject(BrowserWindow* window);
+    BrowserObject(BrowserWindow*);
     BrowserWindow* m_window;
 };
 
