@@ -21,7 +21,6 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QSettings>
 #include <QtCore/QUrl>
-#include <QtGui/QAction>
 #include <QtGui/QImageReader>
 
 BrowserWindow* BrowserWindow::create()
@@ -37,12 +36,6 @@ BrowserWindow::BrowserWindow()
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_mainView = new MainView(this);
-
-    QAction* newWindowAction = new QAction(this);
-    newWindowAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_N));
-    connect(newWindowAction, SIGNAL(triggered()), this, SLOT(openNewWindow()));
-    addAction(newWindowAction);
-
     setCentralWidget(m_mainView);
 
     QSettings settings;
@@ -56,19 +49,6 @@ BrowserWindow::BrowserWindow()
 void BrowserWindow::openInNewTab(const QString& urlFromUserInput)
 {
     m_mainView->openInNewTab(urlFromUserInput);
-}
-
-BrowserWindow* BrowserWindow::openInNewWindow(const QString& url)
-{
-    BrowserWindow* window = BrowserWindow::create();
-    openInNewTab(url);
-    window->show();
-    return window;
-}
-
-void BrowserWindow::openNewWindow()
-{
-    openInNewWindow(QString());
 }
 
 BrowserWindow::~BrowserWindow()

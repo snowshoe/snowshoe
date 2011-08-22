@@ -36,8 +36,6 @@ public:
 
 public slots:
     void openInNewTab(const QString& urlFromUserInput);
-    BrowserWindow* openInNewWindow(const QString& urlFromUserInput);
-    void openNewWindow();
 
 protected:
     void closeEvent(QCloseEvent*);
