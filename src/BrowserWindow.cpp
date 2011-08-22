@@ -23,11 +23,6 @@
 #include <QtCore/QUrl>
 #include <QtGui/QImageReader>
 
-BrowserWindow* BrowserWindow::create()
-{
-    return new BrowserWindow();
-}
-
 BrowserWindow::BrowserWindow()
     : QMainWindow(0)
     , m_browserObject(new BrowserObject(this))

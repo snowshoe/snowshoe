@@ -28,9 +28,8 @@ class BrowserWindow : public QMainWindow {
     Q_OBJECT
 
 public:
+    BrowserWindow();
     virtual ~BrowserWindow();
-
-    static BrowserWindow* create();
 
     BrowserObject* browserObject() { return m_browserObject; }
 
@@ -42,7 +41,6 @@ protected:
 private:
     friend class BrowserObject;
 
-    BrowserWindow();
     MainView* m_mainView;
     BrowserObject* m_browserObject;
 };

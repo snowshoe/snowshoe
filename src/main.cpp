@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     QStringList arguments = app.arguments();
     arguments.removeAt(0);
 
-    BrowserWindow* window = BrowserWindow::create();
+    BrowserWindow* window = new BrowserWindow();
 
     if (!arguments.isEmpty())
         window->openInCurrentTab(arguments.at(0));
