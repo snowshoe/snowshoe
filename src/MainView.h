@@ -36,15 +36,10 @@ public:
     MainView(BrowserWindow*);
     virtual ~MainView();
 
-    bool isLoading() const;
-
     void openInNewTab(const QString& urlFromUserInput);
 
 public slots:
     QPoint mapToGlobal(int x, int y);
-
-signals:
-    void loadingStateChanged(bool);
 
 private:
     QAction* createActionWithShortcut(const QKeySequence&);
