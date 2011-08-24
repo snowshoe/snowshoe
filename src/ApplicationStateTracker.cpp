@@ -1,5 +1,4 @@
 /****************************************************************************
- *   Copyright (C) 2011  Andreas Kling <awesomekling@gmail.com>             *
  *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
@@ -15,48 +14,26 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#ifndef BrowserWindow_h
-#define BrowserWindow_h
-
 #include "ApplicationStateTracker.h"
-#include <QtDeclarative/QSGView>
-#include <QtGui/QKeySequence>
-#include <QtGui/QMainWindow>
 
-class BrowserObject;
-class PopupMenu;
-class QSGItem;
+#include "BrowserWindow.h"
+#include <QtCore/QSettings>
 
-class BrowserWindow : public QMainWindow {
-    Q_OBJECT
+ApplicationStateTracker::ApplicationStateTracker(BrowserWindow* window)
+    : m_window(window)
+{
 
-public:
-    BrowserWindow();
-    virtual ~BrowserWindow();
+}
 
-    BrowserObject* browserObject() { return m_browserObject; }
+void ApplicationStateTracker::saveWindowGeometry()
+{
+    QSettings settings;
+    settings.setValue("mainWindowGeometry", m_window->saveGeometry());
+}
 
-    void openInCurrentTab(const QString& urlFromUserInput);
-
-public slots:
-    QPoint mapToGlobal(int x, int y);
-
-protected:
-    void closeEvent(QCloseEvent*);
-
-private:
-    friend class BrowserObject;
-
-    void setupDeclarativeEnvironment();
-
-    QAction* createActionWithShortcut(const QKeySequence&);
-    void setupShortcuts();
-
-    ApplicationStateTracker m_stateTracker;
-    BrowserObject* m_browserObject;
-    QSGView* m_view;
-    QSGItem* m_tabWidget;
-    PopupMenu* m_popupMenu;
-};
-
-#endif
+void ApplicationStateTracker::restoreWindowGeometry()
+{
+    QSettings settings;
+    if (!m_window->restoreGeometry(settings.value("mainWindowGeometry").toByteArray()))
+        m_window->resize(800, 600);
+}

@@ -35,6 +35,7 @@
 
 BrowserWindow::BrowserWindow()
     : QMainWindow(0)
+    , m_stateTracker(this)
     , m_browserObject(new BrowserObject(this))
     , m_view(new QSGView(this))
     , m_tabWidget(0)
@@ -50,7 +51,7 @@ BrowserWindow::BrowserWindow()
 
     setupShortcuts();
 
-    restoreSettings();
+    m_stateTracker.restoreWindowGeometry();
 }
 
 BrowserWindow::~BrowserWindow()
@@ -81,23 +82,7 @@ void BrowserWindow::openInCurrentTab(const QString& urlFromUserInput)
 
 void BrowserWindow::closeEvent(QCloseEvent*)
 {
-    saveSettings();
-}
-
-void BrowserWindow::saveSettings()
-{
-    QSettings settings;
-    settings.setValue("mainWindowGeometry", saveGeometry());
-    // ### We don't have QToolbar or QDockWidget, is "saveState()" used for something else?
-    settings.setValue("mainWindowState", saveState());
-}
-
-void BrowserWindow::restoreSettings()
-{
-    QSettings settings;
-    if (!restoreGeometry(settings.value("mainWindowGeometry").toByteArray()))
-        resize(800, 600);
-    restoreState(settings.value("mainWindowState").toByteArray());
+    m_stateTracker.saveWindowGeometry();
 }
 
 void BrowserWindow::setupDeclarativeEnvironment()

@@ -5,6 +5,7 @@ QT += declarative sql
 
 SOURCES += \
     main.cpp \
+    ApplicationStateTracker.cpp \
     BookmarkModel.cpp \
     BrowserObject.cpp \
     BrowserWindow.cpp \
@@ -14,6 +15,7 @@ SOURCES += \
     BookmarkFilter.cpp
 
 HEADERS += \
+    ApplicationStateTracker.h \
     BookmarkModel.h \
     BrowserObject.h \
     BrowserWindow.h \

@@ -1,5 +1,4 @@
 /****************************************************************************
- *   Copyright (C) 2011  Andreas Kling <awesomekling@gmail.com>             *
  *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
@@ -15,48 +14,20 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#ifndef BrowserWindow_h
-#define BrowserWindow_h
+#ifndef ApplicationStateTracker_h
+#define ApplicationStateTracker_h
 
-#include "ApplicationStateTracker.h"
-#include <QtDeclarative/QSGView>
-#include <QtGui/QKeySequence>
-#include <QtGui/QMainWindow>
+class BrowserWindow;
 
-class BrowserObject;
-class PopupMenu;
-class QSGItem;
-
-class BrowserWindow : public QMainWindow {
-    Q_OBJECT
-
+class ApplicationStateTracker {
 public:
-    BrowserWindow();
-    virtual ~BrowserWindow();
+    ApplicationStateTracker(BrowserWindow*);
 
-    BrowserObject* browserObject() { return m_browserObject; }
-
-    void openInCurrentTab(const QString& urlFromUserInput);
-
-public slots:
-    QPoint mapToGlobal(int x, int y);
-
-protected:
-    void closeEvent(QCloseEvent*);
+    void saveWindowGeometry();
+    void restoreWindowGeometry();
 
 private:
-    friend class BrowserObject;
-
-    void setupDeclarativeEnvironment();
-
-    QAction* createActionWithShortcut(const QKeySequence&);
-    void setupShortcuts();
-
-    ApplicationStateTracker m_stateTracker;
-    BrowserObject* m_browserObject;
-    QSGView* m_view;
-    QSGItem* m_tabWidget;
-    PopupMenu* m_popupMenu;
+    BrowserWindow* m_window;
 };
 
 #endif
