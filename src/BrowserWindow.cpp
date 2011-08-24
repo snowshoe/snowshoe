@@ -51,10 +51,11 @@ BrowserWindow::BrowserWindow(const QStringList& urls)
 
     m_stateTracker.restoreWindowGeometry();
 
+    const bool restoredUrls = m_stateTracker.restoreUrlsOpened();
     if (!urls.isEmpty()) {
         for (int i = 0; i < urls.size(); i++)
             openUrlInNewTab(urls.at(i));
-    } else
+    } else if (!restoredUrls)
         openNewEmptyTab();
 }
 
@@ -81,6 +82,7 @@ void BrowserWindow::openUrlInNewTab(const QString& urlFromUserInput)
 void BrowserWindow::closeEvent(QCloseEvent*)
 {
     m_stateTracker.saveWindowGeometry();
+    m_stateTracker.saveUrlsOpened();
 }
 
 void BrowserWindow::setupDeclarativeEnvironment()

@@ -53,6 +53,7 @@ Item {
         }
         tab.anchors.top = root.top;
         tab.tabWidget = root;
+        updateUrlsOpened();
         tabAdded(tab);
     }
 
@@ -60,10 +61,15 @@ Item {
     {
         Core.closeTab(tab);
         tab.destroy();
+        updateUrlsOpened()
         if (Core.tabsHeadersWidth() < width) {
             // Shrink the tabs
             Core.shrinkTabs(width);
         }
+    }
+
+    function updateUrlsOpened() {
+        BrowserObject.updateUrlsOpened(Core.urlsInTabOrder())
     }
 
     function updateSiblingTabsForDragging(tab, draggingEnable)
@@ -86,9 +92,9 @@ Item {
         Core.jumpToPreviousTab();
     }
 
-    function resetTabsToNonDraggingState()
-    {
-        Core.resetTabsToNonDraggingState();
+    function resetTabsToNonDraggingState() {
+        Core.resetTabsToNonDraggingState()
+        updateUrlsOpened()
     }
 
     onWidthChanged: Core.shrinkTabs(width)

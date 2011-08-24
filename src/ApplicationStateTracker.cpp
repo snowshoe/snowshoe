@@ -37,3 +37,26 @@ void ApplicationStateTracker::restoreWindowGeometry()
     if (!m_window->restoreGeometry(settings.value("mainWindowGeometry").toByteArray()))
         m_window->resize(800, 600);
 }
+
+void ApplicationStateTracker::updateUrlsOpened(const QStringList& urls)
+{
+    m_urlsOpened = urls;
+}
+
+void ApplicationStateTracker::saveUrlsOpened()
+{
+    QSettings settings;
+    settings.setValue("urlsOpened", m_urlsOpened);
+}
+
+bool ApplicationStateTracker::restoreUrlsOpened()
+{
+    QSettings settings;
+    QStringList storedUrls = settings.value("urlsOpened").toStringList();
+    m_urlsOpened = storedUrls;
+    if (storedUrls.isEmpty())
+        return false;
+    for (int i = 0; i < storedUrls.size(); i++)
+        m_window->openUrlInNewTab(storedUrls.at(i));
+    return true;
+}

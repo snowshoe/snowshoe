@@ -61,6 +61,7 @@ TabWidget {
                 y: tab.headerHeight
                 visible: tab.active
                 tab: tab
+                onUrlChanged: tabWidget.updateUrlsOpened()
             }
         }
     }

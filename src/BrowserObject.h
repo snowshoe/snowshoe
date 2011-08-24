@@ -34,6 +34,8 @@ public:
     Q_INVOKABLE bool isUrlValid(const QUrl&);
     Q_INVOKABLE bool isUrlEmpty(const QUrl&);
 
+    Q_INVOKABLE void updateUrlsOpened(const QStringList&);
+
 signals:
     void windowTitleChanged();
 

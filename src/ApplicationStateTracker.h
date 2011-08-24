@@ -17,6 +17,8 @@
 #ifndef ApplicationStateTracker_h
 #define ApplicationStateTracker_h
 
+#include <QtCore/QStringList>
+
 class BrowserWindow;
 
 class ApplicationStateTracker {
@@ -26,8 +28,14 @@ public:
     void saveWindowGeometry();
     void restoreWindowGeometry();
 
+    void updateUrlsOpened(const QStringList&);
+
+    void saveUrlsOpened();
+    bool restoreUrlsOpened();
+
 private:
     BrowserWindow* m_window;
+    QStringList m_urlsOpened;
 };
 
 #endif

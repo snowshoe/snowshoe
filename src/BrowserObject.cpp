@@ -49,3 +49,8 @@ bool BrowserObject::isUrlEmpty(const QUrl& url)
 {
     return url.isEmpty();
 }
+
+void BrowserObject::updateUrlsOpened(const QStringList& urls)
+{
+    m_window->stateTracker()->updateUrlsOpened(urls);
+}

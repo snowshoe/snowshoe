@@ -21,6 +21,7 @@ import Snowshoe 1.0
 Item {
     id: root
 
+    property alias url: desktopView.url
     property alias urlBar: urlBar
     property alias desktopView: desktopView
     property bool isLoading: false

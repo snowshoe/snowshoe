@@ -296,3 +296,13 @@ function jumpToPreviousTab()
         tabIndex = tabArray.length - 1;
     setActiveTab(tabArray[tabIndex]);
 }
+
+function urlsInTabOrder() {
+    var i, tab, urls
+    urls = []
+    for (i = 0; i < tabArray.length; i++) {
+        tab = tabArray[i]
+        urls.push(tab.mainView.desktopView.url)
+    }
+    return urls
+}

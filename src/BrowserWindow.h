@@ -36,6 +36,8 @@ public:
 
     BrowserObject* browserObject() { return m_browserObject; }
 
+    void openUrlInNewTab(const QString& urlFromUserInput);
+
 public slots:
     QPoint mapToGlobal(int x, int y);
 
@@ -45,7 +47,8 @@ protected:
 private:
     friend class BrowserObject;
 
-    void openUrlInNewTab(const QString& urlFromUserInput);
+    ApplicationStateTracker* stateTracker() { return &m_stateTracker; }
+
     void openNewEmptyTab();
 
     void setupDeclarativeEnvironment();
