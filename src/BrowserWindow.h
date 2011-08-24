@@ -31,12 +31,10 @@ class BrowserWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    BrowserWindow();
+    BrowserWindow(const QStringList& urls);
     virtual ~BrowserWindow();
 
     BrowserObject* browserObject() { return m_browserObject; }
-
-    void openInCurrentTab(const QString& urlFromUserInput);
 
 public slots:
     QPoint mapToGlobal(int x, int y);
@@ -46,6 +44,9 @@ protected:
 
 private:
     friend class BrowserObject;
+
+    void openUrlInNewTab(const QString& urlFromUserInput);
+    void openNewEmptyTab();
 
     void setupDeclarativeEnvironment();
 

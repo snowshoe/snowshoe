@@ -43,13 +43,8 @@ int main(int argc, char** argv)
 
     DatabaseManager::instance()->initialize();
 
-    QStringList arguments = app.arguments();
-    arguments.removeAt(0);
-
-    BrowserWindow* window = new BrowserWindow();
-
-    if (!arguments.isEmpty())
-        window->openInCurrentTab(arguments.at(0));
+    QStringList urlsFromArguments = app.arguments().mid(1);
+    BrowserWindow* window = new BrowserWindow(urlsFromArguments);
 
     window->show();
     app.exec();

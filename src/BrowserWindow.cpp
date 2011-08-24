@@ -31,9 +31,7 @@
 #include <QtDeclarative/QSGItem>
 #include <QtGui/QAction>
 
-
-
-BrowserWindow::BrowserWindow()
+BrowserWindow::BrowserWindow(const QStringList& urls)
     : QMainWindow(0)
     , m_stateTracker(this)
     , m_browserObject(new BrowserObject(this))
@@ -52,6 +50,12 @@ BrowserWindow::BrowserWindow()
     setupShortcuts();
 
     m_stateTracker.restoreWindowGeometry();
+
+    if (!urls.isEmpty()) {
+        for (int i = 0; i < urls.size(); i++)
+            openUrlInNewTab(urls.at(i));
+    } else
+        openNewEmptyTab();
 }
 
 BrowserWindow::~BrowserWindow()
@@ -63,21 +67,15 @@ QPoint BrowserWindow::mapToGlobal(int x, int y)
     return QWidget::mapToGlobal(QPoint(x, y));
 }
 
-QDesktopWebView* getWebViewForTab(QObject* tab)
+void BrowserWindow::openNewEmptyTab()
 {
-    QObject* mainView = tab->property("mainView").value<QObject*>();
-    // ### Using QObject::property() is giving me 0 here.
-    QObject* webView = QDeclarativeProperty::read(mainView, "desktopView").value<QObject*>();
-    return qobject_cast<QDesktopWebView*>(webView);
+    QMetaObject::invokeMethod(m_tabWidget, "addNewEmptyTab");
 }
 
-void BrowserWindow::openInCurrentTab(const QString& urlFromUserInput)
+void BrowserWindow::openUrlInNewTab(const QString& urlFromUserInput)
 {
     QUrl url = QUrl::fromUserInput(urlFromUserInput);
-    if (url.isEmpty())
-        return;
-    QObject* currentActiveTab = m_tabWidget->property("currentActiveTab").value<QObject*>();
-    getWebViewForTab(currentActiveTab)->load(url);
+    QMetaObject::invokeMethod(m_tabWidget, "addNewTabWithUrl", Q_ARG(QVariant, url));
 }
 
 void BrowserWindow::closeEvent(QCloseEvent*)
@@ -113,7 +111,7 @@ void BrowserWindow::setupShortcuts()
     connect(focusLocationBarAction, SIGNAL(triggered()), m_tabWidget, SLOT(focusUrlBar()));
 
     QAction* newTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_T));
-    connect(newTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(addNewTab()));
+    connect(newTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(addNewEmptyTab()));
 
     QAction* closeTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_W));
     connect(closeTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(closeActiveTab()));

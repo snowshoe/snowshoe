@@ -33,13 +33,19 @@ TabWidget {
         closeTab(currentActiveTab)
     }
 
-    onNewTabRequested: addNewTab()
-    Component.onCompleted: addNewTab()
+    onNewTabRequested: addNewEmptyTab()
 
-    function addNewTab() {
+    function addNewEmptyTab() {
         var tab = tabComponent.createObject(tabWidget)
         tabWidget.addTab(tab)
         tabWidget.setActiveTab(tab)
+        return tab
+    }
+
+    function addNewTabWithUrl(url) {
+        var tab = addNewEmptyTab()
+        if (BrowserObject.isUrlValid(url))
+            tab.mainView.desktopView.load(url)
         return tab
     }
 
