@@ -68,6 +68,16 @@ QPoint BrowserWindow::mapToGlobal(int x, int y)
     return QWidget::mapToGlobal(QPoint(x, y));
 }
 
+void BrowserWindow::moveEvent(QMoveEvent*)
+{
+    m_stateTracker.updateWindowGeometry();
+}
+
+void BrowserWindow::resizeEvent(QResizeEvent*)
+{
+    m_stateTracker.updateWindowGeometry();
+}
+
 void BrowserWindow::openNewEmptyTab()
 {
     QMetaObject::invokeMethod(m_tabWidget, "addNewEmptyTab");
@@ -77,12 +87,6 @@ void BrowserWindow::openUrlInNewTab(const QString& urlFromUserInput)
 {
     QUrl url = QUrl::fromUserInput(urlFromUserInput);
     QMetaObject::invokeMethod(m_tabWidget, "addNewTabWithUrl", Q_ARG(QVariant, url));
-}
-
-void BrowserWindow::closeEvent(QCloseEvent*)
-{
-    m_stateTracker.saveWindowGeometry();
-    m_stateTracker.saveUrlsOpened();
 }
 
 void BrowserWindow::setupDeclarativeEnvironment()

@@ -42,7 +42,8 @@ public slots:
     QPoint mapToGlobal(int x, int y);
 
 protected:
-    void closeEvent(QCloseEvent*);
+    virtual void moveEvent(QMoveEvent*);
+    virtual void resizeEvent(QResizeEvent*);
 
 private:
     friend class BrowserObject;

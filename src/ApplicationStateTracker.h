@@ -17,24 +17,36 @@
 #ifndef ApplicationStateTracker_h
 #define ApplicationStateTracker_h
 
+#include <QtCore/QObject>
 #include <QtCore/QStringList>
+#include <QtCore/QTimer>
 
 class BrowserWindow;
 
-class ApplicationStateTracker {
+class ApplicationStateTracker : public QObject {
+    Q_OBJECT
+
 public:
     ApplicationStateTracker(BrowserWindow*);
+    virtual ~ApplicationStateTracker();
 
-    void saveWindowGeometry();
+    void updateWindowGeometry();
     void restoreWindowGeometry();
 
     void updateUrlsOpened(const QStringList&);
-
-    void saveUrlsOpened();
     bool restoreUrlsOpened();
 
+private slots:
+    void saveState();
+
 private:
+    Q_DISABLE_COPY(ApplicationStateTracker)
+
+    void startTimerIfNeeded();
+
+    QTimer m_saveTimer;
     BrowserWindow* m_window;
+    QByteArray m_windowGeometry;
     QStringList m_urlsOpened;
 };
 

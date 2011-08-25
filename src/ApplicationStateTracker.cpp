@@ -19,16 +19,26 @@
 #include "BrowserWindow.h"
 #include <QtCore/QSettings>
 
-ApplicationStateTracker::ApplicationStateTracker(BrowserWindow* window)
-    : m_window(window)
-{
+const int IntervalForSavingStateInMilliseconds = 10000;
 
+ApplicationStateTracker::ApplicationStateTracker(BrowserWindow* window)
+    : QObject()
+    , m_saveTimer()
+    , m_window(window)
+{
+    m_saveTimer.setInterval(IntervalForSavingStateInMilliseconds);
+    m_saveTimer.setSingleShot(true);
+    connect(&m_saveTimer, SIGNAL(timeout()), SLOT(saveState()));
 }
 
-void ApplicationStateTracker::saveWindowGeometry()
+ApplicationStateTracker::~ApplicationStateTracker()
 {
-    QSettings settings;
-    settings.setValue("mainWindowGeometry", m_window->saveGeometry());
+    saveState();
+}
+
+void ApplicationStateTracker::updateWindowGeometry()
+{
+    m_windowGeometry = m_window->saveGeometry();
 }
 
 void ApplicationStateTracker::restoreWindowGeometry()
@@ -41,12 +51,7 @@ void ApplicationStateTracker::restoreWindowGeometry()
 void ApplicationStateTracker::updateUrlsOpened(const QStringList& urls)
 {
     m_urlsOpened = urls;
-}
-
-void ApplicationStateTracker::saveUrlsOpened()
-{
-    QSettings settings;
-    settings.setValue("urlsOpened", m_urlsOpened);
+    startTimerIfNeeded();
 }
 
 bool ApplicationStateTracker::restoreUrlsOpened()
@@ -59,4 +64,17 @@ bool ApplicationStateTracker::restoreUrlsOpened()
     for (int i = 0; i < storedUrls.size(); i++)
         m_window->openUrlInNewTab(storedUrls.at(i));
     return true;
+}
+
+void ApplicationStateTracker::saveState()
+{
+    QSettings settings;
+    settings.setValue("mainWindowGeometry", m_windowGeometry);
+    settings.setValue("urlsOpened", m_urlsOpened);
+}
+
+void ApplicationStateTracker::startTimerIfNeeded()
+{
+    if (!m_saveTimer.isActive())
+        m_saveTimer.start();
 }
