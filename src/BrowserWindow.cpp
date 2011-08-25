@@ -127,4 +127,7 @@ void BrowserWindow::setupShortcuts()
 
     QAction* previousTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageUp));
     connect(previousTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(jumpToPreviousTab()));
+
+    QAction* quitAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Q));
+    connect(quitAction, SIGNAL(triggered()), QCoreApplication::instance(), SLOT(quit()));
 }
