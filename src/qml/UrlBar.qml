@@ -27,8 +27,6 @@ Item {
 
     signal urlEntered(string url)
 
-    Component.onCompleted: { urlEdit.view = webView }
-
     width: parent.width
     height: urlEdit.height + verticalMargins
 
@@ -93,8 +91,6 @@ Item {
 
         UrlEdit {
             id: urlEdit
-            property variant view: webView
-            objectName: "urlEdit"
             onUrlEntered: root.urlEntered(url)
         }
     }
