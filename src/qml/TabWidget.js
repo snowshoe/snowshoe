@@ -32,8 +32,6 @@ function setActiveTab(newActiveTab) {
         newActiveTab.pageWidget.urlBar.textInput.forceActiveFocus();
     else
         newActiveTab.pageWidget.webView.forceActiveFocus();
-
-    tabWidget.currentTabChanged();
 }
 
 function addTab(newTab)

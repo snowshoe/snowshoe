@@ -29,8 +29,6 @@ Item {
         Core.setActiveTab(newActiveTab);
     }
 
-    signal tabAdded(variant newTab)
-    signal currentTabChanged()
     signal newTabRequested()
 
     Image {
@@ -54,7 +52,6 @@ Item {
         tab.anchors.top = root.top;
         tab.tabWidget = root;
         updateUrlsOpened();
-        tabAdded(tab);
     }
 
     function closeTab(tab)
