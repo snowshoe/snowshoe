@@ -52,25 +52,25 @@ Item {
         id: separator
         anchors {
             top: parent.top
-            right: drowDownMenuButton.left
+            right: dropDownMenuButton.left
             rightMargin: 10
         }
         source: "qrc:///bookmark/bookmark_header_divisor"
-        visible: drowDownMenuButton.visible
+        visible: dropDownMenuButton.visible
     }
 
     Image {
-        id: drowDownMenuButton
+        id: dropDownMenuButton
         anchors {
             right: parent.right
             rightMargin: 10
             top: parent.top
             topMargin: 8
         }
-        source: { drowDownMenuMouseArea.isHovered ? "qrc:///bookmarks/btn_dropdown_menu_over" : "qrc:///bookmarks/btn_dropdown_menu_static"}
+        source: { dropDownMenuMouseArea.isHovered ? "qrc:///bookmarks/btn_dropdown_menu_over" : "qrc:///bookmarks/btn_dropdown_menu_static"}
         visible: { (filteredModel.endRow != -1 && filteredModel.endRow < BookmarkModel.rowCount() - 1) }
         MouseArea {
-            id: drowDownMenuMouseArea
+            id: dropDownMenuMouseArea
             anchors.fill: parent
             hoverEnabled: true
             property bool isHovered: false
@@ -80,9 +80,9 @@ Item {
                 PopupMenu.setContextProperty("WebView", desktopView);
                 PopupMenu.setContextProperty("BookmarkModel", BookmarkModel);
                 PopupMenu.setContextProperty("StartRow", filteredModel.endRow + 1);
-                PopupMenu.qmlComponent = "DrowDownMenuBookmark";
+                PopupMenu.qmlComponent = "DropDownMenuBookmark";
                 var point = mapToItem(tabWidget, x, height);
-                var globalPos = View.mapToGlobal(drowDownMenuButton.x, point.y);
+                var globalPos = View.mapToGlobal(dropDownMenuButton.x, point.y);
                 PopupMenu.show();
                 PopupMenu.movePopup(globalPos.x, globalPos.y);
             }

@@ -20,7 +20,7 @@ Rectangle {
     id: newTab
     color: "#e1e2ea"
 
-    BookmarBar {
+    BookmarkBar {
         height: 50
         anchors.left: parent.left
         anchors.right: parent.right

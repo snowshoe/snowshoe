@@ -49,6 +49,6 @@ BorderImage {
 
         model: filteredModel
         spacing: 10
-        delegate: DrowDownMenuBookmarkDelegate {}
+        delegate: DropDownMenuBookmarkDelegate {}
     }
 }

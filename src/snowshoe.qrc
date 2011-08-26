@@ -43,13 +43,13 @@
         <file alias="combobox/btn_scroll_static">images/combobox/combobox_btn_scroll_static.png</file>
         <file alias="combobox/divisor">images/combobox/combobox_divisor.png</file>
         <file alias="combobox/item_over_bg">images/combobox/combobox_item_over_bg.png</file>
-        <file>qml/BookmarBar.qml</file>
+        <file>qml/BookmarkBar.qml</file>
         <file>qml/NewTab.qml</file>
-        <file>qml/DrowDownMenuBookmark.qml</file>
+        <file>qml/DropDownMenuBookmark.qml</file>
         <file alias="urlbar/fav_icon_off">images/urlbar/fav_icon_off.png</file>
         <file alias="urlbar/fav_icon_on">images/urlbar/fav_icon_on.png</file>
         <file alias="bookmark/bookmark_header_divisor">images/bookmark/bookmark_header_divisor.png</file>
         <file>qml/BookmarkBarDelegate.qml</file>
-        <file>qml/DrowDownMenuBookmarkDelegate.qml</file>
+        <file>qml/DropDownMenuBookmarkDelegate.qml</file>
     </qresource>
 </RCC>

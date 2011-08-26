@@ -75,7 +75,7 @@ OTHER_FILES += \
     qml/UrlBar.qml \
     qml/PageWidget.qml \
     qml/NewTab.qml \
-    qml/BookmarBar.qml \
-    qml/DrowDownMenuBookmark.qml \
+    qml/BookmarkBar.qml \
+    qml/DropDownMenuBookmark.qml \
     qml/BookmarkBarDelegate.qml \
-    qml/DrowDownMenuBookmarkDelegate.qml
+    qml/DropDownMenuBookmarkDelegate.qml

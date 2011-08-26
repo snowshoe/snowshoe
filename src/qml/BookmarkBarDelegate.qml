@@ -18,7 +18,7 @@ import QtQuick 2.0
 
 Item {
     width: text.width + text.anchors.leftMargin + text.anchors.rightMargin
-    height: drowDownMenuButton.height
+    height: dropDownMenuButton.height
     anchors.top: parent.top
     anchors.topMargin: 8
 
