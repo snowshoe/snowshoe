@@ -36,10 +36,10 @@ Item {
 
     property variant tabWidget: Item {}
 
-    property variant mainView;
+    property variant pageWidget
 
     // Binding's target can't be changed on the fly let's affect it once.
-    onMainViewChanged: { heightBinding.target = widthBinding.target = mainView;}
+    onPageWidgetChanged: { heightBinding.target = widthBinding.target = pageWidget;}
 
     function rightEdge() {
         return content.x + content.width;
@@ -154,7 +154,7 @@ Item {
             anchors.topMargin: 10
             anchors.leftMargin: 12
             playing: visible
-            visible: mainView != undefined && mainView.isLoading;
+            visible: pageWidget != undefined && pageWidget.isLoading;
         }
 
         Text {

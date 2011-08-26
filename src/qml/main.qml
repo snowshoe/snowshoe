@@ -26,7 +26,7 @@ TabWidget {
     }
 
     function focusUrlBar() {
-        currentActiveTab.mainView.focusUrlBar()
+        currentActiveTab.pageWidget.focusUrlBar()
     }
 
     function closeActiveTab() {
@@ -45,7 +45,7 @@ TabWidget {
     function addNewTabWithUrl(url) {
         var tab = addNewEmptyTab()
         if (BrowserObject.isUrlValid(url))
-            tab.mainView.webView.load(url)
+            tab.pageWidget.webView.load(url)
         return tab
     }
 
@@ -54,7 +54,7 @@ TabWidget {
         Tab {
             id: tab
             text: "New Tab"
-            mainView: page
+            pageWidget: page
 
             PageWidget {
                 id: page
