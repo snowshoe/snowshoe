@@ -27,7 +27,7 @@ Item {
 
     signal urlEntered(string url)
 
-    Component.onCompleted: { urlEdit.view = desktopView }
+    Component.onCompleted: { urlEdit.view = webView }
 
     width: parent.width
     height: urlEdit.height + verticalMargins
@@ -48,7 +48,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: { desktopView.navigation.back(); }
+                onClicked: { webView.navigation.back(); }
             }
         }
 
@@ -65,7 +65,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: { desktopView.navigation.forward(); }
+                onClicked: { webView.navigation.forward(); }
             }
         }
 
@@ -82,7 +82,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: { desktopView.navigation.reload(); }
+                onClicked: { webView.navigation.reload(); }
             }
         }
     }
@@ -93,7 +93,7 @@ Item {
 
         UrlEdit {
             id: urlEdit
-            property variant view: desktopView
+            property variant view: webView
             objectName: "urlEdit"
             onUrlEntered: root.urlEntered(url)
         }

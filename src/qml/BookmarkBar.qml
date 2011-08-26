@@ -77,7 +77,7 @@ Item {
             onEntered: { isHovered = true; }
             onExited: { isHovered = false }
             onClicked: {
-                PopupMenu.setContextProperty("WebView", desktopView);
+                PopupMenu.setContextProperty("WebView", webView);
                 PopupMenu.setContextProperty("BookmarkModel", BookmarkModel);
                 PopupMenu.setContextProperty("StartRow", filteredModel.endRow + 1);
                 PopupMenu.qmlComponent = "DropDownMenuBookmark";

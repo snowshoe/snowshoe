@@ -21,9 +21,9 @@ import Snowshoe 1.0
 Item {
     id: root
 
-    property alias url: desktopView.url
+    property alias url: webView.url
     property alias urlBar: urlBar
-    property alias desktopView: desktopView
+    property alias webView: webView
     property bool isLoading: false
 
     property variant tab;
@@ -33,14 +33,14 @@ Item {
         onUrlEntered: {
             var urlToBrowse = BrowserObject.urlFromUserInput(url);
             if (BrowserObject.isUrlValid(urlToBrowse))
-                desktopView.load(urlToBrowse);
+                webView.load(urlToBrowse);
             else
-                desktopView.load(fallbackUrl(url));
+                webView.load(fallbackUrl(url));
         }
     }
 
     DesktopWebView {
-        id: desktopView
+        id: webView
         anchors {
             top: urlBar.bottom
             bottom: root.bottom

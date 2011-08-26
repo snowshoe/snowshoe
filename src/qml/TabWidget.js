@@ -28,10 +28,10 @@ function setActiveTab(newActiveTab) {
     currentActiveTab = newActiveTab;
 
     // FIXME: Do better it breaks the genericity of the tabwidget
-    if (BrowserObject.isUrlEmpty(newActiveTab.mainView.desktopView.url))
+    if (BrowserObject.isUrlEmpty(newActiveTab.mainView.webView.url))
         newActiveTab.mainView.urlBar.textInput.forceActiveFocus();
     else
-        newActiveTab.mainView.desktopView.forceActiveFocus();
+        newActiveTab.mainView.webView.forceActiveFocus();
 
     tabWidget.currentTabChanged();
 }
@@ -302,7 +302,7 @@ function urlsInTabOrder() {
     urls = []
     for (i = 0; i < tabArray.length; i++) {
         tab = tabArray[i]
-        urls.push(tab.mainView.desktopView.url)
+        urls.push(tab.mainView.webView.url)
     }
     return urls
 }

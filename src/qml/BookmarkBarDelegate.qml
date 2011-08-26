@@ -64,6 +64,6 @@ Item {
            background.source = "qrc:///bookmark/static_bg";
            overlay.source = "qrc:///bookmark/static_mask";
        }
-       onClicked: { desktopView.load(url); }
+       onClicked: { webView.load(url); }
     }
 }

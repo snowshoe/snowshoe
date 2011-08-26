@@ -45,7 +45,7 @@ TabWidget {
     function addNewTabWithUrl(url) {
         var tab = addNewEmptyTab()
         if (BrowserObject.isUrlValid(url))
-            tab.mainView.desktopView.load(url)
+            tab.mainView.webView.load(url)
         return tab
     }
 
