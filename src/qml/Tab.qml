@@ -143,6 +143,9 @@ Item {
                     tabWidget.updateTabsLayout(tab);
                 }
             }
+
+            // Prevent double click to hit TabWidget background.
+            onDoubleClicked: { }
         }
 
         AnimatedImage {
