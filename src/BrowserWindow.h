@@ -60,7 +60,7 @@ private:
     ApplicationStateTracker m_stateTracker;
     BrowserObject* m_browserObject;
     QSGView* m_view;
-    QSGItem* m_tabWidget;
+    QSGItem* m_browserView;
     PopupMenu* m_popupMenu;
 };
 

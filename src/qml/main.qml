@@ -16,24 +16,17 @@
 
 import QtQuick 2.0
 
-TabWidget {
-    id: tabWidget
+Item {
+    id: browserView
 
-    Binding {
-        target: BrowserObject
-        property: "windowTitle"
-        value: currentActiveTab.text + " ~ Snowshoe"
-    }
-
+    // FIXME: Many of those functions are exposed so we setup global shortcuts, can we move this setup to QML side?
     function focusUrlBar() {
-        currentActiveTab.pageWidget.focusUrlBar()
+        tabWidget.currentActiveTab.pageWidget.focusUrlBar()
     }
 
     function closeActiveTab() {
-        closeTab(currentActiveTab)
+        tabWidget.closeTab(tabWidget.currentActiveTab)
     }
-
-    onNewTabRequested: addNewEmptyTab()
 
     function addNewEmptyTab() {
         var page = pageComponent.createObject(contentArea)
@@ -47,6 +40,40 @@ TabWidget {
         return tab
     }
 
+    function jumpToNextTab() {
+        tabWidget.jumpToNextTab()
+    }
+
+    function jumpToPreviousTab() {
+        tabWidget.jumpToPreviousTab()
+    }
+
+    TabWidget {
+        id: tabWidget
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
+        onNewTabRequested: browserView.addNewEmptyTab()
+    }
+
+    Item {
+        id: contentArea
+        anchors {
+            top: tabWidget.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
+    }
+
+    Binding {
+        target: BrowserObject
+        property: "windowTitle"
+        value: tabWidget.currentActiveTab.text + " ~ Snowshoe"
+    }
+
     Component {
         id: pageComponent
         PageWidget {
@@ -54,11 +81,5 @@ TabWidget {
             visible: tab ? tab.active : 0
             onUrlChanged: tabWidget.updateUrlsOpened()
         }
-    }
-
-    Item {
-        id: contentArea
-        anchors.fill: parent
-        anchors.topMargin: tabWidget.currentActiveTab.height
     }
 }

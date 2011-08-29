@@ -31,6 +31,8 @@ Item {
 
     signal newTabRequested()
 
+    height: currentActiveTab.height
+
     Image {
         id: base
         width: parent.width

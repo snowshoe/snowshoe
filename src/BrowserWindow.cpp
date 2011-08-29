@@ -36,7 +36,7 @@ BrowserWindow::BrowserWindow(const QStringList& urls)
     , m_stateTracker(this)
     , m_browserObject(new BrowserObject(this))
     , m_view(new QSGView(this))
-    , m_tabWidget(0)
+    , m_browserView(0)
     , m_popupMenu(new PopupMenu(this))
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -44,8 +44,8 @@ BrowserWindow::BrowserWindow(const QStringList& urls)
 
     setupDeclarativeEnvironment();
 
-    m_tabWidget = qobject_cast<QSGItem*>(m_view->rootObject());
-    Q_ASSERT(m_tabWidget);
+    m_browserView = qobject_cast<QSGItem*>(m_view->rootObject());
+    Q_ASSERT(m_browserView);
 
     setupShortcuts();
 
@@ -80,13 +80,13 @@ void BrowserWindow::resizeEvent(QResizeEvent*)
 
 void BrowserWindow::openNewEmptyTab()
 {
-    QMetaObject::invokeMethod(m_tabWidget, "addNewEmptyTab");
+    QMetaObject::invokeMethod(m_browserView, "addNewEmptyTab");
 }
 
 void BrowserWindow::openUrlInNewTab(const QString& urlFromUserInput)
 {
     QUrl url = QUrl::fromUserInput(urlFromUserInput);
-    QMetaObject::invokeMethod(m_tabWidget, "addNewTabWithUrl", Q_ARG(QVariant, url));
+    QMetaObject::invokeMethod(m_browserView, "addNewTabWithUrl", Q_ARG(QVariant, url));
 }
 
 void BrowserWindow::setupDeclarativeEnvironment()
@@ -114,19 +114,19 @@ QAction* BrowserWindow::createActionWithShortcut(const QKeySequence& shortcut)
 void BrowserWindow::setupShortcuts()
 {
     QAction* focusLocationBarAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
-    connect(focusLocationBarAction, SIGNAL(triggered()), m_tabWidget, SLOT(focusUrlBar()));
+    connect(focusLocationBarAction, SIGNAL(triggered()), m_browserView, SLOT(focusUrlBar()));
 
     QAction* newTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_T));
-    connect(newTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(addNewEmptyTab()));
+    connect(newTabAction, SIGNAL(triggered()), m_browserView, SLOT(addNewEmptyTab()));
 
     QAction* closeTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_W));
-    connect(closeTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(closeActiveTab()));
+    connect(closeTabAction, SIGNAL(triggered()), m_browserView, SLOT(closeActiveTab()));
 
     QAction* nextTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageDown));
-    connect(nextTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(jumpToNextTab()));
+    connect(nextTabAction, SIGNAL(triggered()), m_browserView, SLOT(jumpToNextTab()));
 
     QAction* previousTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageUp));
-    connect(previousTabAction, SIGNAL(triggered()), m_tabWidget, SLOT(jumpToPreviousTab()));
+    connect(previousTabAction, SIGNAL(triggered()), m_browserView, SLOT(jumpToPreviousTab()));
 
     QAction* quitAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Q));
     connect(quitAction, SIGNAL(triggered()), QCoreApplication::instance(), SLOT(quit()));
