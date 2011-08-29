@@ -36,10 +36,8 @@ TabWidget {
     onNewTabRequested: addNewEmptyTab()
 
     function addNewEmptyTab() {
-        var tab = tabComponent.createObject(tabWidget)
-        tabWidget.addTab(tab)
-        tabWidget.setActiveTab(tab)
-        return tab
+        var page = pageComponent.createObject()
+        return tabWidget.addTabForPage(page)
     }
 
     function addNewTabWithUrl(url) {
@@ -50,19 +48,11 @@ TabWidget {
     }
 
     Component {
-        id: tabComponent
-        Tab {
-            id: tab
-            text: "New Tab"
-            pageWidget: page
-
-            PageWidget {
-                id: page
-                y: tab.headerHeight
-                visible: tab.active
-                tab: tab
-                onUrlChanged: tabWidget.updateUrlsOpened()
-            }
+        id: pageComponent
+        PageWidget {
+            y: tab ? tab.headerHeight : 0
+            visible: tab ? tab.active : 0
+            onUrlChanged: tabWidget.updateUrlsOpened()
         }
     }
 }

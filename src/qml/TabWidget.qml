@@ -42,6 +42,22 @@ Item {
         }
     }
 
+    Component {
+        id: tabComponent
+        Tab {
+        }
+    }
+
+    function addTabForPage(page) {
+        var tabToAdd = tabComponent.createObject(root)
+        tabToAdd.pageWidget = page
+        page.parent = tabToAdd
+        page.tab = tabToAdd
+        root.addTab(tabToAdd)
+        root.setActiveTab(tabToAdd)
+        return tabToAdd
+    }
+
     function addTab(tab)
     {
         Core.addTab(tab);
