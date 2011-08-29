@@ -20,8 +20,6 @@ Item {
     id: tab
 
     property alias content:  content
-    property int headerWidth: content.width + rightImage.width
-    property int headerHeight: leftImage.height
     property alias tabHeader: tabHeader
 
     property bool active: true
@@ -38,8 +36,7 @@ Item {
 
     property variant pageWidget
 
-    // Binding's target can't be changed on the fly let's affect it once.
-    onPageWidgetChanged: { heightBinding.target = widthBinding.target = pageWidget;}
+    height: leftImage.height
 
     function rightEdge() {
         return content.x + content.width;
@@ -55,18 +52,6 @@ Item {
 
     function isFirstTab() {
         return (previousTab == undefined);
-    }
-
-    Binding {
-        id: heightBinding
-        property: "height"
-        value: tab.content.height - tab.headerHeight
-    }
-
-    Binding {
-        id: widthBinding
-        property: "width"
-        value: tabWidget.width
     }
 
     function syncHeader() {

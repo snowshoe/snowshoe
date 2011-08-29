@@ -36,7 +36,7 @@ TabWidget {
     onNewTabRequested: addNewEmptyTab()
 
     function addNewEmptyTab() {
-        var page = pageComponent.createObject()
+        var page = pageComponent.createObject(contentArea)
         return tabWidget.addTabForPage(page)
     }
 
@@ -50,9 +50,15 @@ TabWidget {
     Component {
         id: pageComponent
         PageWidget {
-            y: tab ? tab.headerHeight : 0
+            anchors.fill: contentArea
             visible: tab ? tab.active : 0
             onUrlChanged: tabWidget.updateUrlsOpened()
         }
+    }
+
+    Item {
+        id: contentArea
+        anchors.fill: parent
+        anchors.topMargin: tabWidget.currentActiveTab.height
     }
 }
