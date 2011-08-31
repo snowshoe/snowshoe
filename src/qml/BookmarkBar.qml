@@ -32,6 +32,7 @@ Item {
             bottom: parent.bottom
             left: parent.left
             right: separator.left
+            leftMargin: 8
         }
         interactive: false
         orientation: ListView.Horizontal
@@ -44,7 +45,7 @@ Item {
         }
 
         model: filteredModel
-        spacing: 10
+        spacing: 8
         delegate: BookmarkBarDelegate {}
     }
 
@@ -68,7 +69,7 @@ Item {
             topMargin: 8
         }
         source: { dropDownMenuMouseArea.isHovered ? "qrc:///bookmarks/btn_dropdown_menu_over" : "qrc:///bookmarks/btn_dropdown_menu_static"}
-        visible: { (filteredModel.endRow != -1 && filteredModel.endRow < BookmarkModel.rowCount() - 1) }
+        visible: { (filteredModel.endRow != -1 && filteredModel.endRow < BookmarkModel.count - 1) }
         MouseArea {
             id: dropDownMenuMouseArea
             anchors.fill: parent
@@ -82,9 +83,8 @@ Item {
                 PopupMenu.setContextProperty("StartRow", filteredModel.endRow + 1);
                 PopupMenu.qmlComponent = "DropDownMenuBookmark";
                 var point = mapToItem(tabWidget, x, height);
-                var globalPos = View.mapToGlobal(dropDownMenuButton.x, point.y);
-                PopupMenu.show();
-                PopupMenu.movePopup(globalPos.x, globalPos.y);
+                var globalPos = View.mapToGlobal(dropDownMenuButton.x + dropDownMenuButton.width, point.y);
+                PopupMenu.showAtPosition(globalPos.x, globalPos.y);
             }
         }
     }

@@ -33,8 +33,10 @@ Item {
        id: text
        anchors {
            left: parent.left
-           leftMargin: 5
-           rightMargin: 5
+           leftMargin: 8
+           rightMargin: 8
+           top: parent.top
+           topMargin: 9
        }
        text: name + " "
        font.pixelSize: 11
@@ -43,7 +45,6 @@ Item {
                text.elide = Text.ElideRight;
            width = listView.maximumBookmarkWidth;
        }
-       anchors.verticalCenter: parent.verticalCenter
     }
 
     BorderImage {

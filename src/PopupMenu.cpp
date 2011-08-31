@@ -17,6 +17,7 @@
 #include "PopupMenu.h"
 
 #include <QtDeclarative/QDeclarativeContext>
+#include <QtDeclarative/QSGItem>
 #include <QtDeclarative/QSGView>
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopWidget>
@@ -75,6 +76,9 @@ int PopupMenu::maxHeight() const
 void PopupMenu::movePopup(int x, int y)
 {
     QPoint newPos(x, y);
+    QSGItem* rootObject = m_view->rootObject();
+    newPos.setX(x + rootObject->property("rightOffset").toInt());
+    newPos.setY(y + rootObject->property("topOffset").toInt());
     QDesktopWidget* desktopWidget = QApplication::desktop();
     int right = x + geometry().width();
     int bottom = y + geometry().height();
@@ -88,4 +92,10 @@ void PopupMenu::movePopup(int x, int y)
 void PopupMenu::setContextProperty(const QString& name, const QVariant& variant)
 {
     m_view->rootContext()->setContextProperty(name, variant);
+}
+
+void PopupMenu::showAtPosition(int x, int y)
+{
+    QWidget::show();
+    movePopup(x, y);
 }

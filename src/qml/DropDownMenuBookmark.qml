@@ -20,14 +20,17 @@ import Snowshoe 1.0
 BorderImage {
     id: background
     width: listView.width + border.right + border.left
-    height: listView.height + border.top + border.bottom
+    height: listView.height + border.top + border.bottom + margin*2
     source: "qrc:///combobox/base_bg"
     border { left: 12; top: 6; right: 12; bottom: 16 }
+    property int margin: 8
+    property int topOffset: -4
+    property int rightOffset: -width + margin
 
     ListView {
         id: listView
         x: background.x + background.border.left
-        y: background.y + background.border.top
+        y: background.y + background.border.top + margin
         width: 150
         clip: true;
         property int elementHeight: 24
@@ -48,7 +51,7 @@ BorderImage {
         }
 
         model: filteredModel
-        spacing: 10
+        spacing: 2
         delegate: DropDownMenuBookmarkDelegate {}
     }
 }

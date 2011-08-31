@@ -45,6 +45,7 @@ Q_SIGNALS:
 public slots:
     void movePopup(int, int);
     void setContextProperty(const QString&, const QVariant&);
+    void showAtPosition(int, int);
 
 private:
     QString m_qmlComponent;

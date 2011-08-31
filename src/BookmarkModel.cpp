@@ -23,6 +23,8 @@
 BookmarkModel::BookmarkModel(QSqlDatabase database, QObject *parent)
     : QSqlTableModel(parent,  database)
 {
+    connect(this, SIGNAL(rowsInserted(const QModelIndex&, int, int)), SIGNAL(countChanged()));
+    connect(this, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), SIGNAL(countChanged()));
 }
 
 void BookmarkModel::generateRoleNames()

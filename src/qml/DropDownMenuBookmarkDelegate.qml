@@ -32,7 +32,13 @@ Item {
         font.pixelSize: 11
         text: name
         elide: Text.ElideRight
-        anchors.verticalCenter: parent.verticalCenter
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            leftMargin: 8
+            rightMargin: 8
+            right: parent.right
+        }
         onWidthChanged: {
             if (width > listView.width)
                 listView.width = width

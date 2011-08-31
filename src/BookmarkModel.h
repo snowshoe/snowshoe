@@ -22,7 +22,7 @@
 
 class BookmarkModel : public QSqlTableModel {
     Q_OBJECT
-
+    Q_PROPERTY(int count READ rowCount() NOTIFY countChanged())
 public:
     BookmarkModel(QSqlDatabase, QObject* parent = 0);
     void generateRoleNames();
@@ -37,7 +37,9 @@ public:
     Q_INVOKABLE void remove(const QString& url);
     Q_INVOKABLE void update(int index, const QString& name, const QString& url);
     Q_INVOKABLE bool contains(const QString& url);
-    Q_INVOKABLE int rowCount() { return QSqlTableModel::rowCount(); };
+
+Q_SIGNALS:
+    void countChanged();
 
 private:
     QHash<int, QByteArray> m_roles;

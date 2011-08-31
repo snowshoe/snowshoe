@@ -78,7 +78,7 @@ Item {
 
     Image {
         id: bookmarkButton
-        x: urlInput.width - 2
+        x: urlInput.width - 8
         visible:  false
         anchors.top: background.top
         // Those margins are there to make the progress bar look "inside" the url input.
