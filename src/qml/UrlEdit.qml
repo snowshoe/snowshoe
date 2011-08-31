@@ -60,7 +60,6 @@ Item {
         id: urlInput
         focus: true
         font.pixelSize: 12
-        font.bold: true
         selectByMouse: true
         mouseSelectionMode: TextInput.SelectCharacters
         y: verticalMargins
