@@ -97,7 +97,7 @@ void BrowserWindow::setupDeclarativeEnvironment()
     context->setContextProperty("PopupMenu", m_popupMenu);
     context->setContextProperty("View", this);
 
-    QObject::connect(m_view->engine(), SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
+    QObject::connect(m_view->engine(), SIGNAL(quit()), this, SLOT(close()));
 
     m_view->setResizeMode(QSGView::SizeRootObjectToView);
     m_view->setSource(QUrl("qrc:/qml/main.qml"));

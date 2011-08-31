@@ -103,43 +103,44 @@ function getLeftTab(tab)
 function closeTab(tab)
 {
     if (tabArray.length == 0)
-        return;
+        return
 
     if (tabArray.length == 1) {
-        tabArray.pop();
-        Qt.quit();
-        return;
+        tabArray.pop()
+        updateUrlsOpened()
+        Qt.quit()
+        return
     }
 
-    var rightTab = getRightTab(tab);
-    var leftTab = getLeftTab(tab);
+    var rightTab = getRightTab(tab)
+    var leftTab = getLeftTab(tab)
 
-    var tabIndex = tabArray.indexOf(tab);
+    var tabIndex = tabArray.indexOf(tab)
     if (tabIndex > 0) {
         if (tabIndex == tabArray.length - 1) {
             leftTab.isLastTab = true;
             if (tab.active) {
-                setActiveTab(leftTab);
+                setActiveTab(leftTab)
             }
         } else {
-            rightTab.previousTab = leftTab;
-            rightTab.content.x = leftTab.rightEdge();
-            updateGeometryFollowingTabs(rightTab);
+            rightTab.previousTab = leftTab
+            rightTab.content.x = leftTab.rightEdge()
+            updateGeometryFollowingTabs(rightTab)
             if (tab.active) {
-                setActiveTab(rightTab);
+                setActiveTab(rightTab)
             }
         }
     } else {
-        rightTab.previousTab = undefined;
-        rightTab.content.x = 0;
-        updateGeometryFollowingTabs(rightTab);
+        rightTab.previousTab = undefined
+        rightTab.content.x = 0
+        updateGeometryFollowingTabs(rightTab)
         if (tab.active) {
-            setActiveTab(rightTab);
+            setActiveTab(rightTab)
         }
 
     }
 
-    tabArray.splice(tabIndex, 1);
+    tabArray.splice(tabIndex, 1)
 }
 
 function updateGeometryFollowingTabs(tab)
