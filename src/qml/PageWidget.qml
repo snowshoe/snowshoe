@@ -55,12 +55,12 @@ Item {
             visible = true;
             newTab.visible = false;
             urlBar.bookmarkButton.visible = false;
+            if (tab.active && !focus)
+                forceActiveFocus();
         }
 
         onLoadSucceeded: {
             root.isLoading = false
-            if (tab.active && !focus)
-                forceActiveFocus();
             urlBar.bookmarkButton.visible = true;
             urlBar.bookmarkButton.isBookmarked = BookmarkModel.contains(url);
         }
