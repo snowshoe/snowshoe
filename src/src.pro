@@ -11,7 +11,6 @@ SOURCES += \
     BrowserWindow.cpp \
     DatabaseManager.cpp \
     PopupMenu.cpp \
-    TripleClickMonitor.cpp \
     BookmarkFilter.cpp
 
 HEADERS += \
@@ -21,7 +20,6 @@ HEADERS += \
     BrowserWindow.h \
     DatabaseManager.h \
     PopupMenu.h \
-    TripleClickMonitor.h \
     BookmarkFilter.h
 
 RESOURCES += \

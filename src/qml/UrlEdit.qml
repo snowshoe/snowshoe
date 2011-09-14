@@ -51,11 +51,6 @@ Item {
         opacity: webView.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
     }
 
-    TripleClickMonitor {
-        target: urlInput
-        onTripleClicked: urlInput.selectAll()
-    }
-
     TextInput {
         id: urlInput
         focus: true

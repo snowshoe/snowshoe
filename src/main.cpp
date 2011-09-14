@@ -19,7 +19,6 @@
 #include "BookmarkFilter.h"
 #include "DatabaseManager.h"
 #include "qdesktopwebview.h"
-#include "TripleClickMonitor.h"
 
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QLatin1String>
@@ -37,7 +36,6 @@ int main(int argc, char** argv)
     app.setOrganizationName(QLatin1String("Snowshoe"));
     app.setApplicationVersion("1.0.0");
 
-    qmlRegisterType<TripleClickMonitor>("Snowshoe", 1, 0, "TripleClickMonitor");
     qmlRegisterType<BookmarkFilter>("Snowshoe", 1, 0, "BookmarkFilter");
     qmlRegisterUncreatableType<QAbstractItemModel>("Snowshoe", 1, 0, "QAbstractItemModel", QObject::tr("You can't create a QAbstractItemModel"));
 
