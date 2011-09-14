@@ -21,67 +21,71 @@ Item {
     property alias text: urlInput.text
     property alias textInput: urlInput
     property alias bookmarkButton: bookmarkButton
-    property int horizontalMargin: 9
 
     width: parent.width
-    height: urlInput.height + verticalMargins * 2
+    height: background.height
 
     signal urlEntered(string url)
 
     BorderImage {
         id: background
         source: "qrc:///urlbar/component_url_input"
-        anchors.verticalCenter: parent.verticalCenter
         width: parent.width
         border { left: 10; top: 10; right: 10; bottom: 10 }
     }
 
-    BorderImage {
-        anchors.top: background.top
-        // Those margins are there to make the progress bar look "inside" the url input.
-        anchors.topMargin: 2
-        anchors.bottom: background.bottom
-        anchors.bottomMargin: 3
-        anchors.left: background.left
-        anchors.leftMargin: 2
-        source: "qrc:///urlbar/progress_bar_url"
-        border { left: 3; top: 3; right: 3; bottom: 3 }
-        horizontalTileMode: BorderImage.Repeat
-        width: (urlEdit.width) * webView.loadProgress / 100.0
-        opacity: webView.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
+    Item {
+        anchors {
+            fill: background
+            // Those margins are here to make the progress bar look "inside" the url input.
+            topMargin: 2
+            bottomMargin: 3
+            leftMargin: 2
+            rightMargin: 2
+        }
+
+        BorderImage {
+            source: "qrc:///urlbar/progress_bar_url"
+            border { left: 3; top: 3; right: 3; bottom: 3 }
+            horizontalTileMode: BorderImage.Repeat
+            width: parent.width * webView.loadProgress / 100.0
+            opacity: webView.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
+        }
     }
 
     TextInput {
         id: urlInput
+
+        anchors {
+            verticalCenter: background.verticalCenter
+            left: background.left
+            right: bookmarkButton.left
+            leftMargin: 9
+            rightMargin: 2
+        }
         focus: true
+        clip: true
         font.pixelSize: 12
         selectByMouse: true
         mouseSelectionMode: TextInput.SelectCharacters
-        y: verticalMargins
-        x: parent.horizontalMargin
-        width: parent.width - bookmarkButton.width
 
-        Keys.onEnterPressed: {
-            urlEdit.urlEntered(urlInput.text)
-        }
-
-        Keys.onReturnPressed: {
-            urlEdit.urlEntered(urlInput.text)
-        }
+        Keys.onEnterPressed: urlEdit.urlEntered(urlInput.text)
+        Keys.onReturnPressed: urlEdit.urlEntered(urlInput.text)
     }
 
     Image {
         id: bookmarkButton
-        x: urlInput.width - 8
-        visible:  false
-        anchors.top: background.top
-        // Those margins are there to make the progress bar look "inside" the url input.
-        anchors.topMargin: 2
-        smooth: true
 
-        property variant isBookmarked
-        onIsBookmarkedChanged: { BrowserObject.isUrlEmpty(webView.url) ? visible = false : visible = true }
-        source: { isBookmarked ? "qrc:///urlbar/fav_icon_on" :"qrc:///urlbar/fav_icon_off" }
+        property bool isBookmarked: false
+
+        anchors {
+            top: background.top
+            right: background.right
+            topMargin: 2
+            rightMargin: 5
+        }
+        visible: false
+        source: isBookmarked ? "qrc:///urlbar/fav_icon_on" : "qrc:///urlbar/fav_icon_off"
 
         MouseArea {
             anchors.fill: parent
@@ -96,6 +100,10 @@ Item {
                     BookmarkModel.insert(webView.title, webView.url);
                 }
             }
+        }
+
+        onIsBookmarkedChanged: {
+            visible = !BrowserObject.isUrlEmpty(webView.url)
         }
     }
 }

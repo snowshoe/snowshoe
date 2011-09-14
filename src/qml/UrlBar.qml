@@ -23,75 +23,66 @@ Item {
     property alias text: urlEdit.text
     property alias textInput: urlEdit.textInput
     property alias bookmarkButton: urlEdit.bookmarkButton
-    property int verticalMargins: 8
 
     signal urlEntered(string url)
 
     width: parent.width
-    height: urlEdit.height + verticalMargins
+    height: background.height
 
     Image {
-        anchors.fill: parent
+        id: background
+        width: parent.width
         fillMode: Image.TileHorizontally
         source: "qrc:///urlbar/url_bg_base_fill"
     }
 
-    Item {
-        id : buttons
-        width: backButton.width + forwardButton.width + refreshButton.width
-        height: parent.height
+    Row {
+        id: buttons
+        width: childrenRect.width
+        height: childrenRect.height
+        anchors.verticalCenter: parent.verticalCenter
+
         Image {
-            id: backButton
             source: "qrc:///urlbar/button_nav_back"
-
             MouseArea {
                 anchors.fill: parent
-                onClicked: { webView.navigation.back(); }
+                onClicked: webView.navigation.back()
             }
         }
 
         Image {
-            id: divisor1
-            anchors.left: backButton.right
             source: "qrc:///urlbar/component_divisor"
         }
 
         Image {
-            id: forwardButton
-            anchors.left: divisor1.right
             source: "qrc:///urlbar/button_nav_next"
-
             MouseArea {
                 anchors.fill: parent
-                onClicked: { webView.navigation.forward(); }
+                onClicked: webView.navigation.forward()
             }
         }
 
         Image {
-            id: divisor2
-            anchors.left: forwardButton.right
             source: "qrc:///urlbar/component_divisor"
         }
 
         Image {
-            id: refreshButton
-            anchors.left: divisor2.right
             source: "qrc:///urlbar/button_nav_refresh"
-
             MouseArea {
                 anchors.fill: parent
-                onClicked: { webView.navigation.reload(); }
+                onClicked: webView.navigation.reload()
             }
         }
     }
-    Item {
-        width: parent.width - buttons.width
-        anchors.left: buttons.right
-        y: verticalMargins / 2
 
-        UrlEdit {
-            id: urlEdit
-            onUrlEntered: root.urlEntered(url)
+    UrlEdit {
+        id: urlEdit
+        anchors {
+            left: buttons.right
+            right: parent.right
+            rightMargin: 4
+            verticalCenter: buttons.verticalCenter
         }
+        onUrlEntered: root.urlEntered(url)
     }
 }
