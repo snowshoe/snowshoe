@@ -90,7 +90,8 @@ Item {
     }
 
     function focusUrlBar() {
-        urlBar.textInput.forceActiveFocus();
+        urlBar.textInput.forceActiveFocus()
+        urlBar.textInput.selectAll()
     }
 
     NewTab {
