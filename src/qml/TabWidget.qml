@@ -20,6 +20,7 @@ import "TabWidget.js" as Core
 Item {
     id: root
 
+    property PageWidget activePage: currentActiveTab.pageWidget
     property variant currentActiveTab: Tab {}
 
     property variant currentTabAnimate;
@@ -47,6 +48,7 @@ Item {
     Component {
         id: tabComponent
         Tab {
+            text: pageWidget ? pageWidget.title : ""
         }
     }
 
@@ -109,6 +111,10 @@ Item {
     function resetTabsToNonDraggingState() {
         Core.resetTabsToNonDraggingState()
         updateUrlsOpened()
+    }
+
+    function closeActiveTab() {
+        root.closeTab(root.currentActiveTab)
     }
 
     onWidthChanged: Core.shrinkTabs(width)

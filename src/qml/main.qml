@@ -21,15 +21,15 @@ Item {
 
     // FIXME: Many of those functions are exposed so we setup global shortcuts, can we move this setup to QML side?
     function stop() {
-        tabWidget.currentActiveTab.pageWidget.stop()
+        tabWidget.activePage.stop()
     }
 
     function focusUrlBar() {
-        tabWidget.currentActiveTab.pageWidget.focusUrlBar()
+        tabWidget.activePage.focusUrlBar()
     }
 
     function closeActiveTab() {
-        tabWidget.closeTab(tabWidget.currentActiveTab)
+        tabWidget.closeActiveTab()
     }
 
     function addNewEmptyTab() {
@@ -75,7 +75,7 @@ Item {
     Binding {
         target: BrowserObject
         property: "windowTitle"
-        value: tabWidget.currentActiveTab.text + " ~ Snowshoe"
+        value: tabWidget.activePage ? tabWidget.activePage.title + " ~ Snowshoe" : ""
     }
 
     Component {

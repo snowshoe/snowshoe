@@ -25,6 +25,7 @@ Item {
     property alias urlBar: urlBar
     property alias webView: webView
     property bool isLoading: false
+    property string title: "New Tab"
 
     property variant tab;
 
@@ -74,7 +75,7 @@ Item {
             load(fallbackUrl(urlBar.text))
         }
 
-        onTitleChanged: { tab.text = title }
+        onTitleChanged: { root.title = title }
 
         function navigationPolicyForUrl(url, button, modifiers) {
             if (button == Qt.MiddleButton

@@ -34,7 +34,7 @@ Item {
 
     property variant tabWidget: Item {}
 
-    property variant pageWidget
+    property PageWidget pageWidget
 
     height: leftImage.height
 
@@ -147,7 +147,6 @@ Item {
 
         Text {
             id: tabText
-            text: "New Tab"
             width: parent.width
             elide: Text.ElideRight
             anchors.top: parent.top
