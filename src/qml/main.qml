@@ -20,6 +20,10 @@ Item {
     id: browserView
 
     // FIXME: Many of those functions are exposed so we setup global shortcuts, can we move this setup to QML side?
+    function stop() {
+        tabWidget.currentActiveTab.pageWidget.stop()
+    }
+
     function focusUrlBar() {
         tabWidget.currentActiveTab.pageWidget.focusUrlBar()
     }

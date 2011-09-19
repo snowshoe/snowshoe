@@ -69,6 +69,8 @@ Item {
 
         onLoadFailed: {
             root.isLoading = false
+            if (errorType == DesktopWebView.NetworkError && errorCode == NetworkReply.OperationCanceledError)
+                return;
             load(fallbackUrl(urlBar.text))
         }
 
@@ -92,6 +94,10 @@ Item {
     function focusUrlBar() {
         urlBar.textInput.forceActiveFocus()
         urlBar.textInput.selectAll()
+    }
+
+    function stop() {
+        webView.navigation.stop()
     }
 
     NewTab {
