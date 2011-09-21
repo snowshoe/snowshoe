@@ -133,4 +133,7 @@ void BrowserWindow::setupShortcuts()
 
     QAction* quitAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Q));
     connect(quitAction, SIGNAL(triggered()), QCoreApplication::instance(), SLOT(quit()));
+
+    QAction* reloadAction = createActionWithShortcut(QKeySequence(Qt::Key_F5));
+    connect(reloadAction, SIGNAL(triggered()), m_browserView, SLOT(reload()));
 }

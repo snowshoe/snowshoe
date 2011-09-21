@@ -24,6 +24,10 @@ Item {
         tabWidget.activePage.stop()
     }
 
+    function reload() {
+        tabWidget.activePage.reload()
+    }
+
     function focusUrlBar() {
         tabWidget.activePage.focusUrlBar()
     }

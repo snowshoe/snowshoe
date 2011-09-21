@@ -101,6 +101,10 @@ Item {
         webView.navigation.stop()
     }
 
+    function reload() {
+        webView.navigation.reload()
+    }
+
     NewTab {
         id: newTab
         anchors.top: urlBar.bottom
