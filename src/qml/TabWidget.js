@@ -22,16 +22,14 @@ function setActiveTab(newActiveTab) {
     newActiveTab.active = true;
 
     // Update the old active tab.
-    if (currentActiveTab)
+    if (currentActiveTab) {
         currentActiveTab.active = false;
+        if (currentActiveTab.pageWidget)
+            currentActiveTab.pageWidget.active = false;
+    }
 
     currentActiveTab = newActiveTab;
-
-    // FIXME: Do better it breaks the genericity of the tabwidget
-    if (BrowserObject.isUrlEmpty(newActiveTab.pageWidget.webView.url))
-        newActiveTab.pageWidget.urlBar.textInput.forceActiveFocus();
-    else
-        newActiveTab.pageWidget.webView.forceActiveFocus();
+    currentActiveTab.pageWidget.active = true;
 }
 
 function addTab(newTab)

@@ -29,11 +29,52 @@ Item {
     width: parent.width
     height: background.height
 
+    property PageWidget pageWidget: PageWidget {}
+
+    onPageWidgetChanged: {
+        if (BrowserObject.isUrlEmpty(pageWidget.webView.url)) {
+            textInput.forceActiveFocus()
+            bookmarkButton.visible = false
+        } else {
+            pageWidget.webView.forceActiveFocus()
+            if (!pageWidget.isLoading) {
+                bookmarkButton.visible = true
+                bookmarkButton.isBookmarked = BookmarkModel.contains(textInput.text)
+            }
+        }
+        urlEdit.text = pageWidget.currentUrl
+    }
+
+    onUrlEntered: {
+        var urlToBrowse = BrowserObject.urlFromUserInput(url);
+        if (BrowserObject.isUrlValid(urlToBrowse))
+            pageWidget.loadUrl(urlToBrowse);
+        else
+            pageWidget.loadUrl(pageWidget.fallbackUrl(url));
+    }
+
     Image {
         id: background
         width: parent.width
         fillMode: Image.TileHorizontally
         source: "qrc:///urlbar/url_bg_base_fill"
+    }
+
+    Connections {
+        target: pageWidget.webView
+        onLoadSucceeded: {
+            bookmarkButton.visible = true;
+            bookmarkButton.isBookmarked = BookmarkModel.contains(pageWidget.webView.url);
+        }
+        onLoadStarted: {
+            bookmarkButton.visible = false;
+        }
+    }
+
+    Binding {
+        target: urlEdit
+        property: "text"
+        value : pageWidget.currentUrl
     }
 
     Row {
@@ -47,7 +88,7 @@ Item {
             pressedImage: "qrc:///urlbar/btn_nav_back_pressed"
             standardImage: "qrc:///urlbar/btn_nav_back_unpressed"
 
-            onClicked: { webView.navigation.back() }
+            onClicked: { pageWidget.webView.navigation.back() }
         }
 
         Image {
@@ -59,7 +100,7 @@ Item {
             pressedImage: "qrc:///urlbar/btn_nav_next_pressed"
             standardImage: "qrc:///urlbar/btn_nav_next_unpressed"
 
-            onClicked: { webView.navigation.forward() }
+            onClicked: { pageWidget.webView.navigation.forward() }
         }
 
         Image {
@@ -67,11 +108,11 @@ Item {
         }
 
         Button {
-            hoveredImage: { webView.navigation.stopAction.enabled ? "qrc:///urlbar/btn_nav_cancel_over" : "qrc:///urlbar/btn_nav_refresh_over" }
-            pressedImage: { webView.navigation.stopAction.enabled ? "qrc:///urlbar/btn_nav_cancel_pressed" : "qrc:///urlbar/btn_nav_refresh_pressed" }
-            standardImage: { webView.navigation.stopAction.enabled ? "qrc:///urlbar/btn_nav_cancel_unpressed" : "qrc:///urlbar/btn_nav_refresh_unpressed" }
+            hoveredImage: { pageWidget.webView.navigation.stopAction.enabled ? "qrc:///urlbar/btn_nav_cancel_over" : "qrc:///urlbar/btn_nav_refresh_over" }
+            pressedImage: { pageWidget.webView.navigation.stopAction.enabled ? "qrc:///urlbar/btn_nav_cancel_pressed" : "qrc:///urlbar/btn_nav_refresh_pressed" }
+            standardImage: { pageWidget.webView.navigation.stopAction.enabled ? "qrc:///urlbar/btn_nav_cancel_unpressed" : "qrc:///urlbar/btn_nav_refresh_unpressed" }
 
-            onClicked: { webView.navigation.stopAction.enabled ? webView.navigation.stop() : webView.navigation.reload() }
+            onClicked: { pageWidget.webView.navigation.stopAction.enabled ? pageWidget.webView.navigation.stop() : pageWidget.webView.navigation.reload() }
         }
     }
 

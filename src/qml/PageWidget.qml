@@ -22,44 +22,19 @@ Item {
     id: root
 
     property alias url: webView.url
-    property alias urlBar: urlBar
     property alias webView: webView
     property bool isLoading: false
     property string title: "New Tab"
+    property string currentUrl
+    property bool active: false
 
     property variant tab;
 
-    function hideUrlBar()
-    {
-        webView.anchors.top = root.top
-        newTab.anchors.top = root.top
-    }
-
-    function showUrlBar()
-    {
-        webView.anchors.top = urlBar.bottom
-        newTab.anchors.top = urlBar.bottom
-    }
-
-    UrlBar {
-        id: urlBar
-        onUrlEntered: {
-            var urlToBrowse = BrowserObject.urlFromUserInput(url);
-            if (BrowserObject.isUrlValid(urlToBrowse))
-                webView.load(urlToBrowse);
-            else
-                webView.load(fallbackUrl(url));
-        }
-    }
+    onActiveChanged: { currentUrl = urlBar.text }
 
     DesktopWebView {
         id: webView
-        anchors {
-            top: urlBar.bottom
-            bottom: root.bottom
-            left: root.left
-            right: root.right
-        }
+        anchors.fill: parent
 
         visible: false
 
@@ -67,24 +42,19 @@ Item {
             root.isLoading = true;
             visible = true;
             newTab.visible = false;
-            urlBar.bookmarkButton.visible = false;
             if (tab.active && !focus)
                 forceActiveFocus();
         }
 
         onLoadSucceeded: {
             root.isLoading = false
-            urlBar.bookmarkButton.visible = true;
-            urlBar.bookmarkButton.isBookmarked = BookmarkModel.contains(url);
         }
-
-        onUrlChanged: { urlBar.text = url.toString() }
 
         onLoadFailed: {
             root.isLoading = false
             if (errorType == DesktopWebView.NetworkError && errorCode == NetworkReply.OperationCanceledError)
                 return;
-            load(fallbackUrl(urlBar.text))
+            loadUrl(fallbackUrl(url))
         }
 
         onTitleChanged: { root.title = title }
@@ -99,14 +69,15 @@ Item {
         }
     }
 
+    function loadUrl(url)
+    {
+        webView.load(url)
+        currentUrl = url
+    }
+
     function fallbackUrl(url)
     {
         return "http://www.google.com/search?q=" + url;
-    }
-
-    function focusUrlBar() {
-        urlBar.textInput.forceActiveFocus()
-        urlBar.textInput.selectAll()
     }
 
     function stop() {
@@ -119,9 +90,6 @@ Item {
 
     NewTab {
         id: newTab
-        anchors.top: urlBar.bottom
-        anchors.bottom: root.bottom
-        anchors.left: root.left
-        anchors.right: root.right
+        anchors.fill: parent
     }
 }

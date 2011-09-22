@@ -48,8 +48,8 @@ Item {
             source: "qrc:///urlbar/progress_bar_url"
             border { left: 3; top: 3; right: 3; bottom: 3 }
             horizontalTileMode: BorderImage.Repeat
-            width: parent.width * webView.loadProgress / 100.0
-            opacity: webView.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
+            width: parent.width * pageWidget.webView.loadProgress / 100.0
+            opacity: pageWidget.webView.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
         }
     }
 
@@ -90,20 +90,20 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (BrowserObject.isUrlEmpty(webView.url))
+                if (BrowserObject.isUrlEmpty(pageWidget.webView.url))
                     return;
                 if (parent.isBookmarked) {
                     parent.isBookmarked = false;
-                    BookmarkModel.remove(webView.url)
+                    BookmarkModel.remove(pageWidget.webView.url)
                 } else {
                     parent.isBookmarked = true;
-                    BookmarkModel.insert(webView.title, webView.url);
+                    BookmarkModel.insert(pageWidget.webView.title, pageWidget.webView.url);
                 }
             }
         }
 
         onIsBookmarkedChanged: {
-            visible = !BrowserObject.isUrlEmpty(webView.url)
+            visible = !BrowserObject.isUrlEmpty(pageWidget.webView.url)
         }
     }
 }

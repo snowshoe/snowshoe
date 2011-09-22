@@ -19,7 +19,7 @@ import QtQuick 2.0
 Item {
     id: browserView
 
-    property bool __fullscreen : false
+    state: "normal"
 
     // FIXME: Many of those functions are exposed so we setup global shortcuts, can we move this setup to QML side?
     function stop() {
@@ -31,7 +31,8 @@ Item {
     }
 
     function focusUrlBar() {
-        tabWidget.activePage.focusUrlBar()
+        urlBar.textInput.forceActiveFocus()
+        urlBar.textInput.selectAll()
     }
 
     function closeActiveTab() {
@@ -46,7 +47,7 @@ Item {
     function addNewTabWithUrl(url) {
         var tab = addNewEmptyTab()
         if (BrowserObject.isUrlValid(url))
-            tab.pageWidget.webView.load(url)
+            tab.pageWidget.loadUrl(url)
         return tab
     }
 
@@ -59,58 +60,107 @@ Item {
     }
 
     function fullScreenActionTriggered() {
-        if (__fullscreen)
-            exitFullScreen()
+        if (state == "normal")
+            state = "fullscreen"
         else
-            enterFullScreen()
+            state = "normal"
     }
 
-    function enterFullScreen() {
-        __fullscreen = true
-        tabWidget.hideHeader()
-        tabWidget.activePage.hideUrlBar();
-        View.showFullScreen()
+    function showHeaderArea() {
+        tabWidget.visible = true
+        urlBar.visible = true
     }
 
-    function exitFullScreen() {
-        __fullscreen = false
-        tabWidget.showHeader()
-        tabWidget.activePage.showUrlBar();
-        View.showNormal()
+    function hideHeaderArea() {
+        tabWidget.visible = false
+        urlBar.visible = false
     }
+
 
     TabWidget {
         id: tabWidget
+        z: 1
         anchors {
             top: parent.top
             left: parent.left
             right: parent.right
         }
 
-        function hideHeader()
-        {
-            visible = false
-            contentArea.anchors.top = browserView.top
-        }
-
-        function showHeader()
-        {
-            visible = true
-            contentArea.anchors.top = tabWidget.bottom
-        }
-
         onNewTabRequested: browserView.addNewEmptyTab()
+        onActivePageChanged: urlBar.pageWidget = activePage
+    }
+
+    UrlBar {
+        id: urlBar
+        z: 1
+        anchors.top: tabWidget.bottom
     }
 
     Item {
         id: contentArea
         anchors {
-            top: tabWidget.bottom
+            top: urlBar.bottom
             left: parent.left
             right: parent.right
             bottom: parent.bottom
         }
+
+        MouseArea {
+            id: fullScreenMouseArea
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+            }
+            height: 5
+            hoverEnabled: true
+            z: 1
+
+            onEntered: { if (browserView.state != "fullscreen") return; showHeaderArea(); height = urlBar.height + urlBar.y; }
+            onExited: { if (browserView.state != "fullscreen") return; hideHeaderArea(); height = 5; }
+        }
+
     }
+
+    states: [
+        State {
+            name: "fullscreen"
+            PropertyChanges {
+                target: urlBar
+                visible: false
+            }
+            PropertyChanges {
+                target: tabWidget
+                visible: false
+            }
+            StateChangeScript {
+                script: View.showFullScreen()
+            }
+            AnchorChanges {
+                target: contentArea
+                anchors.top: browserView.top
+            }
+        },
+        State {
+            name: "normal"
+            PropertyChanges {
+                target: urlBar
+                visible: true
+            }
+            PropertyChanges {
+                target: tabWidget
+                visible: true
+            }
+            StateChangeScript {
+                script: View.showNormal()
+            }
+            AnchorChanges {
+                target: contentArea
+                anchors.top: urlBar.bottom
+            }
+        }
+
+    ]
 
     Binding {
         target: BrowserObject

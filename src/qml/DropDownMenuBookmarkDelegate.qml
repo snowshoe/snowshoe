@@ -51,6 +51,6 @@ Item {
         hoverEnabled: true
         onEntered: { overlay.visible = true; }
         onExited: overlay.visible = false
-        onClicked: { WebView.load(url); View.hide(); }
+        onClicked: { PageWidget.loadUrl(url); View.hide(); }
     }
 }
