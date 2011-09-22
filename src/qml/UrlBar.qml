@@ -42,36 +42,36 @@ Item {
         height: childrenRect.height
         anchors.verticalCenter: parent.verticalCenter
 
-        Image {
-            source: "qrc:///urlbar/button_nav_back"
-            MouseArea {
-                anchors.fill: parent
-                onClicked: webView.navigation.back()
-            }
+        Button {
+            hoveredImage: "qrc:///urlbar/btn_nav_back_over"
+            pressedImage: "qrc:///urlbar/btn_nav_back_pressed"
+            standardImage: "qrc:///urlbar/btn_nav_back_unpressed"
+
+            onClicked: { webView.navigation.back() }
         }
 
         Image {
             source: "qrc:///urlbar/component_divisor"
         }
 
-        Image {
-            source: "qrc:///urlbar/button_nav_next"
-            MouseArea {
-                anchors.fill: parent
-                onClicked: webView.navigation.forward()
-            }
+        Button {
+            hoveredImage: "qrc:///urlbar/btn_nav_next_over"
+            pressedImage: "qrc:///urlbar/btn_nav_next_pressed"
+            standardImage: "qrc:///urlbar/btn_nav_next_unpressed"
+
+            onClicked: { webView.navigation.forward() }
         }
 
         Image {
             source: "qrc:///urlbar/component_divisor"
         }
 
-        Image {
-            source: "qrc:///urlbar/button_nav_refresh"
-            MouseArea {
-                anchors.fill: parent
-                onClicked: webView.navigation.reload()
-            }
+        Button {
+            hoveredImage: { webView.navigation.stopAction.enabled ? "qrc:///urlbar/btn_nav_cancel_over" : "qrc:///urlbar/btn_nav_refresh_over" }
+            pressedImage: { webView.navigation.stopAction.enabled ? "qrc:///urlbar/btn_nav_cancel_pressed" : "qrc:///urlbar/btn_nav_refresh_pressed" }
+            standardImage: { webView.navigation.stopAction.enabled ? "qrc:///urlbar/btn_nav_cancel_unpressed" : "qrc:///urlbar/btn_nav_refresh_unpressed" }
+
+            onClicked: { webView.navigation.stopAction.enabled ? webView.navigation.stop() : webView.navigation.reload() }
         }
     }
 

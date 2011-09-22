@@ -3,9 +3,6 @@
         <file>qml/main.qml</file>
         <file>qml/UrlEdit.qml</file>
         <file>qml/UrlBar.qml</file>
-        <file alias="urlbar/button_nav_back">images/urlbar/component_btn_nav_back.png</file>
-        <file alias="urlbar/button_nav_next">images/urlbar/component_btn_nav_next.png</file>
-        <file alias="urlbar/button_nav_refresh">images/urlbar/component_btn_nav_refresh.png</file>
         <file alias="urlbar/component_url_input">images/urlbar/component_url_input.png</file>
         <file alias="urlbar/progress_bar_url">images/urlbar/progress_bar_url.png</file>
         <file alias="urlbar/component_divisor">images/urlbar/component_divisor.png</file>
@@ -51,5 +48,18 @@
         <file alias="bookmark/bookmark_header_divisor">images/bookmark/bookmark_header_divisor.png</file>
         <file>qml/BookmarkBarDelegate.qml</file>
         <file>qml/DropDownMenuBookmarkDelegate.qml</file>
+        <file alias="urlbar/btn_nav_back_over">images/urlbar/component_btn_nav_back_over.png</file>
+        <file alias="urlbar/btn_nav_back_pressed">images/urlbar/component_btn_nav_back_pressed.png</file>
+        <file alias="urlbar/btn_nav_back_unpressed">images/urlbar/component_btn_nav_back_unpressed.png</file>
+        <file alias="urlbar/btn_nav_cancel_over">images/urlbar/component_btn_nav_cancel_over.png</file>
+        <file alias="urlbar/btn_nav_cancel_pressed">images/urlbar/component_btn_nav_cancel_pressed.png</file>
+        <file alias="urlbar/btn_nav_cancel_unpressed">images/urlbar/component_btn_nav_cancel_unpressed.png</file>
+        <file alias="urlbar/btn_nav_next_over">images/urlbar/component_btn_nav_next_over.png</file>
+        <file alias="urlbar/btn_nav_next_pressed">images/urlbar/component_btn_nav_next_pressed.png</file>
+        <file alias="urlbar/btn_nav_next_unpressed">images/urlbar/component_btn_nav_next_unpressed.png</file>
+        <file alias="urlbar/btn_nav_refresh_over">images/urlbar/component_btn_nav_refresh_over.png</file>
+        <file alias="urlbar/btn_nav_refresh_pressed">images/urlbar/component_btn_nav_refresh_pressed.png</file>
+        <file alias="urlbar/btn_nav_refresh_unpressed">images/urlbar/component_btn_nav_refresh_unpressed.png</file>
+        <file>qml/Button.qml</file>
     </qresource>
 </RCC>
