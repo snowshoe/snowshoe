@@ -19,6 +19,8 @@ import QtQuick 2.0
 Item {
     id: browserView
 
+    property bool __fullscreen : false
+
     // FIXME: Many of those functions are exposed so we setup global shortcuts, can we move this setup to QML side?
     function stop() {
         tabWidget.activePage.stop()
@@ -56,6 +58,27 @@ Item {
         tabWidget.jumpToPreviousTab()
     }
 
+    function fullScreenActionTriggered() {
+        if (__fullscreen)
+            exitFullScreen()
+        else
+            enterFullScreen()
+    }
+
+    function enterFullScreen() {
+        __fullscreen = true
+        tabWidget.hideHeader()
+        tabWidget.activePage.hideUrlBar();
+        View.showFullScreen()
+    }
+
+    function exitFullScreen() {
+        __fullscreen = false
+        tabWidget.showHeader()
+        tabWidget.activePage.showUrlBar();
+        View.showNormal()
+    }
+
     TabWidget {
         id: tabWidget
         anchors {
@@ -63,6 +86,19 @@ Item {
             left: parent.left
             right: parent.right
         }
+
+        function hideHeader()
+        {
+            visible = false
+            contentArea.anchors.top = browserView.top
+        }
+
+        function showHeader()
+        {
+            visible = true
+            contentArea.anchors.top = tabWidget.bottom
+        }
+
         onNewTabRequested: browserView.addNewEmptyTab()
     }
 

@@ -136,4 +136,7 @@ void BrowserWindow::setupShortcuts()
 
     QAction* reloadAction = createActionWithShortcut(QKeySequence(Qt::Key_F5));
     connect(reloadAction, SIGNAL(triggered()), m_browserView, SLOT(reload()));
+
+    QAction* fullScreenAction = createActionWithShortcut(QKeySequence(Qt::Key_F11));
+    connect(fullScreenAction, SIGNAL(triggered()), m_browserView, SLOT(fullScreenActionTriggered()));
 }

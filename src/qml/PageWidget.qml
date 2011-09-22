@@ -29,6 +29,18 @@ Item {
 
     property variant tab;
 
+    function hideUrlBar()
+    {
+        webView.anchors.top = root.top
+        newTab.anchors.top = root.top
+    }
+
+    function showUrlBar()
+    {
+        webView.anchors.top = urlBar.bottom
+        newTab.anchors.top = urlBar.bottom
+    }
+
     UrlBar {
         id: urlBar
         onUrlEntered: {
