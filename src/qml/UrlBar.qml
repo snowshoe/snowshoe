@@ -84,10 +84,11 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
 
         Button {
+            disabledImage: "qrc:///urlbar/btn_nav_back_disable"
             hoveredImage: "qrc:///urlbar/btn_nav_back_over"
             pressedImage: "qrc:///urlbar/btn_nav_back_pressed"
             standardImage: "qrc:///urlbar/btn_nav_back_unpressed"
-
+            disabled: !pageWidget.webView.navigation.backAction.enabled
             onClicked: { pageWidget.webView.navigation.back() }
         }
 
@@ -96,10 +97,11 @@ Item {
         }
 
         Button {
+            disabledImage: "qrc:///urlbar/btn_nav_next_disable"
             hoveredImage: "qrc:///urlbar/btn_nav_next_over"
             pressedImage: "qrc:///urlbar/btn_nav_next_pressed"
             standardImage: "qrc:///urlbar/btn_nav_next_unpressed"
-
+            disabled: !pageWidget.webView.navigation.forwardAction.enabled
             onClicked: { pageWidget.webView.navigation.forward() }
         }
 

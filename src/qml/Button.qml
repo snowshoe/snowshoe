@@ -19,6 +19,10 @@ import QtQuick 2.0
 
 Item {
     id: rootButton
+
+    property bool disabled
+
+    property string disabledImage
     property string hoveredImage
     property string pressedImage
     property string standardImage
@@ -31,6 +35,8 @@ Item {
     Image {
         id: buttonImage
         source: {
+            if (rootButton.disabled)
+                return disabledImage
             if (buttonMouseArea.isPressed)
                 return pressedImage
             if (buttonMouseArea.isHovered)

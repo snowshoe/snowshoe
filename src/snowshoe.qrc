@@ -61,5 +61,9 @@
         <file alias="urlbar/btn_nav_refresh_pressed">images/urlbar/component_btn_nav_refresh_pressed.png</file>
         <file alias="urlbar/btn_nav_refresh_unpressed">images/urlbar/component_btn_nav_refresh_unpressed.png</file>
         <file>qml/Button.qml</file>
+        <file alias="urlbar/btn_nav_back_disable">images/urlbar/component_btn_nav_back_disable.png</file>
+        <file alias="urlbar/btn_nav_cancel_disable">images/urlbar/component_btn_nav_cancel_disable.png</file>
+        <file alias="urlbar/btn_nav_next_disable">images/urlbar/component_btn_nav_next_disable.png</file>
+        <file alias="urlbar/btn_nav_refresh_disable">images/urlbar/component_btn_nav_refresh_disable.png</file>
     </qresource>
 </RCC>
