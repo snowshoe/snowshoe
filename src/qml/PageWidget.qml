@@ -92,7 +92,7 @@ Item {
         function navigationPolicyForUrl(url, button, modifiers) {
             if (button == Qt.MiddleButton
                 || (button == Qt.LeftButton && modifiers & Qt.ControlModifier)) {
-                tab.tabWidget.addNewTabWithUrl(url)
+                browserView.addNewTabWithUrl(url)
                 return DesktopWebView.IgnorePolicy
             }
             return DesktopWebView.UsePolicy
