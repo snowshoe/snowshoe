@@ -38,9 +38,9 @@ Item {
         anchors {
             fill: background
             // Those margins are here to make the progress bar look "inside" the url input.
-            topMargin: 2
+            topMargin: 7
             bottomMargin: 3
-            leftMargin: 2
+            leftMargin: 3
             rightMargin: 2
         }
 
@@ -81,7 +81,7 @@ Item {
         anchors {
             top: background.top
             right: background.right
-            topMargin: 2
+            topMargin: 7
             rightMargin: 5
         }
         visible: false

@@ -82,6 +82,7 @@ Item {
         width: childrenRect.width
         height: childrenRect.height
         anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: -1
 
         Button {
             disabledImage: "qrc:///urlbar/btn_nav_back_disable"
@@ -124,7 +125,8 @@ Item {
             left: buttons.right
             right: parent.right
             rightMargin: 4
-            verticalCenter: buttons.verticalCenter
+            verticalCenter: root.verticalCenter
+            verticalCenterOffset: -1
         }
         onUrlEntered: root.urlEntered(url)
     }
