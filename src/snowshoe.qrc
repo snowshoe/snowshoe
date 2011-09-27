@@ -3,6 +3,7 @@
         <file>qml/main.qml</file>
         <file>qml/UrlEdit.qml</file>
         <file>qml/UrlBar.qml</file>
+        <file>qml/HoveredLinkBar.qml</file>
         <file alias="urlbar/component_url_input">images/urlbar/component_url_input.png</file>
         <file alias="urlbar/progress_bar_url">images/urlbar/progress_bar_url.png</file>
         <file alias="urlbar/component_divisor">images/urlbar/component_divisor.png</file>
@@ -65,5 +66,7 @@
         <file alias="urlbar/btn_nav_cancel_disable">images/urlbar/component_btn_nav_cancel_disable.png</file>
         <file alias="urlbar/btn_nav_next_disable">images/urlbar/component_btn_nav_next_disable.png</file>
         <file alias="urlbar/btn_nav_refresh_disable">images/urlbar/component_btn_nav_refresh_disable.png</file>
+        <file alias="pagewidget/link_status_bg_left">images/pagewidget/link_status_bg_left.png</file>
+        <file alias="pagewidget/link_status_bg_right">images/pagewidget/link_status_bg_right.png</file>
     </qresource>
 </RCC>

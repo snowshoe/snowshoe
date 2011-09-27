@@ -77,4 +77,5 @@ OTHER_FILES += \
     qml/DropDownMenuBookmark.qml \
     qml/BookmarkBarDelegate.qml \
     qml/DropDownMenuBookmarkDelegate.qml \
-    qml/Button.qml
+    qml/Button.qml \
+    qml/HoveredLinkBar.qml

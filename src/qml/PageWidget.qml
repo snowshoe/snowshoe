@@ -61,6 +61,10 @@ Item {
             currentUrl = url
         }
 
+        onLinkHovered: {
+            hoveredLink.text = url.toString()
+        }
+
         onTitleChanged: { root.title = title }
 
         function navigationPolicyForUrl(url, button, modifiers) {
@@ -95,5 +99,11 @@ Item {
     NewTab {
         id: newTab
         anchors.fill: parent
+    }
+
+    HoveredLinkBar {
+        id: hoveredLink
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
     }
 }
