@@ -57,6 +57,10 @@ Item {
             loadUrl(fallbackUrl(url))
         }
 
+        onUrlChanged: {
+            currentUrl = url
+        }
+
         onTitleChanged: { root.title = title }
 
         function navigationPolicyForUrl(url, button, modifiers) {
