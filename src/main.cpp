@@ -22,7 +22,7 @@
 
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QLatin1String>
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 int main(int argc, char** argv)
 {

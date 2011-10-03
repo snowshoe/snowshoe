@@ -17,7 +17,7 @@
 #ifndef PopupMenu_h
 #define PopupMenu_h
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 
 QT_BEGIN_NAMESPACE
 class QSGView;

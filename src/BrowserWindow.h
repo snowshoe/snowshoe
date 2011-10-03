@@ -21,11 +21,30 @@
 #include "ApplicationStateTracker.h"
 #include <QtDeclarative/QSGView>
 #include <QtGui/QKeySequence>
-#include <QtGui/QMainWindow>
+#include <QtWidgets/QMainWindow>
 
 class BrowserObject;
 class PopupMenu;
 class QSGItem;
+
+class WindowWrapper : public QWidget
+{
+    Q_OBJECT
+
+public:
+    WindowWrapper(QWindow* window, QWidget* widget = 0);
+
+protected:
+    void showEvent(QShowEvent* event);
+    void resizeEvent(QResizeEvent* event);
+
+private slots:
+    void doResize();
+
+private:
+    QWindow* m_window;
+    QTimer m_resizeTimer;
+};
 
 class BrowserWindow : public QMainWindow {
     Q_OBJECT

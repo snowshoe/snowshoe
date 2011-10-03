@@ -29,18 +29,51 @@
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QtDeclarative/QDeclarativeProperty>
 #include <QtDeclarative/QSGItem>
-#include <QtGui/QAction>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QWidget>
+
+WindowWrapper::WindowWrapper(QWindow* window, QWidget* widget)
+    : QWidget(widget)
+    , m_window(window)
+{
+    // Throttle resize events a bit
+    m_resizeTimer.setInterval(5);
+    m_resizeTimer.setSingleShot(true);
+    connect(&m_resizeTimer, SIGNAL(timeout()), this, SLOT(doResize()));
+    m_window->setWindowFlags(Qt::FramelessWindowHint);
+}
+
+void WindowWrapper::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+    m_window->setParent(window()->windowHandle());
+    m_window->show();
+}
+
+void WindowWrapper::resizeEvent(QResizeEvent* event)
+{
+    QWidget::resizeEvent(event);
+    if (!m_resizeTimer.isActive())
+        m_resizeTimer.start();
+}
+
+void WindowWrapper::doResize()
+{
+    m_window->setGeometry(QRect(mapTo(window(), QPoint(0, 0)), size()));
+}
 
 BrowserWindow::BrowserWindow(const QStringList& urls)
     : QMainWindow(0)
     , m_stateTracker(this)
     , m_browserObject(new BrowserObject(this))
-    , m_view(new QSGView(this))
+    , m_view(new QSGView)
     , m_browserView(0)
     , m_popupMenu(new PopupMenu(this))
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    setCentralWidget(m_view);
+    setCentralWidget(new WindowWrapper(m_view, this));
+
+    window()->windowHandle();
 
     setupDeclarativeEnvironment();
 
@@ -61,6 +94,7 @@ BrowserWindow::BrowserWindow(const QStringList& urls)
 
 BrowserWindow::~BrowserWindow()
 {
+    delete m_view;
 }
 
 QPoint BrowserWindow::mapToGlobal(int x, int y)

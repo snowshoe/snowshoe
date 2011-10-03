@@ -24,23 +24,21 @@
 
 class SGView : public QSGView {
 public:
-    SGView(QWidget* parent = 0) : QSGView(parent) { }
+    SGView(QWindow* parent = 0) : QSGView(parent) { }
 protected:
     void resizeEvent(QResizeEvent* event)
     {
         QSGView::resizeEvent(event);
-        parentWidget()->resize(size());
+        parent()->resize(size());
     }
 };
 
 PopupMenu::PopupMenu(QWidget* parent)
     : QDialog(parent)
-    , m_view(new SGView(this))
+    , m_view(new SGView(windowHandle()))
 {
     m_view->setResizeMode(QSGView::SizeViewToRootObject);
     m_view->rootContext()->setContextProperty("View", this);
-    m_view->setAutoFillBackground(false);
-    m_view->setAttribute(Qt::WA_TranslucentBackground, true);
     setAttribute(Qt::WA_TranslucentBackground, true);
     setAutoFillBackground(false);
     setModal(true);
