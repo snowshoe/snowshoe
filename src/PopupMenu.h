@@ -17,19 +17,15 @@
 #ifndef PopupMenu_h
 #define PopupMenu_h
 
-#include <QtWidgets/QDialog>
+#include <QtDeclarative/QSGView>
 
-QT_BEGIN_NAMESPACE
-class QSGView;
-QT_END_NAMESPACE
-
-class PopupMenu : public QDialog {
+class PopupMenu : public QSGView {
     Q_OBJECT
     Q_PROPERTY(QString qmlComponent READ qmlComponent WRITE setQmlComponent NOTIFY qmlComponentChanged)
     Q_PROPERTY(int maxWidth READ maxWidth NOTIFY maxWidthChanged)
     Q_PROPERTY(int maxHeight READ maxHeight NOTIFY maxHeightChanged)
 public:
-    PopupMenu(QWidget* parent = 0);
+    PopupMenu(QWindow* parent = 0);
 
     void setQmlComponent(const QString&);
     QString qmlComponent() const;
@@ -49,7 +45,6 @@ public slots:
 
 private:
     QString m_qmlComponent;
-    QSGView* m_view;
 };
 
 #endif // PopupMenu_h

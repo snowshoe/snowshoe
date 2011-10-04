@@ -21,32 +21,14 @@
 #include "ApplicationStateTracker.h"
 #include <QtDeclarative/QSGView>
 #include <QtGui/QKeySequence>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QMainWindow>
 
 class BrowserObject;
 class PopupMenu;
 class QSGItem;
 
-class WindowWrapper : public QWidget
-{
-    Q_OBJECT
-
-public:
-    WindowWrapper(QWindow* window, QWidget* widget = 0);
-
-protected:
-    void showEvent(QShowEvent* event);
-    void resizeEvent(QResizeEvent* event);
-
-private slots:
-    void doResize();
-
-private:
-    QWindow* m_window;
-    QTimer m_resizeTimer;
-};
-
-class BrowserWindow : public QMainWindow {
+class BrowserWindow : public QSGView {
     Q_OBJECT
 
 public:
@@ -61,12 +43,12 @@ public slots:
     QPoint mapToGlobal(int x, int y);
 
 protected:
+    virtual bool event(QEvent*);
     virtual void moveEvent(QMoveEvent*);
     virtual void resizeEvent(QResizeEvent*);
 
 private:
     friend class BrowserObject;
-
     ApplicationStateTracker* stateTracker() { return &m_stateTracker; }
 
     void openNewEmptyTab();
@@ -78,9 +60,9 @@ private:
 
     ApplicationStateTracker m_stateTracker;
     BrowserObject* m_browserObject;
-    QSGView* m_view;
     QSGItem* m_browserView;
     PopupMenu* m_popupMenu;
+    QMap<QKeySequence, QAction*> m_shortcuts;
 };
 
 #endif

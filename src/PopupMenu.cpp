@@ -19,30 +19,16 @@
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QSGItem>
 #include <QtDeclarative/QSGView>
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QDesktopWidget>
 
-class SGView : public QSGView {
-public:
-    SGView(QWindow* parent = 0) : QSGView(parent) { }
-protected:
-    void resizeEvent(QResizeEvent* event)
-    {
-        QSGView::resizeEvent(event);
-        parent()->resize(size());
-    }
-};
-
-PopupMenu::PopupMenu(QWidget* parent)
-    : QDialog(parent)
-    , m_view(new SGView(windowHandle()))
+PopupMenu::PopupMenu(QWindow* parent)
+    : QSGView(parent)
 {
-    m_view->setResizeMode(QSGView::SizeViewToRootObject);
-    m_view->rootContext()->setContextProperty("View", this);
-    setAttribute(Qt::WA_TranslucentBackground, true);
-    setAutoFillBackground(false);
-    setModal(true);
-    setWindowFlags(Qt::Popup);
+    setResizeMode(QSGView::SizeViewToRootObject);
+    rootContext()->setContextProperty("View", this);
+    setWindowModality(Qt::WindowModal);
+    setWindowFlags(Qt::Popup | Qt::Dialog);
     hide();
 
     connect(QApplication::desktop(), SIGNAL(resized(int)), this, SIGNAL(maxWidthChanged()));
@@ -52,7 +38,7 @@ PopupMenu::PopupMenu(QWidget* parent)
 void PopupMenu::setQmlComponent(const QString& qmlComponent)
 {
     m_qmlComponent = qmlComponent;
-    m_view->setSource(QUrl(QString("qrc:/qml/%1.qml").arg(qmlComponent)));
+    setSource(QUrl(QString("qrc:/qml/%1.qml").arg(qmlComponent)));
     emit qmlComponentChanged();
 }
 
@@ -74,9 +60,9 @@ int PopupMenu::maxHeight() const
 void PopupMenu::movePopup(int x, int y)
 {
     QPoint newPos(x, y);
-    QSGItem* rootObject = m_view->rootObject();
-    newPos.setX(x + rootObject->property("rightOffset").toInt());
-    newPos.setY(y + rootObject->property("topOffset").toInt());
+    QSGItem* root = rootObject();
+    newPos.setX(x + root->property("rightOffset").toInt());
+    newPos.setY(y + root->property("topOffset").toInt());
     QDesktopWidget* desktopWidget = QApplication::desktop();
     int right = x + geometry().width();
     int bottom = y + geometry().height();
@@ -89,11 +75,11 @@ void PopupMenu::movePopup(int x, int y)
 
 void PopupMenu::setContextProperty(const QString& name, const QVariant& variant)
 {
-    m_view->rootContext()->setContextProperty(name, variant);
+    rootContext()->setContextProperty(name, variant);
 }
 
 void PopupMenu::showAtPosition(int x, int y)
 {
-    QWidget::show();
+    show();
     movePopup(x, y);
 }

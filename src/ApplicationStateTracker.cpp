@@ -38,14 +38,16 @@ ApplicationStateTracker::~ApplicationStateTracker()
 
 void ApplicationStateTracker::updateWindowGeometry()
 {
-    m_windowGeometry = m_window->saveGeometry();
+    // FIXME : implement that in QWindow.
+    // m_windowGeometry = m_window->saveGeometry();
 }
 
 void ApplicationStateTracker::restoreWindowGeometry()
 {
-    QSettings settings;
-    if (!m_window->restoreGeometry(settings.value("mainWindowGeometry").toByteArray()))
-        m_window->resize(800, 600);
+    // FIXME : implement that in QWindow.
+    // QSettings settings;
+    // if (!m_window->restoreGeometry(settings.value("mainWindowGeometry").toByteArray()))
+    m_window->resize(800, 600);
 }
 
 void ApplicationStateTracker::updateUrlsOpened(const QStringList& urls)

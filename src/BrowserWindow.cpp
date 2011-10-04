@@ -30,54 +30,17 @@
 #include <QtDeclarative/QDeclarativeProperty>
 #include <QtDeclarative/QSGItem>
 #include <QtWidgets/QAction>
-#include <QtWidgets/QWidget>
-
-WindowWrapper::WindowWrapper(QWindow* window, QWidget* widget)
-    : QWidget(widget)
-    , m_window(window)
-{
-    // Throttle resize events a bit
-    m_resizeTimer.setInterval(5);
-    m_resizeTimer.setSingleShot(true);
-    connect(&m_resizeTimer, SIGNAL(timeout()), this, SLOT(doResize()));
-    m_window->setWindowFlags(Qt::FramelessWindowHint);
-}
-
-void WindowWrapper::showEvent(QShowEvent* event)
-{
-    QWidget::showEvent(event);
-    m_window->setParent(window()->windowHandle());
-    m_window->show();
-}
-
-void WindowWrapper::resizeEvent(QResizeEvent* event)
-{
-    QWidget::resizeEvent(event);
-    if (!m_resizeTimer.isActive())
-        m_resizeTimer.start();
-}
-
-void WindowWrapper::doResize()
-{
-    m_window->setGeometry(QRect(mapTo(window(), QPoint(0, 0)), size()));
-}
 
 BrowserWindow::BrowserWindow(const QStringList& urls)
-    : QMainWindow(0)
+    : QSGView(0)
     , m_stateTracker(this)
     , m_browserObject(new BrowserObject(this))
-    , m_view(new QSGView)
     , m_browserView(0)
     , m_popupMenu(new PopupMenu(this))
 {
-    setAttribute(Qt::WA_DeleteOnClose);
-    setCentralWidget(new WindowWrapper(m_view, this));
-
-    window()->windowHandle();
-
     setupDeclarativeEnvironment();
 
-    m_browserView = qobject_cast<QSGItem*>(m_view->rootObject());
+    m_browserView = qobject_cast<QSGItem*>(rootObject());
     Q_ASSERT(m_browserView);
 
     setupShortcuts();
@@ -94,22 +57,40 @@ BrowserWindow::BrowserWindow(const QStringList& urls)
 
 BrowserWindow::~BrowserWindow()
 {
-    delete m_view;
 }
 
 QPoint BrowserWindow::mapToGlobal(int x, int y)
 {
-    return QWidget::mapToGlobal(QPoint(x, y));
+    return QWindow::mapToGlobal(QPoint(x, y));
 }
 
-void BrowserWindow::moveEvent(QMoveEvent*)
+void BrowserWindow::moveEvent(QMoveEvent* event)
 {
     m_stateTracker.updateWindowGeometry();
+    QSGView::moveEvent(event);
 }
 
-void BrowserWindow::resizeEvent(QResizeEvent*)
+void BrowserWindow::resizeEvent(QResizeEvent* event)
 {
     m_stateTracker.updateWindowGeometry();
+    QSGView::resizeEvent(event);
+}
+
+bool BrowserWindow::event(QEvent* event)
+{
+    if (event->type() == QEvent::Close)
+        deleteLater();
+    // This is to get shortcuts working, it needs to be removed when they will work in Qt5.
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+        QKeySequence sequence(keyEvent->modifiers() | keyEvent->key());
+        QMap<QKeySequence, QAction*>::const_iterator iterator = m_shortcuts.find(sequence);
+        if (iterator != m_shortcuts.end()){
+            iterator.value()->trigger();
+            return true;
+        }
+    }
+    return QSGView::event(event);
 }
 
 void BrowserWindow::openNewEmptyTab()
@@ -125,23 +106,23 @@ void BrowserWindow::openUrlInNewTab(const QString& urlFromUserInput)
 
 void BrowserWindow::setupDeclarativeEnvironment()
 {
-    QDeclarativeContext* context = m_view->rootContext();
+    QDeclarativeContext* context = rootContext();
     context->setContextProperty("BrowserObject", browserObject());
     context->setContextProperty("BookmarkModel", DatabaseManager::instance()->bookmarkDataBaseModel());
     context->setContextProperty("PopupMenu", m_popupMenu);
     context->setContextProperty("View", this);
 
-    QObject::connect(m_view->engine(), SIGNAL(quit()), this, SLOT(close()));
+    QObject::connect(engine(), SIGNAL(quit()), this, SLOT(close()));
 
-    m_view->setResizeMode(QSGView::SizeRootObjectToView);
-    m_view->setSource(QUrl("qrc:/qml/main.qml"));
+    setResizeMode(QSGView::SizeRootObjectToView);
+    setSource(QUrl("qrc:/qml/main.qml"));
 }
 
 QAction* BrowserWindow::createActionWithShortcut(const QKeySequence& shortcut)
 {
     QAction* action = new QAction(this);
     action->setShortcut(shortcut);
-    addAction(action);
+    m_shortcuts.insert(shortcut, action);
     return action;
 }
 
