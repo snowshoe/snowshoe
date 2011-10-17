@@ -41,8 +41,7 @@ Item {
        text: name + " "
        font.pixelSize: 11
        Component.onCompleted: {
-           if (width > listView.maximumBookmarkWidth)
-               text.elide = Text.ElideRight;
+           text.elide = Text.ElideRight;
            width = listView.maximumBookmarkWidth;
        }
     }
