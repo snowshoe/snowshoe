@@ -17,15 +17,15 @@
 #include "PopupMenu.h"
 
 #include <QtDeclarative/QDeclarativeContext>
-#include <QtDeclarative/QSGItem>
-#include <QtDeclarative/QSGView>
+#include <QtDeclarative/QQuickItem>
+#include <QtDeclarative/QQuickView>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
 
 PopupMenu::PopupMenu(QWindow* parent)
-    : QSGView(parent)
+    : QQuickView(parent)
 {
-    setResizeMode(QSGView::SizeViewToRootObject);
+    setResizeMode(QQuickView::SizeViewToRootObject);
     rootContext()->setContextProperty("View", this);
     setWindowModality(Qt::WindowModal);
     setWindowFlags(Qt::Popup | Qt::Dialog);
@@ -60,7 +60,7 @@ int PopupMenu::maxHeight() const
 void PopupMenu::movePopup(int x, int y)
 {
     QPoint newPos(x, y);
-    QSGItem* root = rootObject();
+    QQuickItem* root = rootObject();
     newPos.setX(x + root->property("rightOffset").toInt());
     newPos.setY(y + root->property("topOffset").toInt());
     QDesktopWidget* desktopWidget = QApplication::desktop();

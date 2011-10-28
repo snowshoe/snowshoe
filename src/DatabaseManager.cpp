@@ -19,7 +19,7 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QString>
-#include <QtGui/QDesktopServices>
+#include <QtCore/QStandardPaths>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 
@@ -42,7 +42,7 @@ void DatabaseManager::destroy()
 
 DatabaseManager::DatabaseManager()
 {
-    const QString storagePath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    const QString storagePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     QDir storageDir;
     if (!storageDir.exists(storagePath))
         storageDir.mkpath(storagePath);

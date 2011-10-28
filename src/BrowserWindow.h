@@ -19,7 +19,7 @@
 #define BrowserWindow_h
 
 #include "ApplicationStateTracker.h"
-#include <QtDeclarative/QSGView>
+#include <QtDeclarative/QQuickView>
 #include <QtGui/QKeySequence>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QMainWindow>
@@ -28,7 +28,7 @@ class BrowserObject;
 class PopupMenu;
 class QSGItem;
 
-class BrowserWindow : public QSGView {
+class BrowserWindow : public QQuickView {
     Q_OBJECT
 
 public:
@@ -60,7 +60,7 @@ private:
 
     ApplicationStateTracker m_stateTracker;
     BrowserObject* m_browserObject;
-    QSGItem* m_browserView;
+    QQuickItem* m_browserView;
     PopupMenu* m_popupMenu;
     QMap<QKeySequence, QAction*> m_shortcuts;
 };

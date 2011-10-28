@@ -28,11 +28,11 @@
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QtDeclarative/QDeclarativeProperty>
-#include <QtDeclarative/QSGItem>
+#include <QtDeclarative/QQuickItem>
 #include <QtWidgets/QAction>
 
 BrowserWindow::BrowserWindow(const QStringList& urls)
-    : QSGView(0)
+    : QQuickView(0)
     , m_stateTracker(this)
     , m_browserObject(new BrowserObject(this))
     , m_browserView(0)
@@ -40,7 +40,7 @@ BrowserWindow::BrowserWindow(const QStringList& urls)
 {
     setupDeclarativeEnvironment();
 
-    m_browserView = qobject_cast<QSGItem*>(rootObject());
+    m_browserView = qobject_cast<QQuickItem*>(rootObject());
     Q_ASSERT(m_browserView);
 
     setupShortcuts();
@@ -67,13 +67,13 @@ QPoint BrowserWindow::mapToGlobal(int x, int y)
 void BrowserWindow::moveEvent(QMoveEvent* event)
 {
     m_stateTracker.updateWindowGeometry();
-    QSGView::moveEvent(event);
+    QQuickView::moveEvent(event);
 }
 
 void BrowserWindow::resizeEvent(QResizeEvent* event)
 {
     m_stateTracker.updateWindowGeometry();
-    QSGView::resizeEvent(event);
+    QQuickView::resizeEvent(event);
 }
 
 bool BrowserWindow::event(QEvent* event)
@@ -90,7 +90,7 @@ bool BrowserWindow::event(QEvent* event)
             return true;
         }
     }
-    return QSGView::event(event);
+    return QQuickView::event(event);
 }
 
 void BrowserWindow::openNewEmptyTab()
@@ -114,7 +114,7 @@ void BrowserWindow::setupDeclarativeEnvironment()
 
     QObject::connect(engine(), SIGNAL(quit()), this, SLOT(close()));
 
-    setResizeMode(QSGView::SizeRootObjectToView);
+    setResizeMode(QQuickView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
 }
 

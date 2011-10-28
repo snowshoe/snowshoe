@@ -17,9 +17,9 @@
 #ifndef PopupMenu_h
 #define PopupMenu_h
 
-#include <QtDeclarative/QSGView>
+#include <QtDeclarative/QQuickView>
 
-class PopupMenu : public QSGView {
+class PopupMenu : public QQuickView {
     Q_OBJECT
     Q_PROPERTY(QString qmlComponent READ qmlComponent WRITE setQmlComponent NOTIFY qmlComponentChanged)
     Q_PROPERTY(int maxWidth READ maxWidth NOTIFY maxWidthChanged)
