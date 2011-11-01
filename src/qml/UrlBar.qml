@@ -90,7 +90,7 @@ Item {
             pressedImage: "qrc:///urlbar/btn_nav_back_pressed"
             standardImage: "qrc:///urlbar/btn_nav_back_unpressed"
             disabled: !pageWidget.webView.navigation.canGoBack
-            onClicked: { pageWidget.webView.navigation.back() }
+            onClicked: { pageWidget.webView.navigation.goBack() }
         }
 
         Image {
@@ -103,7 +103,7 @@ Item {
             pressedImage: "qrc:///urlbar/btn_nav_next_pressed"
             standardImage: "qrc:///urlbar/btn_nav_next_unpressed"
             disabled: !pageWidget.webView.navigation.canGoForward
-            onClicked: { pageWidget.webView.navigation.forward() }
+            onClicked: { pageWidget.webView.navigation.goForward() }
         }
 
         Image {
