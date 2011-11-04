@@ -67,6 +67,11 @@ Item {
 
         onTitleChanged: { root.title = title }
 
+        onDownloadRequested: {
+            downloadItem.destinationPath = BrowserObject.decideDownloadPath(downloadItem.suggestedFilename)
+            downloadItem.start()
+        }
+
         function navigationPolicyForUrl(url, button, modifiers) {
             if (button == Qt.MiddleButton
                 || (button == Qt.LeftButton && modifiers & Qt.ControlModifier)) {

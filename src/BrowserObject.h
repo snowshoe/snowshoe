@@ -35,6 +35,7 @@ public:
     Q_INVOKABLE bool isUrlEmpty(const QUrl&);
 
     Q_INVOKABLE void updateUrlsOpened(const QStringList&);
+    Q_INVOKABLE QString decideDownloadPath(const QString& suggestedPath);
 
 signals:
     void windowTitleChanged();

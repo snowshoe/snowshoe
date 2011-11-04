@@ -18,6 +18,10 @@
 
 #include "BrowserWindow.h"
 
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
+#include <QtCore/QStandardPaths>
+
 BrowserObject::BrowserObject(BrowserWindow* window)
     : QObject(window)
     , m_window(window)
@@ -53,4 +57,35 @@ bool BrowserObject::isUrlEmpty(const QUrl& url)
 void BrowserObject::updateUrlsOpened(const QStringList& urls)
 {
     m_window->stateTracker()->updateUrlsOpened(urls);
+}
+
+QString BrowserObject::decideDownloadPath(const QString& suggestedFilename)
+{
+    QString filename(suggestedFilename);
+    if (filename.isEmpty())
+        filename = "download";
+
+    const QDir homeDir(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+    if (!homeDir.exists(filename))
+        return homeDir.filePath(filename);
+
+    QString suffix;
+    if (filename.endsWith(".tar.bz2"))
+        suffix = "tar.bz2";
+    else if (filename.endsWith(".tar.gz"))
+        suffix = "tar.gz";
+    else
+        suffix = QFileInfo(homeDir, filename).suffix();
+
+    if (!suffix.isEmpty()) {
+        suffix.prepend('.');
+        filename = filename.left(filename.lastIndexOf(suffix));
+    }
+
+    int i = 0;
+    const QString fallbackFilename(filename + "_%1" + suffix);
+    while (homeDir.exists(fallbackFilename.arg(i))) // FIXME: Using exists() might lead to a race condition with other apps
+        ++i;
+
+    return homeDir.filePath(fallbackFilename.arg(i));
 }
