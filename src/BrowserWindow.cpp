@@ -21,7 +21,6 @@
 #include "BrowserObject.h"
 #include "DatabaseManager.h"
 #include "PopupMenu.h"
-#include "qdesktopwebview.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QSettings>
 #include <QtCore/QUrl>

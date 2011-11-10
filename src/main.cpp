@@ -18,11 +18,11 @@
 
 #include "BookmarkFilter.h"
 #include "DatabaseManager.h"
-#include "qdesktopwebview.h"
 
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QLatin1String>
 #include <QtWidgets/QApplication>
+#include <qdeclarative.h>
 
 int main(int argc, char** argv)
 {
