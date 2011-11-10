@@ -32,7 +32,7 @@ Item {
 
     onActiveChanged: { currentUrl = urlBar.text }
 
-    DesktopWebView {
+    WebView {
         id: webView
         anchors.fill: parent
 
@@ -52,7 +52,7 @@ Item {
 
         onLoadFailed: {
             root.isLoading = false
-            if (errorType == DesktopWebView.NetworkError && errorCode == NetworkReply.OperationCanceledError)
+            if (errorType == WebView.NetworkError && errorCode == NetworkReply.OperationCanceledError)
                 return;
             loadUrl(fallbackUrl(url))
         }
@@ -76,9 +76,9 @@ Item {
             if (button == Qt.MiddleButton
                 || (button == Qt.LeftButton && modifiers & Qt.ControlModifier)) {
                 browserView.addNewTabWithUrl(url)
-                return DesktopWebView.IgnorePolicy
+                return WebView.IgnorePolicy
             }
-            return DesktopWebView.UsePolicy
+            return WebView.UsePolicy
         }
     }
 
