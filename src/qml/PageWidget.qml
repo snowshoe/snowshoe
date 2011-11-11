@@ -16,6 +16,7 @@
 
 import QtQuick 2.0
 import QtWebKit 3.0
+import QtWebKit.private 3.0
 import Snowshoe 1.0
 
 Item {
@@ -80,6 +81,8 @@ Item {
             }
             return WebView.UsePolicy
         }
+
+        Component.onCompleted: { privateObject.setUseTraditionalDesktopBehaviour(true) }
     }
 
     function loadUrl(url)
