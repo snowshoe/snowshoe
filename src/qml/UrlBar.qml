@@ -89,8 +89,8 @@ Item {
             hoveredImage: "qrc:///urlbar/btn_nav_back_over"
             pressedImage: "qrc:///urlbar/btn_nav_back_pressed"
             standardImage: "qrc:///urlbar/btn_nav_back_unpressed"
-            disabled: !pageWidget.webView.navigation.canGoBack
-            onClicked: { pageWidget.webView.navigation.goBack() }
+            disabled: !pageWidget.webView.canGoBack
+            onClicked: { pageWidget.webView.goBack() }
         }
 
         Image {
@@ -102,8 +102,8 @@ Item {
             hoveredImage: "qrc:///urlbar/btn_nav_next_over"
             pressedImage: "qrc:///urlbar/btn_nav_next_pressed"
             standardImage: "qrc:///urlbar/btn_nav_next_unpressed"
-            disabled: !pageWidget.webView.navigation.canGoForward
-            onClicked: { pageWidget.webView.navigation.goForward() }
+            disabled: !pageWidget.webView.canGoForward
+            onClicked: { pageWidget.webView.goForward() }
         }
 
         Image {
@@ -111,11 +111,11 @@ Item {
         }
 
         Button {
-            hoveredImage: { pageWidget.webView.navigation.canStop ? "qrc:///urlbar/btn_nav_cancel_over" : "qrc:///urlbar/btn_nav_refresh_over" }
-            pressedImage: { pageWidget.webView.navigation.canStop ? "qrc:///urlbar/btn_nav_cancel_pressed" : "qrc:///urlbar/btn_nav_refresh_pressed" }
-            standardImage: { pageWidget.webView.navigation.canStop ? "qrc:///urlbar/btn_nav_cancel_unpressed" : "qrc:///urlbar/btn_nav_refresh_unpressed" }
+            hoveredImage: { pageWidget.webView.canStop ? "qrc:///urlbar/btn_nav_cancel_over" : "qrc:///urlbar/btn_nav_refresh_over" }
+            pressedImage: { pageWidget.webView.canStop ? "qrc:///urlbar/btn_nav_cancel_pressed" : "qrc:///urlbar/btn_nav_refresh_pressed" }
+            standardImage: { pageWidget.webView.canStop ? "qrc:///urlbar/btn_nav_cancel_unpressed" : "qrc:///urlbar/btn_nav_refresh_unpressed" }
 
-            onClicked: { pageWidget.webView.navigation.canStop ? pageWidget.webView.navigation.stop() : pageWidget.webView.navigation.reload() }
+            onClicked: { pageWidget.webView.canStop ? pageWidget.webView.stop() : pageWidget.webView.reload() }
         }
     }
 
