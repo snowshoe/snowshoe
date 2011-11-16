@@ -96,14 +96,6 @@ Item {
         return "http://www.google.com/search?q=" + url;
     }
 
-    function stop() {
-        webView.navigation.stop()
-    }
-
-    function reload() {
-        webView.navigation.reload()
-    }
-
     NewTab {
         id: newTab
         anchors.fill: parent
