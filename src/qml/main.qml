@@ -23,11 +23,11 @@ Item {
 
     // FIXME: Many of those functions are exposed so we setup global shortcuts, can we move this setup to QML side?
     function stop() {
-        tabWidget.activePage.stop()
+        tabWidget.activePage.webView.stop()
     }
 
     function reload() {
-        tabWidget.activePage.reload()
+        tabWidget.activePage.webView.reload()
     }
 
     function focusUrlBar() {
