@@ -68,18 +68,19 @@ Item {
 
         onTitleChanged: { root.title = title }
 
-        onDownloadRequested: {
+        experimental.onDownloadRequested: {
             downloadItem.destinationPath = BrowserObject.decideDownloadPath(downloadItem.suggestedFilename)
             downloadItem.start()
         }
 
-        function navigationPolicyForUrl(url, button, modifiers) {
-            if (button == Qt.MiddleButton
-                || (button == Qt.LeftButton && modifiers & Qt.ControlModifier)) {
-                browserView.addNewTabWithUrl(url)
-                return WebView.IgnorePolicy
+        onNavigationRequested: {
+            if (request.button == Qt.MiddleButton
+                || (request.button == Qt.LeftButton && request.modifiers & Qt.ControlModifier)) {
+                browserView.addNewTabWithUrl(request.url)
+                request.action = WebView.IgnoreRequest
+                return
             }
-            return WebView.UsePolicy
+            request.action = WebView.AcceptRequest
         }
 
         Component.onCompleted: { experimental.setUseTraditionalDesktopBehaviour(true) }
