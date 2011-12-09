@@ -19,8 +19,8 @@
 #define BrowserWindow_h
 
 #include "ApplicationStateTracker.h"
-#include <QtDeclarative/QQuickView>
 #include <QtGui/QKeySequence>
+#include <QtQuick/QQuickView>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QMainWindow>
 

@@ -17,7 +17,7 @@
 #ifndef PopupMenu_h
 #define PopupMenu_h
 
-#include <QtDeclarative/QQuickView>
+#include <QtQuick/QQuickView>
 
 class PopupMenu : public QQuickView {
     Q_OBJECT

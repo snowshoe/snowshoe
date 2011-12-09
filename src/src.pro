@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = ../snowshoe
 
-QT += declarative sql widgets webkit
+QT += declarative sql widgets webkit quick
 
 SOURCES += \
     main.cpp \

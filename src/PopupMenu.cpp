@@ -17,8 +17,8 @@
 #include "PopupMenu.h"
 
 #include <QtDeclarative/QDeclarativeContext>
-#include <QtDeclarative/QQuickItem>
-#include <QtDeclarative/QQuickView>
+#include <QtQuick/QQuickItem>
+#include <QtQuick/QQuickView>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
 
