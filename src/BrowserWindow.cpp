@@ -27,7 +27,7 @@
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QtDeclarative/QDeclarativeProperty>
-#include <QtDeclarative/QQuickItem>
+#include <QtQuick/QQuickItem>
 #include <QtWidgets/QAction>
 
 BrowserWindow::BrowserWindow(const QStringList& urls)
