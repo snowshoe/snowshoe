@@ -17,7 +17,7 @@
 #ifndef BookmarkFilter_h
 #define BookmarkFilter_h
 
-#include <QtWidgets/QSortFilterProxyModel>
+#include <QtCore/QSortFilterProxyModel>
 
 class BookmarkFilter : public QSortFilterProxyModel {
     Q_OBJECT
