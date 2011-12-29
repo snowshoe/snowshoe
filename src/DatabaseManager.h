@@ -33,6 +33,8 @@ protected:
     bool createTables();
 
 private:
+    Q_DISABLE_COPY(DatabaseManager)
+
     DatabaseManager();
     ~DatabaseManager();
 
