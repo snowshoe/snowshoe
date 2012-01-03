@@ -84,7 +84,7 @@ bool BrowserWindow::event(QEvent* event)
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         QKeySequence sequence(keyEvent->modifiers() | keyEvent->key());
         QMap<QKeySequence, QAction*>::const_iterator iterator = m_shortcuts.find(sequence);
-        if (iterator != m_shortcuts.end()){
+        if (iterator != m_shortcuts.end()) {
             iterator.value()->trigger();
             return true;
         }
