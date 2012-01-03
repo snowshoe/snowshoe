@@ -20,7 +20,8 @@ HEADERS += \
     BrowserWindow.h \
     DatabaseManager.h \
     PopupMenu.h \
-    BookmarkFilter.h
+    BookmarkFilter.h \
+    UrlTools.h
 
 RESOURCES += \
     snowshoe.qrc

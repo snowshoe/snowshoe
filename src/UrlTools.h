@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
+ *   Copyright (C) 2012  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
  *   General Public License version 2.1 as published by the Free Software   *
@@ -14,32 +14,33 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#ifndef BrowserObject_h
-#define BrowserObject_h
+#ifndef UrlTools_h
+#define UrlTools_h
 
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
 
-class BrowserWindow;
-
-class BrowserObject : public QObject {
+class UrlTools : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QString windowTitle READ windowTitle WRITE setWindowTitle NOTIFY windowTitleChanged)
 
 public:
-    QString windowTitle() const;
-    void setWindowTitle(const QString&);
+    UrlTools(QObject* parent = 0)
+        : QObject(parent) { }
 
-    Q_INVOKABLE void updateUrlsOpened(const QStringList&);
-    Q_INVOKABLE QString decideDownloadPath(const QString& suggestedPath);
+    Q_INVOKABLE QUrl fromUserInput(const QString& input)
+    {
+        return QUrl::fromUserInput(input);
+    }
 
-signals:
-    void windowTitleChanged();
+    Q_INVOKABLE bool isValid(const QUrl& url)
+    {
+        return url.isValid();
+    }
 
-private:
-    friend class BrowserWindow;
-    BrowserObject(BrowserWindow*);
-    BrowserWindow* m_window;
+    Q_INVOKABLE bool isEmpty(const QUrl& url)
+    {
+        return url.isEmpty();
+    }
 };
 
 #endif

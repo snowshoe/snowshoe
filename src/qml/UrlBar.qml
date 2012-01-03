@@ -32,7 +32,7 @@ Item {
     property PageWidget pageWidget: PageWidget {}
 
     onPageWidgetChanged: {
-        if (BrowserObject.isUrlEmpty(pageWidget.webView.url)) {
+        if (UrlTools.isEmpty(pageWidget.webView.url)) {
             textInput.forceActiveFocus()
             bookmarkButton.visible = false
         } else {
@@ -46,8 +46,8 @@ Item {
     }
 
     onUrlEntered: {
-        var urlToBrowse = BrowserObject.urlFromUserInput(url);
-        if (BrowserObject.isUrlValid(urlToBrowse))
+        var urlToBrowse = UrlTools.fromUserInput(url);
+        if (UrlTools.isValid(urlToBrowse))
             pageWidget.loadUrl(urlToBrowse);
         else
             pageWidget.loadUrl(pageWidget.fallbackUrl(url));

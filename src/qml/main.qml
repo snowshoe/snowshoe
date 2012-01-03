@@ -46,7 +46,7 @@ Item {
 
     function addNewTabWithUrl(url) {
         var tab = addNewEmptyTab()
-        if (BrowserObject.isUrlValid(url))
+        if (UrlTools.isValid(url))
             tab.pageWidget.loadUrl(url)
         return tab
     }

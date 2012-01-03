@@ -21,6 +21,7 @@
 #include "BrowserObject.h"
 #include "DatabaseManager.h"
 #include "PopupMenu.h"
+#include "UrlTools.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QSettings>
 #include <QtCore/QUrl>
@@ -110,6 +111,7 @@ void BrowserWindow::setupDeclarativeEnvironment()
     context->setContextProperty("BookmarkModel", DatabaseManager::instance()->bookmarkDataBaseModel());
     context->setContextProperty("PopupMenu", m_popupMenu);
     context->setContextProperty("View", this);
+    context->setContextProperty("UrlTools", new UrlTools(this));
 
     QObject::connect(engine(), SIGNAL(quit()), this, SLOT(close()));
 

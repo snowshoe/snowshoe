@@ -39,21 +39,6 @@ void BrowserObject::setWindowTitle(const QString& title)
     emit windowTitleChanged();
 }
 
-QUrl BrowserObject::urlFromUserInput(const QString& url)
-{
-    return QUrl::fromUserInput(url);
-}
-
-bool BrowserObject::isUrlValid(const QUrl& url)
-{
-    return url.isValid();
-}
-
-bool BrowserObject::isUrlEmpty(const QUrl& url)
-{
-    return url.isEmpty();
-}
-
 void BrowserObject::updateUrlsOpened(const QStringList& urls)
 {
     m_window->stateTracker()->updateUrlsOpened(urls);

@@ -90,7 +90,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (BrowserObject.isUrlEmpty(pageWidget.webView.url))
+                if (UrlTools.isEmpty(pageWidget.webView.url))
                     return;
                 if (parent.isBookmarked) {
                     parent.isBookmarked = false;
@@ -103,7 +103,7 @@ Item {
         }
 
         onIsBookmarkedChanged: {
-            visible = !BrowserObject.isUrlEmpty(pageWidget.webView.url)
+            visible = !UrlTools.isEmpty(pageWidget.webView.url)
         }
     }
 }
