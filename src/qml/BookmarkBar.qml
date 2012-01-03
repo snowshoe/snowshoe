@@ -83,7 +83,7 @@ Item {
                 PopupMenu.setContextProperty("StartRow", filteredModel.endRow + 1);
                 PopupMenu.qmlComponent = "DropDownMenuBookmark";
                 var point = mapToItem(tabWidget, x, height);
-                var globalPos = View.mapToGlobal(dropDownMenuButton.x + dropDownMenuButton.width, point.y);
+                var globalPos = BrowserWindow.mapToGlobal(dropDownMenuButton.x + dropDownMenuButton.width, point.y);
                 PopupMenu.showAtPosition(globalPos.x, globalPos.y);
             }
         }

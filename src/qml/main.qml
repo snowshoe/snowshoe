@@ -134,7 +134,7 @@ Item {
                 visible: false
             }
             StateChangeScript {
-                script: View.showFullScreen()
+                script: BrowserWindow.showFullScreen()
             }
             AnchorChanges {
                 target: contentArea
@@ -152,7 +152,7 @@ Item {
                 visible: true
             }
             StateChangeScript {
-                script: View.showNormal()
+                script: BrowserWindow.showNormal()
             }
             AnchorChanges {
                 target: contentArea
@@ -163,7 +163,7 @@ Item {
     ]
 
     Binding {
-        target: BrowserObject
+        target: BrowserWindow
         property: "windowTitle"
         value: tabWidget.activePage ? tabWidget.activePage.title + " ~ Snowshoe" : ""
     }

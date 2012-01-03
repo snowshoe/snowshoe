@@ -85,7 +85,7 @@ Item {
     }
 
     function updateUrlsOpened() {
-        BrowserObject.updateUrlsOpened(Core.urlsInTabOrder())
+        BrowserWindow.updateUrlsOpened(Core.urlsInTabOrder())
     }
 
     function updateSiblingTabsForDragging(tab, draggingEnable)

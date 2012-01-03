@@ -69,7 +69,7 @@ Item {
         onTitleChanged: { root.title = title }
 
         experimental.onDownloadRequested: {
-            downloadItem.destinationPath = BrowserObject.decideDownloadPath(downloadItem.suggestedFilename)
+            downloadItem.destinationPath = BrowserWindow.decideDownloadPath(downloadItem.suggestedFilename)
             downloadItem.start()
         }
 

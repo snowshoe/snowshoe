@@ -7,7 +7,6 @@ SOURCES += \
     main.cpp \
     ApplicationStateTracker.cpp \
     BookmarkModel.cpp \
-    BrowserObject.cpp \
     BrowserWindow.cpp \
     DatabaseManager.cpp \
     PopupMenu.cpp \
@@ -16,7 +15,6 @@ SOURCES += \
 HEADERS += \
     ApplicationStateTracker.h \
     BookmarkModel.h \
-    BrowserObject.h \
     BrowserWindow.h \
     DatabaseManager.h \
     PopupMenu.h \

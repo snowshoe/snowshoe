@@ -24,7 +24,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QMainWindow>
 
-class BrowserObject;
 class PopupMenu;
 class QSGItem;
 
@@ -35,12 +34,13 @@ public:
     BrowserWindow(const QStringList& urls);
     virtual ~BrowserWindow();
 
-    BrowserObject* browserObject() { return m_browserObject; }
-
     void openUrlInNewTab(const QString& urlFromUserInput);
 
-public slots:
-    QPoint mapToGlobal(int x, int y);
+    Q_INVOKABLE QPoint mapToGlobal(int x, int y);
+
+    // FIXME: Move those to appropriate objects to be exposed (for Settings and Download).
+    Q_INVOKABLE void updateUrlsOpened(const QStringList&);
+    Q_INVOKABLE QString decideDownloadPath(const QString& suggestedPath);
 
 protected:
     virtual bool event(QEvent*);
@@ -48,7 +48,6 @@ protected:
     virtual void resizeEvent(QResizeEvent*);
 
 private:
-    friend class BrowserObject;
     ApplicationStateTracker* stateTracker() { return &m_stateTracker; }
 
     void openNewEmptyTab();
@@ -59,7 +58,6 @@ private:
     void setupShortcuts();
 
     ApplicationStateTracker m_stateTracker;
-    BrowserObject* m_browserObject;
     QQuickItem* m_browserView;
     PopupMenu* m_popupMenu;
     QMap<QKeySequence, QAction*> m_shortcuts;
