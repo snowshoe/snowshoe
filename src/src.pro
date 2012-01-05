@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = ../snowshoe
 
-QT += declarative sql widgets webkit quick
+QT += declarative sql widgets webkit quick core-private gui-private
 
 SOURCES += \
     main.cpp \
@@ -10,6 +10,7 @@ SOURCES += \
     BrowserWindow.cpp \
     DatabaseManager.cpp \
     PopupMenu.cpp \
+    Shortcut.cpp \
     BookmarkFilter.cpp
 
 HEADERS += \
@@ -19,6 +20,7 @@ HEADERS += \
     DatabaseManager.h \
     PopupMenu.h \
     BookmarkFilter.h \
+    Shortcut.h \
     UrlTools.h
 
 RESOURCES += \

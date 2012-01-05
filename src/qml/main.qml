@@ -15,28 +15,15 @@
  ****************************************************************************/
 
 import QtQuick 2.0
+import Snowshoe 1.0
 
 Item {
     id: browserView
-
     state: "normal"
-
-    // FIXME: Many of those functions are exposed so we setup global shortcuts, can we move this setup to QML side?
-    function stop() {
-        tabWidget.activePage.webView.stop()
-    }
-
-    function reload() {
-        tabWidget.activePage.webView.reload()
-    }
 
     function focusUrlBar() {
         urlBar.textInput.forceActiveFocus()
         urlBar.textInput.selectAll()
-    }
-
-    function closeActiveTab() {
-        tabWidget.closeActiveTab()
     }
 
     function addNewEmptyTab() {
@@ -51,15 +38,7 @@ Item {
         return tab
     }
 
-    function jumpToNextTab() {
-        tabWidget.jumpToNextTab()
-    }
-
-    function jumpToPreviousTab() {
-        tabWidget.jumpToPreviousTab()
-    }
-
-    function fullScreenActionTriggered() {
+    function toggleFullScreen() {
         if (state == "normal")
             state = "fullscreen"
         else
@@ -75,7 +54,6 @@ Item {
         tabWidget.visible = false
         urlBar.visible = false
     }
-
 
     TabWidget {
         id: tabWidget
@@ -175,5 +153,50 @@ Item {
             visible: tab ? tab.active : 0
             onUrlChanged: tabWidget.updateUrlsOpened()
         }
+    }
+
+    Shortcut {
+        key: "Ctrl+L"
+        onTriggered: focusUrlBar()
+    }
+
+    Shortcut {
+        key: "Ctrl+T"
+        onTriggered: addNewEmptyTab()
+    }
+
+    Shortcut {
+        key: "Ctrl+W"
+        onTriggered: tabWidget.closeActiveTab()
+    }
+
+    Shortcut {
+        key: "Ctrl+PgDown"
+        onTriggered: tabWidget.jumpToNextTab()
+    }
+
+    Shortcut {
+        key: "Ctrl+PgUp"
+        onTriggered: tabWidget.jumpToPreviousTab()
+    }
+
+    Shortcut {
+        key: "Esc"
+        onTriggered: tabWidget.activePage.webView.stop()
+    }
+
+    Shortcut {
+        key: "F5"
+        onTriggered: tabWidget.activePage.webView.reload()
+    }
+
+    Shortcut {
+        key: "Ctrl+Shift+Q"
+        onTriggered: Qt.quit()
+    }
+
+    Shortcut {
+        key: "F11"
+        onTriggered: toggleFullScreen()
     }
 }

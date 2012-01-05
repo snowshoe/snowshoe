@@ -1,6 +1,5 @@
 /****************************************************************************
- *   Copyright (C) 2011  Andreas Kling <awesomekling@gmail.com>             *
- *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
+ *   Copyright (C) 2012  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
  *   General Public License version 2.1 as published by the Free Software   *
@@ -15,44 +14,36 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#ifndef BrowserWindow_h
-#define BrowserWindow_h
+#ifndef Shortcut_h
+#define Shortcut_h
 
-#include "ApplicationStateTracker.h"
-#include <QtQuick/QQuickView>
+#include <QtCore/QObject>
+#include <QtGui/QKeySequence>
 
-class PopupMenu;
+// FIXME: This a candidate to be polished and added to Qt5.
 
-class BrowserWindow : public QQuickView {
+class Shortcut : public QObject {
     Q_OBJECT
+    Q_PROPERTY(QString key READ key WRITE setKey NOTIFY keyChanged)
 
 public:
-    BrowserWindow(const QStringList& urls);
-    virtual ~BrowserWindow();
+    Shortcut();
+    virtual ~Shortcut();
 
-    void openUrlInNewTab(const QString& urlFromUserInput);
-
-    Q_INVOKABLE QPoint mapToGlobal(int x, int y);
-
-    // FIXME: Move those to appropriate objects to be exposed (for Settings and Download).
-    Q_INVOKABLE void updateUrlsOpened(const QStringList&);
-    Q_INVOKABLE QString decideDownloadPath(const QString& suggestedPath);
-
-protected:
     virtual bool event(QEvent*);
-    virtual void moveEvent(QMoveEvent*);
-    virtual void resizeEvent(QResizeEvent*);
+
+    QString key() const { return m_keySequence.toString(); }
+    void setKey(const QString&);
+
+signals:
+    void keyChanged();
+    void triggered();
 
 private:
-    ApplicationStateTracker* stateTracker() { return &m_stateTracker; }
+    QKeySequence m_keySequence;
+    int m_id;
 
-    void openNewEmptyTab();
-
-    void setupDeclarativeEnvironment();
-
-    ApplicationStateTracker m_stateTracker;
-    QQuickItem* m_browserView;
-    PopupMenu* m_popupMenu;
+    void updateShortcutMap(const QKeySequence& oldSequence, const QKeySequence& newSequence);
 };
 
 #endif

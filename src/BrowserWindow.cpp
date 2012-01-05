@@ -31,7 +31,7 @@
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QtDeclarative/QDeclarativeProperty>
 #include <QtQuick/QQuickItem>
-#include <QtWidgets/QAction>
+#include <QtGui/private/qguiapplication_p.h>
 
 BrowserWindow::BrowserWindow(const QStringList& urls)
     : QQuickView(0)
@@ -43,8 +43,6 @@ BrowserWindow::BrowserWindow(const QStringList& urls)
 
     m_browserView = qobject_cast<QQuickItem*>(rootObject());
     Q_ASSERT(m_browserView);
-
-    setupShortcuts();
 
     m_stateTracker.restoreWindowGeometry();
 
@@ -118,15 +116,11 @@ bool BrowserWindow::event(QEvent* event)
 {
     if (event->type() == QEvent::Close)
         deleteLater();
-    // This is to get shortcuts working, it needs to be removed when they will work in Qt5.
+
+    // FIXME: workarounds the fact that QApplication doesn't process shortcuts for QWindow.
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
-        QKeySequence sequence(keyEvent->modifiers() | keyEvent->key());
-        QMap<QKeySequence, QAction*>::const_iterator iterator = m_shortcuts.find(sequence);
-        if (iterator != m_shortcuts.end()) {
-            iterator.value()->trigger();
+        if (QGuiApplicationPrivate::instance()->shortcutMap.tryShortcutEvent(this, static_cast<QKeyEvent *>(event)))
             return true;
-        }
     }
     return QQuickView::event(event);
 }
@@ -150,46 +144,8 @@ void BrowserWindow::setupDeclarativeEnvironment()
     context->setContextProperty("BrowserWindow", this);
     context->setContextProperty("UrlTools", new UrlTools(this));
 
-    QObject::connect(engine(), SIGNAL(quit()), this, SLOT(close()));
+    QObject::connect(engine(), SIGNAL(quit()), qApp, SLOT(quit()));
 
     setResizeMode(QQuickView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
-}
-
-QAction* BrowserWindow::createActionWithShortcut(const QKeySequence& shortcut)
-{
-    QAction* action = new QAction(this);
-    action->setShortcut(shortcut);
-    m_shortcuts.insert(shortcut, action);
-    return action;
-}
-
-void BrowserWindow::setupShortcuts()
-{
-    QAction* focusLocationBarAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
-    connect(focusLocationBarAction, SIGNAL(triggered()), m_browserView, SLOT(focusUrlBar()));
-
-    QAction* newTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_T));
-    connect(newTabAction, SIGNAL(triggered()), m_browserView, SLOT(addNewEmptyTab()));
-
-    QAction* closeTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_W));
-    connect(closeTabAction, SIGNAL(triggered()), m_browserView, SLOT(closeActiveTab()));
-
-    QAction* nextTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageDown));
-    connect(nextTabAction, SIGNAL(triggered()), m_browserView, SLOT(jumpToNextTab()));
-
-    QAction* previousTabAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageUp));
-    connect(previousTabAction, SIGNAL(triggered()), m_browserView, SLOT(jumpToPreviousTab()));
-
-    QAction* stopAction = createActionWithShortcut(QKeySequence(Qt::Key_Escape));
-    connect(stopAction, SIGNAL(triggered()), m_browserView, SLOT(stop()));
-
-    QAction* quitAction = createActionWithShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Q));
-    connect(quitAction, SIGNAL(triggered()), QCoreApplication::instance(), SLOT(quit()));
-
-    QAction* reloadAction = createActionWithShortcut(QKeySequence(Qt::Key_F5));
-    connect(reloadAction, SIGNAL(triggered()), m_browserView, SLOT(reload()));
-
-    QAction* fullScreenAction = createActionWithShortcut(QKeySequence(Qt::Key_F11));
-    connect(fullScreenAction, SIGNAL(triggered()), m_browserView, SLOT(fullScreenActionTriggered()));
 }

@@ -18,6 +18,7 @@
 
 #include "BookmarkFilter.h"
 #include "DatabaseManager.h"
+#include "Shortcut.h"
 
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QLatin1String>
@@ -38,6 +39,7 @@ int main(int argc, char** argv)
 
     qmlRegisterType<BookmarkFilter>("Snowshoe", 1, 0, "BookmarkFilter");
     qmlRegisterUncreatableType<QAbstractItemModel>("Snowshoe", 1, 0, "QAbstractItemModel", QObject::tr("You can't create a QAbstractItemModel"));
+    qmlRegisterType<Shortcut>("Snowshoe", 1, 0, "Shortcut");
 
     DatabaseManager::instance()->initialize();
 
