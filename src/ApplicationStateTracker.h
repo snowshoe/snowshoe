@@ -18,6 +18,7 @@
 #define ApplicationStateTracker_h
 
 #include <QtCore/QObject>
+#include <QtCore/QRect>
 #include <QtCore/QStringList>
 #include <QtCore/QTimer>
 
@@ -30,7 +31,7 @@ public:
     ApplicationStateTracker(BrowserWindow*);
     virtual ~ApplicationStateTracker();
 
-    void updateWindowGeometry();
+    void updateWindowGeometry(const QRect&);
     void restoreWindowGeometry();
 
     void updateUrlsOpened(const QStringList&);
@@ -46,7 +47,7 @@ private:
 
     QTimer m_saveTimer;
     BrowserWindow* m_window;
-    QByteArray m_windowGeometry;
+    QRect m_windowGeometry;
     QStringList m_urlsOpened;
 };
 

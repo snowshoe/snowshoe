@@ -36,18 +36,20 @@ ApplicationStateTracker::~ApplicationStateTracker()
     saveState();
 }
 
-void ApplicationStateTracker::updateWindowGeometry()
+void ApplicationStateTracker::updateWindowGeometry(const QRect& geometry)
 {
-    // FIXME : implement that in QWindow.
-    // m_windowGeometry = m_window->saveGeometry();
+    // FIXME: We should improve this to consider window state as well.
+    m_windowGeometry = geometry;
 }
 
 void ApplicationStateTracker::restoreWindowGeometry()
 {
-    // FIXME : implement that in QWindow.
-    // QSettings settings;
-    // if (!m_window->restoreGeometry(settings.value("mainWindowGeometry").toByteArray()))
-    m_window->resize(800, 600);
+    QSettings settings;
+    QRect geometry = settings.value("mainWindowGeometry").toRect();
+    if (geometry.isValid())
+        m_window->setGeometry(geometry);
+    else
+        m_window->resize(800, 600);
 }
 
 void ApplicationStateTracker::updateUrlsOpened(const QStringList& urls)

@@ -102,13 +102,12 @@ QString BrowserWindow::decideDownloadPath(const QString& suggestedFilename)
 
 void BrowserWindow::moveEvent(QMoveEvent* event)
 {
-    m_stateTracker.updateWindowGeometry();
-    QQuickView::moveEvent(event);
-}
+    m_stateTracker.updateWindowGeometry(geometry());
+    QQuickView::moveEvent(event);}
 
 void BrowserWindow::resizeEvent(QResizeEvent* event)
 {
-    m_stateTracker.updateWindowGeometry();
+    m_stateTracker.updateWindowGeometry(geometry());
     QQuickView::resizeEvent(event);
 }
 
