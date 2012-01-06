@@ -25,17 +25,15 @@ class PopupMenu;
 
 class BrowserWindow : public QQuickView {
     Q_OBJECT
+    Q_PROPERTY(QStringList urlsFromCommandLine READ urlsFromCommandLine CONSTANT)
 
 public:
-    BrowserWindow(const QStringList& urls);
-    virtual ~BrowserWindow();
+    BrowserWindow(const QStringList& arguments);
 
-    void openUrlInNewTab(const QString& urlFromUserInput);
+    QStringList urlsFromCommandLine() const { return m_urlsFromCommandLine; }
 
     Q_INVOKABLE QPoint mapToGlobal(int x, int y);
-
-    // FIXME: Move those to appropriate objects to be exposed (for Settings and Download).
-    Q_INVOKABLE void updateUrlsOpened(const QStringList&);
+    // FIXME: Move to appropriate object exposed to handle download.
     Q_INVOKABLE QString decideDownloadPath(const QString& suggestedPath);
 
 protected:
@@ -44,13 +42,11 @@ protected:
     virtual void resizeEvent(QResizeEvent*);
 
 private:
-    ApplicationStateTracker* stateTracker() { return &m_stateTracker; }
-
-    void openNewEmptyTab();
-
+    void restoreWindowGeometry();
     void setupDeclarativeEnvironment();
 
     ApplicationStateTracker m_stateTracker;
+    QStringList m_urlsFromCommandLine;
     QQuickItem* m_browserView;
     PopupMenu* m_popupMenu;
 };

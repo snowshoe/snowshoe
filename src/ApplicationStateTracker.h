@@ -22,20 +22,22 @@
 #include <QtCore/QStringList>
 #include <QtCore/QTimer>
 
-class BrowserWindow;
-
 class ApplicationStateTracker : public QObject {
     Q_OBJECT
+    Q_PROPERTY(QStringList urlsOpened READ urlsOpened WRITE setUrlsOpened NOTIFY urlsOpenedChanged)
 
 public:
-    ApplicationStateTracker(BrowserWindow*);
+    ApplicationStateTracker();
     virtual ~ApplicationStateTracker();
 
-    void updateWindowGeometry(const QRect&);
-    void restoreWindowGeometry();
+    QRect windowGeometry() const { return m_windowGeometry; }
+    void setWindowGeometry(const QRect&);
 
-    void updateUrlsOpened(const QStringList&);
-    bool restoreUrlsOpened();
+    QStringList urlsOpened() const { return m_urlsOpened; }
+    void setUrlsOpened(const QStringList&);
+
+signals:
+    void urlsOpenedChanged();
 
 private slots:
     void saveState();
@@ -43,10 +45,10 @@ private slots:
 private:
     Q_DISABLE_COPY(ApplicationStateTracker)
 
+    void loadState();
     void startTimerIfNeeded();
 
     QTimer m_saveTimer;
-    BrowserWindow* m_window;
     QRect m_windowGeometry;
     QStringList m_urlsOpened;
 };

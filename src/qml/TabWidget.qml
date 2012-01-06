@@ -85,7 +85,7 @@ Item {
     }
 
     function updateUrlsOpened() {
-        BrowserWindow.updateUrlsOpened(Core.urlsInTabOrder())
+        StateTracker.urlsOpened = Core.urlsInTabOrder();
     }
 
     function updateSiblingTabsForDragging(tab, draggingEnable)

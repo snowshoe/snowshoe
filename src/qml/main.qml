@@ -26,13 +26,8 @@ Item {
         urlBar.textInput.selectAll()
     }
 
-    function addNewEmptyTab() {
-        var page = pageComponent.createObject(contentArea)
-        return tabWidget.addTabForPage(page)
-    }
-
-    function addNewTabWithUrl(url) {
-        var tab = addNewEmptyTab()
+    function openTabWithUrl(url) {
+        var tab = _openEmptyTab()
         if (UrlTools.isValid(url))
             tab.pageWidget.loadUrl(url)
         return tab
@@ -64,7 +59,7 @@ Item {
             right: parent.right
         }
 
-        onNewTabRequested: browserView.addNewEmptyTab()
+        onNewTabRequested: _openNewEmptyTab()
         onActivePageChanged: urlBar.pageWidget = activePage
     }
 
@@ -162,7 +157,7 @@ Item {
 
     Shortcut {
         key: "Ctrl+T"
-        onTriggered: addNewEmptyTab()
+        onTriggered: _openEmptyTab()
     }
 
     Shortcut {
@@ -198,5 +193,26 @@ Item {
     Shortcut {
         key: "F11"
         onTriggered: toggleFullScreen()
+    }
+
+    Component.onCompleted: {
+        // Copy the QStringList so we are not affected when it changes.
+        var savedUrls = StateTracker.urlsOpened.slice(0);
+        var commandLineUrls = BrowserWindow.urlsFromCommandLine;
+        if (!savedUrls.length && !commandLineUrls.length) {
+            _openEmptyTab();
+            return;
+        }
+
+        var i;
+        for (i = 0; i < savedUrls.length; i++)
+            openTabWithUrl(savedUrls[i]);
+        for (i = 0; i < commandLineUrls.length; i++)
+            openTabWithUrl(commandLineUrls[i]);
+    }
+
+    function _openEmptyTab() {
+        var page = pageComponent.createObject(contentArea)
+        return tabWidget.addTabForPage(page)
     }
 }

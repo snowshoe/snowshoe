@@ -43,8 +43,8 @@ int main(int argc, char** argv)
 
     DatabaseManager::instance()->initialize();
 
-    QStringList urlsFromArguments = app.arguments().mid(1);
-    BrowserWindow* window = new BrowserWindow(urlsFromArguments);
+    QStringList arguments = app.arguments().mid(1);
+    BrowserWindow* window = new BrowserWindow(arguments);
 
     window->show();
     app.exec();

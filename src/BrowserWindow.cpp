@@ -33,39 +33,20 @@
 #include <QtQuick/QQuickItem>
 #include <QtGui/private/qguiapplication_p.h>
 
-BrowserWindow::BrowserWindow(const QStringList& urls)
-    : QQuickView(0)
-    , m_stateTracker(this)
+BrowserWindow::BrowserWindow(const QStringList& arguments)
+    : m_urlsFromCommandLine(arguments)
     , m_browserView(0)
     , m_popupMenu(new PopupMenu(this))
 {
+    restoreWindowGeometry();
     setupDeclarativeEnvironment();
-
     m_browserView = qobject_cast<QQuickItem*>(rootObject());
     Q_ASSERT(m_browserView);
-
-    m_stateTracker.restoreWindowGeometry();
-
-    const bool restoredUrls = m_stateTracker.restoreUrlsOpened();
-    if (!urls.isEmpty()) {
-        for (int i = 0; i < urls.size(); i++)
-            openUrlInNewTab(urls.at(i));
-    } else if (!restoredUrls)
-        openNewEmptyTab();
-}
-
-BrowserWindow::~BrowserWindow()
-{
 }
 
 QPoint BrowserWindow::mapToGlobal(int x, int y)
 {
     return QWindow::mapToGlobal(QPoint(x, y));
-}
-
-void BrowserWindow::updateUrlsOpened(const QStringList& urls)
-{
-    m_stateTracker.updateUrlsOpened(urls);
 }
 
 QString BrowserWindow::decideDownloadPath(const QString& suggestedFilename)
@@ -102,12 +83,12 @@ QString BrowserWindow::decideDownloadPath(const QString& suggestedFilename)
 
 void BrowserWindow::moveEvent(QMoveEvent* event)
 {
-    m_stateTracker.updateWindowGeometry(geometry());
+    m_stateTracker.setWindowGeometry(geometry());
     QQuickView::moveEvent(event);}
 
 void BrowserWindow::resizeEvent(QResizeEvent* event)
 {
-    m_stateTracker.updateWindowGeometry(geometry());
+    m_stateTracker.setWindowGeometry(geometry());
     QQuickView::resizeEvent(event);
 }
 
@@ -124,15 +105,13 @@ bool BrowserWindow::event(QEvent* event)
     return QQuickView::event(event);
 }
 
-void BrowserWindow::openNewEmptyTab()
+void BrowserWindow::restoreWindowGeometry()
 {
-    QMetaObject::invokeMethod(m_browserView, "addNewEmptyTab");
-}
-
-void BrowserWindow::openUrlInNewTab(const QString& urlFromUserInput)
-{
-    QUrl url = QUrl::fromUserInput(urlFromUserInput);
-    QMetaObject::invokeMethod(m_browserView, "addNewTabWithUrl", Q_ARG(QVariant, url));
+    QRect savedGeometry = m_stateTracker.windowGeometry();
+    if (savedGeometry.isValid())
+        setGeometry(savedGeometry);
+    else
+        resize(800, 600);
 }
 
 void BrowserWindow::setupDeclarativeEnvironment()
@@ -142,6 +121,7 @@ void BrowserWindow::setupDeclarativeEnvironment()
     context->setContextProperty("PopupMenu", m_popupMenu);
     context->setContextProperty("BrowserWindow", this);
     context->setContextProperty("UrlTools", new UrlTools(this));
+    context->setContextProperty("StateTracker", &m_stateTracker);
 
     QObject::connect(engine(), SIGNAL(quit()), qApp, SLOT(quit()));
 

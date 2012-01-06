@@ -16,19 +16,18 @@
 
 #include "ApplicationStateTracker.h"
 
-#include "BrowserWindow.h"
 #include <QtCore/QSettings>
 
 const int IntervalForSavingStateInMilliseconds = 10000;
 
-ApplicationStateTracker::ApplicationStateTracker(BrowserWindow* window)
+ApplicationStateTracker::ApplicationStateTracker()
     : QObject()
     , m_saveTimer()
-    , m_window(window)
 {
     m_saveTimer.setInterval(IntervalForSavingStateInMilliseconds);
     m_saveTimer.setSingleShot(true);
     connect(&m_saveTimer, SIGNAL(timeout()), SLOT(saveState()));
+    loadState();
 }
 
 ApplicationStateTracker::~ApplicationStateTracker()
@@ -36,38 +35,26 @@ ApplicationStateTracker::~ApplicationStateTracker()
     saveState();
 }
 
-void ApplicationStateTracker::updateWindowGeometry(const QRect& geometry)
+void ApplicationStateTracker::setWindowGeometry(const QRect& geometry)
 {
-    // FIXME: We should improve this to consider window state as well.
     m_windowGeometry = geometry;
-}
-
-void ApplicationStateTracker::restoreWindowGeometry()
-{
-    QSettings settings;
-    QRect geometry = settings.value("mainWindowGeometry").toRect();
-    if (geometry.isValid())
-        m_window->setGeometry(geometry);
-    else
-        m_window->resize(800, 600);
-}
-
-void ApplicationStateTracker::updateUrlsOpened(const QStringList& urls)
-{
-    m_urlsOpened = urls;
     startTimerIfNeeded();
 }
 
-bool ApplicationStateTracker::restoreUrlsOpened()
+void ApplicationStateTracker::setUrlsOpened(const QStringList& urls)
+{
+    if (urls == m_urlsOpened)
+        return;
+    m_urlsOpened = urls;
+    startTimerIfNeeded();
+    emit urlsOpenedChanged();
+}
+
+void ApplicationStateTracker::loadState()
 {
     QSettings settings;
-    QStringList storedUrls = settings.value("urlsOpened").toStringList();
-    m_urlsOpened = storedUrls;
-    if (storedUrls.isEmpty())
-        return false;
-    for (int i = 0; i < storedUrls.size(); i++)
-        m_window->openUrlInNewTab(storedUrls.at(i));
-    return true;
+    m_windowGeometry = settings.value("mainWindowGeometry").toRect();
+    m_urlsOpened = settings.value("urlsOpened").toStringList();
 }
 
 void ApplicationStateTracker::saveState()

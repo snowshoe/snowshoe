@@ -76,7 +76,7 @@ Item {
         onNavigationRequested: {
             if (request.button == Qt.MiddleButton
                 || (request.button == Qt.LeftButton && request.modifiers & Qt.ControlModifier)) {
-                browserView.addNewTabWithUrl(request.url)
+                browserView.openTabWithUrl(request.url)
                 request.action = WebView.IgnoreRequest
                 return
             }
