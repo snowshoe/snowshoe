@@ -53,7 +53,7 @@ Item {
 
         onLoadFailed: {
             root.isLoading = false
-            if (errorType == WebView.NetworkError && errorCode == NetworkReply.OperationCanceledError)
+            if (errorDomain == WebView.NetworkErrorDomain && errorCode == NetworkReply.OperationCanceledError)
                 return;
             loadUrl(fallbackUrl(url))
         }
