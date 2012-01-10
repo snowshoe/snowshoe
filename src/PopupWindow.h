@@ -1,5 +1,5 @@
 /****************************************************************************
- *   Copyright (C) 2011  Instituto Nokia de Tecnologia (INdT)               *
+ *   Copyright (C) 2012  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
  *   General Public License version 2.1 as published by the Free Software   *
@@ -14,37 +14,25 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#ifndef PopupMenu_h
-#define PopupMenu_h
+#ifndef PopupWindow_h
+#define PopupWindow_h
 
-#include <QtQuick/QQuickView>
+#include <QtQuick/QQuickCanvas>
 
-class PopupMenu : public QQuickView {
+class PopupWindow : public QQuickCanvas {
     Q_OBJECT
-    Q_PROPERTY(QString qmlComponent READ qmlComponent WRITE setQmlComponent NOTIFY qmlComponentChanged)
-    Q_PROPERTY(int maxWidth READ maxWidth NOTIFY maxWidthChanged)
-    Q_PROPERTY(int maxHeight READ maxHeight NOTIFY maxHeightChanged)
+
 public:
-    PopupMenu(QWindow* parent = 0);
+    PopupWindow(QWindow* parent = 0);
 
-    void setQmlComponent(const QString&);
-    QString qmlComponent() const;
+protected:
+    virtual void showEvent(QShowEvent*);
+    virtual void hideEvent(QHideEvent*);
 
-    int maxWidth() const;
-    int maxHeight() const;
+    virtual void mousePressEvent(QMouseEvent*);
 
-Q_SIGNALS:
-    void qmlComponentChanged();
-    void maxWidthChanged();
-    void maxHeightChanged();
-
-public slots:
-    void movePopup(int, int);
-    void setContextProperty(const QString&, const QVariant&);
-    void showAtPosition(int, int);
-
-private:
-    QString m_qmlComponent;
+private Q_SLOTS:
+    void setMouseGrab();
 };
 
-#endif // PopupMenu_h
+#endif

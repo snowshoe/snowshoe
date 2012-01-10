@@ -4,22 +4,22 @@ TARGET = ../snowshoe
 QT += declarative sql widgets webkit quick core-private gui-private
 
 SOURCES += \
-    main.cpp \
     ApplicationStateTracker.cpp \
+    BookmarkFilter.cpp \
     BookmarkModel.cpp \
     BrowserWindow.cpp \
     DatabaseManager.cpp \
-    PopupMenu.cpp \
+    PopupWindow.cpp \
     Shortcut.cpp \
-    BookmarkFilter.cpp
+    main.cpp
 
 HEADERS += \
     ApplicationStateTracker.h \
+    BookmarkFilter.h \
     BookmarkModel.h \
     BrowserWindow.h \
     DatabaseManager.h \
-    PopupMenu.h \
-    BookmarkFilter.h \
+    PopupWindow.h \
     Shortcut.h \
     UrlTools.h
 
@@ -31,17 +31,17 @@ RCC_DIR = .rcc/
 OBJECTS_DIR = .obj/
 
 OTHER_FILES += \
-    qml/main.qml \
-    qml/Tab.qml \
-    qml/TabWidget.qml \
-    qml/TabWidget.js \
-    qml/UrlEdit.qml \
-    qml/UrlBar.qml \
-    qml/PageWidget.qml \
-    qml/NewTab.qml \
     qml/BookmarkBar.qml \
-    qml/DropDownMenuBookmark.qml \
     qml/BookmarkBarDelegate.qml \
-    qml/DropDownMenuBookmarkDelegate.qml \
     qml/Button.qml \
-    qml/HoveredLinkBar.qml
+    qml/DropDownMenuBookmark.qml \
+    qml/DropDownMenuBookmarkDelegate.qml \
+    qml/HoveredLinkBar.qml \
+    qml/NewTab.qml \
+    qml/PageWidget.qml \
+    qml/Tab.qml \
+    qml/TabWidget.js \
+    qml/TabWidget.qml \
+    qml/UrlBar.qml \
+    qml/UrlEdit.qml \
+    qml/main.qml

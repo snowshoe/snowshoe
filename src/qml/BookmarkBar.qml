@@ -18,6 +18,7 @@ import QtQuick 2.0
 import Snowshoe 1.0
 
 Item {
+    id: bookmarkBar
 
     Image {
         anchors.fill: parent
@@ -68,23 +69,38 @@ Item {
             top: parent.top
             topMargin: 8
         }
-        source: { dropDownMenuMouseArea.isHovered ? "qrc:///bookmarks/btn_dropdown_menu_over" : "qrc:///bookmarks/btn_dropdown_menu_static"}
-        visible: { (filteredModel.endRow != -1 && filteredModel.endRow < BookmarkModel.count - 1) }
+        source: dropDownMenuMouseArea.containsMouse ? "qrc:///bookmarks/btn_dropdown_menu_over" : "qrc:///bookmarks/btn_dropdown_menu_static"
+        visible: Boolean(filteredModel.endRow != -1 && filteredModel.endRow < BookmarkModel.count - 1)
+
         MouseArea {
             id: dropDownMenuMouseArea
             anchors.fill: parent
             hoverEnabled: true
-            property bool isHovered: false
-            onEntered: { isHovered = true; }
-            onExited: { isHovered = false }
             onClicked: {
-                PopupMenu.setContextProperty("PageWidget", root);
-                PopupMenu.setContextProperty("BookmarkModel", BookmarkModel);
-                PopupMenu.setContextProperty("StartRow", filteredModel.endRow + 1);
-                PopupMenu.qmlComponent = "DropDownMenuBookmark";
-                var point = mapToItem(tabWidget, x, height);
-                var globalPos = BrowserWindow.mapToGlobal(dropDownMenuButton.x + dropDownMenuButton.width, point.y);
-                PopupMenu.showAtPosition(globalPos.x, globalPos.y);
+                var point = mapToItem(tabWidget, x + width, height);
+                var globalPos = BrowserWindow.mapToGlobal(point.x - 200 + width, point.y);
+                var menu = dropDownMenuComponent.createObject();
+                menu.x = globalPos.x;
+                menu.y = globalPos.y;
+                menu.show();
+            }
+        }
+    }
+
+    Component {
+        id: dropDownMenuComponent
+
+        DropDownMenuBookmark {
+            model: BookmarkModel
+            startRow: filteredModel.endRow + 1
+
+            // FIXME: We should be able to use Screen.height from QtQuick.Window to
+            // calculate this but it isn't working yet.
+            maxHeight: 600
+
+            onClicked: {
+                root.loadUrl(url)
+                hide();
             }
         }
     }

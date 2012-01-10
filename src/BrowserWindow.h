@@ -21,8 +21,6 @@
 #include "ApplicationStateTracker.h"
 #include <QtQuick/QQuickView>
 
-class PopupMenu;
-
 class BrowserWindow : public QQuickView {
     Q_OBJECT
     Q_PROPERTY(QStringList urlsFromCommandLine READ urlsFromCommandLine CONSTANT)
@@ -48,7 +46,6 @@ private:
     ApplicationStateTracker m_stateTracker;
     QStringList m_urlsFromCommandLine;
     QQuickItem* m_browserView;
-    PopupMenu* m_popupMenu;
 };
 
 #endif

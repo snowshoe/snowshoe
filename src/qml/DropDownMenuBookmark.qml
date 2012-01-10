@@ -17,41 +17,50 @@
 import QtQuick 2.0
 import Snowshoe 1.0
 
-BorderImage {
-    id: background
-    width: listView.width + border.right + border.left
-    height: listView.height + border.top + border.bottom + margin*2
-    source: "qrc:///combobox/base_bg"
-    border { left: 12; top: 6; right: 12; bottom: 16 }
-    property int margin: 8
-    property int topOffset: -4
-    property int rightOffset: -width + margin
+PopupWindow {
+    id: dropDownBookmarkMenu
+    property alias model: filteredModel.sourceModel
+    property alias startRow: filteredModel.startRow
+    property int maxHeight
+
+    signal clicked(string url)
+
+    property int _margin: 8
+    width: listView.width + bg.border.right + bg.border.left
+    height: listView.height + bg.border.top + bg.border.bottom + (_margin * 2)
+
+    BorderImage {
+        id: bg
+        anchors.fill: parent
+        source: "qrc:///combobox/base_bg"
+        border { left: 12; top: 6; right: 12; bottom: 16 }
+    }
+
+    BookmarkFilter {
+        id: filteredModel
+    }
 
     ListView {
         id: listView
-        x: background.x + background.border.left
-        y: background.y + background.border.top + margin
-        width: 150
-        clip: true;
         property int elementHeight: 24
-        height: {
-            if (filteredModel.rowCount * elementHeight > View.maxHeight) {
-                interactive = true;
-                return View.maxHeight;
-            } else
-                return filteredModel.rowCount * (elementHeight + spacing) - spacing
-        }
+
+        x: bg.x + bg.border.left
+        y: bg.y + bg.border.top + _margin
+        width: 150
+        clip: true
         orientation: ListView.Vertical
-        interactive: false
-
-        BookmarkFilter {
-            id: filteredModel
-            sourceModel: BookmarkModel
-            startRow: StartRow
-        }
-
         model: filteredModel
         spacing: 2
-        delegate: DropDownMenuBookmarkDelegate {}
+
+        interactive: Boolean(height == dropDownBookmarkMenu.maxHeight)
+        height: {
+            var listHeight = filteredModel.rowCount * (elementHeight + spacing) - spacing;
+            return Math.min(listHeight, dropDownBookmarkMenu.maxHeight);
+        }
+
+        delegate: DropDownMenuBookmarkDelegate {
+            onClicked: dropDownBookmarkMenu.clicked(model.url)
+        }
     }
 }
+

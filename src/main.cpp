@@ -18,6 +18,7 @@
 
 #include "BookmarkFilter.h"
 #include "DatabaseManager.h"
+#include "PopupWindow.h"
 #include "Shortcut.h"
 
 #include <QtCore/QAbstractItemModel>
@@ -39,6 +40,7 @@ int main(int argc, char** argv)
 
     qmlRegisterType<BookmarkFilter>("Snowshoe", 1, 0, "BookmarkFilter");
     qmlRegisterUncreatableType<QAbstractItemModel>("Snowshoe", 1, 0, "QAbstractItemModel", QObject::tr("You can't create a QAbstractItemModel"));
+    qmlRegisterType<PopupWindow>("Snowshoe", 1, 0, "PopupWindow");
     qmlRegisterType<Shortcut>("Snowshoe", 1, 0, "Shortcut");
 
     DatabaseManager::instance()->initialize();

@@ -17,8 +17,11 @@
 import QtQuick 2.0
 
 Item {
+    signal clicked()
+
     width: listView.width
     height: listView.elementHeight
+
     BorderImage {
         anchors.fill: parent
         id: overlay
@@ -49,8 +52,12 @@ Item {
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
-        onEntered: { overlay.visible = true; }
-        onExited: overlay.visible = false
-        onClicked: { PageWidget.loadUrl(url); View.hide(); }
+        onEntered: {
+            overlay.visible = true;
+        }
+        onExited: {
+            overlay.visible = false;
+        }
+        onClicked: parent.clicked()
     }
 }

@@ -19,7 +19,6 @@
 
 #include "BookmarkModel.h"
 #include "DatabaseManager.h"
-#include "PopupMenu.h"
 #include "UrlTools.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
@@ -36,7 +35,6 @@
 BrowserWindow::BrowserWindow(const QStringList& arguments)
     : m_urlsFromCommandLine(arguments)
     , m_browserView(0)
-    , m_popupMenu(new PopupMenu(this))
 {
     restoreWindowGeometry();
     setupDeclarativeEnvironment();
@@ -118,7 +116,6 @@ void BrowserWindow::setupDeclarativeEnvironment()
 {
     QDeclarativeContext* context = rootContext();
     context->setContextProperty("BookmarkModel", DatabaseManager::instance()->bookmarkDataBaseModel());
-    context->setContextProperty("PopupMenu", m_popupMenu);
     context->setContextProperty("BrowserWindow", this);
     context->setContextProperty("UrlTools", new UrlTools(this));
     context->setContextProperty("StateTracker", &m_stateTracker);
