@@ -11,7 +11,7 @@ PageStackWindow {
 Rectangle {
     id: rootPage
     width: 480
-    height: 854
+    height: 854 - 36 // 36 is the height of status bar
     color: "#202022"
 
     Row {
@@ -51,13 +51,13 @@ Rectangle {
 
     Rectangle {
         id: plusBtn
-        y: 854
+        y: rootPage.height
         anchors.horizontalCenter: rootPage.horizontalCenter
 
-        width: 30
-        height: 30
+        width: 40
+        height: 40
         smooth: true
-        radius: 15
+        radius: 20
 
         Text {
             id: plusBtnLabel
@@ -72,6 +72,7 @@ Rectangle {
             visible: false
             anchors.centerIn: parent
             width: parent.width - 20
+            font.pixelSize: 24
             clip: true
             text: "http://"
             onAccepted: {
@@ -92,7 +93,7 @@ Rectangle {
             PropertyChanges { target: navigationPanel; visible: false }
             PropertyChanges { target: favoritesPanel; visible: true }
             PropertyChanges { target: toolbar; y: UiConstants.DefaultMargin }
-            PropertyChanges { target: plusBtn; y:  854 - 50 }
+            PropertyChanges { target: plusBtn; y:  rootPage.height - 50 }
             PropertyChanges { target: currentBtn; z: 0 }
             PropertyChanges { target: favoritesBtn; z: 1 }
         },
@@ -101,7 +102,7 @@ Rectangle {
             PropertyChanges { target: navigationPanel; visible: true }
             PropertyChanges { target: favoritesPanel; visible: false }
             PropertyChanges { target: toolbar; y: UiConstants.DefaultMargin }
-            PropertyChanges { target: plusBtn; y:  854 - 50 }
+            PropertyChanges { target: plusBtn; y:  rootPage.height - 50 }
             PropertyChanges { target: currentBtn; z: 1 }
             PropertyChanges { target: favoritesBtn; z: 0 }
         },
@@ -111,7 +112,7 @@ Rectangle {
             PropertyChanges { target:  favoritesPanel; visible: false }
             PropertyChanges { target:  toolbar; visible: true }
             PropertyChanges { target:  navigationPanel; state: "fullscreen" }
-            PropertyChanges { target:  plusBtn; y:  854 }
+            PropertyChanges { target:  plusBtn; y:  rootPage.height }
         },
         State {
             name: "typeNewUrl"
@@ -153,9 +154,9 @@ Rectangle {
         },
         Transition {
             to: "currentFullScreen"
+            PropertyAnimation { target: plusBtn; properties: "x,y"; duration: 0; }
             PropertyAnimation { properties: "opacity"; duration: 500; }
         }
-
     ]
 
     Component.onCompleted: {

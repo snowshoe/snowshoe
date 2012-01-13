@@ -2,9 +2,9 @@ import QtQuick 1.1
 
 Rectangle {
     id: statusBall
-    width: 8
-    height: 8
-    radius: 4
+    width: 10
+    height: 10
+    radius: 5
     z: 1
     property bool active: true
     color: active ? "white" : "#666"

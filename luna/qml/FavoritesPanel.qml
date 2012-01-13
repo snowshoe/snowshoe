@@ -11,8 +11,8 @@ Grid {
             color: "magenta"
             radius: 10
             scale: 0
-            width: 160
-            height: 284
+            width: 176
+            height: 312
 
             Text {
                 anchors.centerIn: parent

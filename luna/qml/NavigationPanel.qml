@@ -46,9 +46,9 @@ Item {
     Item {
         id: tabBar
         width: 480
-        height: 20
+        height: 36
         x: 0
-        y: 854 - 20
+        y: 818 - 36
 
         Row {
             id: tabBarRow
@@ -102,12 +102,11 @@ Item {
     function createTab(url)
     {
         var webView = webViewPrototype.createObject(webViewRow)
-        // FIXME: This makes QML parse StatusBarIndicator.qml all the times!?
         var webViewStatus = Qt.createComponent("StatusBarIndicator.qml").createObject(tabBarRow)
         Foo.pushWebPage(webView, webViewStatus)
 
         // reset previous status bullet
-        if (currentWebPageIndex != -1) {
+        if (currentWebPageIndex !== -1) {
             var prevStatusElem = Foo.getWebPageStatusElem(currentWebPageIndex)
             prevStatusElem.active = false
             prevStatusElem.state = ""
