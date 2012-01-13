@@ -15,6 +15,13 @@ QT += declarative
 SOURCES += main.cpp
 
 OTHER_FILES += \
+    qml/FavoritesPanel.qml \
+    qml/foo.js \
+    qml/main.qml \
+    qml/NavigationPanel.qml \
+    qml/StatusBarIndicator.qml \
+    qml/UglyButton.qml \
+    qml/UiConstants.js \
     qtc_packaging/debian_harmattan/rules \
     qtc_packaging/debian_harmattan/README \
     qtc_packaging/debian_harmattan/manifest.aegis \
