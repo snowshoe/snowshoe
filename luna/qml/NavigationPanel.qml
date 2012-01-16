@@ -101,9 +101,11 @@ Item {
                 // deactivate old status indicator
                 var oldStatusElem = Foo.getStatusBarIndicator(currentTabIndex);
                 if (oldStatusElem)
-                    oldStatusElem.active = false
+                    oldStatusElem.active = false;
 
-                Foo.getStatusBarIndicator(index).active = true
+                var statusIndicator = Foo.getStatusBarIndicator(index);
+                statusIndicator.state = "likeAUrlBar"
+                statusIndicator.active = true
                 Foo.getWebPage(index).state = state
                 webViewRow.x = -index * navigationPanel.width
             }
