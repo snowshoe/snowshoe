@@ -7,8 +7,8 @@ Item {
     id: navigationPanel
     width: parent.width
     height: parent.height
-    property int currentWebPageIndex: -1
-    property int pageCount: 0
+    property int currentTabIndex: -1
+    property int tabCount: 0
 
     Row {
         id: webViewRow
@@ -54,11 +54,11 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        Foo.removeWebPage(currentWebPageIndex)
-                        navigationPanel.pageCount = Foo.pageCount();
-                        if (currentWebPageIndex === Foo.pageCount())
-                            currentWebPageIndex--;
-                        tabBar.setCurrentPage(currentWebPageIndex)
+                        Foo.removeTab(currentTabIndex)
+                        navigationPanel.tabCount = Foo.tabCount();
+                        if (currentTabIndex === Foo.tabCount())
+                            currentTabIndex--;
+                        tabBar.setCurrentTab(currentTabIndex)
                     }
                 }
             }
@@ -96,18 +96,18 @@ Item {
         x: 0
         y: 818 - 36
 
-        function setCurrentPage(index) {
+        function setCurrentTab(index) {
             if (index !== -1) {
                 // deactivate old status indicator
-                var oldStatusElem = Foo.getWebPageStatusElem(currentWebPageIndex);
+                var oldStatusElem = Foo.getStatusBarIndicator(currentTabIndex);
                 if (oldStatusElem)
                     oldStatusElem.active = false
 
-                Foo.getWebPageStatusElem(index).active = true
-                Foo.getWebPageElem(index).state = state == "notFullScreen" ? "minimized" : ""
+                Foo.getStatusBarIndicator(index).active = true
+                Foo.getWebPage(index).state = state
                 webViewRow.x = -index * navigationPanel.width
             }
-            currentWebPageIndex = index
+            currentTabIndex = index
         }
 
 
@@ -124,18 +124,18 @@ Item {
             }
             onPressAndHold: {
                 // emulate swipe gesture to the left
-                if (currentWebPageIndex === 0)
+                if (currentTabIndex === 0)
                     return;
-                tabBar.setCurrentPage(currentWebPageIndex - 1);
+                tabBar.setCurrentTab(currentTabIndex - 1);
             }
         }
         states: [
             State {
-                name: "notFullScreen"
+                name: "minimized"
                 StateChangeScript {
                     script: {
-                        Foo.setAllStatusElemStatesBut("hide", currentWebPageIndex)
-                        Foo.getWebPageStatusElem(currentWebPageIndex).state = "likeAUrlBar"
+                        Foo.setAllStatusBarIndicatorStatusBut("hide", currentTabIndex)
+                        Foo.getStatusBarIndicator(currentTabIndex).state = "likeAUrlBar"
                     }
                 }
             },
@@ -143,7 +143,7 @@ Item {
                 name: ""
                 StateChangeScript {
                     script: {
-                        Foo.setAllStatusElemStatesBut("", -1)
+                        Foo.setAllStatusBarIndicatorStatusBut("", -1)
                     }
                 }
             }
@@ -157,31 +157,31 @@ Item {
     function createTab(url)
     {
         var webView = webViewPrototype.createObject(webViewRow)
-        var webViewStatus = Qt.createComponent("StatusBarIndicator.qml").createObject(tabBarRow)
-        Foo.pushWebPage(webView, webViewStatus)
+        var statusBarIndicator = Qt.createComponent("StatusBarIndicator.qml").createObject(tabBarRow)
+        Foo.pushTab(webView, statusBarIndicator)
 
         // reset previous status bullet
-        if (currentWebPageIndex !== -1) {
-            var prevStatusElem = Foo.getWebPageStatusElem(currentWebPageIndex)
+        if (currentTabIndex !== -1) {
+            var prevStatusElem = Foo.getStatusBarIndicator(currentTabIndex)
             prevStatusElem.active = false
             prevStatusElem.state = ""
-            Foo.getWebPageElem(currentWebPageIndex).state = ""
+            Foo.getWebPage(currentTabIndex).state = ""
         }
-        currentWebPageIndex = Foo.pageCount() - 1
-        webViewRow.x = -currentWebPageIndex * navigationPanel.width
+        currentTabIndex = Foo.tabCount() - 1
+        webViewRow.x = -currentTabIndex * navigationPanel.width
 
         webView.text = url
-        webViewStatus.url = url
+        statusBarIndicator.url = url
 
-        pageCount += 1
+        tabCount += 1
     }
 
     states: [
         State {
             name: ""
-            PropertyChanges { target: tabBar; state: "notFullScreen" }
+            PropertyChanges { target: tabBar; state: "minimized" }
             StateChangeScript {
-                script: Foo.getWebPageElem(currentWebPageIndex).state = "minimized"
+                script: Foo.getWebPage(currentTabIndex).state = "minimized"
             }
         },
         State {
@@ -189,12 +189,12 @@ Item {
             PropertyChanges { target: tabBar; state: "" }
             StateChangeScript {
                 script: {
-                    if (currentWebPageIndex - 1  >= 0)
-                        Foo.getWebPageElem(currentWebPageIndex - 1).state = ""
-                    Foo.getWebPageElem(currentWebPageIndex).state = ""
-                    Foo.getWebPageStatusElem(currentWebPageIndex).state = ""
-                    if (currentWebPageIndex + 1 < Foo.pageCount())
-                        Foo.getWebPageElem(currentWebPageIndex + 1).state = ""
+                    if (currentTabIndex - 1  >= 0)
+                        Foo.getWebPage(currentTabIndex - 1).state = ""
+                    Foo.getWebPage(currentTabIndex).state = ""
+                    Foo.getStatusBarIndicator(currentTabIndex).state = ""
+                    if (currentTabIndex + 1 < Foo.tabCount())
+                        Foo.getWebPage(currentTabIndex + 1).state = ""
                 }
             }
         }

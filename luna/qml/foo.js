@@ -1,43 +1,42 @@
 .pragma library
 
 /// I just want a writable list!!! why qml.... why!!!!!!????????????
-var webPages = new Array()
+var tabs = new Array()
 
-function pushWebPage(webView, webViewStatus)
+function pushTab(webView, statusBarIndicator)
 {
-    webPages.push( [webView, webViewStatus] );
+    tabs.push( [webView, statusBarIndicator] );
 }
 
-function getWebPageElem(index)
+function getWebPage(tabIndex)
 {
-    return webPages[index][0];
+    return tabs[tabIndex][0];
 }
 
-function getWebPageStatusElem(index)
+function getStatusBarIndicator(tabIndex)
 {
-    return webPages[index][1];
+    return tabs[tabIndex][1];
 }
 
-function pageCount()
+function tabCount()
 {
-    return webPages.length;
+    return tabs.length;
 }
 
-function setAllStatusElemStatesBut(newState, excludedId)
+function setAllStatusBarIndicatorStatusBut(newState, excludedId)
 {
-    for (var i in webPages) {
+    for (var i in tabs) {
         if (i !== excludedId)
-            webPages[i][1].state = newState
+            tabs[i][1].state = newState;
     }
 }
 
-function removeWebPage(index)
+function removeTab(index)
 {
-    var end = webPages.length - 1;
-    webPages[index][0].destroy()
-    webPages[index][1].destroy()
-    for (var i = index; i < end; ++i) {
-        webPages[i] = webPages[i+1]
-    }
-    webPages.pop()
+    var end = tabs.length - 1;
+    tabs[index][0].destroy();
+    tabs[index][1].destroy();
+    for (var i = index; i < end; ++i)
+        tabs[i] = tabs[i+1];
+    tabs.pop();
 }

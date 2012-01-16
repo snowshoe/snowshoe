@@ -34,7 +34,7 @@ Rectangle {
             text: "CURRENT"
             z: 0
             onClicked: rootPage.state = "current"
-            enabled: navigationPanel.pageCount !== 0
+            enabled: navigationPanel.tabCount !== 0
         }
     }
 
@@ -161,8 +161,8 @@ Rectangle {
 
     Connections {
         target: navigationPanel
-        onCurrentWebPageIndexChanged: {
-            if (navigationPanel.currentWebPageIndex === -1)
+        onCurrentTabIndexChanged: {
+            if (navigationPanel.currentTabIndex === -1)
                 rootPage.state = "favorites";
         }
     }
