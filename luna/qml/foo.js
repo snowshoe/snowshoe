@@ -30,3 +30,8 @@ function setAllStatusElemStatesBut(newState, excludedId)
             webPages[i][1].state = newState
     }
 }
+
+function removeWebPage(index)
+{
+    console.log("Ok... I'll remove the tab some day, yeah... some day... seens fair enough... some day...");
+}

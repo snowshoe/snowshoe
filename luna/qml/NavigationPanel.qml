@@ -18,28 +18,70 @@ Item {
 
     Component {
         id: webViewPrototype
-        Rectangle {
+        Item {
+            property alias text: fakeWebViewText.text
             width: navigationPanel.width
             height: navigationPanel.height - tabBar.height
-            scale: 0.7
-            color: "purple"
-            property alias text: fakeWebViewText.text
-            radius: 10
 
-            Text {
-                id: fakeWebViewText
-                anchors.centerIn: parent
-                rotation: -45
-            }
-            MouseArea {
+            Rectangle {
+                id: webView
                 anchors.fill: parent
-                onClicked: {
-                    navigationPanel.parent.state = "currentFullScreen"
+                color: "purple"
+                radius: 10
+
+                Text {
+                    id: fakeWebViewText
+                    anchors.centerIn: parent
+                    rotation: -45
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        navigationPanel.parent.state = "currentFullScreen"
+                        state = "minimized"
+                    }
+                }
+
+            }
+            Image {
+                id: closeBtn
+                // ok.. this are the coords, but they dont't need to be binded because
+                // this coords will NEVER change.
+                x: webView.width * 0.85 - width/2
+                y: webView.height * 0.15 - height/2
+                source: "image://theme/icon-m-framework-close-thumbnail"
+                visible: false
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        Foo.removeWebPage(currentWebPageIndex)
+                    }
                 }
             }
-            Behavior on scale {
-                NumberAnimation { duration: 300 }
-            }
+            states: [
+                State {
+                    name: "minimized"
+                    PropertyChanges { target: webView; scale: 0.7; }
+                    PropertyChanges { target: closeBtn; visible: true; }
+                }
+            ]
+
+            transitions: [
+                Transition {
+                    to: "minimized"
+                    SequentialAnimation {
+                        PropertyAnimation { properties: "scale"; duration: 300; }
+                        PropertyAnimation { target: closeBtn; properties: "visible"; duration: 0; }
+                    }
+                },
+                Transition {
+                    to: ""
+                    SequentialAnimation {
+                        PropertyAnimation { target: closeBtn; properties: "visible"; duration: 0; }
+                        PropertyAnimation { properties: "scale"; duration: 300; }
+                    }
+                }
+            ]
         }
     }
 
@@ -110,12 +152,11 @@ Item {
             var prevStatusElem = Foo.getWebPageStatusElem(currentWebPageIndex)
             prevStatusElem.active = false
             prevStatusElem.state = ""
+            Foo.getWebPageElem(currentWebPageIndex).state = ""
         }
         currentWebPageIndex = Foo.pageCount() - 1
         webViewRow.x = -currentWebPageIndex * navigationPanel.width
 
-        var colors = ["red", "green", "purple", "blue"]
-        webView.color = colors[Foo.pageCount() % colors.length]
         webView.text = url
         webViewStatus.url = url
 
@@ -127,7 +168,7 @@ Item {
             name: ""
             PropertyChanges { target: tabBar; state: "notFullScreen" }
             StateChangeScript {
-                script: Foo.getWebPageElem(currentWebPageIndex).scale = 0.7
+                script: Foo.getWebPageElem(currentWebPageIndex).state = "minimized"
             }
         },
         State {
@@ -136,11 +177,11 @@ Item {
             StateChangeScript {
                 script: {
                     if (currentWebPageIndex - 1  >= 0)
-                        Foo.getWebPageElem(currentWebPageIndex - 1).scale = 1
-                    Foo.getWebPageElem(currentWebPageIndex).scale = 1
+                        Foo.getWebPageElem(currentWebPageIndex - 1).state = ""
+                    Foo.getWebPageElem(currentWebPageIndex).state = ""
                     Foo.getWebPageStatusElem(currentWebPageIndex).state = ""
                     if (currentWebPageIndex + 1 < Foo.pageCount())
-                        Foo.getWebPageElem(currentWebPageIndex + 1).scale = 1
+                        Foo.getWebPageElem(currentWebPageIndex + 1).state = ""
                 }
             }
         }
