@@ -67,14 +67,12 @@ Rectangle {
             color: "#666"
             text: "+"
         }
-        TextInput {
+        UrlBar {
             id: newUrlBar
             visible: false
             anchors.centerIn: parent
             width: parent.width - 20
-            font.pixelSize: 24
-            clip: true
-            text: "http://"
+
             onAccepted: {
                 navigationPanel.createTab(newUrlBar.text)
                 newUrlBar.text = "http://"

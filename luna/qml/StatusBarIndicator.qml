@@ -10,13 +10,11 @@ Rectangle {
     color: active ? "white" : "#666"
     property alias url: urlBar.text
 
-    // FIXME: Create a component for this!? to add auto completion, clear buttons, etc...
-    TextInput {
+    UrlBar {
         id: urlBar
         visible: false
         anchors.centerIn: parent
         width: parent.width - 20
-        clip: true
     }
 
     states: [
