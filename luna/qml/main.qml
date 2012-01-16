@@ -159,6 +159,14 @@ Rectangle {
         }
     ]
 
+    Connections {
+        target: navigationPanel
+        onCurrentWebPageIndexChanged: {
+            if (navigationPanel.currentWebPageIndex === -1)
+                rootPage.state = "favorites";
+        }
+    }
+
     Component.onCompleted: {
         rootPage.state = "favorites"
     }

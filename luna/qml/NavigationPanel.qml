@@ -55,6 +55,10 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         Foo.removeWebPage(currentWebPageIndex)
+                        navigationPanel.pageCount = Foo.pageCount();
+                        if (currentWebPageIndex === Foo.pageCount())
+                            currentWebPageIndex--;
+                        tabBar.setCurrentPage(currentWebPageIndex)
                     }
                 }
             }
@@ -92,6 +96,21 @@ Item {
         x: 0
         y: 818 - 36
 
+        function setCurrentPage(index) {
+            if (index !== -1) {
+                // deactivate old status indicator
+                var oldStatusElem = Foo.getWebPageStatusElem(currentWebPageIndex);
+                if (oldStatusElem)
+                    oldStatusElem.active = false
+
+                Foo.getWebPageStatusElem(index).active = true
+                Foo.getWebPageElem(index).state = state == "notFullScreen" ? "minimized" : ""
+                webViewRow.x = -index * navigationPanel.width
+            }
+            currentWebPageIndex = index
+        }
+
+
         Row {
             id: tabBarRow
             spacing: 5
@@ -106,14 +125,8 @@ Item {
             onPressAndHold: {
                 // emulate swipe gesture to the left
                 if (currentWebPageIndex === 0)
-                    return
-                Foo.getWebPageStatusElem(currentWebPageIndex).active = false
-                currentWebPageIndex -= 1
-                Foo.getWebPageStatusElem(currentWebPageIndex).active = true
-                Foo.getWebPageElem(currentWebPageIndex).scale = 1
-                if (currentWebPageIndex - 1 >= 0)
-                    Foo.getWebPageElem(currentWebPageIndex - 1).scale = 1
-                webViewRow.x = -currentWebPageIndex * navigationPanel.width
+                    return;
+                tabBar.setCurrentPage(currentWebPageIndex - 1);
             }
         }
         states: [

@@ -26,12 +26,18 @@ function pageCount()
 function setAllStatusElemStatesBut(newState, excludedId)
 {
     for (var i in webPages) {
-        if (i != excludedId)
+        if (i !== excludedId)
             webPages[i][1].state = newState
     }
 }
 
 function removeWebPage(index)
 {
-    console.log("Ok... I'll remove the tab some day, yeah... some day... seens fair enough... some day...");
+    var end = webPages.length - 1;
+    webPages[index][0].destroy()
+    webPages[index][1].destroy()
+    for (var i = index; i < end; ++i) {
+        webPages[i] = webPages[i+1]
+    }
+    webPages.pop()
 }
