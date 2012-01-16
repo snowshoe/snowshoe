@@ -16,7 +16,7 @@ SOURCES += main.cpp
 
 OTHER_FILES += \
     qml/FavoritesPanel.qml \
-    qml/foo.js \
+    qml/tabmanager.js \
     qml/main.qml \
     qml/NavigationPanel.qml \
     qml/StatusBarIndicator.qml \

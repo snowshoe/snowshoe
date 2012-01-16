@@ -6,6 +6,6 @@
         <file>qml/StatusBarIndicator.qml</file>
         <file>qml/UglyButton.qml</file>
         <file>qml/UiConstants.js</file>
-        <file>qml/foo.js</file>
+        <file>qml/tabmanager.js</file>
     </qresource>
 </RCC>

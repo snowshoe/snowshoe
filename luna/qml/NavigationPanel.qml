@@ -1,7 +1,7 @@
 import QtQuick 1.1
 // What to do on Qt5 !?
 import "UiConstants.js" as UiConstants
-import "foo.js" as Foo
+import "tabmanager.js" as TabManager
 
 Item {
     id: navigationPanel
@@ -54,9 +54,9 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        Foo.removeTab(currentTabIndex)
-                        navigationPanel.tabCount = Foo.tabCount();
-                        if (currentTabIndex === Foo.tabCount())
+                        TabManager.removeTab(currentTabIndex)
+                        navigationPanel.tabCount = TabManager.tabCount();
+                        if (currentTabIndex === TabManager.tabCount())
                             currentTabIndex--;
                         tabBar.setCurrentTab(currentTabIndex)
                     }
@@ -99,14 +99,14 @@ Item {
         function setCurrentTab(index) {
             if (index !== -1) {
                 // deactivate old status indicator
-                var oldStatusElem = Foo.getStatusBarIndicator(currentTabIndex);
+                var oldStatusElem = TabManager.getStatusBarIndicator(currentTabIndex);
                 if (oldStatusElem)
                     oldStatusElem.active = false;
 
-                var statusIndicator = Foo.getStatusBarIndicator(index);
+                var statusIndicator = TabManager.getStatusBarIndicator(index);
                 statusIndicator.state = state === "minimized" ? "likeAUrlBar" : ""
                 statusIndicator.active = true
-                Foo.getWebPage(index).state = state
+                TabManager.getWebPage(index).state = state
                 webViewRow.x = -index * navigationPanel.width
             }
             currentTabIndex = index
@@ -136,8 +136,8 @@ Item {
                 name: "minimized"
                 StateChangeScript {
                     script: {
-                        Foo.setAllStatusBarIndicatorStatusBut("hide", currentTabIndex)
-                        Foo.getStatusBarIndicator(currentTabIndex).state = "likeAUrlBar"
+                        TabManager.setAllStatusBarIndicatorStatusBut("hide", currentTabIndex)
+                        TabManager.getStatusBarIndicator(currentTabIndex).state = "likeAUrlBar"
                     }
                 }
             },
@@ -145,7 +145,7 @@ Item {
                 name: ""
                 StateChangeScript {
                     script: {
-                        Foo.setAllStatusBarIndicatorStatusBut("", -1)
+                        TabManager.setAllStatusBarIndicatorStatusBut("", -1)
                     }
                 }
             }
@@ -160,16 +160,16 @@ Item {
     {
         var webView = webViewPrototype.createObject(webViewRow)
         var statusBarIndicator = Qt.createComponent("StatusBarIndicator.qml").createObject(tabBarRow)
-        Foo.pushTab(webView, statusBarIndicator)
+        TabManager.pushTab(webView, statusBarIndicator)
 
         // reset previous status bullet
         if (currentTabIndex !== -1) {
-            var prevStatusElem = Foo.getStatusBarIndicator(currentTabIndex)
+            var prevStatusElem = TabManager.getStatusBarIndicator(currentTabIndex)
             prevStatusElem.active = false
             prevStatusElem.state = ""
-            Foo.getWebPage(currentTabIndex).state = ""
+            TabManager.getWebPage(currentTabIndex).state = ""
         }
-        currentTabIndex = Foo.tabCount() - 1
+        currentTabIndex = TabManager.tabCount() - 1
         webViewRow.x = -currentTabIndex * navigationPanel.width
 
         webView.url = url
@@ -183,7 +183,7 @@ Item {
             name: ""
             PropertyChanges { target: tabBar; state: "minimized" }
             StateChangeScript {
-                script: Foo.getWebPage(currentTabIndex).state = "minimized"
+                script: TabManager.getWebPage(currentTabIndex).state = "minimized"
             }
         },
         State {
@@ -192,11 +192,11 @@ Item {
             StateChangeScript {
                 script: {
                     if (currentTabIndex - 1  >= 0)
-                        Foo.getWebPage(currentTabIndex - 1).state = ""
-                    Foo.getWebPage(currentTabIndex).state = ""
-                    Foo.getStatusBarIndicator(currentTabIndex).state = ""
-                    if (currentTabIndex + 1 < Foo.tabCount())
-                        Foo.getWebPage(currentTabIndex + 1).state = ""
+                        TabManager.getWebPage(currentTabIndex - 1).state = ""
+                    TabManager.getWebPage(currentTabIndex).state = ""
+                    TabManager.getStatusBarIndicator(currentTabIndex).state = ""
+                    if (currentTabIndex + 1 < TabManager.tabCount())
+                        TabManager.getWebPage(currentTabIndex + 1).state = ""
                 }
             }
         }
