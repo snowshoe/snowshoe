@@ -19,7 +19,7 @@ Item {
     Component {
         id: webViewPrototype
         Item {
-            property alias text: fakeWebViewText.text
+            property alias url: fakeWebViewText.text
             width: navigationPanel.width
             height: navigationPanel.height - tabBar.height
 
@@ -104,7 +104,7 @@ Item {
                     oldStatusElem.active = false;
 
                 var statusIndicator = Foo.getStatusBarIndicator(index);
-                statusIndicator.state = "likeAUrlBar"
+                statusIndicator.state = state === "minimized" ? "likeAUrlBar" : ""
                 statusIndicator.active = true
                 Foo.getWebPage(index).state = state
                 webViewRow.x = -index * navigationPanel.width
@@ -172,7 +172,7 @@ Item {
         currentTabIndex = Foo.tabCount() - 1
         webViewRow.x = -currentTabIndex * navigationPanel.width
 
-        webView.text = url
+        webView.url = url
         statusBarIndicator.url = url
 
         tabCount += 1
