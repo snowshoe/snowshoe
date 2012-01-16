@@ -59,7 +59,7 @@ Item {
             right: parent.right
         }
 
-        onNewTabRequested: _openNewEmptyTab()
+        onNewTabRequested: _openEmptyTab()
         onActivePageChanged: urlBar.pageWidget = activePage
     }
 
