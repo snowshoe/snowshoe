@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import QtWebKit 1.0
 // What to do on Qt5 !?
 import "UiConstants.js" as UiConstants
 import "tabmanager.js" as TabManager
@@ -19,21 +20,15 @@ Item {
     Component {
         id: webViewPrototype
         Item {
-            property alias url: fakeWebViewText.text
+            property string url: "http://www.uol.com.br"
             width: navigationPanel.width
             height: navigationPanel.height - tabBar.height
 
-            Rectangle {
+            WebView {
                 id: webView
+                url: parent.url
                 anchors.fill: parent
-                color: "purple"
-                radius: 10
 
-                Text {
-                    id: fakeWebViewText
-                    anchors.centerIn: parent
-                    rotation: -45
-                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -41,7 +36,6 @@ Item {
                         state = "minimized"
                     }
                 }
-
             }
             Image {
                 id: closeBtn
