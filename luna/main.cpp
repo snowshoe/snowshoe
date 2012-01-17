@@ -16,8 +16,13 @@ int main(int argc, char** argv)
     QApplication* app = NEW_QAPPLICATION(argc, argv);
 
     QDeclarativeView viewer;
-    viewer.setSource(QUrl("qrc:/qml/main.qml"));
+#if defined(MEEGO_EDITION_HARMATTAN)
+    viewer.setSource(QUrl("qrc:/qml/main-harmattan.qml"));
     viewer.showFullScreen();
+#else
+    viewer.setSource(QUrl("qrc:/qml/main-desktop.qml"));
+    viewer.show();
+#endif
 
     return app->exec();
 }

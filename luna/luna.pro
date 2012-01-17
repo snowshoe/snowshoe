@@ -17,7 +17,9 @@ SOURCES += main.cpp
 OTHER_FILES += \
     qml/FavoritesPanel.qml \
     qml/tabmanager.js \
-    qml/main.qml \
+    qml/Main.qml \
+    qml/main-desktop.qml \
+    qml/main-harmattan.qml \
     qml/NavigationPanel.qml \
     qml/StatusBarIndicator.qml \
     qml/UglyButton.qml \

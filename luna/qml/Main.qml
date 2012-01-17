@@ -1,17 +1,8 @@
 import QtQuick 1.1
 import "UiConstants.js" as UiConstants
 
-// Temporary hack to lock the app in portrait mode
-import com.nokia.meego 1.0
-PageStackWindow {
-    initialPage: Page {
-        orientationLock: PageOrientation.LockPortrait
-// end hack
-
 Rectangle {
     id: rootPage
-    width: 480
-    height: 854 - 36 // 36 is the height of status bar
     color: "#202022"
 
     Row {
@@ -169,8 +160,3 @@ Rectangle {
         rootPage.state = "favorites"
     }
 }
-
-// Temporary hack to lock the app in portrait mode
-    }
-}
-// end hack
