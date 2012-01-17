@@ -4,28 +4,18 @@ import "UiConstants.js" as UiConstants
 Rectangle {
     id: rootPage
     color: "#202022"
+    clip: true
 
-    Row {
-        id: toolbar
+    PanelToggle {
+        id: panelToggle
         y: -100
-        width: 300
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: -30
-
-        UglyButton {
-            id: favoritesBtn
-            activeColor: "red"
-            text: "FAVORITES"
-            onClicked: rootPage.state = "favorites"
-            z: 1
+        currentEnabled: navigationPanel.tabCount !== 0
+        onFavoritesSelected: {
+            rootPage.state = "favorites";
         }
-        UglyButton {
-            id: currentBtn
-            activeColor: "blue"
-            text: "CURRENT"
-            z: 0
-            onClicked: rootPage.state = "current"
-            enabled: navigationPanel.tabCount !== 0
+        onCurrentSelected: {
+            rootPage.state = "current";
         }
     }
 
@@ -81,25 +71,22 @@ Rectangle {
             name: "favorites"
             PropertyChanges { target: navigationPanel; visible: false }
             PropertyChanges { target: favoritesPanel; visible: true }
-            PropertyChanges { target: toolbar; y: UiConstants.DefaultMargin }
+            PropertyChanges { target: panelToggle; y: UiConstants.DefaultMargin }
             PropertyChanges { target: plusBtn; y:  rootPage.height - 50 }
-            PropertyChanges { target: currentBtn; z: 0 }
-            PropertyChanges { target: favoritesBtn; z: 1 }
         },
         State {
             name: "current"
             PropertyChanges { target: navigationPanel; visible: true }
             PropertyChanges { target: favoritesPanel; visible: false }
-            PropertyChanges { target: toolbar; y: UiConstants.DefaultMargin }
+            PropertyChanges { target: panelToggle; y: UiConstants.DefaultMargin }
             PropertyChanges { target: plusBtn; y:  rootPage.height - 50 }
-            PropertyChanges { target: currentBtn; z: 1 }
-            PropertyChanges { target: favoritesBtn; z: 0 }
         },
         State {
             name: "currentFullScreen"
             PropertyChanges { target:  navigationPanel; visible: true }
             PropertyChanges { target:  favoritesPanel; visible: false }
-            PropertyChanges { target:  toolbar; visible: true }
+            PropertyChanges { target: panelToggle; visible: true }
+            StateChangeScript { script: panelToggle.resetToCurrent() }
             PropertyChanges { target:  navigationPanel; state: "fullscreen" }
             PropertyChanges { target:  plusBtn; y:  rootPage.height }
         },
@@ -112,8 +99,6 @@ Rectangle {
             PropertyChanges { target:  newUrlBar; focus: true }
             PropertyChanges { target:  navigationPanel; opacity: 0 }
             PropertyChanges { target:  favoritesPanel; opacity: 0 }
-            PropertyChanges { target: currentBtn; z: currentBtn.z }
-            PropertyChanges { target: favoritesBtn; z: favoritesBtn.z }
         }
     ]
 
@@ -156,7 +141,5 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: {
-        rootPage.state = "favorites"
-    }
+    Component.onCompleted: state = "favorites"
 }

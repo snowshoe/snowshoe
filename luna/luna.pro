@@ -21,8 +21,9 @@ OTHER_FILES += \
     qml/main-desktop.qml \
     qml/main-harmattan.qml \
     qml/NavigationPanel.qml \
+    qml/PanelToggle.qml \
+    qml/PanelToggleButton.qml \
     qml/StatusBarIndicator.qml \
-    qml/UglyButton.qml \
     qml/UiConstants.js \
     qml/UrlBar.qml \
     qtc_packaging/debian_harmattan/rules \
@@ -31,7 +32,8 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/copyright \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog
+    qtc_packaging/debian_harmattan/changelog \
+    qml/PanelToggleButton.qml
 
 RESOURCES += \
     luna.qrc
