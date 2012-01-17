@@ -133,16 +133,27 @@ Item {
             onDoubleClicked: { }
         }
 
-        AnimatedImage {
-            id: spinner
-            source: "qrc:///tabwidget/spinner.gif"
+        Item {
+            id: faviconArea
+            height: 15
             width: 15
             anchors.top: parent.top
             anchors.left: leftImage.left
             anchors.topMargin: 10
             anchors.leftMargin: 12
-            playing: visible
-            visible: pageWidget != undefined && pageWidget.isLoading;
+
+            AnimatedImage {
+                id: spinner
+                source: "qrc:///tabwidget/spinner.gif"
+                playing: visible
+                visible: pageWidget != undefined && pageWidget.isLoading;
+            }
+
+            Image {
+                id: favicon
+                source: pageWidget != undefined && pageWidget.webView.icon ? pageWidget.webView.icon : ""
+                visible: !spinner.visible && source
+            }
         }
 
         Text {
@@ -150,7 +161,7 @@ Item {
             width: parent.width
             elide: Text.ElideRight
             anchors.top: parent.top
-            anchors.left: spinner.right
+            anchors.left: faviconArea.right
             anchors.right: closeImage.left
             font.pixelSize: 12
             anchors.topMargin: 10
