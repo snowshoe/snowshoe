@@ -111,11 +111,11 @@ Item {
         }
 
         Button {
-            hoveredImage: { pageWidget.webView.canStop ? "qrc:///urlbar/btn_nav_cancel_over" : "qrc:///urlbar/btn_nav_refresh_over" }
-            pressedImage: { pageWidget.webView.canStop ? "qrc:///urlbar/btn_nav_cancel_pressed" : "qrc:///urlbar/btn_nav_refresh_pressed" }
-            standardImage: { pageWidget.webView.canStop ? "qrc:///urlbar/btn_nav_cancel_unpressed" : "qrc:///urlbar/btn_nav_refresh_unpressed" }
+            hoveredImage: { pageWidget.webView.loading ? "qrc:///urlbar/btn_nav_cancel_over" : "qrc:///urlbar/btn_nav_refresh_over" }
+            pressedImage: { pageWidget.webView.loading ? "qrc:///urlbar/btn_nav_cancel_pressed" : "qrc:///urlbar/btn_nav_refresh_pressed" }
+            standardImage: { pageWidget.webView.loading ? "qrc:///urlbar/btn_nav_cancel_unpressed" : "qrc:///urlbar/btn_nav_refresh_unpressed" }
 
-            onClicked: { pageWidget.webView.canStop ? pageWidget.webView.stop() : pageWidget.webView.reload() }
+            onClicked: { pageWidget.webView.loading ? pageWidget.webView.stop() : pageWidget.webView.reload() }
         }
     }
 
