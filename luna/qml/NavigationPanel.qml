@@ -187,6 +187,7 @@ Item {
 
         webView.url = url
         statusBarIndicator.url = url
+        statusBarIndicator.webView = webView
 
         tabCount += 1
     }

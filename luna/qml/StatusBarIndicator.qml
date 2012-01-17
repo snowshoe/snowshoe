@@ -8,13 +8,18 @@ Rectangle {
     z: 1
     property bool active: true
     color: active ? "white" : "#666"
-    property alias url: urlBar.text
+    property alias url : urlBar.text
+    property variant webView
 
     UrlBar {
         id: urlBar
         visible: false
         anchors.centerIn: parent
         width: parent.width - 20
+
+        onAccepted: {
+            webView.url = urlBar.text
+        }
     }
 
     states: [
