@@ -15,6 +15,10 @@ Item {
         id: webViewRow
         x: 0
         y: 0
+
+        Behavior on x {
+            NumberAnimation { duration: 200; }
+        }
     }
 
     Component {
@@ -113,16 +117,31 @@ Item {
             anchors.centerIn: parent
         }
         MouseArea {
+            property int lastX
+            property int lastY
             anchors.fill: parent
-            onClicked: {
-                navigationPanel.state = ""
-                navigationPanel.parent.state = "current"
+
+            onPressed: {
+                lastX = mouse.x
+                lastY = mouse.y
             }
-            onPressAndHold: {
-                // emulate swipe gesture to the left
-                if (currentTabIndex === 0)
+
+            onReleased: {
+                if (Math.abs(mouse.y - lastY) > height*3
+                    || Math.abs(mouse.x - lastX) < 50) {
+                    // normal click,
+                    navigationPanel.state = "";
+                    navigationPanel.parent.state = "current";
                     return;
-                tabBar.setCurrentTab(currentTabIndex - 1);
+                }
+
+                if (mouse.x > lastX) { // swip right
+                    if (currentTabIndex !== 0)
+                        tabBar.setCurrentTab(currentTabIndex - 1);
+                } else { // swipe left
+                    if (currentTabIndex !== TabManager.tabCount() - 1)
+                        tabBar.setCurrentTab(currentTabIndex + 1);
+                }
             }
         }
         states: [
