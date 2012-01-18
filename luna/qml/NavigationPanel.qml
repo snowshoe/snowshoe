@@ -46,7 +46,7 @@ Item {
                         anchors.fill: parent
                         visible: false
                         onClicked: {
-                            navigationPanel.parent.state = "currentFullScreen"
+                            navigationPanel.parent.state = "navigationFullScreen"
                             state = "minimized"
                         }
                     }
@@ -146,7 +146,7 @@ Item {
                     || Math.abs(mouse.x - lastX) < 50) {
                     // normal click,
                     navigationPanel.state = "";
-                    navigationPanel.parent.state = "current";
+                    navigationPanel.parent.state = "navigation";
                     return;
                 }
 

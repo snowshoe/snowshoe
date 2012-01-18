@@ -1,16 +1,23 @@
 import QtQuick 1.1
 
 Grid {
-    id: bookmarkGrid
+    id: favoritesGrid
+
+    property real _childrenScale: 0
+
     columns: 2
     spacing: 10
+
+    function showAnimated() {
+        _childrenScale = 1;
+    }
 
     Component {
         id: fakeBookmarkEntry
         Rectangle {
             color: "magenta"
             radius: 10
-            scale: 0
+            scale: favoritesGrid._childrenScale
             width: 176
             height: 312
 
@@ -22,18 +29,16 @@ Grid {
 
             Behavior on scale {
                 NumberAnimation {
-                    duration: 250
+                    duration: 400
                     easing.type: Easing.InOutQuad
                 }
             }
         }
-     }
+    }
 
     Component.onCompleted: {
-       var i = 0
-       for (i = 0; i < 3; ++i) {
-           var elem = fakeBookmarkEntry.createObject(bookmarkGrid)
-           elem.scale = 1
-       }
+       var i = 0;
+       for (i = 0; i < 3; ++i)
+           fakeBookmarkEntry.createObject(favoritesGrid);
     }
 }

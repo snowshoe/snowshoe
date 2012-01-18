@@ -3,16 +3,16 @@ import QtQuick 1.1
 Row {
     id: panelToggle
 
-    property bool currentEnabled: false
+    property bool navigationEnabled: true
     property int _defaultSpacing: -30
 
     signal favoritesSelected()
-    signal currentSelected()
+    signal navigationSelected()
 
-    function resetToCurrent() {
+    function resetToNavigation() {
         // FIXME: Can we disable explicit disable the transition? It isn't affecting the UI at the time of the
         // commit, but ideally we don't want it to run at all in this case.
-        state = "current";
+        state = "navigation";
     }
 
     function selectFavorites() {
@@ -22,7 +22,10 @@ Row {
         panelToggle.favoritesSelected();
     }
 
-    onCurrentEnabledChanged: selectFavorites()
+    onNavigationEnabledChanged: {
+        if (!navigationEnabled)
+            selectFavorites();
+    }
 
     spacing: _defaultSpacing
     state: "favorites"
@@ -31,12 +34,12 @@ Row {
         State {
             name: "favorites"
             PropertyChanges { target: favorites; active: true }
-            PropertyChanges { target: current; active: false }
+            PropertyChanges { target: navigation; active: false }
         },
         State {
-            name: "current"
+            name: "navigation"
             PropertyChanges { target: favorites; active: false }
-            PropertyChanges { target: current; active: true }
+            PropertyChanges { target: navigation; active: true }
         }
     ]
 
@@ -54,13 +57,13 @@ Row {
     }
 
     PanelToggleButton {
-        id: current
+        id: navigation
         text: "CURRENT"
         onClicked: {
-            if (!currentEnabled)
+            if (!navigationEnabled)
                 return;
-            panelToggle.state = "current";
-            panelToggle.currentSelected();
+            panelToggle.state = "navigation";
+            panelToggle.navigationSelected();
         }
     }
 }
