@@ -24,29 +24,41 @@ Item {
     Component {
         id: webViewPrototype
         Item {
+            id: webViewItem
             property string url: "http://www.uol.com.br"
             width: navigationPanel.width
             height: navigationPanel.height - tabBar.height
 
-            WebView {
-                id: webView
-                url: parent.url
+            Flickable {
+                id: flickableWebView
                 anchors.fill: parent
+                clip: true
+                contentWidth: webView.width
+                contentHeight: webView.height
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        navigationPanel.parent.state = "currentFullScreen"
-                        state = "minimized"
+                WebView {
+                    id: webView
+                    url: webViewItem.url
+                    preferredWidth: flickableWebView.width
+                    preferredHeight: flickableWebView.height
+                    MouseArea {
+                        id: webViewMaximizeMouseArea
+                        anchors.fill: parent
+                        visible: false
+                        onClicked: {
+                            navigationPanel.parent.state = "currentFullScreen"
+                            state = "minimized"
+                        }
                     }
                 }
             }
+
             Image {
                 id: closeBtn
                 // ok.. this are the coords, but they dont't need to be binded because
                 // this coords will NEVER change.
-                x: webView.width * 0.85 - width/2
-                y: webView.height * 0.15 - height/2
+                x: flickableWebView.width * 0.85 - width/2
+                y: flickableWebView.height * 0.15 - height/2
                 source: "image://theme/icon-m-framework-close-thumbnail"
                 visible: false
                 MouseArea {
@@ -63,8 +75,9 @@ Item {
             states: [
                 State {
                     name: "minimized"
-                    PropertyChanges { target: webView; scale: 0.7; }
+                    PropertyChanges { target: flickableWebView; scale: 0.7; }
                     PropertyChanges { target: closeBtn; visible: true; }
+                    PropertyChanges { target: webViewMaximizeMouseArea; visible: true; }
                 }
             ]
 
@@ -74,6 +87,7 @@ Item {
                     SequentialAnimation {
                         PropertyAnimation { properties: "scale"; duration: 300; }
                         PropertyAnimation { target: closeBtn; properties: "visible"; duration: 0; }
+                        PropertyAnimation { target: webViewMaximizeMouseArea; properties: "visible"; duration: 0; }
                     }
                 },
                 Transition {
@@ -81,6 +95,7 @@ Item {
                     SequentialAnimation {
                         PropertyAnimation { target: closeBtn; properties: "visible"; duration: 0; }
                         PropertyAnimation { properties: "scale"; duration: 300; }
+                        PropertyAnimation { target: webViewMaximizeMouseArea; properties: "visible"; duration: 0; }
                     }
                 }
             ]
