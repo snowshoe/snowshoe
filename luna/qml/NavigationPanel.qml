@@ -72,11 +72,29 @@ Item {
                     }
                 }
             }
+
+            Image {
+                id: addToFavBtn
+                // ok.. this are the coords, but they dont't need to be binded because
+                // this coords will NEVER change.
+                x: flickableWebView.width * 0.15 - width/2
+                y: flickableWebView.height * 0.15 - height/2
+                // FIXME: This image is too ugly to be used here!
+                source: "image://theme/icon-l-content-favourites"
+                width: 48; height: 48 // resize the original Harmattan image while we don't have a good one to put here
+                visible: false
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: console.log("Add to favorites!")
+                }
+            }
+
             states: [
                 State {
                     name: "minimized"
                     PropertyChanges { target: flickableWebView; scale: 0.7; }
                     PropertyChanges { target: closeBtn; visible: true; }
+                    PropertyChanges { target: addToFavBtn; visible: true; }
                     PropertyChanges { target: webViewMaximizeMouseArea; visible: true; }
                 }
             ]
@@ -87,6 +105,7 @@ Item {
                     SequentialAnimation {
                         PropertyAnimation { properties: "scale"; duration: 300; }
                         PropertyAnimation { target: closeBtn; properties: "visible"; duration: 0; }
+                        PropertyAnimation { target: addToFavBtn; properties: "visible"; duration: 0; }
                         PropertyAnimation { target: webViewMaximizeMouseArea; properties: "visible"; duration: 0; }
                     }
                 },
@@ -94,6 +113,7 @@ Item {
                     to: ""
                     SequentialAnimation {
                         PropertyAnimation { target: closeBtn; properties: "visible"; duration: 0; }
+                        PropertyAnimation { target: addToFavBtn; properties: "visible"; duration: 0; }
                         PropertyAnimation { properties: "scale"; duration: 300; }
                         PropertyAnimation { target: webViewMaximizeMouseArea; properties: "visible"; duration: 0; }
                     }
