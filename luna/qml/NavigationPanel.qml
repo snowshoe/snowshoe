@@ -28,6 +28,7 @@ Item {
             property string url: "http://www.uol.com.br"
             width: navigationPanel.width
             height: navigationPanel.height - tabBar.height
+            property alias webView: webView
 
             Flickable {
                 id: flickableWebView
@@ -221,7 +222,7 @@ Item {
         webViewRow.x = -currentTabIndex * navigationPanel.width
 
         webView.url = url
-        statusBarIndicator.url = url
+        webView.webView.urlChanged.connect(function() { statusBarIndicator.url = webView.webView.url; })
         statusBarIndicator.webView = webView
 
         tabCount += 1
