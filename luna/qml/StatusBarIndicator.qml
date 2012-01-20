@@ -10,6 +10,7 @@ Rectangle {
     color: active ? "white" : "#666"
     property alias url : urlBar.text
     property variant webView
+    property bool startAnimation: Boolean(webView && webView.shouldAnimateIndicator)
 
     UrlBar {
         id: urlBar
@@ -20,6 +21,23 @@ Rectangle {
         onAccepted: {
             webView.url = urlBar.text
         }
+    }
+
+    onStartAnimationChanged: {
+        if (startAnimation)
+            loadingAnimation.start()
+        else
+            loadingAnimation.stop()
+    }
+
+    SequentialAnimation on y {
+        id: loadingAnimation
+        alwaysRunToEnd: true
+        loops: Animation.Infinite
+        PropertyAnimation { to: -10}
+        PropertyAnimation { to: 0}
+        PropertyAnimation { to: 10}
+        PropertyAnimation { to: 0}
     }
 
     states: [
@@ -37,7 +55,7 @@ Rectangle {
             PropertyChanges { target: urlBar; visible: false; }
             PropertyChanges { target: statusBall; y: 50; }
         }
-        ]
+    ]
     transitions: [
         Transition {
             to: "likeAUrlBar"

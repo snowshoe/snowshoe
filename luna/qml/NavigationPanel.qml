@@ -25,10 +25,12 @@ Item {
         id: webViewPrototype
         Item {
             id: webViewItem
-            property string url: "http://www.uol.com.br"
+            property string url: ""
+            property variant statusIndicator
             width: navigationPanel.width
             height: navigationPanel.height - tabBar.height
             property alias webView: webView
+            property bool shouldAnimateIndicator: (navigationPanel.parent.state == "navigationFullScreen" && webView.progress < 1 && webView.progress > 0)
 
             Flickable {
                 id: flickableWebView
@@ -42,13 +44,15 @@ Item {
                     url: webViewItem.url
                     preferredWidth: flickableWebView.width
                     preferredHeight: flickableWebView.height
+
+                    onLoadFailed: webViewItem.shouldAnimateIndicator = false
+
                     MouseArea {
                         id: webViewMaximizeMouseArea
                         anchors.fill: parent
                         visible: false
                         onClicked: {
                             navigationPanel.parent.state = "navigationFullScreen"
-                            state = "minimized"
                         }
                     }
                 }
@@ -210,6 +214,9 @@ Item {
         var webView = webViewPrototype.createObject(webViewRow)
         var statusBarIndicator = Qt.createComponent("StatusBarIndicator.qml").createObject(tabBarRow)
         TabManager.pushTab(webView, statusBarIndicator)
+
+        statusBarIndicator.webView = webView
+        webView.statusIndicator = statusBarIndicator
 
         // reset previous status bullet
         if (currentTabIndex !== -1) {
