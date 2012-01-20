@@ -11,5 +11,6 @@
         <file>qml/main-harmattan.qml</file>
         <file>qml/PanelToggle.qml</file>
         <file>qml/PanelToggleButton.qml</file>
+        <file>luna_404.html</file>
     </qresource>
 </RCC>

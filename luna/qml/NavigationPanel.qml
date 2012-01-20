@@ -45,7 +45,10 @@ Item {
                     preferredWidth: flickableWebView.width
                     preferredHeight: flickableWebView.height
 
-                    onLoadFailed: webViewItem.shouldAnimateIndicator = false
+                    onLoadFailed: {
+                        webViewItem.shouldAnimateIndicator = false
+                        webViewItem.url = "qrc:///luna_404.html"
+                    }
 
                     MouseArea {
                         id: webViewMaximizeMouseArea
