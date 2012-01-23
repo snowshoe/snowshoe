@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import QtWebKit 1.0
+import Luna 1.0
 // What to do on Qt5 !?
 import "UiConstants.js" as UiConstants
 import "tabmanager.js" as TabManager
@@ -39,7 +40,7 @@ Item {
                 contentWidth: webView.width
                 contentHeight: webView.height
 
-                WebView {
+                LunaWebView {
                     id: webView
                     url: webViewItem.url
                     preferredWidth: flickableWebView.width

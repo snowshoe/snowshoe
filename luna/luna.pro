@@ -6,13 +6,18 @@
 # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
 CONFIG += qdeclarative-boostable
 
-QT += declarative
+QT += declarative webkit
 
 # Add dependency to Symbian components
 # CONFIG += qt-components
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += qdeclarativewebview.cpp \
+    LunaWebView.cpp \
+    main.cpp
+
+HEADERS += qdeclarativewebview_p.h \
+    LunaWebView.h
 
 OTHER_FILES += \
     qml/FavoritesPanel.qml \

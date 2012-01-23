@@ -3,6 +3,8 @@
 #include <QUrl>
 #include <qplatformdefs.h>
 
+#include <LunaWebView.h>
+
 #if defined(MEEGO_EDITION_HARMATTAN)
     #include <MDeclarativeCache>
     #define NEW_QAPPLICATION(x, y) MDeclarativeCache::qApplication((x), (y))
@@ -14,6 +16,8 @@
 int main(int argc, char** argv)
 {
     QApplication* app = NEW_QAPPLICATION(argc, argv);
+
+    qmlRegisterType<LunaWebView>("Luna", 1, 0, "LunaWebView");
 
     QDeclarativeView viewer;
 #if defined(MEEGO_EDITION_HARMATTAN)
