@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QDeclarativeView>
 #include <QUrl>
+#include <QScopedPointer>
 #include <qplatformdefs.h>
 
 #include <LunaWebView.h>
@@ -15,7 +16,7 @@
 
 int main(int argc, char** argv)
 {
-    QApplication* app = NEW_QAPPLICATION(argc, argv);
+    QScopedPointer<QApplication> app(NEW_QAPPLICATION(argc, argv));
 
     qmlRegisterType<LunaWebView>("Luna", 1, 0, "LunaWebView");
 
