@@ -83,7 +83,7 @@ Item {
             request.action = WebView.AcceptRequest
         }
 
-        Component.onCompleted: { experimental.setUseTraditionalDesktopBehaviour(true) }
+        experimental.useTraditionalDesktopBehaviour : true
     }
 
     function loadUrl(url)
