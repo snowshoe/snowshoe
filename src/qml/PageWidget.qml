@@ -82,8 +82,6 @@ Item {
             }
             request.action = WebView.AcceptRequest
         }
-
-        experimental.useTraditionalDesktopBehaviour : true
     }
 
     function loadUrl(url)

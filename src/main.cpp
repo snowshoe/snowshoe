@@ -25,11 +25,14 @@
 #include <QtCore/QLatin1String>
 #include <QtWidgets/QApplication>
 #include <qdeclarative.h>
+#include <private/qquickwebview_p.h>
 
 int main(int argc, char** argv)
 {
     // FIXME: This need to be reverted when WebKit works with it.
     qputenv("QML_NO_THREADED_RENDERER", QByteArray("1"));
+
+    QQuickWebViewExperimental::setFlickableViewportEnabled(false);
 
     QApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(true);
