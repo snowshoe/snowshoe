@@ -62,12 +62,13 @@ Item {
 
     Connections {
         target: pageWidget.webView
-        onLoadSucceeded: {
-            bookmarkButton.visible = true;
-            bookmarkButton.isBookmarked = BookmarkModel.contains(pageWidget.webView.url);
-        }
-        onLoadStarted: {
-            bookmarkButton.visible = false;
+        onLoadingChanged: {
+            if (loadRequest.status == WebView.LoadSucceededStatus) {
+                bookmarkButton.visible = true;
+                bookmarkButton.isBookmarked = BookmarkModel.contains(pageWidget.webView.url);
+            } else if (loadRequest.status == WebView.LoadStartedStatus) {
+                bookmarkButton.visible = false;
+            }
         }
     }
 

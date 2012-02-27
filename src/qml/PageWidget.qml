@@ -39,23 +39,27 @@ Item {
 
         visible: false
 
-        onLoadStarted: {
-            root.isLoading = true;
-            visible = true;
-            newTab.visible = false;
-            if (tab.active && !focus)
-                forceActiveFocus();
-        }
-
-        onLoadSucceeded: {
-            root.isLoading = false
-        }
-
-        onLoadFailed: {
-            root.isLoading = false
-            if (errorDomain == WebView.NetworkErrorDomain && errorCode == NetworkReply.OperationCanceledError)
-                return;
-            loadUrl(fallbackUrl(url))
+        onLoadingChanged: {
+            switch (loadRequest.status) {
+                case WebView.LoadStartedStatus: {
+                    root.isLoading = true;
+                    visible = true;
+                    newTab.visible = false;
+                    if (tab.active && !focus)
+                        forceActiveFocus();
+                    break;
+                }
+                case WebView.LoadFailedStatus : {
+                    root.isLoading = false;
+                    if (loadRequest.errorDomain == WebView.NetworkErrorDomain && loadRequest.errorCode == NetworkReply.OperationCanceledError)
+                        return;
+                    loadUrl(fallbackUrl(loadRequest.url));
+                    break;
+                }
+                case WebView.LoadSucceededStatus :
+                    root.isLoading = false;
+                    break;
+            }
         }
 
         onUrlChanged: {
