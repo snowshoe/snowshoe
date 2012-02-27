@@ -14,12 +14,12 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#include "BrowserWindow.h"
+#include "desktop/BrowserWindow.h"
+#include "mobile/BrowserWindowMobile.h"
 
 #include "BookmarkFilter.h"
 #include "DatabaseManager.h"
 #include "PopupWindow.h"
-#include "Shortcut.h"
 
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QLatin1String>
@@ -44,13 +44,21 @@ int main(int argc, char** argv)
     qmlRegisterType<BookmarkFilter>("Snowshoe", 1, 0, "BookmarkFilter");
     qmlRegisterUncreatableType<QAbstractItemModel>("Snowshoe", 1, 0, "QAbstractItemModel", QObject::tr("You can't create a QAbstractItemModel"));
     qmlRegisterType<PopupWindow>("Snowshoe", 1, 0, "PopupWindow");
-    qmlRegisterType<Shortcut>("Snowshoe", 1, 0, "Shortcut");
 
     DatabaseManager::instance()->initialize();
 
-    QStringList arguments = app.arguments().mid(1);
-    BrowserWindow* window = new BrowserWindow(arguments);
-
+    QStringList arguments = app.arguments();
+    QWindow* window;
+    if (arguments.contains(QLatin1String("--mobile"))) {
+        window = new BrowserWindowMobile();
+    } else {
+        int pos = arguments.indexOf(QLatin1String("--desktop"));
+        if (pos != -1)
+            arguments.removeAt(pos);
+        arguments = arguments.mid(1);
+        window = new BrowserWindow(arguments);
+    }
+    
     window->show();
     app.exec();
     DatabaseManager::instance()->destroy();

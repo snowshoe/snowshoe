@@ -19,6 +19,7 @@
 
 #include "BookmarkModel.h"
 #include "DatabaseManager.h"
+#include "Shortcut.h"
 #include "UrlTools.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
@@ -36,6 +37,7 @@ BrowserWindow::BrowserWindow(const QStringList& arguments)
     : m_urlsFromCommandLine(arguments)
     , m_browserView(0)
 {
+    qmlRegisterType<Shortcut>("Snowshoe", 1, 0, "Shortcut");
     restoreWindowGeometry();
     setupDeclarativeEnvironment();
     m_browserView = qobject_cast<QQuickItem*>(rootObject());
