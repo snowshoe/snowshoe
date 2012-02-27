@@ -53,15 +53,15 @@ void ApplicationStateTracker::setUrlsOpened(const QStringList& urls)
 void ApplicationStateTracker::loadState()
 {
     QSettings settings;
-    m_windowGeometry = settings.value("mainWindowGeometry").toRect();
-    m_urlsOpened = settings.value("urlsOpened").toStringList();
+    m_windowGeometry = settings.value(QLatin1String("mainWindowGeometry")).toRect();
+    m_urlsOpened = settings.value(QLatin1String("urlsOpened")).toStringList();
 }
 
 void ApplicationStateTracker::saveState()
 {
     QSettings settings;
-    settings.setValue("mainWindowGeometry", m_windowGeometry);
-    settings.setValue("urlsOpened", m_urlsOpened);
+    settings.setValue(QLatin1String("mainWindowGeometry"), m_windowGeometry);
+    settings.setValue(QLatin1String("urlsOpened"), m_urlsOpened);
 }
 
 void ApplicationStateTracker::startTimerIfNeeded()

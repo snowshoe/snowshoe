@@ -37,8 +37,8 @@ void BookmarkModel::generateRoleNames()
 
 QString BookmarkModel::tableCreateQuery() const
 {
-    const QString bookmarkQuery = "CREATE TABLE IF NOT EXISTS bookmarks (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                  "name VARCHAR, url VARCHAR, dateAdded DATE);";
+    const QLatin1String bookmarkQuery("CREATE TABLE IF NOT EXISTS bookmarks (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                  "name VARCHAR, url VARCHAR, dateAdded DATE);");
 
     return bookmarkQuery;
 
@@ -59,8 +59,8 @@ void BookmarkModel::insert(const QString& name, const QString& url)
     if (contains(url))
         return;
     QSqlRecord record = this->record();
-    record.setValue("name", name);
-    record.setValue("url", url);
+    record.setValue(QLatin1String("name"), name);
+    record.setValue(QLatin1String("url"), url);
 
     insertRecord(-1, record);
 }
@@ -70,7 +70,7 @@ void BookmarkModel::remove(const QString& url)
     if (!contains(url))
         return;
     QSqlQuery sqlQuery(database());
-    sqlQuery.prepare(QString("SELECT id FROM bookmarks WHERE url = '%1'").arg(url));
+    sqlQuery.prepare(QString(QLatin1String("SELECT id FROM bookmarks WHERE url = '%1'")).arg(url));
     sqlQuery.exec();
     sqlQuery.first();
     int indexToDelete = -1;
@@ -92,7 +92,7 @@ void BookmarkModel::update(int index, const QString& name, const QString& url)
 bool BookmarkModel::contains(const QString& url)
 {
     QSqlQuery sqlQuery(database());
-    sqlQuery.prepare(QString("SELECT id FROM bookmarks WHERE url = '%1'").arg(url));
+    sqlQuery.prepare(QString(QLatin1String("SELECT id FROM bookmarks WHERE url = '%1'")).arg(url));
     sqlQuery.exec();
     return sqlQuery.first();
 }

@@ -47,9 +47,9 @@ DatabaseManager::DatabaseManager()
     if (!storageDir.exists(storagePath))
         storageDir.mkpath(storagePath);
 
-    m_database = QSqlDatabase::addDatabase("QSQLITE");
+    m_database = QSqlDatabase::addDatabase(QLatin1String("QSQLITE"));
 
-    const QString dataBaseName = storagePath + "/snowshoe.db";
+    const QString dataBaseName = storagePath + QLatin1String("/snowshoe.db");
     m_database.setDatabaseName(dataBaseName);
 
     m_bookmarkModel = new BookmarkModel(m_database);
@@ -73,7 +73,7 @@ bool DatabaseManager::initialize()
 
     const bool createdTables = createTables();
 
-    m_bookmarkModel->setTable("bookmarks");
+    m_bookmarkModel->setTable(QLatin1String("bookmarks"));
     if (m_bookmarkModel->lastError().isValid())
         return false;
 
