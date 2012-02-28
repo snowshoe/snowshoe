@@ -5,5 +5,5 @@ if [ ! -d "$WEBKIT_SOURCE_DIR" ]; then
     exit 1
 fi
 
-FILES_TO_CHECK="src/*.h src/*.cpp tests/database/*.cpp"
+FILES_TO_CHECK=`find \( -name \*.cpp -o -name \*.h \) -not -name \*moc_\* -not -name \*qrc\*`
 "$WEBKIT_SOURCE_DIR"/Tools/Scripts/check-webkit-style --filter -build/include_order $FILES_TO_CHECK

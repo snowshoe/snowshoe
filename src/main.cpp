@@ -49,9 +49,9 @@ int main(int argc, char** argv)
 
     QStringList arguments = app.arguments();
     QWindow* window;
-    if (arguments.contains(QLatin1String("--mobile"))) {
+    if (arguments.contains(QLatin1String("--mobile")))
         window = new BrowserWindowMobile();
-    } else {
+    else {
         int pos = arguments.indexOf(QLatin1String("--desktop"));
         if (pos != -1)
             arguments.removeAt(pos);
