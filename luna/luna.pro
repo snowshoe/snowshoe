@@ -3,13 +3,7 @@
 # CONFIG += mobility
 # MOBILITY +=
 
-# Speed up launching on MeeGo/Harmattan when using applauncherd daemon
-CONFIG += qdeclarative-boostable
-
-QT += declarative
-
-# Add dependency to Symbian components
-# CONFIG += qt-components
+QT += widgets quick webkit
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp

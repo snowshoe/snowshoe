@@ -1,5 +1,5 @@
-import QtQuick 1.1
-import QtWebKit 1.0
+import QtQuick 2.0
+import QtWebKit 3.0
 // What to do on Qt5 !?
 import "UiConstants.js" as UiConstants
 import "tabmanager.js" as TabManager
@@ -42,13 +42,13 @@ Item {
                 WebView {
                     id: webView
                     url: webViewItem.url
-                    preferredWidth: flickableWebView.width
-                    preferredHeight: flickableWebView.height
+//                     preferredWidth: flickableWebView.width
+//                     preferredHeight: flickableWebView.height
 
-                    onLoadFailed: {
-                        webViewItem.shouldAnimateIndicator = false
-                        webViewItem.url = "qrc:///luna_404.html"
-                    }
+//                     onLoadFailed: {
+//                         webViewItem.shouldAnimateIndicator = false
+//                         webViewItem.url = "qrc:///luna_404.html"
+//                     }
 
                     MouseArea {
                         id: webViewMaximizeMouseArea

@@ -1,7 +1,4 @@
-import QtQuick 1.0
-
-// We need to load this at least in one QML file to enable the image provider for MeeGo assets.
-import com.nokia.meego 1.0
+import QtQuick 2.0
 
 Item {
     width: 480

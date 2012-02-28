@@ -1,22 +1,13 @@
 #include <QApplication>
-#include <QDeclarativeView>
+#include <QQuickView>
 #include <QUrl>
-#include <QScopedPointer>
 #include <qplatformdefs.h>
-
-#if defined(MEEGO_EDITION_HARMATTAN)
-    #include <MDeclarativeCache>
-    #define NEW_QAPPLICATION(x, y) MDeclarativeCache::qApplication((x), (y))
-    Q_DECL_EXPORT
-#else
-    #define NEW_QAPPLICATION(x, y) new QApplication((x), (y))
-#endif
 
 int main(int argc, char** argv)
 {
-    QScopedPointer<QApplication> app(NEW_QAPPLICATION(argc, argv));
+    QApplication app(argc, argv);
 
-    QDeclarativeView viewer;
+    QQuickView viewer;
 #if defined(MEEGO_EDITION_HARMATTAN)
     viewer.setSource(QUrl("qrc:/qml/main-harmattan.qml"));
     viewer.showFullScreen();
@@ -25,5 +16,5 @@ int main(int argc, char** argv)
     viewer.show();
 #endif
 
-    return app->exec();
+    return app.exec();
 }
