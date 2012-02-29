@@ -1,6 +1,6 @@
 TEMPLATE = lib
 CONFIG = staticlib qt
-TARGET= snowshoe
+TARGET= snowshoecore
 
 QT +=  declarative sql widgets quick
 
@@ -17,4 +17,4 @@ HEADERS += \
     BookmarkModel.h \
     DatabaseManager.h \
     PopupWindow.h \
-    UrlTools.h 
+    UrlTools.h

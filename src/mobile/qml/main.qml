@@ -1,10 +1,32 @@
 import QtQuick 2.0
 
-Rectangle {
-    width: 640
-    height: 480
-    Text {
-        anchors.fill : parent
-        text: "Hello Mobile"
+Item {
+    width: 480
+    height: 854
+
+    Rectangle {
+        id: fakeStatusBar
+        color: "black"
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 36
+        Text {
+            anchors.fill: parent
+            anchors.rightMargin: 5
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignRight
+            text: "23:59"
+            color: "white"
+            font.pixelSize: 20
+        }
+    }
+
+    Main {
+        anchors {
+            top: fakeStatusBar.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
     }
 }
