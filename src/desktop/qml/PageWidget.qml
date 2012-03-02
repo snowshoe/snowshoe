@@ -67,7 +67,7 @@ Item {
         }
 
         onLinkHovered: {
-            hoveredLink.text = url.toString()
+            hoveredLink.text = hoveredUrl.toString()
         }
 
         onTitleChanged: { root.title = title }
@@ -78,8 +78,8 @@ Item {
         }
 
         onNavigationRequested: {
-            if (request.button == Qt.MiddleButton
-                || (request.button == Qt.LeftButton && request.modifiers & Qt.ControlModifier)) {
+            if (request.mouseButton == Qt.MiddleButton
+                || (request.mouseButton == Qt.LeftButton && request.keyboardModifiers & Qt.ControlModifier)) {
                 browserView.openTabWithUrl(request.url)
                 request.action = WebView.IgnoreRequest
                 return
