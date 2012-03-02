@@ -32,8 +32,6 @@ int main(int argc, char** argv)
     // FIXME: This need to be reverted when WebKit works with it.
     qputenv("QML_NO_THREADED_RENDERER", QByteArray("1"));
 
-    QQuickWebViewExperimental::setFlickableViewportEnabled(false);
-
     QApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(true);
     app.setApplicationName(QLatin1String("Snowshoe"));
@@ -56,9 +54,10 @@ int main(int argc, char** argv)
         if (pos != -1)
             arguments.removeAt(pos);
         arguments = arguments.mid(1);
+        QQuickWebViewExperimental::setFlickableViewportEnabled(false);
         window = new BrowserWindow(arguments);
     }
-    
+
     window->show();
     app.exec();
     DatabaseManager::instance()->destroy();

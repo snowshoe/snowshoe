@@ -30,33 +30,26 @@ Item {
             width: navigationPanel.width
             height: navigationPanel.height - tabBar.height
             property alias webView: webView
-            property bool shouldAnimateIndicator: (navigationPanel.parent.state == "navigationFullScreen" && webView.progress < 1 && webView.progress > 0)
+            property bool shouldAnimateIndicator: (navigationPanel.parent.state == "navigationFullScreen" && webView.loading)
 
-            Flickable {
-                id: flickableWebView
+            WebView {
+                id: webView
                 anchors.fill: parent
-                clip: true
-                contentWidth: webView.width
-                contentHeight: webView.height
+                url: webViewItem.url
 
-                WebView {
-                    id: webView
-                    url: webViewItem.url
-//                     preferredWidth: flickableWebView.width
-//                     preferredHeight: flickableWebView.height
+                onLoadingChanged: {
+                    if (loadRequest.status == WebView.LoadFailedStatus) {
+                        webViewItem.shouldAnimateIndicator = false
+                        webViewItem.url = "qrc://mobile/luna_404.html"
+                    }
+                }
 
-//                     onLoadFailed: {
-//                         webViewItem.shouldAnimateIndicator = false
-//                         webViewItem.url = "qrc:///luna_404.html"
-//                     }
-
-                    MouseArea {
-                        id: webViewMaximizeMouseArea
-                        anchors.fill: parent
-                        visible: false
-                        onClicked: {
-                            navigationPanel.parent.state = "navigationFullScreen"
-                        }
+                MouseArea {
+                    id: webViewMaximizeMouseArea
+                    anchors.fill: parent
+                    visible: false
+                    onClicked: {
+                        navigationPanel.parent.state = "navigationFullScreen"
                     }
                 }
             }
@@ -65,8 +58,8 @@ Item {
                 id: closeBtn
                 // ok.. this are the coords, but they dont't need to be binded because
                 // this coords will NEVER change.
-                x: flickableWebView.width * 0.85 - width/2
-                y: flickableWebView.height * 0.15 - height/2
+                x: webView.width * 0.85 - width/2
+                y: webView.height * 0.15 - height/2
                 source: "image://theme/icon-m-framework-close-thumbnail"
                 visible: false
                 MouseArea {
@@ -85,8 +78,8 @@ Item {
                 id: addToFavBtn
                 // ok.. this are the coords, but they dont't need to be binded because
                 // this coords will NEVER change.
-                x: flickableWebView.width * 0.15 - width/2
-                y: flickableWebView.height * 0.15 - height/2
+                x: webView.width * 0.15 - width/2
+                y: webView.height * 0.15 - height/2
                 // FIXME: This image is too ugly to be used here!
                 source: "image://theme/icon-l-content-favourites"
                 width: 48; height: 48 // resize the original Harmattan image while we don't have a good one to put here
@@ -100,7 +93,7 @@ Item {
             states: [
                 State {
                     name: "minimized"
-                    PropertyChanges { target: flickableWebView; scale: 0.7; }
+                    PropertyChanges { target: webView; scale: 0.7; }
                     PropertyChanges { target: closeBtn; visible: true; }
                     PropertyChanges { target: addToFavBtn; visible: true; }
                     PropertyChanges { target: webViewMaximizeMouseArea; visible: true; }

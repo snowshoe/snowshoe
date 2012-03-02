@@ -90,7 +90,7 @@ Item {
 
     function loadUrl(url)
     {
-        webView.load(url)
+        webView.url = url
         currentUrl = url
     }
 
