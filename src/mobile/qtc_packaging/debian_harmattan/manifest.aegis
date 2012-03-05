@@ -65,6 +65,6 @@ AutoGenerateAegisFile
 
 	</request>
 
-	<for path="/opt/luna/bin/luna" />
+	<for path="/opt/snowshoe-mobile/bin/snowshoe" />
 	<for path="applauncherd-launcher::/usr/bin/applauncherd.bin" id="" />
 </aegis>

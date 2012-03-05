@@ -3,9 +3,9 @@ Encoding=UTF-8
 Version=1.0
 Type=Application
 Terminal=false
-Name=luna
-Exec=/usr/bin/invoker --type=d -s /opt/luna/bin/luna
-Icon=/usr/share/icons/hicolor/80x80/apps/luna80.png
+Name=Snowshoe Mobile
+Exec=/opt/snowshoe-mobile/bin/snowshoe
+Icon=snowshoe-mobile64
 X-Window-Icon=
 X-HildonDesk-ShowInToolbar=true
 X-Osso-Type=application/x-executable

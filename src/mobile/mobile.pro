@@ -29,14 +29,14 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/changelog
 
 RESOURCES += \
-    luna.qrc
+    snowshoe-mobile.qrc
 
 # Install procedures
-installPrefix = /opt/luna
+installPrefix = /opt/snowshoe-mobile
 
-desktopfile.files = luna_harmattan.desktop
+desktopfile.files = mobile_harmattan.desktop
 desktopfile.path = /usr/share/applications
-icon.files = luna80.png
+icon.files = snowshoe-mobile80.png
 icon.path = /usr/share/icons/hicolor/80x80/apps
-target.path = /opt/luna/bin
+target.path = /opt/snowshoe-mobile/bin
 INSTALLS += icon desktopfile target

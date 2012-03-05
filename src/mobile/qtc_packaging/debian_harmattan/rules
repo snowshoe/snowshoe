@@ -28,7 +28,7 @@ build-stamp: configure-stamp
 
 	# Add here commands to compile the package.
 	# $(MAKE) # Uncomment this line for use without Qt Creator
-	#docbook-to-man debian/luna.sgml > luna.1
+	#docbook-to-man debian/snowshoe-mobile.sgml > snowshoe-mobile.1
 
 	touch $@
 
@@ -48,8 +48,8 @@ install: build
 	dh_clean -k 
 	dh_installdirs
 
-	# Add here commands to install the package into debian/luna.
-	$(MAKE) INSTALL_ROOT="$(CURDIR)"/debian/luna install
+	# Add here commands to install the package into debian/snowshoe-mobile.
+	$(MAKE) INSTALL_ROOT="$(CURDIR)"/debian/snowshoe-mobile install
 
 
 # Build architecture-independent files here.

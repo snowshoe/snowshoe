@@ -40,7 +40,7 @@ Item {
                 onLoadingChanged: {
                     if (loadRequest.status == WebView.LoadFailedStatus) {
                         webViewItem.shouldAnimateIndicator = false
-                        webViewItem.url = "qrc://mobile/luna_404.html"
+                        webViewItem.url = "qrc:/mobile/404.html"
                     }
                 }
 
