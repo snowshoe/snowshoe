@@ -23,7 +23,8 @@
 #include <QtQuick/QQuickItem>
 
 BrowserWindowMobile::BrowserWindowMobile()
-    : m_browserView(0)
+    : QQuickView(0, Qt::Window)
+    , m_browserView(0)
 {
     setupDeclarativeEnvironment();
     m_browserView = qobject_cast<QQuickItem*>(rootObject());

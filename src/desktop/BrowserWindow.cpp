@@ -34,7 +34,8 @@
 #include <QtGui/private/qguiapplication_p.h>
 
 BrowserWindow::BrowserWindow(const QStringList& arguments)
-    : m_urlsFromCommandLine(arguments)
+    : QQuickView(0, Qt::Window)
+    , m_urlsFromCommandLine(arguments)
     , m_browserView(0)
 {
     qmlRegisterType<Shortcut>("Snowshoe", 1, 0, "Shortcut");
