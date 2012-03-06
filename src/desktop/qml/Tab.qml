@@ -153,7 +153,7 @@ Item {
                 id: favicon
                 anchors.fill: parent
                 source: pageWidget != undefined && pageWidget.webView.icon ? pageWidget.webView.icon : ""
-                visible: !spinner.visible && source
+                visible: !spinner.visible && source != ""
             }
         }
 
