@@ -34,10 +34,10 @@
 #include <QtGui/private/qguiapplication_p.h>
 
 BrowserWindow::BrowserWindow(const QStringList& arguments)
-    : QQuickView(0, Qt::Window)
-    , m_urlsFromCommandLine(arguments)
+    : m_urlsFromCommandLine(arguments)
     , m_browserView(0)
 {
+    setWindowFlags(Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint);
     qmlRegisterType<Shortcut>("Snowshoe", 1, 0, "Shortcut");
     restoreWindowGeometry();
     setupDeclarativeEnvironment();

@@ -23,9 +23,9 @@
 #include <QtQuick/QQuickItem>
 
 BrowserWindowMobile::BrowserWindowMobile()
-    : QQuickView(0, Qt::Window)
-    , m_browserView(0)
+    : m_browserView(0)
 {
+    setWindowFlags(Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint);
     setupDeclarativeEnvironment();
     m_browserView = qobject_cast<QQuickItem*>(rootObject());
     Q_ASSERT(m_browserView);
