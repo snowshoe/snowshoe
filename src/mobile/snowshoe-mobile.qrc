@@ -11,6 +11,5 @@
         <file>qml/main-harmattan.qml</file>
         <file>qml/PanelToggle.qml</file>
         <file>qml/PanelToggleButton.qml</file>
-        <file>404.html</file>
     </qresource>
 </RCC>
