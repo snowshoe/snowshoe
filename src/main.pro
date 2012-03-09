@@ -41,10 +41,12 @@ OTHER_FILES += \
     desktop/qml/UrlBar.qml \
     desktop/qml/UrlEdit.qml \
     desktop/qml/main.qml \
+    mobile/qml/Button.qml \
     mobile/qml/FavoritesPanel.qml \
     mobile/qml/tabmanager.js \
     mobile/qml/Main.qml \
     mobile/qml/main-harmattan.qml \
+    mobile/qml/NavigationBar.qml \
     mobile/qml/NavigationPanel.qml \
     mobile/qml/PanelToggle.qml \
     mobile/qml/PanelToggleButton.qml \

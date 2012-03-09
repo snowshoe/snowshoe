@@ -11,6 +11,7 @@ Item {
     property int currentTabIndex: -1
     property int tabCount: 0
     property variant rootPage
+    property int webPageHeight: height - tabBar.height
 
     Row {
         id: webViewRow
@@ -43,14 +44,18 @@ Item {
                         webView.loadHtml(UiConstants.HtmlFor404Page)
                     }
                 }
+            }
 
-                MouseArea {
-                    id: webViewMaximizeMouseArea
-                    anchors.fill: parent
-                    visible: false
-                    onClicked: {
-                        navigationPanel.parent.state = "navigationFullScreen"
-                    }
+            MouseArea {
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: navigationPanel.webPageHeight
+                visible: (navigationBar.state === "visible")
+                onClicked: {
+                    navigationPanel.parent.state = "navigationFullScreen"
+                    navigationBar.state = "hidden"
+                    navigationPanel.webPageHeight = navigationPanel.height - tabBar.height
                 }
             }
 
@@ -96,7 +101,6 @@ Item {
                     PropertyChanges { target: webView; scale: 0.7; }
                     PropertyChanges { target: closeBtn; visible: true; }
                     PropertyChanges { target: addToFavBtn; visible: true; }
-                    PropertyChanges { target: webViewMaximizeMouseArea; visible: true; }
                 }
             ]
 
@@ -107,7 +111,6 @@ Item {
                         PropertyAnimation { properties: "scale"; duration: 300; }
                         PropertyAnimation { target: closeBtn; properties: "visible"; duration: 0; }
                         PropertyAnimation { target: addToFavBtn; properties: "visible"; duration: 0; }
-                        PropertyAnimation { target: webViewMaximizeMouseArea; properties: "visible"; duration: 0; }
                     }
                 },
                 Transition {
@@ -116,7 +119,6 @@ Item {
                         PropertyAnimation { target: closeBtn; properties: "visible"; duration: 0; }
                         PropertyAnimation { target: addToFavBtn; properties: "visible"; duration: 0; }
                         PropertyAnimation { properties: "scale"; duration: 300; }
-                        PropertyAnimation { target: webViewMaximizeMouseArea; properties: "visible"; duration: 0; }
                     }
                 }
             ]
@@ -162,11 +164,16 @@ Item {
             }
 
             onReleased: {
-                if (Math.abs(mouse.y - lastY) > height*3
-                    || Math.abs(mouse.x - lastX) < 50) {
-                    // normal click,
+                if (mouse.y < lastY - UiConstants.DefaultSwipeLenght) { // swipe up
                     navigationPanel.state = "";
                     navigationPanel.parent.state = "navigation";
+                    return
+                }
+
+                if (Math.abs(mouse.y - lastY) > height * 3
+                    || Math.abs(mouse.x - lastX) < UiConstants.DefaultSwipeLenght) {
+                    // normal click,
+                    navigationPanel.parent.state = "withNavigationBar"
                     return;
                 }
 
@@ -186,6 +193,15 @@ Item {
                     script: {
                         TabManager.setAllStatusBarIndicatorStatusBut("hide", currentTabIndex)
                         TabManager.getStatusBarIndicator(currentTabIndex).state = "likeAUrlBar"
+                    }
+                }
+            },
+            State {
+                name: "hidden"
+                AnchorChanges { target: tabBar; anchors.top: parent.bottom }
+                StateChangeScript {
+                    script: {
+                        TabManager.setAllStatusBarIndicatorStatusBut("hide", currentTabIndex)
                     }
                 }
             },
@@ -243,13 +259,20 @@ Item {
         State {
             name: ""
             PropertyChanges { target: tabBar; state: "minimized" }
+            PropertyChanges { target: navigationPanel; webPageHeight: navigationPanel.height - tabBar.height }
             StateChangeScript {
                 script: TabManager.getWebPage(currentTabIndex).state = "minimized"
             }
         },
         State {
+            name: "navBar"
+            PropertyChanges { target: tabBar; state: "hidden" }
+            PropertyChanges { target: navigationPanel; webPageHeight: navigationPanel.height - navigationBar.height }
+        },
+        State {
             name: "fullscreen"
             PropertyChanges { target: tabBar; state: "" }
+            PropertyChanges { target: navigationPanel; webPageHeight: navigationPanel.height - tabBar.height }
             StateChangeScript {
                 script: {
                     if (currentTabIndex - 1  >= 0)

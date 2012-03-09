@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/mobile">
+        <file>qml/Button.qml</file>
         <file>qml/FavoritesPanel.qml</file>
+        <file>qml/NavigationBar.qml</file>
         <file>qml/NavigationPanel.qml</file>
         <file>qml/StatusBarIndicator.qml</file>
         <file>qml/UiConstants.js</file>
@@ -11,5 +13,24 @@
         <file>qml/PanelToggle.qml</file>
         <file>qml/PanelToggleButton.qml</file>
         <file>qml/UrlSuggestions.qml</file>
+        <file alias="navbar/btn_nav_back_disabled">../desktop/images/urlbar/component_btn_nav_back_disable.png</file>
+        <file alias="navbar/btn_nav_back_unpressed">../desktop/images/urlbar/component_btn_nav_back_unpressed.png</file>
+        <file alias="navbar/btn_nav_back_pressed">../desktop/images/urlbar/component_btn_nav_back_pressed.png</file>
+        <file alias="navbar/btn_nav_next_disabled">../desktop/images/urlbar/component_btn_nav_next_disable.png</file>
+        <file alias="navbar/btn_nav_next_unpressed">../desktop/images/urlbar/component_btn_nav_next_unpressed.png</file>
+        <file alias="navbar/btn_nav_next_pressed">../desktop/images/urlbar/component_btn_nav_next_pressed.png</file>
+        <file alias="navbar/btn_nav_favorite_disabled">../desktop/images/urlbar/fav_icon_off.png</file>
+        <file alias="navbar/btn_nav_favorite_unpressed">../desktop/images/urlbar/fav_icon_off.png</file>
+        <file alias="navbar/btn_nav_favorite_pressed">../desktop/images/urlbar/fav_icon_off.png</file>
+        <file alias="navbar/btn_nav_reload_disabled">../desktop/images/urlbar/component_btn_nav_refresh_disable.png</file>
+        <file alias="navbar/btn_nav_reload_unpressed">../desktop/images/urlbar/component_btn_nav_refresh_unpressed.png</file>
+        <file alias="navbar/btn_nav_reload_pressed">../desktop/images/urlbar/component_btn_nav_refresh_pressed.png</file>
+        <file alias="navbar/btn_nav_stop_disabled">../desktop/images/urlbar/component_btn_nav_cancel_disable.png</file>
+        <file alias="navbar/btn_nav_stop_unpressed">../desktop/images/urlbar/component_btn_nav_cancel_unpressed.png</file>
+        <file alias="navbar/btn_nav_stop_pressed">../desktop/images/urlbar/component_btn_nav_cancel_pressed.png</file>
+        <file alias="navbar/btn_nav_settings_disabled">../desktop/images/urlbar/component_btn_settings.png</file>
+        <file alias="navbar/btn_nav_settings_unpressed">../desktop/images/urlbar/component_btn_settings.png</file>
+        <file alias="navbar/btn_nav_settings_pressed">../desktop/images/urlbar/component_btn_settings.png</file>
+        <file alias="navbar/component_divisor">../desktop/images/urlbar/component_divisor.png</file>
     </qresource>
 </RCC>

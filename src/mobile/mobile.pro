@@ -9,11 +9,13 @@ QT += widgets quick webkit
 SOURCES += main.cpp
 
 OTHER_FILES += \
+    qml/Button.qml \
     qml/FavoritesPanel.qml \
     qml/tabmanager.js \
     qml/Main.qml \
     qml/main-desktop.qml \
     qml/main-harmattan.qml \
+    qml/NavigationBar.qml \
     qml/NavigationPanel.qml \
     qml/PanelToggle.qml \
     qml/PanelToggleButton.qml \

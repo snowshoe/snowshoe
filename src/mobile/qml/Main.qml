@@ -3,8 +3,8 @@ import "UiConstants.js" as UiConstants
 
 Rectangle {
     id: rootPage
-    width: 480
-    height: 818
+    width: UiConstants.PortraitWidth
+    height: UiConstants.PortraitHeight
     color: "#aaa"
     clip: true
 
@@ -102,6 +102,11 @@ Rectangle {
         rootPage.state = "typeNewUrl"
     }
 
+    NavigationBar {
+        id: navigationBar
+        state: "hidden"
+    }
+
     state: "splash"
     states: [
         State {
@@ -130,6 +135,17 @@ Rectangle {
             PropertyChanges { target: navigationPanel; state: "fullscreen" }
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
             PropertyChanges { target: plusButton; opacity: 0 }
+            PropertyChanges { target: navigationPanel; visible: true }  // Note: this is redundant but needed for N9.
+        },
+        State {
+            name: "withNavigationBar"
+            AnchorChanges { target: panelToggle; anchors.bottom: parent.top; anchors.top: undefined }
+            StateChangeScript { script: panelToggle.resetToNavigation() }
+            AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
+            PropertyChanges { target: navigationBar; state: "visible" }
+            PropertyChanges { target: plusButton; opacity: 0 }
+            PropertyChanges { target: navigationPanel; state: "navBar" }
+            PropertyChanges { target: favoritesPanel; visible: false }
             PropertyChanges { target: navigationPanel; visible: true }  // Note: this is redundant but needed for N9.
         },
         State {
