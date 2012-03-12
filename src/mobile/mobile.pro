@@ -20,6 +20,7 @@ OTHER_FILES += \
     qml/StatusBarIndicator.qml \
     qml/UiConstants.js \
     qml/UrlBar.qml \
+    qml/UrlSuggestions.qml \
     qtc_packaging/debian_harmattan/rules \
     qtc_packaging/debian_harmattan/README \
     qtc_packaging/debian_harmattan/manifest.aegis \

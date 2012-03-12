@@ -10,5 +10,6 @@
         <file>qml/main-harmattan.qml</file>
         <file>qml/PanelToggle.qml</file>
         <file>qml/PanelToggleButton.qml</file>
+        <file>qml/UrlSuggestions.qml</file>
     </qresource>
 </RCC>

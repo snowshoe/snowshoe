@@ -51,6 +51,7 @@ OTHER_FILES += \
     mobile/qml/StatusBarIndicator.qml \
     mobile/qml/UiConstants.js \
     mobile/qml/UrlBar.qml \
+    mobile/qml/UrlSuggestions.qml \
     mobile/qtc_packaging/debian_harmattan/rules \
     mobile/qtc_packaging/debian_harmattan/README \
     mobile/qtc_packaging/debian_harmattan/manifest.aegis \

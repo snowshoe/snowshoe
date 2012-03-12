@@ -5,7 +5,7 @@ Rectangle {
     id: rootPage
     width: 480
     height: 818
-    color: "#202022"
+    color: "#aaa"
     clip: true
 
     PanelToggle {
@@ -48,7 +48,7 @@ Rectangle {
         width: 40
         height: 40
         smooth: true
-        radius: 20
+        radius: 10
 
         Text {
             id: plusLabel
@@ -64,6 +64,7 @@ Rectangle {
             visible: false
             anchors.centerIn: parent
             width: parent.width - 20
+            property string previousUrl: ""
 
             onAccepted: {
                 var webView = navigationPanel.currentWebView()
@@ -77,14 +78,27 @@ Rectangle {
             anchors.fill: parent
             onClicked: {
                 navigationPanel.createTab("")
+                newUrlBar.previousUrl = ""
                 rootPage.state = "typeNewUrl"
             }
         }
     }
 
+    UrlSuggestions {
+        id: urlSuggestions
+        width: rootPage.width
+        anchors.top: rootPage.top
+        anchors.bottom: plusButton.top
+        anchors.bottomMargin: 26
+        onSuggestionSelected: newUrlBar.text = suggestedUrl
+        // Only lookup suggestions once you have at least 2 characters to provide better results.
+        opacity: newUrlBar.text != newUrlBar.previousUrl && newUrlBar.text.length >= 2 ? 1 : 0
+    }
+
     function editUrlRequested() {
         var webView = navigationPanel.currentWebView()
         newUrlBar.text = webView.url
+        newUrlBar.previousUrl = newUrlBar.text
         rootPage.state = "typeNewUrl"
     }
 

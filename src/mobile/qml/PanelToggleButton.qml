@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import "UiConstants.js" as UiConstants
 
 Rectangle {
     id: button
@@ -37,7 +38,7 @@ Rectangle {
         id: label
         anchors.centerIn: parent
         color: "gray"
-        font.family: "Nokia Pure Text"
+        font.family: UiConstants.DefaultFontFamily
         font.pixelSize: button.active ? 20 : 14
     }
 

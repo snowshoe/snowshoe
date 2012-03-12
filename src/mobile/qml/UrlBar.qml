@@ -1,9 +1,11 @@
 import QtQuick 2.0
 
+import "UiConstants.js" as UiConstants
+
 TextInput {
     id: root
-    font.pixelSize: 24
-    font.family: "Nokia Pure Text"
+    font.pixelSize: UiConstants.DefaultFontSize
+    font.family: UiConstants.DefaultFontFamily
     baselineOffset: 2
     clip: true
     text: ""
