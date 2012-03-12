@@ -39,5 +39,5 @@ void BrowserWindowMobile::setupDeclarativeEnvironment()
     QObject::connect(engine(), SIGNAL(quit()), qApp, SLOT(quit()));
 
     setResizeMode(QQuickView::SizeRootObjectToView);
-    setSource(QUrl("qrc:/mobile/qml/main.qml"));
+    setSource(QUrl("qrc:/mobile/qml/Main.qml"));
 }

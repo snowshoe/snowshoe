@@ -3,6 +3,8 @@ import "UiConstants.js" as UiConstants
 
 Rectangle {
     id: rootPage
+    width: 480
+    height: 818
     color: "#202022"
     clip: true
 

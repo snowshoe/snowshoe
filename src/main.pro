@@ -44,7 +44,6 @@ OTHER_FILES += \
     mobile/qml/FavoritesPanel.qml \
     mobile/qml/tabmanager.js \
     mobile/qml/Main.qml \
-    mobile/qml/main.qml \ # FIXME Remove this file and if possible just use Main.qml
     mobile/qml/main-harmattan.qml \
     mobile/qml/NavigationPanel.qml \
     mobile/qml/PanelToggle.qml \
