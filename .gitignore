@@ -1,0 +1,9 @@
+Makefile
+Makefile.main
+*.o
+.obj
+.moc
+.rcc
+moc_*.cpp
+*.a
+snowshoe
