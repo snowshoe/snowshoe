@@ -31,6 +31,11 @@ Rectangle {
         id: navigationPanel
         anchors.centerIn: parent
         rootPage: rootPage
+
+        onCurrentTabIndexChanged: {
+            if (navigationPanel.currentTabIndex == -1)
+                rootPage.state = "favorites";
+        }
     }
 
     Rectangle {
@@ -160,14 +165,6 @@ Rectangle {
             }
         }
     ]
-
-    Connections {
-        target: navigationPanel
-        onCurrentTabIndexChanged: {
-            if (navigationPanel.currentTabIndex === -1)
-                rootPage.state = "favorites";
-        }
-    }
 
     Timer {
         running: true
