@@ -10,6 +10,7 @@ Item {
     height: parent.height
     property int currentTabIndex: -1
     property int tabCount: 0
+    property variant rootPage
 
     Row {
         id: webViewRow
@@ -25,7 +26,7 @@ Item {
         id: webViewPrototype
         Item {
             id: webViewItem
-            property string url: ""
+            property alias url: webView.url
             property variant statusIndicator
             width: navigationPanel.width
             height: navigationPanel.height - tabBar.height
@@ -35,7 +36,6 @@ Item {
             WebView {
                 id: webView
                 anchors.fill: parent
-                url: webViewItem.url
 
                 onLoadingChanged: {
                     if (loadRequest.status == WebView.LoadFailedStatus) {
@@ -146,7 +146,6 @@ Item {
             currentTabIndex = index
         }
 
-
         Row {
             id: tabBarRow
             spacing: 5
@@ -227,8 +226,17 @@ Item {
         webView.url = url
         webView.webView.urlChanged.connect(function() { statusBarIndicator.url = webView.webView.url; })
         statusBarIndicator.webView = webView
+        statusBarIndicator.rootPage = navigationPanel.rootPage
 
         tabCount += 1
+    }
+
+    function currentWebView()
+    {
+        if (currentTabIndex == -1)
+            return null
+
+        return TabManager.getWebPage(currentTabIndex)
     }
 
     states: [

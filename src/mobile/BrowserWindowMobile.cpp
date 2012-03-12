@@ -17,6 +17,7 @@
 
 #include "BrowserWindowMobile.h"
 
+#include "UrlTools.h"
 #include <QtCore/QCoreApplication>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeEngine>
@@ -35,6 +36,7 @@ void BrowserWindowMobile::setupDeclarativeEnvironment()
 {
     QDeclarativeContext* context = rootContext();
     context->setContextProperty("BrowserWindow", this);
+    context->setContextProperty("UrlTools", new UrlTools(this));
 
     QObject::connect(engine(), SIGNAL(quit()), qApp, SLOT(quit()));
 

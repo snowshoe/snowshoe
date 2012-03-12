@@ -11,15 +11,18 @@ Rectangle {
     property alias url : urlBar.text
     property variant webView
     property bool startAnimation: Boolean(webView && webView.shouldAnimateIndicator)
+    property variant rootPage
 
     UrlBar {
         id: urlBar
         visible: false
         anchors.centerIn: parent
         width: parent.width - 20
+        focus: false
 
-        onAccepted: {
-            webView.url = urlBar.text
+        MouseArea {
+            anchors.fill: parent
+            onClicked: rootPage.editUrlRequested()
         }
     }
 

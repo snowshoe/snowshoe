@@ -30,6 +30,7 @@ Rectangle {
     NavigationPanel {
         id: navigationPanel
         anchors.centerIn: parent
+        rootPage: rootPage
     }
 
     Rectangle {
@@ -60,16 +61,26 @@ Rectangle {
             width: parent.width - 20
 
             onAccepted: {
-                navigationPanel.createTab(newUrlBar.text)
-                newUrlBar.text = "http://"
+                var webView = navigationPanel.currentWebView()
+                webView.url = UrlTools.fromUserInput(newUrlBar.text)
                 rootPage.state = "navigationFullScreen"
+                newUrlBar.text = ""
             }
         }
 
         MouseArea {
             anchors.fill: parent
-            onClicked: rootPage.state = "typeNewUrl"
+            onClicked: {
+                navigationPanel.createTab("")
+                rootPage.state = "typeNewUrl"
+            }
         }
+    }
+
+    function editUrlRequested() {
+        var webView = navigationPanel.currentWebView()
+        newUrlBar.text = webView.url
+        rootPage.state = "typeNewUrl"
     }
 
     state: "splash"
