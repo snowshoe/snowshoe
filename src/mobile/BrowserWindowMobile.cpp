@@ -41,5 +41,9 @@ void BrowserWindowMobile::setupDeclarativeEnvironment()
     QObject::connect(engine(), SIGNAL(quit()), qApp, SLOT(quit()));
 
     setResizeMode(QQuickView::SizeRootObjectToView);
+#if defined(SNOWSHOE_MEEGO_HARMATTAN)
+    setSource(QUrl("qrc:/mobile/qml/main-harmattan.qml"));
+#else
     setSource(QUrl("qrc:/mobile/qml/Main.qml"));
+#endif
 }

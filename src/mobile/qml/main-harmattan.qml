@@ -1,4 +1,4 @@
-import com.nokia.meego 1.0
+import com.nokia.meego 2.0
 
 PageStackWindow {
     initialPage: Page {

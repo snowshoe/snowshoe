@@ -7,6 +7,10 @@ LIBS += -Lcore/ -lsnowshoe
 
 INCLUDEPATH += core
 
+linux-g++-maemo {
+    DEFINES += SNOWSHOE_MEEGO_HARMATTAN
+}
+
 SOURCES += \
     desktop/BrowserWindow.cpp \
     desktop/Shortcut.cpp \

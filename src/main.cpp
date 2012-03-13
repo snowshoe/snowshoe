@@ -58,7 +58,11 @@ int main(int argc, char** argv)
         window = new BrowserWindow(arguments);
     }
 
+#if defined(SNOWSHOE_MEEGO_HARMATTAN)
+    window->showFullScreen();
+#else
     window->show();
+#endif
     app.exec();
     DatabaseManager::instance()->destroy();
     return 0;
