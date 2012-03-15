@@ -67,3 +67,27 @@ OTHER_FILES += \
     mobile/qtc_packaging/debian_harmattan/control \
     mobile/qtc_packaging/debian_harmattan/compat \
     mobile/qtc_packaging/debian_harmattan/changelog
+
+# Extra files and install rules for N9.
+# TODO support desktop install paths
+
+desktop.path = /usr/share/applications/
+icon.files = icons/snowshoe80.png
+
+linux-g++-maemo {
+    target.path = /usr/share/snowshoe/
+
+    launcher.files = mobile/snowshoe_launcher
+    launcher.path = /usr/bin
+
+    desktop.files = mobile/snowshoe_harmattan.desktop
+    icon.path = /usr/share/themes/base/meegotouch/icons/
+
+    INSTALLS += launcher
+} else {
+    target.path = /usr/bin
+    desktop.files = desktop/snowshoe.desktop
+    icon.path = /usr/share/pixmaps/
+}
+
+INSTALLS += target desktop icon

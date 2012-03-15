@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Name=Snowshoe
+Exec=/usr/bin/snowshoe
+Icon=/usr/share/pixmaps/snowshoe80.png
+X-Window-Icon=
+Categories=WebBrowser

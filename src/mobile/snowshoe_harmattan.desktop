@@ -4,8 +4,8 @@ Version=1.0
 Type=Application
 Terminal=false
 Name=Snowshoe Mobile
-Exec=/usr/bin/invoker --type=d -s /opt/snowshoe-mobile/bin/snowshoe
-Icon=/usr/share/icons/hicolor/80x80/apps/snowshoe-mobile80.png
+Exec=/usr/bin/invoker --type=e -s /usr/bin/snowshoe_launcher
+Icon=/usr/share/themes/base/meegotouch/icons/snowshoe80.png
 X-Window-Icon=
 X-HildonDesk-ShowInToolbar=true
 X-Osso-Type=application/x-executable
