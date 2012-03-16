@@ -148,9 +148,8 @@ Item {
             currentTabIndex = index
         }
 
-        Row {
+        Item {
             id: tabBarRow
-            spacing: 5
             anchors.centerIn: parent
         }
         MouseArea {
@@ -224,6 +223,10 @@ Item {
     {
         var webView = webViewPrototype.createObject(webViewRow)
         var statusBarIndicator = Qt.createComponent("StatusBarIndicator.qml").createObject(tabBarRow)
+        statusBarIndicator.anchors.verticalCenter = tabBar.verticalCenter
+        var indicatorSpacing = tabCount * 4
+        tabBarRow.width = ((tabCount + 1) * statusBarIndicator.width) + indicatorSpacing
+        statusBarIndicator.x = (tabCount * statusBarIndicator.width) + indicatorSpacing
         TabManager.pushTab(webView, statusBarIndicator)
 
         statusBarIndicator.webView = webView
