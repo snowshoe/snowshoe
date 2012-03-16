@@ -1,3 +1,5 @@
+.pragma library
+
 var DefaultMargin = 32
 var DefaultFontSize = 24
 var DefaultFontFamily = "Nokia Pure Text"

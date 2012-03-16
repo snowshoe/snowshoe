@@ -5,6 +5,7 @@
         <file>qml/NavigationBar.qml</file>
         <file>qml/NavigationPanel.qml</file>
         <file>qml/StatusBarIndicator.qml</file>
+        <file>qml/SnowshoeWebView.qml</file>
         <file>qml/UiConstants.js</file>
         <file>qml/tabmanager.js</file>
         <file>qml/UrlBar.qml</file>

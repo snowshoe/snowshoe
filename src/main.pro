@@ -51,6 +51,7 @@ OTHER_FILES += \
     mobile/qml/PanelToggle.qml \
     mobile/qml/PanelToggleButton.qml \
     mobile/qml/StatusBarIndicator.qml \
+    mobile/qml/SnowshoeWebView.qml \
     mobile/qml/UiConstants.js \
     mobile/qml/UrlBar.qml \
     mobile/qml/UrlSuggestions.qml \

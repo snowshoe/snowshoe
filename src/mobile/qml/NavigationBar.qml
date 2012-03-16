@@ -4,7 +4,7 @@ import "UiConstants.js" as UiConstants
 Rectangle {
     id: navigationBar
 
-    property variant currentWebView: { navigationPanel.currentWebView() ? navigationPanel.currentWebView().webView : null }
+    property variant currentWebView: null
     property variant navBarHeight: 64
     property variant navBarMargins: 10
     property variant navBarSeparatorWidth: 2

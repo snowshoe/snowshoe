@@ -29,11 +29,10 @@ Rectangle {
 
     NavigationPanel {
         id: navigationPanel
-        anchors.centerIn: parent
-        rootPage: rootPage
+        anchors.fill: parent
 
         onCurrentTabIndexChanged: {
-            if (navigationPanel.currentTabIndex == -1)
+            if (navigationPanel.currentTabIndex === -1)
                 rootPage.state = "favorites";
         }
     }
@@ -67,8 +66,7 @@ Rectangle {
             property string previousUrl: ""
 
             onAccepted: {
-                var webView = navigationPanel.currentWebView()
-                webView.url = UrlTools.fromUserInput(newUrlBar.text)
+                navigationPanel.createTab(UrlTools.fromUserInput(newUrlBar.text))
                 rootPage.state = "navigationFullScreen"
                 newUrlBar.text = ""
             }
@@ -76,11 +74,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                navigationPanel.createTab("")
-                newUrlBar.previousUrl = ""
-                rootPage.state = "typeNewUrl"
-            }
+            onClicked: rootPage.state = "typeNewUrl"
         }
     }
 
@@ -93,13 +87,6 @@ Rectangle {
         onSuggestionSelected: newUrlBar.text = suggestedUrl
         // Only lookup suggestions once you have at least 2 characters to provide better results.
         opacity: newUrlBar.text != newUrlBar.previousUrl && newUrlBar.text.length >= 2 ? 1 : 0
-    }
-
-    function editUrlRequested() {
-        var webView = navigationPanel.currentWebView()
-        newUrlBar.text = webView.url
-        newUrlBar.previousUrl = newUrlBar.text
-        rootPage.state = "typeNewUrl"
     }
 
     NavigationBar {

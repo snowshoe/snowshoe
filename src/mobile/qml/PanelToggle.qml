@@ -58,7 +58,7 @@ Row {
 
     PanelToggleButton {
         id: navigation
-        text: "CURRENT"
+        text: "TABS"
         onClicked: {
             if (!navigationEnabled)
                 return;
