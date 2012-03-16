@@ -13,7 +13,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: UiConstants.DefaultMargin
-        navigationEnabled: navigationPanel.tabCount !== 0
+        navigationEnabled: navigationPanel.hasOpennedTabs
         onFavoritesSelected: {
             rootPage.state = "favorites";
         }
@@ -31,8 +31,8 @@ Rectangle {
         id: navigationPanel
         anchors.fill: parent
 
-        onCurrentTabIndexChanged: {
-            if (navigationPanel.currentTabIndex === -1)
+        onHasOpennedTabsChanged: {
+            if (navigationPanel.hasOpennedTabs)
                 rootPage.state = "favorites";
         }
     }
@@ -122,17 +122,6 @@ Rectangle {
             PropertyChanges { target: navigationPanel; state: "fullscreen" }
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
             PropertyChanges { target: plusButton; opacity: 0 }
-            PropertyChanges { target: navigationPanel; visible: true }  // Note: this is redundant but needed for N9.
-        },
-        State {
-            name: "withNavigationBar"
-            AnchorChanges { target: panelToggle; anchors.bottom: parent.top; anchors.top: undefined }
-            StateChangeScript { script: panelToggle.resetToNavigation() }
-            AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
-            PropertyChanges { target: navigationBar; state: "visible" }
-            PropertyChanges { target: plusButton; opacity: 0 }
-            PropertyChanges { target: navigationPanel; state: "navBar" }
-            PropertyChanges { target: favoritesPanel; visible: false }
             PropertyChanges { target: navigationPanel; visible: true }  // Note: this is redundant but needed for N9.
         },
         State {

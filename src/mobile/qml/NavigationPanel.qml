@@ -7,9 +7,7 @@ import "tabmanager.js" as TabManager
 Item {
     id: navigationPanel
     anchors.fill: parent
-    property int currentTabIndex: -1
-    property int tabCount: 0
-    property int webPageHeight: height - tabBar.height
+    property bool hasOpennedTabs: false
 
     Item {
         id: tabBar
@@ -63,14 +61,12 @@ Item {
     {
         TabManager.createTab(url, navigationPanel, tabBarRow);
         var statusBarIndicator = TabManager.getCurrentTab().statusIndicator;
-        statusBarIndicator.anchors.verticalCenter = tabBar.verticalCenter
+        statusBarIndicator.anchors.verticalCenter = tabBarRow.verticalCenter
         var tabCount = TabManager.tabCount()
         var indicatorSpacing = tabCount * 4
         tabBarRow.width = ((tabCount + 1) * statusBarIndicator.width) + indicatorSpacing
         statusBarIndicator.x = (tabCount * statusBarIndicator.width) + indicatorSpacing
-
-        currentTabIndex = TabManager.tabCount() - 1
-        tabCount += 1
+        navigationPanel.hasOpennedTabs = true;
     }
 
     states: [
