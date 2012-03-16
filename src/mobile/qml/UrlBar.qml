@@ -21,7 +21,5 @@ TextInput {
         anchors.leftMargin: 8
         opacity: root.text == "" ? 1 : 0
     }
-
-
 }
 

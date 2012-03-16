@@ -37,6 +37,31 @@ Rectangle {
         }
     }
 
+
+    Rectangle {
+        id: urlBarArea
+        color: "#fff"
+        anchors.margins: UiConstants.DefaultMargin
+        anchors.centerIn: rootPage
+        width: rootPage.width - 20
+        height: 40
+        radius: 10
+
+        UrlBar {
+            id: urlBar
+            width: parent.width
+            anchors.verticalCenter: parent.verticalCenter
+            property string previousUrl: ""
+            focus: false
+
+            onAccepted: {
+                navigationPanel.createTab(UrlTools.fromUserInput(urlBar.text))
+                rootPage.state = "navigationFullScreen"
+                urlBar.text = ""
+            }
+        }
+    }
+
     Rectangle {
         id: plusButton
 
@@ -58,23 +83,12 @@ Rectangle {
             text: "+"
         }
 
-        UrlBar {
-            id: newUrlBar
-            visible: false
-            anchors.centerIn: parent
-            width: parent.width - 20
-            property string previousUrl: ""
-
-            onAccepted: {
-                navigationPanel.createTab(UrlTools.fromUserInput(newUrlBar.text))
-                rootPage.state = "navigationFullScreen"
-                newUrlBar.text = ""
-            }
-        }
-
         MouseArea {
             anchors.fill: parent
-            onClicked: rootPage.state = "typeNewUrl"
+            onClicked: {
+                urlBar.previousUrl = ""
+                rootPage.state = "typeNewUrl"
+            }
         }
     }
 
@@ -84,9 +98,9 @@ Rectangle {
         anchors.top: rootPage.top
         anchors.bottom: plusButton.top
         anchors.bottomMargin: 26
-        onSuggestionSelected: newUrlBar.text = suggestedUrl
+        onSuggestionSelected: urlBar.text = suggestedUrl
         // Only lookup suggestions once you have at least 2 characters to provide better results.
-        opacity: newUrlBar.text != newUrlBar.previousUrl && newUrlBar.text.length >= 2 ? 1 : 0
+        opacity: urlBar.text != urlBar.previousUrl && urlBar.text.length >= 2 ? 1 : 0
     }
 
     NavigationBar {
@@ -102,17 +116,20 @@ Rectangle {
             PropertyChanges { target: favoritesPanel; visible: false }
             PropertyChanges { target: navigationPanel; visible: false }
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
+            PropertyChanges { target: urlBarArea; opacity: 0 }
         },
         State {
             name: "favorites"
             StateChangeScript { script: favoritesPanel.showAnimated() }
             PropertyChanges { target: navigationPanel; visible: false }
             PropertyChanges { target: favoritesPanel; visible: true } // Note: this is redundant but needed for N9.
+            PropertyChanges { target: urlBarArea; opacity: 0 }
         },
         State {
             name: "navigation"
             PropertyChanges { target: favoritesPanel; visible: false }
             PropertyChanges { target: navigationPanel; visible: true } // Note: this is redundant but needed for N9.
+            PropertyChanges { target: urlBarArea; opacity: 0 }
         },
         State {
             name: "navigationFullScreen"
@@ -123,16 +140,15 @@ Rectangle {
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
             PropertyChanges { target: plusButton; opacity: 0 }
             PropertyChanges { target: navigationPanel; visible: true }  // Note: this is redundant but needed for N9.
+            PropertyChanges { target: urlBarArea; opacity: 0 }
         },
         State {
             name: "typeNewUrl"
             AnchorChanges { target: panelToggle; anchors.bottom: parent.top; anchors.top: undefined }
             PropertyChanges { target: favoritesPanel; opacity: 0 }
             PropertyChanges { target: navigationPanel; opacity: 0 }
-            AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.verticalCenter: parent.verticalCenter }
-            PropertyChanges { target: plusLabel; visible: false }
-            PropertyChanges { target: plusButton; width: rootPage.width - UiConstants.DefaultMargin }
-            PropertyChanges { target: newUrlBar; visible: true; focus: true }
+            PropertyChanges { target: plusButton; opacity: 0 }
+            PropertyChanges { target: urlBar; focus: true }
         }
     ]
 
@@ -155,10 +171,9 @@ Rectangle {
             from: "typeNewUrl"
             to: "navigationFullScreen"
             SequentialAnimation {
-                PropertyAnimation { target: plusButton; properties: "opacity"; duration: 300 }
+                PropertyAnimation { target: urlBarArea; properties: "opacity"; duration: 300 }
                 PropertyAnimation { properties: "x,y,width,scale,opacity"; duration: 300; easing.type: Easing.InOutQuad }
                 AnchorAnimation { duration: 0 }
-                PropertyAction { targets: [plusButton, plusLabel, newUrlBar]; properties: "visible,focus,width,opacity" }
             }
         },
         Transition {
