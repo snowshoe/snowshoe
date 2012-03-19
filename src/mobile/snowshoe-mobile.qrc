@@ -33,5 +33,14 @@
         <file alias="navbar/btn_nav_settings_unpressed">../desktop/images/urlbar/component_btn_settings.png</file>
         <file alias="navbar/btn_nav_settings_pressed">../desktop/images/urlbar/component_btn_settings.png</file>
         <file alias="navbar/component_divisor">../desktop/images/urlbar/component_divisor.png</file>
+        <file alias="googleIcon">img/google.png</file>
+        <file>qml/SuggestionItem.qml</file>
+        <file alias="url_bar_border">img/url_bar.png</file>
+        <file alias="button_icon_cancel">img/button_icon_cancel.png</file>
+        <file alias="urlbar_bg_typing">img/urlbar_bg_typing.png</file>
+        <file alias="urlbar_bg_browsing">img/urlbar_bg_browsing.png</file>
+        <file>qml/SuggestionsDelegate.qml</file>
+        <file>qml/SearchItem.qml</file>
+        <file alias="button_base">img/button_base.png</file>
     </qresource>
 </RCC>

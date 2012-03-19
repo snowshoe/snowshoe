@@ -2,24 +2,47 @@ import QtQuick 2.0
 
 import "UiConstants.js" as UiConstants
 
-TextInput {
+Item {
     id: root
-    font.pixelSize: UiConstants.DefaultFontSize
-    font.family: UiConstants.DefaultFontFamily
-    baselineOffset: 2
-    clip: true
-    text: ""
+    property alias verticalAlignment: input.verticalAlignment
+    property alias text: input.text
+    property alias input: input
+    signal accepted()
 
-    onFocusChanged: if (!focus) closeSoftwareInputPanel()
-
-    Text {
-        id: textHint
-        text: "Type the address"
+    Rectangle {
         anchors.fill: root
-        color: "#bbb"
-        font.pixelSize: parent.font.pixelSize
-        anchors.leftMargin: 8
-        opacity: root.text == "" ? 1 : 0
+        color: "#fff"
+    }
+
+    BorderImage {
+        id: border
+        source: "qrc:///mobile/url_bar_border"
+        border { left: 25; top: 25; right: 25; bottom: 25 }
+        anchors.fill: root
+    }
+
+    TextInput {
+        id: input
+        anchors { fill: root; leftMargin: 15; rightMargin: 15 }
+        font.pixelSize: UiConstants.DefaultFontSize
+        font.family: UiConstants.DefaultFontFamily
+        color: UiConstants.PrimaryColor
+        clip: true
+        text: ""
+
+        onFocusChanged: if (!focus) closeSoftwareInputPanel()
+        onAccepted: root.accepted()
+
+        Text {
+            id: textHint
+            text: "Go to web address or search..."
+            color: UiConstants.SecondaryColor
+            font.pixelSize: input.font.pixelSize
+            font.family: input.font.family
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            anchors.verticalCenter: input.verticalCenter
+            opacity: input.text == "" ? 1 : 0
+        }
     }
 }
-
