@@ -82,27 +82,12 @@ Rectangle {
             left: rootPage.left
             right: rootPage.right
             bottom: rootPage.bottom
-            bottomMargin: 318
-        }
-
-        UrlSuggestions {
-            id: urlSuggestions
-            width: rootPage.width
-            anchors { top: urlArea.top; bottom: urlBarBackground.top; left: urlArea.left; right: urlArea.right }
-            onSuggestionSelected: urlBar.text = suggestedUrl
-            onSearchSelected: {
-                var searchUrl = "http://www.google.com/search?q=" + urlBar.text.replace(" ", "+")
-                navigationPanel.createTab(searchUrl)
-                rootPage.state = "navigationFullScreen"
-                urlBar.text = ""
-            }
-            // Only lookup suggestions once you have at least 2 characters to provide better results.
-            opacity: urlBar.text != urlBar.previousUrl && urlBar.text.length >= 2 ? 1 : 0
+            bottomMargin: 310
         }
 
         Item {
             id: urlBarBackground
-            height: 100
+            height: 114
             anchors {
                 bottom: urlArea.bottom;
                 left: urlArea.left;
@@ -117,7 +102,7 @@ Rectangle {
             UrlBar {
                 id: urlBar
                 height: 60
-                anchors { verticalCenter: parent.verticalCenter; left: parent.left; right: parent.right; leftMargin: 10; rightMargin: 10 }
+                anchors { verticalCenter: parent.verticalCenter; left: parent.left; right: parent.right; leftMargin: 15; rightMargin: 15 }
                 property string previousUrl: ""
                 verticalAlignment: TextInput.AlignVCenter
                 input.focus: false
@@ -141,6 +126,27 @@ Rectangle {
                     }
                 }
             }
+        }
+
+        Image {
+            id: fadingShadow
+            source: "qrc:///mobile/urlbar_bg_browsing"
+            anchors { left: parent.left; right: parent.right; bottom: urlBarBackground.top }
+        }
+
+        UrlSuggestions {
+            id: urlSuggestions
+            width: rootPage.width
+            anchors { top: urlArea.top; bottom: urlBarBackground.top; left: urlArea.left; right: urlArea.right; bottomMargin: 1 }
+            onSuggestionSelected: urlBar.text = suggestedUrl
+            onSearchSelected: {
+                var searchUrl = "http://www.google.com/search?q=" + urlBar.text.replace(" ", "+")
+                navigationPanel.createTab(searchUrl)
+                rootPage.state = "navigationFullScreen"
+                urlBar.text = ""
+            }
+            // Only lookup suggestions once you have at least 2 characters to provide better results.
+            opacity: urlBar.text != urlBar.previousUrl && urlBar.text.length >= 2 ? 1 : 0
         }
     }
 
