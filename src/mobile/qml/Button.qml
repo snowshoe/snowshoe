@@ -23,30 +23,35 @@ Item {
 
     property bool disabled
 
-    property string disabledImage
+    property string baseImage
     property string pressedImage
     property string standardImage
 
     signal clicked()
     anchors.verticalCenter: parent.verticalCenter
-    height: navigationBar.navBarButtonHeight // Use buttonImage.height when the new icons get ready!
-    width: navigationBar.navBarButtonWidthPortrait // Use buttonImage.width when the new icons get ready!
+    height: 57
+    width: 56
 
     Image {
-        id: buttonImage
-        anchors.fill: parent
-        source: {
-            if (rootButton.disabled)
-                return disabledImage
-            if (buttonMouseArea.isPressed)
-                return pressedImage
-            else
-                return standardImage
+        id: buttonBaseImage
+        anchors.centerIn: parent
+        source: baseImage
+
+        Image {
+            id: buttonImage
+            anchors.centerIn: parent
+            source: {
+                if (buttonMouseArea.isPressed)
+                    return pressedImage
+                else
+                    return standardImage
+            }
         }
     }
+
     MouseArea {
         id: buttonMouseArea
-        anchors.fill: parent
+        anchors.fill: buttonBaseImage
         onClicked: rootButton.clicked();
         property bool isPressed: false
         onPressed: { isPressed = true }

@@ -8,6 +8,11 @@ Rectangle {
     color: "#aaa"
     clip: true
 
+    Image {
+        anchors.fill: parent
+        source: "qrc:///mobile/app/bg_image"
+    }
+
     PanelToggle {
         id: panelToggle
         anchors.top: parent.top
@@ -20,6 +25,11 @@ Rectangle {
         onNavigationSelected: {
             rootPage.state = "navigation";
         }
+    }
+
+    NavigationBar {
+        id: navigationBar
+        state: "hidden"
     }
 
     FavoritesPanel {
@@ -66,11 +76,6 @@ Rectangle {
                 rootPage.state = "typeNewUrl"
             }
         }
-    }
-
-    NavigationBar {
-        id: navigationBar
-        state: "hidden"
     }
 
     Rectangle {

@@ -14,36 +14,37 @@
         <file>qml/PanelToggle.qml</file>
         <file>qml/PanelToggleButton.qml</file>
         <file>qml/UrlSuggestions.qml</file>
-        <file alias="navbar/btn_nav_back_disabled">../desktop/images/urlbar/component_btn_nav_back_disable.png</file>
-        <file alias="navbar/btn_nav_back_unpressed">../desktop/images/urlbar/component_btn_nav_back_unpressed.png</file>
-        <file alias="navbar/btn_nav_back_pressed">../desktop/images/urlbar/component_btn_nav_back_pressed.png</file>
-        <file alias="navbar/btn_nav_next_disabled">../desktop/images/urlbar/component_btn_nav_next_disable.png</file>
-        <file alias="navbar/btn_nav_next_unpressed">../desktop/images/urlbar/component_btn_nav_next_unpressed.png</file>
-        <file alias="navbar/btn_nav_next_pressed">../desktop/images/urlbar/component_btn_nav_next_pressed.png</file>
-        <file alias="navbar/btn_nav_favorite_disabled">../desktop/images/urlbar/fav_icon_off.png</file>
-        <file alias="navbar/btn_nav_favorite_unpressed">../desktop/images/urlbar/fav_icon_off.png</file>
-        <file alias="navbar/btn_nav_favorite_pressed">../desktop/images/urlbar/fav_icon_off.png</file>
-        <file alias="navbar/btn_nav_reload_disabled">../desktop/images/urlbar/component_btn_nav_refresh_disable.png</file>
-        <file alias="navbar/btn_nav_reload_unpressed">../desktop/images/urlbar/component_btn_nav_refresh_unpressed.png</file>
-        <file alias="navbar/btn_nav_reload_pressed">../desktop/images/urlbar/component_btn_nav_refresh_pressed.png</file>
-        <file alias="navbar/btn_nav_stop_disabled">../desktop/images/urlbar/component_btn_nav_cancel_disable.png</file>
-        <file alias="navbar/btn_nav_stop_unpressed">../desktop/images/urlbar/component_btn_nav_cancel_unpressed.png</file>
-        <file alias="navbar/btn_nav_stop_pressed">../desktop/images/urlbar/component_btn_nav_cancel_pressed.png</file>
-        <file alias="navbar/btn_nav_settings_disabled">../desktop/images/urlbar/component_btn_settings.png</file>
-        <file alias="navbar/btn_nav_settings_unpressed">../desktop/images/urlbar/component_btn_settings.png</file>
-        <file alias="navbar/btn_nav_settings_pressed">../desktop/images/urlbar/component_btn_settings.png</file>
-        <file alias="navbar/component_divisor">../desktop/images/urlbar/component_divisor.png</file>
-        <file alias="googleIcon">img/google.png</file>
-        <file>qml/SuggestionItem.qml</file>
-        <file alias="url_bar_border">img/url_bar.png</file>
-        <file alias="button_icon_cancel">img/button_icon_cancel.png</file>
-        <file alias="urlbar_bg_typing">img/urlbar_bg_typing.png</file>
-        <file alias="urlbar_bg_browsing">img/urlbar_bg_browsing.png</file>
         <file>qml/SuggestionsDelegate.qml</file>
+        <file>qml/SuggestionItem.qml</file>
         <file>qml/SearchItem.qml</file>
-        <file alias="button_base">img/button_base.png</file>
-        <file alias="scrollbar_base">img/scrollbar_base.png</file>
-        <file alias="scrollbar_bullet">img/scrollbar_bullet.png</file>
         <file>qml/Scrollbar.qml</file>
+        <file alias="navbar/btn_nav_back_disabled">images/button_icon_back.png</file>
+        <file alias="navbar/btn_nav_back_unpressed">images/button_icon_back.png</file>
+        <file alias="navbar/btn_nav_back_pressed">images/button_icon_back.png</file>
+        <file alias="navbar/btn_nav_next_disabled">images/button_icon_forward.png</file>
+        <file alias="navbar/btn_nav_next_unpressed">images/button_icon_forward.png</file>
+        <file alias="navbar/btn_nav_next_pressed">images/button_icon_forward.png</file>
+        <file alias="navbar/btn_nav_reload_disabled">images/button_icon_refresh.png</file>
+        <file alias="navbar/btn_nav_reload_unpressed">images/button_icon_refresh.png</file>
+        <file alias="navbar/btn_nav_reload_pressed">images/button_icon_refresh.png</file>
+        <file alias="navbar/btn_nav_stop_disabled">images/button_icon_cancel.png</file>
+        <file alias="navbar/btn_nav_stop_unpressed">images/button_icon_cancel.png</file>
+        <file alias="navbar/btn_nav_stop_pressed">images/button_icon_cancel.png</file>
+        <file alias="navbar/btn_nav_settings_disabled">images/button_icon_options.png</file>
+        <file alias="navbar/btn_nav_settings_unpressed">images/button_icon_options.png</file>
+        <file alias="navbar/btn_nav_settings_pressed">images/button_icon_options.png</file>
+        <file alias="navbar/btn_base">images/button_base.png</file>
+        <file alias="navbar/bar_base">images/urlbar_bg_browsing.png</file>
+        <file alias="navbar/url_input">images/url_bar.png</file>
+        <file alias="app/bg_image">images/app_bg.png</file>
+        <file alias="navbar/component_divisor">images/component_divisor.png</file>
+        <file alias="googleIcon">images/google.png</file>
+        <file alias="url_bar_border">images/url_bar.png</file>
+        <file alias="button_icon_cancel">images/button_icon_cancel.png</file>
+        <file alias="urlbar_bg_typing">images/urlbar_bg_typing.png</file>
+        <file alias="urlbar_bg_browsing">images/urlbar_bg_browsing.png</file>
+        <file alias="button_base">images/button_base.png</file>
+        <file alias="scrollbar_base">images/scrollbar_base.png</file>
+        <file alias="scrollbar_bullet">images/scrollbar_bullet.png</file>
     </qresource>
 </RCC>

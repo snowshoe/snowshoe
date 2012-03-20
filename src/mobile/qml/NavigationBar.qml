@@ -1,82 +1,93 @@
 import QtQuick 2.0
 import "UiConstants.js" as UiConstants
+import "tabmanager.js" as TabManager
 
 Rectangle {
     id: navigationBar
 
     property variant currentWebView: null
-    property variant navBarHeight: 64
+    property variant navBarHeight: 80
     property variant navBarMargins: 10
-    property variant navBarSeparatorWidth: 2
-    property variant navBarNumberOfButtons: 3
-    property variant navBarButtonHeight: (navBarHeight - (navBarMargins * 2)) // Top + Bottom
-    property variant navBarButtonWidthLandscape: (UiConstants.LandscapeWidth - (navBarMargins * 2 * navBarNumberOfButtons) - (navBarSeparatorWidth * (navBarNumberOfButtons - 1))) / navBarNumberOfButtons
-    property variant navBarButtonWidthPortrait: (UiConstants.PortraitWidth - (navBarMargins * 2 * navBarNumberOfButtons) - (navBarSeparatorWidth * (navBarNumberOfButtons - 1))) / navBarNumberOfButtons
 
-    color: UiConstants.InterfaceColor
+    property alias navBarTimer: navBarTimer
+
     height: navBarHeight
-
     anchors {
         left: parent.left
         right: parent.right
     }
 
-    Row {
-        id: controlsRow
-        height: parent.height
-        width: parent.width
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            horizontalCenterOffset: navBarMargins // Add spacing at left
-            verticalCenter: parent.verticalCenter
-        }
-
-        spacing: navBarMargins
+    Image {
+        id: navBarBase
+        source: "qrc:///mobile/navbar/bar_base"
 
         Button {
-            disabledImage: "qrc:///mobile/navbar/btn_nav_back_disabled"
+            id: buttonBack
+            anchors.margins: navBarMargins
+            baseImage: "qrc:///mobile/navbar/btn_base"
             pressedImage: "qrc:///mobile/navbar/btn_nav_back_pressed"
             standardImage: "qrc:///mobile/navbar/btn_nav_back_unpressed"
-            disabled: { currentWebView ? !currentWebView.canGoBack : false }
-            onClicked: { !disabled ? currentWebView.goBack() : null }
-        }
-
-        Image {
-            anchors.verticalCenter: parent.verticalCenter
-            source: "qrc:///mobile/navbar/component_divisor"
+            visible: { currentWebView ? !currentWebView.canGoBack : false }
+            onClicked: currentWebView.goBack()
         }
 
         Button {
-            disabledImage: "qrc:///mobile/navbar/btn_nav_next_disabled"
+            id: buttonNext
+            anchors {
+                margins: navBarMargins
+                left: { buttonBack.visible ? buttonBack.right : parent.left }
+            }
+            baseImage: "qrc:///mobile/navbar/btn_base"
             pressedImage: "qrc:///mobile/navbar/btn_nav_next_pressed"
             standardImage: "qrc:///mobile/navbar/btn_nav_next_unpressed"
-            disabled: { currentWebView ? !currentWebView.canGoForward : false }
-            onClicked: { !disabled ? currentWebView.goForward() : null }
+            visible: { currentWebView ? !currentWebView.canGoForward : false }
+            onClicked: currentWebView.goForward()
         }
 
         Image {
-            anchors.verticalCenter: parent.verticalCenter
-            source: "qrc:///mobile/navbar/component_divisor"
+            id: urlBar
+            anchors {
+                margins: navBarMargins
+                left: { buttonBack.visible ? buttonNext.right : parent.left }
+                right: buttonSettings.left
+                verticalCenter: parent.verticalCenter
+            }
+            source: "qrc:///mobile/navbar/url_input"
+            Button {
+                property bool loading: { currentWebView ? currentWebView.loading : false }
+                anchors.right: parent.right
+                baseImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_unpressed" : "qrc:///mobile/navbar/btn_nav_reload_unpressed" }
+                pressedImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_pressed" : "qrc:///mobile/navbar/btn_nav_reload_pressed" }
+                standardImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_unpressed" : "qrc:///mobile/navbar/btn_nav_reload_unpressed" }
+                visible: true
+                onClicked: { loading ? currentWebView.stop() : currentWebView.reload() }
+            }
         }
 
         Button {
-            property bool loading: { currentWebView ? currentWebView.loading : false }
-            disabledImage: "qrc:///mobile/navbar/btn_nav_reload_disabled"
-            pressedImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_pressed" : "qrc:///mobile/navbar/btn_nav_reload_pressed" }
-            standardImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_unpressed" : "qrc:///mobile/navbar/btn_nav_reload_unpressed" }
-            disabled: false
-            onClicked: { loading ? currentWebView.stop() : currentWebView.reload() }
+            id: buttonSettings
+            anchors {
+                margins: navBarMargins
+                right: parent.right
+            }
+            baseImage: "qrc:///mobile/navbar/btn_base"
+            pressedImage: "qrc:///mobile/navbar/btn_nav_settings_pressed"
+            standardImage: "qrc:///mobile/navbar/btn_nav_settings_unpressed"
+            visible: true
+            onClicked: null
         }
     }
 
     states: [
         State {
             name: "hidden"
-            AnchorChanges { target: navigationBar; anchors.top: parent.bottom; anchors.bottom: undefined }
+            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: rootPage.top }
+            StateChangeScript { script: TabManager.doTabFullScreenLayout(); }
         },
         State {
             name: "visible"
-            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: rootPage.bottom }
+            AnchorChanges { target: navigationBar; anchors.top: rootPage.top; anchors.bottom: undefined }
+            PropertyChanges { target: navBarTimer; running: true }
         }
 
     ]
@@ -87,5 +98,9 @@ Rectangle {
             AnchorAnimation { duration: 300 }
         }
     ]
+    Timer {
+        id: navBarTimer
+        interval: 2000
+        onTriggered: navigationBar.state = "hidden"
+    }
 }
-

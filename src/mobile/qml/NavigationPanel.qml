@@ -8,6 +8,7 @@ Item {
     id: navigationPanel
     anchors.fill: parent
     property bool hasOpennedTabs: false
+    property double offset: navigationBar.visible ? 80 : 0
 
     Item {
         id: tabBar
@@ -44,6 +45,8 @@ Item {
                     TabManager.goToPreviousTab();
                 else // swipe left
                     TabManager.goToNextTab();
+
+                navigationBar.state = "visible";
             }
         }
 
@@ -78,7 +81,8 @@ Item {
         State {
             name: "fullscreen"
             PropertyChanges { target: tabBar; state: "" }
-            StateChangeScript { script: TabManager.doTabFullScreenLayout(); }
+            StateChangeScript { script: TabManager.doTabNavBar(); }
+            PropertyChanges { target: navigationBar; state: "visible" }
         }
     ]
 
