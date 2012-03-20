@@ -211,7 +211,6 @@ Rectangle {
             from: "typeNewUrl"
             to: "navigationFullScreen"
             SequentialAnimation {
-                PropertyAnimation { target: urlBarArea; properties: "opacity"; duration: 300 }
                 PropertyAnimation { properties: "x,y,width,scale,opacity"; duration: 300; easing.type: Easing.InOutQuad }
                 AnchorAnimation { duration: 0 }
             }
