@@ -55,6 +55,11 @@ OTHER_FILES += \
     mobile/qml/UiConstants.js \
     mobile/qml/UrlBar.qml \
     mobile/qml/UrlSuggestions.qml \
+    mobile/qml/Scrollbar.qml \
+    mobile/qml/SuggestionItem.qml \
+    mobile/qml/SearchItem.qml \
+    mobile/qml/SuggestionsDelegate.qml \
+    mobile/qml/Scrollbar.qml \
     mobile/qtc_packaging/debian_harmattan/rules \
     mobile/qtc_packaging/debian_harmattan/README \
     mobile/qtc_packaging/debian_harmattan/manifest.aegis \

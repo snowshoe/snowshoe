@@ -20,4 +20,11 @@ ListView {
         ListElement { itemTitle: "KDE"; itemUrl: "http://kde.org" }
         ListElement { itemTitle: "WebKit"; itemUrl: "http://webkit.org" }
     }
+
+    Scrollbar {
+        list: suggestionsList
+        width: 6
+        height: parent.height
+        anchors { right: parent.right; top: parent.top; rightMargin: 6; bottom: parent.bottom }
+    }
 }

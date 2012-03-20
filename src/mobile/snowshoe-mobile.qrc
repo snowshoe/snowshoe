@@ -42,5 +42,8 @@
         <file>qml/SuggestionsDelegate.qml</file>
         <file>qml/SearchItem.qml</file>
         <file alias="button_base">img/button_base.png</file>
+        <file alias="scrollbar_base">img/scrollbar_base.png</file>
+        <file alias="scrollbar_bullet">img/scrollbar_bullet.png</file>
+        <file>qml/Scrollbar.qml</file>
     </qresource>
 </RCC>
