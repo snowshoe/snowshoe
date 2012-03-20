@@ -17,7 +17,6 @@ Rectangle {
         id: panelToggle
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: UiConstants.DefaultMargin
         navigationEnabled: navigationPanel.hasOpennedTabs
         onFavoritesSelected: {
             rootPage.state = "favorites";
@@ -45,6 +44,14 @@ Rectangle {
             if (navigationPanel.hasOpennedTabs)
                 rootPage.state = "favorites";
         }
+
+        onWebViewMaximinized: {
+            rootPage.state = "navigationFullScreen";
+        }
+        onWebViewMinimized: {
+            rootPage.state = "navigation";
+        }
+
     }
 
     Rectangle {
@@ -113,8 +120,7 @@ Rectangle {
                 input.focus: false
 
                 onAccepted: {
-                    navigationPanel.createTab(UrlTools.fromUserInput(urlBar.text))
-                    rootPage.state = "navigationFullScreen"
+                    navigationPanel.createTab(UrlTools.fromUserInput(urlBar.text));
                     urlBar.text = ""
                 }
 
@@ -147,7 +153,6 @@ Rectangle {
             onSearchSelected: {
                 var searchUrl = "http://www.google.com/search?q=" + urlBar.text.replace(" ", "+")
                 navigationPanel.createTab(searchUrl)
-                rootPage.state = "navigationFullScreen"
                 urlBar.text = ""
             }
             // Only lookup suggestions once you have at least 2 characters to provide better results.
@@ -180,12 +185,11 @@ Rectangle {
         },
         State {
             name: "navigationFullScreen"
+            PropertyChanges { target: favoritesPanel; visible: false }
+            PropertyChanges { target: navigationPanel; visible: true }  // Note: this is redundant but needed for N9.
             AnchorChanges { target: panelToggle; anchors.bottom: parent.top; anchors.top: undefined }
             StateChangeScript { script: panelToggle.resetToNavigation() }
-            PropertyChanges { target: favoritesPanel; visible: false }
-            PropertyChanges { target: navigationPanel; state: "fullscreen" }
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
-            PropertyChanges { target: navigationPanel; visible: true }  // Note: this is redundant but needed for N9.
         },
         State {
             name: "typeNewUrl"

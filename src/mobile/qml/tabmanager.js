@@ -1,11 +1,16 @@
 .pragma library
 
-var WINDOW_WIDTH = null;
-var WINDOW_HEIGHT = null;
-var TAB_SCALE_TABLE = [ null, 0.7, 0.35, 0.1 ];
+var WINDOW_WIDTH = 480;
+var WINDOW_HEIGHT = 767;
+var TAB_Y_OFFSET = 24 * 2 + /*BUTTON HEIGHT*/ 50;
+var TAB_SIZE_TABLE = [ null,        // invalid state
+                      [400, 582],   // just one tab (gridsize = 1)
+                      [192, 286] ]; // 4 tabs in a grid (gridsize = 2)
 
 var FULLSCREEN_LAYOUT = 1;
 var OVERVIEW_LAYOUT = 2;
+
+var MAX_GRID_SIZE = 2;
 
 var tabs = new Array()
 var currentTab = -1;
@@ -41,6 +46,7 @@ function createTab(url, webViewParent, statusParent)
 
     tabs.push([webView, statusBarIndicator]);
     setCurrentTab(tabs.length - 1);
+    return webView;
 }
 
 function getCurrentTab()
@@ -88,28 +94,37 @@ function setTabLayout(layout, option)
 
 function doTabOverviewLayout()
 {
-    var scale = TAB_SCALE_TABLE[overviewGridSize];
-    var xOffset = (WINDOW_WIDTH * (1 - scale))/2;
-    var yOffset = (WINDOW_HEIGHT * (1 - scale))/2;
-    var xStep = WINDOW_WIDTH / overviewGridSize;
-    var yStep = WINDOW_HEIGHT / overviewGridSize;
+    var size = TAB_SIZE_TABLE[overviewGridSize];
+    var xMargin = 40;
+    var yMargin = 16;
+    var xStep = (WINDOW_WIDTH - xMargin * 2) / overviewGridSize;
+    var yStep = (WINDOW_HEIGHT - yMargin * 2) / overviewGridSize;
 
     var line = 0;
     var col = 0;
+    var tabsPerView = overviewGridSize * overviewGridSize;
+    var firstTabToShow = Math.floor(currentTab / tabsPerView) * tabsPerView;
+    var lastTabToShow = firstTabToShow + overviewGridSize * overviewGridSize;
     for (var i in tabs)
     {
+        var tab = tabs[i][0];
+        tab.active = false;
+
+        if (i >= lastTabToShow || i < firstTabToShow) {
+            tab.visible = false;
+            continue;
+        }
+
         if (col >= overviewGridSize) {
             line++;
             col = 0;
         }
 
-        var tab = tabs[i][0];
-        tab.x = xOffset + col * xStep;
-        tab.y = yOffset + line * yStep;
-        // FIXME: Use scale here instead of crop the web page
-        tab.width = WINDOW_WIDTH * scale;
-        tab.height = WINDOW_HEIGHT * scale;
-        tab.active = false;
+        tab.visible = true;
+        tab.x = xMargin + col * xStep;
+        tab.y = TAB_Y_OFFSET + yMargin * line * yStep;
+        tab.width = size[0];
+        tab.height = size[1];
         col++;
     }
 }
@@ -119,12 +134,12 @@ function doTabFullScreenLayout()
     for (var i in tabs)
     {
         var tab = tabs[i][0];
-        // FIXME: Use scale here instead of crop the web page
         tab.width = WINDOW_WIDTH;
         tab.height = WINDOW_HEIGHT;
         tab.x = WINDOW_WIDTH * (i - currentTab);
         tab.y = 0;
-        tab.active = true;
+        tab.visible = tab.x === 0;
+        tab.active = tab.x === 0;
     }
 }
 

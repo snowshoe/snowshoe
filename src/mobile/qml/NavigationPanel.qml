@@ -6,16 +6,37 @@ import "tabmanager.js" as TabManager
 
 Item {
     id: navigationPanel
-    anchors.fill: parent
     property bool hasOpennedTabs: false
-    property double offset: navigationBar.visible ? 80 : 0
+    signal webViewMaximinized()
+    signal webViewMinimized()
+
+    PinchArea {
+        id: pinchArea
+        visible: false
+        anchors.bottom: tabBar.top
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        z: 99
+
+        onPinchFinished: {
+            if (pinch.scale > 1.0 && TabManager.overviewGridSize > 1)
+                TabManager.overviewGridSize--;
+            else if (pinch.scale < 1.0 && TabManager.overviewGridSize < TabManager.MAX_GRID_SIZE)
+                TabManager.overviewGridSize++;
+            else
+                return;
+            TabManager.doTabOverviewLayout();
+        }
+    }
 
     Item {
         id: tabBar
-        width: 480
-        height: 36
-        x: 0
-        y: 818 - 36
+        width: UiConstants.PortraitWidth
+        height: 58
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         Item {
             id: tabBarRow
@@ -35,9 +56,8 @@ Item {
                 if (Math.abs(mouse.y - lastY) > height * 3
                     || Math.abs(mouse.x - lastX) < UiConstants.DefaultSwipeLenght) {
                     // normal click,
-                    TabManager.setTabLayout(TabManager.OVERVIEW_LAYOUT, 1);
-                    navigationPanel.state = "";
-                    navigationPanel.parent.state = "navigation";
+                    setFullScreen(false);
+                    webViewMinimized();
                     return;
                 }
 
@@ -45,49 +65,42 @@ Item {
                     TabManager.goToPreviousTab();
                 else // swipe left
                     TabManager.goToNextTab();
-
-                navigationBar.state = "visible";
             }
         }
 
         states: State {
-                name: "hidden"
-                AnchorChanges { target: tabBar; anchors.top: parent.bottom }
-            }
-
-        transitions: Transition {
-            PropertyAnimation { properties: "y"; duration: 200; }
+            name: "hidden"
+            PropertyChanges { target: tabBar; visible: false; }
         }
     }
 
     function createTab(url)
     {
-        TabManager.createTab(url, navigationPanel, tabBarRow);
-        var statusBarIndicator = TabManager.getCurrentTab().statusIndicator;
+        var tab = TabManager.createTab(url, navigationPanel, tabBarRow);
+        var statusBarIndicator = tab.statusIndicator;
         statusBarIndicator.anchors.verticalCenter = tabBarRow.verticalCenter
         var tabCount = TabManager.tabCount()
         var indicatorSpacing = tabCount * 4
         tabBarRow.width = ((tabCount + 1) * statusBarIndicator.width) + indicatorSpacing
         statusBarIndicator.x = (tabCount * statusBarIndicator.width) + indicatorSpacing
         navigationPanel.hasOpennedTabs = true;
+        tab.fullScreenRequested.connect(webViewMaximinized);
+        webViewMaximinized();
+        return tab;
     }
 
-    states: [
-        State {
-            name: ""
-            PropertyChanges { target: tabBar; state: "hidden" }
-            StateChangeScript { script: TabManager.doTabOverviewLayout(); }
-        },
-        State {
-            name: "fullscreen"
-            PropertyChanges { target: tabBar; state: "" }
-            StateChangeScript { script: TabManager.doTabNavBar(); }
-            PropertyChanges { target: navigationBar; state: "visible" }
-        }
-    ]
+    onWebViewMaximinized: setFullScreen(true)
 
-    Component.onCompleted: {
-        TabManager.WINDOW_WIDTH = navigationPanel.width;
-        TabManager.WINDOW_HEIGHT = navigationPanel.height - tabBar.height;
+    function setFullScreen(value)
+    {
+        var layout;
+        if (value) {
+            layout = TabManager.FULLSCREEN_LAYOUT;
+            tabBar.state = "";
+        } else {
+            layout = TabManager.OVERVIEW_LAYOUT;
+            tabBar.state = "hidden";
+        }
+        TabManager.setTabLayout(layout, 1);
     }
 }
