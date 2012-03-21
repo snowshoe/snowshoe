@@ -19,8 +19,8 @@
 
 #include "UrlTools.h"
 #include <QtCore/QCoreApplication>
-#include <QtDeclarative/QDeclarativeContext>
-#include <QtDeclarative/QDeclarativeEngine>
+#include <QtQml/QQmlContext>
+#include <QtQml/QQmlEngine>
 #include <QtQuick/QQuickItem>
 
 BrowserWindowMobile::BrowserWindowMobile()
@@ -34,7 +34,7 @@ BrowserWindowMobile::BrowserWindowMobile()
 
 void BrowserWindowMobile::setupDeclarativeEnvironment()
 {
-    QDeclarativeContext* context = rootContext();
+    QQmlContext* context = rootContext();
     context->setContextProperty("BrowserWindow", this);
     context->setContextProperty("UrlTools", new UrlTools(this));
 

@@ -27,9 +27,9 @@
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QUrl>
-#include <QtDeclarative/QDeclarativeContext>
-#include <QtDeclarative/QDeclarativeEngine>
-#include <QtDeclarative/QDeclarativeProperty>
+#include <QtQml/QQmlContext>
+#include <QtQml/QQmlEngine>
+#include <QtQml/QQmlProperty>
 #include <QtQuick/QQuickItem>
 #include <QtGui/private/qguiapplication_p.h>
 
@@ -117,7 +117,7 @@ void BrowserWindow::restoreWindowGeometry()
 
 void BrowserWindow::setupDeclarativeEnvironment()
 {
-    QDeclarativeContext* context = rootContext();
+    QQmlContext* context = rootContext();
     context->setContextProperty("BookmarkModel", DatabaseManager::instance()->bookmarkDataBaseModel());
     context->setContextProperty("BrowserWindow", this);
     context->setContextProperty("UrlTools", new UrlTools(this));

@@ -24,7 +24,7 @@
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QLatin1String>
 #include <QtWidgets/QApplication>
-#include <qdeclarative.h>
+#include <QtQml/QtQml>
 #include <private/qquickwebview_p.h>
 
 int main(int argc, char** argv)
