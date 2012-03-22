@@ -6,12 +6,19 @@ import "UiConstants.js" as UiConstants
 Item {
     id: webViewItem
     property alias url: webView.url
+    property alias loading: webView.loading
+    property alias canGoBack: webView.canGoBack
+    property alias canGoForward: webView.canGoForward
     property variant statusIndicator
-    property alias webView: webView
     property bool active: true
     signal fullScreenRequested()
     signal closeTabRequested()
     property alias closeButton: closeButton
+
+    function goBack() { webView.goBack() }
+    function goForward() { webView.goForward() }
+    function reload() { webView.reload() }
+    function stop() { webView.stop() }
 
     Behavior on y {
         NumberAnimation { duration: 200 }
