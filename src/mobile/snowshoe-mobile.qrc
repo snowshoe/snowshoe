@@ -36,6 +36,7 @@
         <file alias="navbar/bar_base">images/urlbar_bg_browsing.png</file>
         <file alias="navbar/url_input">images/url_bar.png</file>
         <file alias="app/bg_image">images/app_bg.png</file>
+        <file alias="app/tabbar_image">images/tabbar_bg.png</file>
         <file alias="navbar/component_divisor">images/component_divisor.png</file>
         <file alias="googleIcon">images/google.png</file>
         <file alias="url_bar_border">images/url_bar.png</file>

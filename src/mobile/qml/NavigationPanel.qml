@@ -7,8 +7,13 @@ import "tabmanager.js" as TabManager
 Item {
     id: navigationPanel
     property bool hasOpennedTabs: false
-    signal webViewMaximinized()
+    signal webViewMaximized()
     signal webViewMinimized()
+
+    NavigationBar {
+        id: navigationBar
+        state: "hidden"
+    }
 
     PinchArea {
         id: pinchArea
@@ -37,6 +42,12 @@ Item {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
+        z: 1
+
+        Image {
+            source: "qrc:///mobile/app/tabbar_image"
+            anchors.fill: parent
+        }
 
         Item {
             id: tabBarRow
@@ -65,6 +76,8 @@ Item {
                     TabManager.goToPreviousTab();
                 else // swipe left
                     TabManager.goToNextTab();
+
+                setFullScreen(true);
             }
         }
 
@@ -84,12 +97,12 @@ Item {
         tabBarRow.width = ((tabCount + 1) * statusBarIndicator.width) + indicatorSpacing
         statusBarIndicator.x = (tabCount * statusBarIndicator.width) + indicatorSpacing
         navigationPanel.hasOpennedTabs = true;
-        tab.fullScreenRequested.connect(webViewMaximinized);
-        webViewMaximinized();
+        tab.fullScreenRequested.connect(webViewMaximized);
+        webViewMaximized();
         return tab;
     }
 
-    onWebViewMaximinized: setFullScreen(true)
+    onWebViewMaximized: setFullScreen(true)
 
     function setFullScreen(value)
     {
@@ -97,9 +110,16 @@ Item {
         if (value) {
             layout = TabManager.FULLSCREEN_LAYOUT;
             tabBar.state = "";
+            if (navigationBar.state == "hidden") {
+                navigationBar.state = "visible";
+            } else {
+                navigationBar.state = "hidden";
+                return;
+            }
         } else {
             layout = TabManager.OVERVIEW_LAYOUT;
             tabBar.state = "hidden";
+            navigationBar.state = "hidden";
         }
         TabManager.setTabLayout(layout, 1);
     }

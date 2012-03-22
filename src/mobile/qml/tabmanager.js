@@ -67,18 +67,14 @@ function setCurrentTab(tabIndex)
 
 function goToNextTab()
 {
-    if (currentTab < tabs.length - 1) {
+    if (currentTab < tabs.length - 1)
         setCurrentTab(currentTab + 1);
-        doTabNavBar();
-    }
 }
 
 function goToPreviousTab()
 {
-    if (currentTab) {
+    if (currentTab)
         setCurrentTab(currentTab - 1);
-        doTabNavBar();
-    }
 }
 
 function setTabLayout(layout, option)
@@ -137,14 +133,16 @@ function doTabFullScreenLayout()
         tab.width = WINDOW_WIDTH;
         tab.height = WINDOW_HEIGHT;
         tab.x = WINDOW_WIDTH * (i - currentTab);
-        tab.y = 0;
+        tab.y = 80;
         tab.visible = tab.x === 0;
-        tab.active = tab.x === 0;
+        tab.active = tab.y === 0;
     }
 }
 
-function doTabNavBar()
+function doTabResetY()
 {
-    tabs[currentTab][0].y = 80;
-    tabs[currentTab][0].height -= 80;
+    if (currentTab !== -1) {
+        tabs[currentTab][0].y = 0;
+        tabs[currentTab][0].active = true;
+    }
 }

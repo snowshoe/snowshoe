@@ -11,6 +11,10 @@ Item {
     property bool active: true
     signal fullScreenRequested()
 
+    Behavior on y {
+        NumberAnimation { duration: 200 }
+    }
+
     WebView {
         id: webView
         anchors.fill: parent

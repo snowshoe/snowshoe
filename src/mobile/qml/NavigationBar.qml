@@ -44,8 +44,11 @@ Rectangle {
             onClicked: currentWebView.goForward()
         }
 
-        Image {
+        BorderImage {
             id: urlBar
+            border { left: 22; top: 22; right: 22; bottom: 22 }
+            horizontalTileMode: BorderImage.Repeat
+            verticalTileMode: BorderImage.Repeat
             anchors {
                 margins: navBarMargins
                 left: { buttonBack.visible ? buttonNext.right : parent.left }
@@ -81,12 +84,12 @@ Rectangle {
     states: [
         State {
             name: "hidden"
-            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: rootPage.top }
-            StateChangeScript { script: TabManager.doTabFullScreenLayout(); }
+            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.top }
+            StateChangeScript { script: TabManager.doTabResetY(); }
         },
         State {
             name: "visible"
-            AnchorChanges { target: navigationBar; anchors.top: rootPage.top; anchors.bottom: undefined }
+            AnchorChanges { target: navigationBar; anchors.top: parent.top; anchors.bottom: undefined }
             PropertyChanges { target: navBarTimer; running: true }
         }
 
@@ -95,7 +98,7 @@ Rectangle {
         Transition {
             to: "visible"
             reversible: true
-            AnchorAnimation { duration: 300 }
+            AnchorAnimation { duration: 200 }
         }
     ]
     Timer {

@@ -27,11 +27,6 @@ Rectangle {
         }
     }
 
-    NavigationBar {
-        id: navigationBar
-        state: "hidden"
-    }
-
     FavoritesPanel {
         id: favoritesPanel
         anchors.centerIn: parent
@@ -46,7 +41,7 @@ Rectangle {
                 rootPage.state = "favorites";
         }
 
-        onWebViewMaximinized: {
+        onWebViewMaximized: {
             rootPage.state = "navigationFullScreen";
         }
         onWebViewMinimized: {
