@@ -55,27 +55,15 @@ Rectangle {
 
     }
 
-    Rectangle {
+    Image {
         id: plusButton
+        source: ":/mobile/button_plus"
+        width: 56
+        height: 57
 
         anchors.bottom: parent.bottom
-        anchors.margins: UiConstants.DefaultMargin
+        anchors.bottomMargin: 24
         anchors.horizontalCenter: rootPage.horizontalCenter
-
-        width: 40
-        height: 40
-        smooth: true
-        radius: 10
-        opacity: 0
-
-        Text {
-            id: plusLabel
-            anchors.centerIn: parent
-            font.bold: true
-            font.pixelSize: 24
-            color: "#666"
-            text: "+"
-        }
 
         MouseArea {
             anchors.fill: parent
@@ -195,8 +183,9 @@ Rectangle {
         State {
             name: "typeNewUrl"
             AnchorChanges { target: panelToggle; anchors.bottom: parent.top; anchors.top: undefined }
-            PropertyChanges { target: favoritesPanel; opacity: 0 }
-            PropertyChanges { target: navigationPanel; opacity: 0 }
+            PropertyChanges { target: favoritesPanel; visible: false }
+            PropertyChanges { target: navigationPanel; visible: false }
+            AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
             PropertyChanges { target: urlBar; input.focus: true }
             PropertyChanges { target: urlArea; opacity: 1 }
         }

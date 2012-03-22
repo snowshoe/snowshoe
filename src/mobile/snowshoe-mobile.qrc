@@ -49,5 +49,6 @@
         <file alias="view_menu_tabs">images/view_menu_tabs_unpressed.png</file>
         <file alias="view_menu_topsites_pressed">images/view_menu_topsites_pressed.png</file>
         <file alias="view_menu_topsites">images/view_menu_topsites_unpressed.png</file>
+        <file alias="button_plus">images/button_plus.png</file>
     </qresource>
 </RCC>
