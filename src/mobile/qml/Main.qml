@@ -195,7 +195,7 @@ Rectangle {
             to: "typeNewUrl"
             PropertyAnimation { properties: "opacity"; duration: 300 }
             SequentialAnimation {
-                PropertyAction { target: plusLabel; properties: "visible" }
+                PropertyAction { target: plusButton; properties: "visible" }
                 AnchorAnimation { duration: 300; easing.type: Easing.InOutQuad }
                 PropertyAnimation { properties: "width"; duration: 300; easing.type: Easing.InOutQuad }
                 PropertyAction { properties: "visible,focus" }
