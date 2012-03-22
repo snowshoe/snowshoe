@@ -38,7 +38,6 @@
         <file alias="app/bg_image">images/app_bg.png</file>
         <file alias="app/tabbar_image">images/tabbar_bg.png</file>
         <file alias="navbar/component_divisor">images/component_divisor.png</file>
-        <file alias="googleIcon">images/google.png</file>
         <file alias="url_bar_border">images/url_bar.png</file>
         <file alias="button_icon_cancel">images/button_icon_cancel.png</file>
         <file alias="urlbar_bg_typing">images/urlbar_bg_typing.png</file>
@@ -57,5 +56,9 @@
         <file alias="button_close">images/button_close.png</file>
         <file alias="pagination_active">images/pagination_active.png</file>
         <file alias="pagination_inactive">images/pagination_inactive.png</file>
+        <file alias="button_google_search">images/button_google_search.png</file>
+        <file alias="url_suggestions_overlayer">images/url_suggestions_overlayer.png</file>
+        <file alias="url_suggestions_separator">images/url_suggestions_separator.png</file>
+        <file alias="button_cancel_pressed">images/button_cancel_pressed.png</file>
     </qresource>
 </RCC>

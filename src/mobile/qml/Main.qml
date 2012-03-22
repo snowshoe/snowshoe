@@ -73,20 +73,15 @@ Rectangle {
         id: urlArea
         color: "white"
         opacity: 0
-        anchors {
-            top: rootPage.top
-            left: rootPage.left
-            right: rootPage.right
-            bottom: rootPage.bottom
-        }
+        anchors.fill: rootPage
 
         Item {
             id: urlBarBackground
-            height: 114
+            height: 105
             anchors {
-                bottom: urlArea.bottom;
-                left: urlArea.left;
-                right: urlArea.right;
+                bottom: urlArea.bottom
+                left: urlArea.left
+                right: urlArea.right
             }
 
             Image {
@@ -96,8 +91,14 @@ Rectangle {
 
             UrlBar {
                 id: urlBar
-                height: 60
-                anchors { verticalCenter: parent.verticalCenter; left: parent.left; right: parent.right; leftMargin: 15; rightMargin: 15 }
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    fill: parent
+                    topMargin: 24
+                    bottomMargin: 24
+                    leftMargin: UiConstants.DefaultMargin
+                    rightMargin: UiConstants.DefaultMargin
+                }
                 property string previousUrl: ""
                 verticalAlignment: TextInput.AlignVCenter
                 input.focus: false
@@ -108,13 +109,14 @@ Rectangle {
                 }
 
                 Image {
-                    source: "qrc:///mobile/button_icon_cancel"
+                    source: clearUrlButton.pressed ? "qrc:///mobile/button_cancel_pressed" : "qrc:///mobile/button_icon_cancel"
                     visible: urlBar.text != ""
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
                     }
                     MouseArea {
+                        id: clearUrlButton
                         anchors.fill: parent
                         onClicked: urlBar.text = ""
                     }
@@ -122,17 +124,16 @@ Rectangle {
             }
         }
 
-        Image {
-            id: fadingShadow
-            source: "qrc:///mobile/urlbar_bg_browsing"
-            anchors { left: parent.left; right: parent.right; bottom: urlBarBackground.top }
-        }
-
         UrlSuggestions {
             id: urlSuggestions
             width: rootPage.width
-            anchors { top: urlArea.top; bottom: urlBarBackground.top; left: urlArea.left; right: urlArea.right; bottomMargin: 1 }
-            onSuggestionSelected: urlBar.text = suggestedUrl
+            height: 400
+            clip: true
+            anchors { bottom: urlBarBackground.top; }
+            onSuggestionSelected: {
+                navigationPanel.createTab(UrlTools.fromUserInput(suggestedUrl))
+                urlBar.text = ""
+            }
             onSearchSelected: {
                 var searchUrl = "http://www.google.com/search?q=" + urlBar.text.replace(" ", "+")
                 navigationPanel.createTab(searchUrl)
@@ -140,6 +141,12 @@ Rectangle {
             }
             // Only lookup suggestions once you have at least 2 characters to provide better results.
             opacity: urlBar.text != urlBar.previousUrl && urlBar.text.length >= 2 ? 1 : 0
+
+            Image {
+                id: separator
+                source: "qrc:///mobile/url_suggestions_separator"
+                anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+            }
         }
     }
 
@@ -180,6 +187,7 @@ Rectangle {
             PropertyChanges { target: navigationPanel; visible: false }
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
             PropertyChanges { target: urlBar; input.focus: true; displayHint: urlBar.text == "" }
+            PropertyChanges { target: urlSuggestions; contentY: 0 }
             PropertyChanges { target: urlArea; opacity: 1 }
         }
     ]

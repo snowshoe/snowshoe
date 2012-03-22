@@ -3,7 +3,6 @@ import "UiConstants.js" as UiConstants
 
 Item {
     id: suggestedItem
-    height: 80
 
     property alias url: suggestedUrl.text
     property alias title: suggestedTitle.text
@@ -29,7 +28,7 @@ Item {
             top: parent.top
             leftMargin: UiConstants.DefaultMargin
             rightMargin: UiConstants.DefaultMargin
-            topMargin: UiConstants.DefaultMargin
+            topMargin: 11
         }
     }
 
@@ -39,13 +38,24 @@ Item {
         color: UiConstants.SecondaryColor
         font.pixelSize: UiConstants.SecondaryFontSize
         font.family: UiConstants.DefaultFontFamily
+        font.weight: Font.Light
         anchors {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
             leftMargin: UiConstants.DefaultMargin
             rightMargin: UiConstants.DefaultMargin
-            bottomMargin: UiConstants.DefaultMargin
+            bottomMargin: 19
+        }
+    }
+
+    Image {
+        id: fadingLayer
+        source: "qrc:///mobile/url_suggestions_overlayer"
+        anchors {
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
         }
     }
 

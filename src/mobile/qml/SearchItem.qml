@@ -5,8 +5,6 @@ Item {
     id: suggestedItem
     height: 80
 
-    property string title: ""
-
     signal searchSelected()
 
     Image {
@@ -17,8 +15,8 @@ Item {
 
     Image {
         id: searchIcon
-        source: "qrc:///mobile/googleIcon"
-        width: 57
+        source: "qrc:///mobile/button_google_search"
+        width: 56
         height: 57
         anchors {
             left: parent.left

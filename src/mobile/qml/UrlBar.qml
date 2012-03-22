@@ -24,9 +24,10 @@ Item {
 
     TextInput {
         id: input
-        anchors { fill: root; leftMargin: 15; rightMargin: 15 }
+        anchors { fill: root; leftMargin: 15; rightMargin: 60 }
         font.pixelSize: UiConstants.DefaultFontSize
         font.family: UiConstants.DefaultFontFamily
+        font.weight: Font.Light
         color: UiConstants.PrimaryColor
         clip: true
         text: ""
@@ -41,9 +42,10 @@ Item {
         Text {
             id: textHint
             text: "Go to web address or search..."
-            color: UiConstants.SecondaryColor
-            font.pixelSize: input.font.pixelSize
-            font.family: input.font.family
+            color: "#9e9e9e"
+            font.pixelSize: UiConstants.DefaultFontSize
+            font.family: UiConstants.DefaultFontFamily
+            font.weight: Font.Light
             anchors.leftMargin: 10
             anchors.rightMargin: 10
             anchors.verticalCenter: input.verticalCenter

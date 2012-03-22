@@ -1,12 +1,12 @@
 .pragma library
 
-var DefaultMargin = 14
-var DefaultFontSize = 20
+var DefaultMargin = 17
+var DefaultFontSize = 22
 var DefaultFontFamily = "Nokia Pure Text"
 var HtmlFor404Page = "<html><body><h1>=(</h1><h2>Snowshoe says: 404! File not found.</h2><h1>=~</h1></body></html>"
 var PrimaryColor = "#3e3e3e"
-var SecondaryColor = "#888"
-var SecondaryFontSize = 16
+var SecondaryColor = "#8b8b8b"
+var SecondaryFontSize = 20
 var InterfaceColor = "#efefef"
 var DefaultSwipeLenght = 50
 
