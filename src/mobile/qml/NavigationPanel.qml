@@ -127,5 +127,7 @@ Item {
     function closeCurrentTab()
     {
         TabManager.removeTab(TabManager.currentTab)
+        if (TabManager.tabCount() === 0)
+            hasOpennedTabs = false;
     }
 }
