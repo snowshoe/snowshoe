@@ -54,5 +54,6 @@
         <file alias="thumb_overlayer">images/thumb_overlayer.png</file>
         <file alias="button_favorite_pressed">images/button_favorite_pressed.png</file>
         <file alias="button_favorite">images/button_favorite_unpressed.png</file>
+        <file alias="button_close">images/button_close.png</file>
     </qresource>
 </RCC>

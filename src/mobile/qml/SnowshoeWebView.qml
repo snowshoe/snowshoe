@@ -10,6 +10,8 @@ Item {
     property alias webView: webView
     property bool active: true
     signal fullScreenRequested()
+    signal closeTabRequested()
+    property alias closeButton: closeButton
 
     Behavior on y {
         NumberAnimation { duration: 200 }
@@ -32,5 +34,27 @@ Item {
         anchors.fill: webView
         visible: !webViewItem.active
         onClicked: fullScreenRequested();
+    }
+
+    Image {
+        id: closeButton
+        anchors {
+            top: parent.top
+            right: parent.right
+        }
+        source: ":/mobile/button_close"
+        visible: !webViewItem.active
+        z: 1
+        MouseArea {
+            anchors {
+                verticalCenter: parent.verticalCenter
+                horizontalCenter: parent.horizontalCenter
+            }
+            // Avoid a "too big" clickable area
+            height: parent.height * 0.7
+            width: parent.width * 0.7
+
+            onClicked: closeTabRequested();
+        }
     }
 }

@@ -98,6 +98,7 @@ Item {
         statusBarIndicator.x = (tabCount * statusBarIndicator.width) + indicatorSpacing
         navigationPanel.hasOpennedTabs = true;
         tab.fullScreenRequested.connect(webViewMaximized);
+        tab.closeTabRequested.connect(closeCurrentTab);
         webViewMaximized();
         return tab;
     }
@@ -106,9 +107,8 @@ Item {
 
     function setFullScreen(value)
     {
-        var layout;
         if (value) {
-            layout = TabManager.FULLSCREEN_LAYOUT;
+            TabManager.currentTabLayout = TabManager.FULLSCREEN_LAYOUT;
             tabBar.state = "";
             if (navigationBar.state == "hidden") {
                 navigationBar.state = "visible";
@@ -117,10 +117,15 @@ Item {
                 return;
             }
         } else {
-            layout = TabManager.OVERVIEW_LAYOUT;
+            TabManager.currentTabLayout = TabManager.OVERVIEW_LAYOUT;
             tabBar.state = "hidden";
             navigationBar.state = "hidden";
         }
-        TabManager.setTabLayout(layout, 1);
+        TabManager.setTabLayout(TabManager.currentTabLayout, 1);
+    }
+
+    function closeCurrentTab()
+    {
+        TabManager.removeTab(TabManager.currentTab)
     }
 }

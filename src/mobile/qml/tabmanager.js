@@ -27,7 +27,7 @@ function removeTab(index)
     var end = tabs.length - 1;
     tabs[index][0].destroy();
     tabs[index][1].destroy();
-    for (var i in tabs)
+    for (var i = index; i < tabs.length - 1; i++)
         tabs[i] = tabs[i+1];
     tabs.pop();
     if (currentTab !== 0)
@@ -122,6 +122,7 @@ function doTabOverviewLayout()
         tab.width = size[0];
         tab.height = size[1];
         col++;
+        tab.closeButton.visible = true;
     }
 }
 
@@ -135,7 +136,8 @@ function doTabFullScreenLayout()
         tab.x = WINDOW_WIDTH * (i - currentTab);
         tab.y = 80;
         tab.visible = tab.x === 0;
-        tab.active = tab.y === 0;
+        tab.active = false;
+        tab.closeButton.visible = false;
     }
 }
 
