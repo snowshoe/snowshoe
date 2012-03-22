@@ -7,3 +7,4 @@ Makefile.main
 moc_*.cpp
 *.a
 snowshoe
+snowshoe.pro.user
