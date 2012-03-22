@@ -24,8 +24,6 @@ Item {
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadFailedStatus)
                 webView.loadHtml(UiConstants.HtmlFor404Page)
-            if (!loading)
-                statusIndicator.animation.stop();
         }
     }
     // FIXME: This is outside WebView due to a qt-webkit bug

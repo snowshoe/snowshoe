@@ -55,5 +55,7 @@
         <file alias="button_favorite_pressed">images/button_favorite_pressed.png</file>
         <file alias="button_favorite">images/button_favorite_unpressed.png</file>
         <file alias="button_close">images/button_close.png</file>
+        <file alias="pagination_active">images/pagination_active.png</file>
+        <file alias="pagination_inactive">images/pagination_inactive.png</file>
     </qresource>
 </RCC>
