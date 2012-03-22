@@ -12,7 +12,6 @@
         <file>qml/Main.qml</file>
         <file>qml/main-harmattan.qml</file>
         <file>qml/PanelToggle.qml</file>
-        <file>qml/PanelToggleButton.qml</file>
         <file>qml/UrlSuggestions.qml</file>
         <file>qml/SuggestionsDelegate.qml</file>
         <file>qml/SuggestionItem.qml</file>
@@ -46,5 +45,9 @@
         <file alias="button_base">images/button_base.png</file>
         <file alias="scrollbar_base">images/scrollbar_base.png</file>
         <file alias="scrollbar_bullet">images/scrollbar_bullet.png</file>
+        <file alias="view_menu_tabs_pressed">images/view_menu_tabs_pressed.png</file>
+        <file alias="view_menu_tabs">images/view_menu_tabs_unpressed.png</file>
+        <file alias="view_menu_topsites_pressed">images/view_menu_topsites_pressed.png</file>
+        <file alias="view_menu_topsites">images/view_menu_topsites_unpressed.png</file>
     </qresource>
 </RCC>

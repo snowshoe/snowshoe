@@ -2,7 +2,7 @@
 
 var WINDOW_WIDTH = 480;
 var WINDOW_HEIGHT = 767;
-var TAB_Y_OFFSET = 24 * 2 + /*BUTTON HEIGHT*/ 50;
+var TAB_Y_OFFSET = 24 * 2 + /*BUTTON HEIGHT*/ 56;
 var TAB_SIZE_TABLE = [ null,        // invalid state
                       [400, 582],   // just one tab (gridsize = 1)
                       [192, 286] ]; // 4 tabs in a grid (gridsize = 2)

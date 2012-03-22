@@ -16,12 +16,13 @@ Rectangle {
     PanelToggle {
         id: panelToggle
         anchors.top: parent.top
+        anchors.topMargin: 24
         anchors.horizontalCenter: parent.horizontalCenter
         navigationEnabled: navigationPanel.hasOpennedTabs
-        onFavoritesSelected: {
+        onTopSitesSelected: {
             rootPage.state = "favorites";
         }
-        onNavigationSelected: {
+        onTabsSelected: {
             rootPage.state = "navigation";
         }
     }
@@ -188,7 +189,7 @@ Rectangle {
             PropertyChanges { target: favoritesPanel; visible: false }
             PropertyChanges { target: navigationPanel; visible: true }  // Note: this is redundant but needed for N9.
             AnchorChanges { target: panelToggle; anchors.bottom: parent.top; anchors.top: undefined }
-            StateChangeScript { script: panelToggle.resetToNavigation() }
+            StateChangeScript { script: panelToggle.resetToTabs() }
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
         },
         State {

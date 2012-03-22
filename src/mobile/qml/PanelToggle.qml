@@ -4,22 +4,19 @@ Row {
     id: panelToggle
 
     property bool navigationEnabled: true
-    property int _defaultSpacing: -30
 
-    signal favoritesSelected()
-    signal navigationSelected()
+    signal topSitesSelected()
+    signal tabsSelected()
 
-    function resetToNavigation() {
-        // FIXME: Can we disable explicit disable the transition? It isn't affecting the UI at the time of the
-        // commit, but ideally we don't want it to run at all in this case.
-        state = "navigation";
+    function resetToTabs() {
+        state = "tabs";
     }
 
     function selectFavorites() {
-        if (panelToggle.state === "favorites")
+        if (panelToggle.state === "topsites")
             return;
-        panelToggle.state = "favorites";
-        panelToggle.favoritesSelected();
+        panelToggle.state = "topsites";
+        topSitesSelected();
     }
 
     onNavigationEnabledChanged: {
@@ -27,44 +24,47 @@ Row {
             selectFavorites();
     }
 
-    spacing: _defaultSpacing
-    state: "favorites"
+    state: "topsites"
+
+
+    Image {
+        id: topsites
+        source: ":/mobile/view_menu_topsites" + (active ? "_pressed" : "")
+        property bool active;
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: panelToggle.selectFavorites()
+        }
+    }
+    Image {
+        id: tabs
+        source: ":/mobile/view_menu_tabs" + (active ? "_pressed" : "")
+        property bool active;
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                if (!navigationEnabled)
+                    return;
+                panelToggle.state = "tabs";
+                tabsSelected();
+            }
+        }
+    }
 
     states: [
         State {
-            name: "favorites"
-            PropertyChanges { target: favorites; active: true }
-            PropertyChanges { target: navigation; active: false }
+            name: "topsites"
+            PropertyChanges { target: topsites; active: true }
+            PropertyChanges { target: tabs; active: false }
         },
         State {
-            name: "navigation"
-            PropertyChanges { target: favorites; active: false }
-            PropertyChanges { target: navigation; active: true }
+            name: "tabs"
+            PropertyChanges { target: topsites; active: false }
+            PropertyChanges { target: tabs; active: true }
         }
     ]
 
-    transitions: Transition {
-        SequentialAnimation {
-            PropertyAnimation { target: panelToggle; properties: "spacing"; to: (-1) * _defaultSpacing; duration: 200 }
-            PropertyAnimation { target: panelToggle; properties: "spacing"; to: _defaultSpacing; duration: 200 }
-        }
-    }
-
-    PanelToggleButton {
-        id: favorites
-        text: "FAVORITES"
-        onClicked: panelToggle.selectFavorites()
-    }
-
-    PanelToggleButton {
-        id: navigation
-        text: "TABS"
-        onClicked: {
-            if (!navigationEnabled)
-                return;
-            panelToggle.state = "navigation";
-            panelToggle.navigationSelected();
-        }
-    }
 }
 
