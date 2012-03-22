@@ -78,7 +78,6 @@ Rectangle {
             left: rootPage.left
             right: rootPage.right
             bottom: rootPage.bottom
-            bottomMargin: 310
         }
 
         Item {
@@ -181,7 +180,7 @@ Rectangle {
             PropertyChanges { target: favoritesPanel; visible: false }
             PropertyChanges { target: navigationPanel; visible: false }
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
-            PropertyChanges { target: urlBar; input.focus: true }
+            PropertyChanges { target: urlBar; input.focus: true; displayHint: urlBar.text == "" }
             PropertyChanges { target: urlArea; opacity: 1 }
         }
     ]
