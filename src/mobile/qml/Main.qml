@@ -156,7 +156,6 @@ Rectangle {
         State {
             name: "favorites"
             PropertyChanges { target: plusButton; opacity: 1 }
-            StateChangeScript { script: favoritesPanel.showAnimated() }
             PropertyChanges { target: navigationPanel; visible: false }
             PropertyChanges { target: favoritesPanel; visible: true } // Note: this is redundant but needed for N9.
         },

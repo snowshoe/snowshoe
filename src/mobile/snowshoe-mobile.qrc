@@ -51,5 +51,8 @@
         <file alias="view_menu_topsites_pressed">images/view_menu_topsites_pressed.png</file>
         <file alias="view_menu_topsites">images/view_menu_topsites_unpressed.png</file>
         <file alias="button_plus">images/button_plus.png</file>
+        <file alias="thumb_overlayer">images/thumb_overlayer.png</file>
+        <file alias="button_favorite_pressed">images/button_favorite_pressed.png</file>
+        <file alias="button_favorite">images/button_favorite_unpressed.png</file>
     </qresource>
 </RCC>
