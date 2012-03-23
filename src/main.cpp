@@ -59,10 +59,21 @@ int main(int argc, char** argv)
     }
 
 #if defined(SNOWSHOE_MEEGO_HARMATTAN)
-    window->showFullScreen();
+    bool fullScreen = true;
 #else
-    window->show();
+    bool fullScreen = false;
 #endif
+
+    if (arguments.contains(QLatin1String("--fullscreen")))
+        fullScreen = true;
+    else if (arguments.contains(QLatin1String("--no-fullscreen")))
+        fullScreen = false;
+
+    if (fullScreen)
+        window->showFullScreen();
+    else
+        window->show();
+
     app.exec();
     DatabaseManager::instance()->destroy();
     return 0;
