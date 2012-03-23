@@ -77,6 +77,7 @@ Item {
                 else // swipe left
                     TabManager.goToNextTab();
 
+                navigationBar.update()
                 setFullScreen(true);
             }
         }
@@ -100,6 +101,7 @@ Item {
         tab.fullScreenRequested.connect(webViewMaximized);
         tab.closeTabRequested.connect(closeCurrentTab);
         webViewMaximized();
+        navigationBar.update(url)
         return tab;
     }
 

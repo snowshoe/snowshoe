@@ -9,6 +9,7 @@ Rectangle {
     property variant navBarHeight: 80
     property variant navBarMargins: 10
 
+    property alias url: input.text
     property alias navBarTimer: navBarTimer
 
     height: navBarHeight
@@ -23,11 +24,14 @@ Rectangle {
 
         Button {
             id: buttonBack
-            anchors.margins: navBarMargins
+            anchors {
+                margins: navBarMargins
+                left: parent.left
+            }
             baseImage: "qrc:///mobile/navbar/btn_base"
             pressedImage: "qrc:///mobile/navbar/btn_nav_back_pressed"
             standardImage: "qrc:///mobile/navbar/btn_nav_back_unpressed"
-            visible: { currentWebView ? !currentWebView.canGoBack : false }
+            visible: { currentWebView ? currentWebView.canGoBack : false }
             onClicked: currentWebView.goBack()
         }
 
@@ -40,7 +44,7 @@ Rectangle {
             baseImage: "qrc:///mobile/navbar/btn_base"
             pressedImage: "qrc:///mobile/navbar/btn_nav_next_pressed"
             standardImage: "qrc:///mobile/navbar/btn_nav_next_unpressed"
-            visible: { currentWebView ? !currentWebView.canGoForward : false }
+            visible: { currentWebView ? currentWebView.canGoForward : false }
             onClicked: currentWebView.goForward()
         }
 
@@ -51,12 +55,34 @@ Rectangle {
             verticalTileMode: BorderImage.Repeat
             anchors {
                 margins: navBarMargins
-                left: { buttonBack.visible ? buttonNext.right : parent.left }
+                left: { buttonNext.visible ? buttonNext.right : (buttonBack.visible ? buttonBack.right: parent.left) }
                 right: buttonSettings.left
                 verticalCenter: parent.verticalCenter
             }
             source: "qrc:///mobile/navbar/url_input"
+            TextInput {
+                id: input
+                anchors {
+                    fill: parent
+                    topMargin: 15
+                    leftMargin: 15
+                    rightMargin: reloadStopButton.width
+                }
+                font.pixelSize: UiConstants.DefaultFontSize
+                font.family: UiConstants.DefaultFontFamily
+                color: UiConstants.PrimaryColor
+                clip: true
+                text: ""
+                onAccepted: currentWebView.url = text
+                onFocusChanged: {
+                    if (focus)
+                        navBarTimer.stop()
+                    else
+                        navBarTimer.start()
+                }
+            }
             Button {
+                id: reloadStopButton
                 property bool loading: { currentWebView ? currentWebView.loading : false }
                 anchors.right: parent.right
                 baseImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_unpressed" : "qrc:///mobile/navbar/btn_nav_reload_unpressed" }
@@ -79,6 +105,11 @@ Rectangle {
             visible: true
             onClicked: null
         }
+    }
+
+    function update(url) {
+        currentWebView = TabManager.getCurrentTab()
+        input.text = url ? url : currentWebView.url
     }
 
     states: [
