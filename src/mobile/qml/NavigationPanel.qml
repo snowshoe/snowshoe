@@ -9,6 +9,8 @@ Item {
     property bool hasOpennedTabs: false
     signal webViewMaximized()
     signal webViewMinimized()
+    signal urlEntryFocused()
+    property alias urlInputFocus: navigationBar.urlInputFocus
 
     NavigationBar {
         id: navigationBar
@@ -88,19 +90,22 @@ Item {
         }
     }
 
-    function createTab(url)
+    function openUrl(url, shouldOpenNewTab)
     {
         TabManager.NAVBAR_HEIGHT = navigationBar.navBarHeight;
-        var tab = TabManager.createTab(url, navigationPanel, tabBarRow);
-        var statusBarIndicator = tab.statusIndicator;
-        statusBarIndicator.anchors.verticalCenter = tabBarRow.verticalCenter
-        var tabCount = TabManager.tabCount()
-        var indicatorSpacing = tabCount * 4
-        tabBarRow.width = ((tabCount + 1) * statusBarIndicator.width) + indicatorSpacing
-        statusBarIndicator.x = (tabCount * statusBarIndicator.width) + indicatorSpacing
-        navigationPanel.hasOpennedTabs = true;
-        tab.fullScreenRequested.connect(webViewMaximized);
-        tab.closeTabRequested.connect(closeCurrentTab);
+        var tab = shouldOpenNewTab ? TabManager.createTab(url, navigationPanel, tabBarRow) : TabManager.getCurrentTab()
+        tab.url = url
+        if (shouldOpenNewTab) {
+            var statusBarIndicator = tab.statusIndicator;
+            statusBarIndicator.anchors.verticalCenter = tabBarRow.verticalCenter
+            var tabCount = TabManager.tabCount()
+            var indicatorSpacing = tabCount * 4
+            tabBarRow.width = ((tabCount + 1) * statusBarIndicator.width) + indicatorSpacing
+            statusBarIndicator.x = (tabCount * statusBarIndicator.width) + indicatorSpacing
+            navigationPanel.hasOpennedTabs = true;
+            tab.fullScreenRequested.connect(webViewMaximized);
+            tab.closeTabRequested.connect(closeCurrentTab);
+        }
         webViewMaximized();
         navigationBar.update(url)
         return tab;

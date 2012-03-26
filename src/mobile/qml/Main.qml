@@ -7,6 +7,7 @@ Rectangle {
     height: UiConstants.PortraitHeight
     color: "#aaa"
     clip: true
+    property bool shouldOpenNewTab: false
 
     Image {
         anchors.fill: parent
@@ -48,6 +49,13 @@ Rectangle {
             rootPage.state = "navigation";
         }
 
+        onUrlInputFocusChanged: {
+            if (urlInputFocus) {
+                rootPage.shouldOpenNewTab = false
+                rootPage.state = "typeNewUrl"
+            }
+        }
+
     }
 
     Image {
@@ -63,7 +71,8 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                urlBar.previousUrl = ""
+                urlBar.text = ""
+                rootPage.shouldOpenNewTab = true
                 rootPage.state = "typeNewUrl"
             }
         }
@@ -98,13 +107,11 @@ Rectangle {
                     leftMargin: UiConstants.DefaultMargin
                     rightMargin: UiConstants.DefaultMargin
                 }
-                property string previousUrl: ""
                 verticalAlignment: TextInput.AlignVCenter
                 input.focus: false
 
                 onAccepted: {
-                    navigationPanel.createTab(UrlTools.fromUserInput(urlBar.text));
-                    urlBar.text = ""
+                    navigationPanel.openUrl(UrlTools.fromUserInput(urlBar.text), rootPage.shouldOpenNewTab)
                 }
 
                 Image {
@@ -130,15 +137,13 @@ Rectangle {
             clip: true
             anchors { bottom: urlBarBackground.top; }
             onSuggestionSelected: {
-                navigationPanel.createTab(UrlTools.fromUserInput(suggestedUrl))
-                urlBar.text = ""
+                navigationPanel.openUrl(UrlTools.fromUserInput(suggestedUrl), rootPage.shouldOpenNewTab)
             }
             onSearchSelected: {
                 var searchUrl = "http://www.google.com/search?q=" + urlBar.text.replace(" ", "+")
-                navigationPanel.createTab(searchUrl)
-                urlBar.text = ""
+                navigationPanel.openUrl(searchUrl, rootPage.shouldOpenNewTab)
             }
-            opacity: urlBar.text != urlBar.previousUrl && urlBar.text.length > 0
+            opacity: urlBar.text != "" && urlBar.text.length > 0
 
             Image {
                 id: separator

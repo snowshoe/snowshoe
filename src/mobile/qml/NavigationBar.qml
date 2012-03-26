@@ -12,6 +12,8 @@ Rectangle {
     property alias url: input.text
     property alias navBarTimer: navBarTimer
 
+    property alias urlInputFocus: input.focus
+
     height: navBarHeight
     anchors {
         left: parent.left
@@ -78,9 +80,7 @@ Rectangle {
                 onAccepted: currentWebView.url = text
                 onFocusChanged: {
                     if (focus)
-                        navBarTimer.stop()
-                    else
-                        navBarTimer.start()
+                        urlEntryFocused()
                 }
             }
             Button {
