@@ -77,7 +77,7 @@ Rectangle {
 
         Item {
             id: urlBarBackground
-            height: 105
+            height: 100
             anchors {
                 bottom: urlArea.bottom
                 left: urlArea.left
@@ -92,10 +92,9 @@ Rectangle {
             UrlBar {
                 id: urlBar
                 anchors {
-                    verticalCenter: parent.verticalCenter
                     fill: parent
-                    topMargin: 24
-                    bottomMargin: 24
+                    topMargin: 21
+                    bottomMargin: 22
                     leftMargin: UiConstants.DefaultMargin
                     rightMargin: UiConstants.DefaultMargin
                 }

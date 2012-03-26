@@ -16,12 +16,11 @@ Item {
     Image {
         id: searchIcon
         source: "qrc:///mobile/button_google_search"
-        width: 56
-        height: 57
         anchors {
             left: parent.left
             leftMargin: UiConstants.DefaultMargin
-            verticalCenter: suggestedItem.verticalCenter
+            topMargin: 11
+            top: parent.top
         }
     }
 
