@@ -77,11 +77,6 @@ Rectangle {
                 color: UiConstants.PrimaryColor
                 clip: true
                 text: ""
-                onAccepted: currentWebView.url = text
-                onFocusChanged: {
-                    if (focus)
-                        urlEntryFocused()
-                }
             }
             Button {
                 id: reloadStopButton

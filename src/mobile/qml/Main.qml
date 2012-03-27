@@ -51,6 +51,7 @@ Rectangle {
 
         onUrlInputFocusChanged: {
             if (urlInputFocus) {
+                urlBar.text = navigationPanel.url
                 rootPage.shouldOpenNewTab = false
                 rootPage.state = "typeNewUrl"
             }

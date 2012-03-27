@@ -9,8 +9,8 @@ Item {
     property bool hasOpennedTabs: false
     signal webViewMaximized()
     signal webViewMinimized()
-    signal urlEntryFocused()
     property alias urlInputFocus: navigationBar.urlInputFocus
+    property alias url: navigationBar.url
 
     NavigationBar {
         id: navigationBar
