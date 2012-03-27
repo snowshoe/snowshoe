@@ -184,7 +184,6 @@ Rectangle {
             PropertyChanges { target: favoritesPanel; visible: false }
             PropertyChanges { target: navigationPanel; visible: false }
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
-            PropertyChanges { target: urlBar; input.focus: true }
             PropertyChanges { target: urlSuggestions; contentY: 0 }
             PropertyChanges { target: urlArea; opacity: 1 }
         }
@@ -197,12 +196,13 @@ Rectangle {
         },
         Transition {
             to: "typeNewUrl"
-            PropertyAnimation { properties: "opacity"; duration: 300 }
+            PropertyAnimation { properties: "opacity"; duration: 600 }
             SequentialAnimation {
                 PropertyAction { target: plusButton; properties: "visible" }
                 AnchorAnimation { duration: 300; easing.type: Easing.InOutQuad }
                 PropertyAnimation { properties: "width"; duration: 300; easing.type: Easing.InOutQuad }
                 PropertyAction { properties: "visible,focus" }
+                PropertyAction { target: urlBar.input; property: "focus"; value: "true" }
             }
         },
         Transition {
