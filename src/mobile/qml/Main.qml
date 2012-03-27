@@ -138,8 +138,7 @@ Rectangle {
                 navigationPanel.createTab(searchUrl)
                 urlBar.text = ""
             }
-            // Only lookup suggestions once you have at least 2 characters to provide better results.
-            opacity: urlBar.text != urlBar.previousUrl && urlBar.text.length >= 2 ? 1 : 0
+            opacity: urlBar.text != urlBar.previousUrl && urlBar.text.length > 0
 
             Image {
                 id: separator
@@ -185,7 +184,7 @@ Rectangle {
             PropertyChanges { target: favoritesPanel; visible: false }
             PropertyChanges { target: navigationPanel; visible: false }
             AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
-            PropertyChanges { target: urlBar; input.focus: true; displayHint: urlBar.text == "" }
+            PropertyChanges { target: urlBar; input.focus: true }
             PropertyChanges { target: urlSuggestions; contentY: 0 }
             PropertyChanges { target: urlArea; opacity: 1 }
         }
