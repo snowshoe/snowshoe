@@ -47,7 +47,7 @@ Item {
             top: parent.top
             right: parent.right
         }
-        source: ":/mobile/button_close"
+        source: ":/mobile/nav/btn_close"
         visible: !webViewItem.active
         z: 1
         MouseArea {

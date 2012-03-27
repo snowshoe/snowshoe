@@ -29,7 +29,7 @@ Row {
 
     Image {
         id: topsites
-        source: ":/mobile/view_menu_topsites" + (active ? "_pressed" : "")
+        source: ":/mobile/app/topsites" + (active ? "_pressed" : "_unpressed")
         property bool active;
 
         MouseArea {
@@ -39,7 +39,7 @@ Row {
     }
     Image {
         id: tabs
-        source: ":/mobile/view_menu_tabs" + (active ? "_pressed" : "")
+        source: ":/mobile/app/tabs" + (active ? "_pressed" : "_unpressed")
         property bool active;
 
         MouseArea {

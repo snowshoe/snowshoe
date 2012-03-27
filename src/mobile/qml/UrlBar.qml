@@ -17,7 +17,7 @@ Item {
 
     BorderImage {
         id: border
-        source: "qrc:///mobile/url_bar_border"
+        source: ":/mobile/url/border"
         border { left: 25; top: 25; right: 25; bottom: 25 }
         anchors.fill: root
     }

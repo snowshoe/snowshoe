@@ -21,11 +21,11 @@ Grid {
             }
 
             Image {
-                source: ":/mobile/thumb_overlayer"
+                source: ":/mobile/app/thumb_overlayer"
                 anchors.fill: parent
 
                 Image {
-                    source: ":/mobile/button_favorite"
+                    source: ":/mobile/fav/btn_favorite"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: 209

@@ -38,14 +38,14 @@ Item {
     Item {
         id: tabBar
         width: UiConstants.PortraitWidth
-        height: 58
+        height: 57
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         z: 1
 
         Image {
-            source: "qrc:///mobile/app/tabbar_image"
+            source: ":/mobile/tabs/bg_image"
             anchors.fill: parent
         }
 
@@ -90,6 +90,7 @@ Item {
 
     function createTab(url)
     {
+        TabManager.NAVBAR_HEIGHT = navigationBar.navBarHeight;
         var tab = TabManager.createTab(url, navigationPanel, tabBarRow);
         var statusBarIndicator = tab.statusIndicator;
         statusBarIndicator.anchors.verticalCenter = tabBarRow.verticalCenter

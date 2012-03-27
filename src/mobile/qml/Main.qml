@@ -10,7 +10,7 @@ Rectangle {
 
     Image {
         anchors.fill: parent
-        source: "qrc:///mobile/app/bg_image"
+        source: ":/mobile/app/bg_image"
     }
 
     PanelToggle {
@@ -52,7 +52,7 @@ Rectangle {
 
     Image {
         id: plusButton
-        source: ":/mobile/button_plus"
+        source: ":/mobile/nav/btn_plus"
         width: 56
         height: 57
 
@@ -85,7 +85,7 @@ Rectangle {
             }
 
             Image {
-                source: "qrc:///mobile/urlbar_bg_typing"
+                source: ":/mobile/url/bg_typing"
                 anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
             }
 
@@ -108,7 +108,7 @@ Rectangle {
                 }
 
                 Image {
-                    source: clearUrlButton.pressed ? "qrc:///mobile/button_cancel_pressed" : "qrc:///mobile/button_icon_cancel"
+                    source: clearUrlButton.pressed ? ":/mobile/url/btn_cancel_pressed" : ":/mobile/url/btn_cancel_unpressed"
                     visible: urlBar.text != ""
                     anchors {
                         verticalCenter: parent.verticalCenter
@@ -143,7 +143,7 @@ Rectangle {
 
             Image {
                 id: separator
-                source: "qrc:///mobile/url_suggestions_separator"
+                source: ":/mobile/scrollbar/suggestions_separator"
                 anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
             }
         }

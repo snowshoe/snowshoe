@@ -6,8 +6,8 @@ Rectangle {
     id: navigationBar
 
     property variant currentWebView: null
-    property variant navBarHeight: 80
-    property variant navBarMargins: 10
+    property variant navBarHeight: 105
+    property variant navBarMargins: 8
 
     property alias url: input.text
     property alias navBarTimer: navBarTimer
@@ -20,7 +20,11 @@ Rectangle {
 
     Image {
         id: navBarBase
-        source: "qrc:///mobile/navbar/bar_base"
+        source: ":/mobile/navbar/bg_image"
+        anchors {
+            fill: parent
+            margins: 9
+        }
 
         Button {
             id: buttonBack
@@ -28,9 +32,8 @@ Rectangle {
                 margins: navBarMargins
                 left: parent.left
             }
-            baseImage: "qrc:///mobile/navbar/btn_base"
-            pressedImage: "qrc:///mobile/navbar/btn_nav_back_pressed"
-            standardImage: "qrc:///mobile/navbar/btn_nav_back_unpressed"
+            pressedImage: ":/mobile/navbar/btn_nav_back_pressed"
+            unpressedImage: ":/mobile/navbar/btn_nav_back_unpressed"
             visible: { currentWebView ? currentWebView.canGoBack : false }
             onClicked: currentWebView.goBack()
         }
@@ -41,16 +44,15 @@ Rectangle {
                 margins: navBarMargins
                 left: { buttonBack.visible ? buttonBack.right : parent.left }
             }
-            baseImage: "qrc:///mobile/navbar/btn_base"
-            pressedImage: "qrc:///mobile/navbar/btn_nav_next_pressed"
-            standardImage: "qrc:///mobile/navbar/btn_nav_next_unpressed"
+            pressedImage: ":/mobile/navbar/btn_nav_next_pressed"
+            unpressedImage: ":/mobile/navbar/btn_nav_next_unpressed"
             visible: { currentWebView ? currentWebView.canGoForward : false }
             onClicked: currentWebView.goForward()
         }
 
         BorderImage {
             id: urlBar
-            border { left: 22; top: 22; right: 22; bottom: 22 }
+            border { left: 26; top: 26; right: 26; bottom: 26 }
             horizontalTileMode: BorderImage.Repeat
             verticalTileMode: BorderImage.Repeat
             anchors {
@@ -59,7 +61,7 @@ Rectangle {
                 right: buttonSettings.left
                 verticalCenter: parent.verticalCenter
             }
-            source: "qrc:///mobile/navbar/url_input"
+            source: ":/mobile/navbar/url_input"
             TextInput {
                 id: input
                 anchors {
@@ -85,9 +87,8 @@ Rectangle {
                 id: reloadStopButton
                 property bool loading: { currentWebView ? currentWebView.loading : false }
                 anchors.right: parent.right
-                baseImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_unpressed" : "qrc:///mobile/navbar/btn_nav_reload_unpressed" }
-                pressedImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_pressed" : "qrc:///mobile/navbar/btn_nav_reload_pressed" }
-                standardImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_unpressed" : "qrc:///mobile/navbar/btn_nav_reload_unpressed" }
+                pressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_pressed" : ":/mobile/navbar/btn_nav_reload_pressed" }
+                unpressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_unpressed" : ":/mobile/navbar/btn_nav_reload_unpressed" }
                 visible: true
                 onClicked: { loading ? currentWebView.stop() : currentWebView.reload() }
             }
@@ -99,9 +100,8 @@ Rectangle {
                 margins: navBarMargins
                 right: parent.right
             }
-            baseImage: "qrc:///mobile/navbar/btn_base"
-            pressedImage: "qrc:///mobile/navbar/btn_nav_settings_pressed"
-            standardImage: "qrc:///mobile/navbar/btn_nav_settings_unpressed"
+            pressedImage: ":/mobile/navbar/btn_nav_settings_pressed"
+            unpressedImage: ":/mobile/navbar/btn_nav_settings_unpressed"
             visible: true
             onClicked: null
         }

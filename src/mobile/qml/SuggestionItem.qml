@@ -12,7 +12,7 @@ Item {
 
     Image {
         id: suggestionRect
-        source: "qrc:///mobile/urlbar_bg_browsing"
+        source: ":/mobile/url/bg_browsing"
         anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
     }
 
@@ -51,7 +51,7 @@ Item {
 
     Image {
         id: fadingLayer
-        source: "qrc:///mobile/url_suggestions_overlayer"
+        source: ":/mobile/scrollbar/suggestions_overlayer"
         anchors {
             right: parent.right
             top: parent.top

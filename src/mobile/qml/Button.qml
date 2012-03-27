@@ -23,9 +23,8 @@ Item {
 
     property bool disabled
 
-    property string baseImage
     property string pressedImage
-    property string standardImage
+    property string unpressedImage
 
     signal clicked()
     anchors.verticalCenter: parent.verticalCenter
@@ -33,25 +32,19 @@ Item {
     width: 56
 
     Image {
-        id: buttonBaseImage
+        id: buttonImage
         anchors.centerIn: parent
-        source: baseImage
-
-        Image {
-            id: buttonImage
-            anchors.centerIn: parent
-            source: {
-                if (buttonMouseArea.isPressed)
-                    return pressedImage
-                else
-                    return standardImage
-            }
+        source: {
+            if (buttonMouseArea.isPressed)
+                return pressedImage
+            else
+                return unpressedImage
         }
     }
 
     MouseArea {
         id: buttonMouseArea
-        anchors.fill: buttonBaseImage
+        anchors.fill: buttonImage
         onClicked: rootButton.clicked();
         property bool isPressed: false
         onPressed: { isPressed = true }

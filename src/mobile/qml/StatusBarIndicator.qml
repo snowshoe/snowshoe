@@ -4,5 +4,5 @@ Image {
     z: 1
     property bool active: true
 
-    source: active ? ":/mobile/pagination_active" : ":/mobile/pagination_inactive"
+    source: active ? ":/mobile/tabs/pagination_active" : ":/mobile/tabs/pagination_inactive"
 }
