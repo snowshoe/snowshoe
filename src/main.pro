@@ -87,7 +87,12 @@ linux-g++-maemo {
     desktop.files = mobile/snowshoe_harmattan.desktop
     icon.path = /usr/share/themes/base/meegotouch/icons/
 
-    INSTALLS += launcher
+    # powervr ini file
+    powervr.files = mobile/snowshoe.ini
+    powervr.path = /etc/powervr.d/
+
+    INSTALLS += launcher powervr
+
 } else {
     target.path = /usr/bin
     desktop.files = desktop/snowshoe.desktop
