@@ -94,7 +94,8 @@ Item {
     {
         TabManager.NAVBAR_HEIGHT = navigationBar.navBarHeight;
         var tab = shouldOpenNewTab ? TabManager.createTab(url, navigationPanel, tabBarRow) : TabManager.getCurrentTab()
-        tab.url = url
+        // FIXME: we cannot set the same url to a webview while it is loading.
+        // BUG: https://bugs.webkit.org/show_bug.cgi?id=82506
         if (shouldOpenNewTab) {
             var statusBarIndicator = tab.statusIndicator;
             statusBarIndicator.anchors.verticalCenter = tabBarRow.verticalCenter
@@ -105,6 +106,8 @@ Item {
             navigationPanel.hasOpennedTabs = true;
             tab.fullScreenRequested.connect(webViewMaximized);
             tab.closeTabRequested.connect(closeCurrentTab);
+        } else {
+            tab.url = url;
         }
         webViewMaximized();
         navigationBar.update(url)
