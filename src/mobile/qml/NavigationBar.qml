@@ -12,7 +12,7 @@ Rectangle {
     property alias url: input.text
     property alias navBarTimer: navBarTimer
 
-    property alias urlInputFocus: input.focus
+    property alias urlInputFocus: urlArea.pressed
 
     height: navBarHeight
     anchors {
@@ -64,19 +64,29 @@ Rectangle {
                 verticalCenter: parent.verticalCenter
             }
             source: ":/mobile/navbar/url_input"
-            TextInput {
-                id: input
+            Item {
                 anchors {
                     fill: parent
-                    topMargin: 15
-                    leftMargin: 15
                     rightMargin: reloadStopButton.width
                 }
-                font.pixelSize: UiConstants.DefaultFontSize
-                font.family: UiConstants.DefaultFontFamily
-                color: UiConstants.PrimaryColor
                 clip: true
-                text: ""
+                Text {
+                    id: input
+                    anchors {
+                        fill: parent
+                        topMargin: 15
+                        leftMargin: 15
+                        verticalCenter: parent.verticalCenter
+                    }
+                    font.pixelSize: UiConstants.DefaultFontSize
+                    font.family: UiConstants.DefaultFontFamily
+                    color: UiConstants.PrimaryColor
+                    text: ""
+                }
+                MouseArea {
+                    id: urlArea
+                    anchors.fill: parent
+                }
             }
             Button {
                 id: reloadStopButton
