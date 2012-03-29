@@ -68,19 +68,17 @@ Item {
             onReleased: {
                 if (Math.abs(mouse.y - lastY) > height * 3
                     || Math.abs(mouse.x - lastX) < UiConstants.DefaultSwipeLenght) {
-                    // normal click,
-                    setFullScreen(false);
-                    webViewMinimized();
+                    navigationPanel.webViewMinimized();
                     return;
                 }
 
-                if (mouse.x > lastX) // swip right
+                if (mouse.x > lastX) // swipe right
                     TabManager.goToPreviousTab();
                 else // swipe left
                     TabManager.goToNextTab();
 
                 navigationBar.update()
-                setFullScreen(true);
+                navigationPanel.webViewMaximized()
             }
         }
 
@@ -109,12 +107,10 @@ Item {
         } else {
             tab.url = url;
         }
-        webViewMaximized();
+        navigationPanel.webViewMaximized();
         navigationBar.update(url)
         return tab;
     }
-
-    onWebViewMaximized: setFullScreen(true)
 
     function setFullScreen(value)
     {
