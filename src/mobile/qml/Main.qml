@@ -32,7 +32,7 @@ Rectangle {
         id: favoritesPanel
         opacity: 0
         anchors.centerIn: parent
-        onSelectedUrlChanged: navigationPanel.openUrl(UrlTools.fromUserInput(selectedUrl), true)
+        onUrlSelected: navigationPanel.openUrl(UrlTools.fromUserInput(url), true)
     }
 
     NavigationPanel {

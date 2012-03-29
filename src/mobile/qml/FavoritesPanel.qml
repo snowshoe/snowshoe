@@ -4,7 +4,8 @@ Grid {
     id: favoritesGrid
     columns: 2
     spacing: 16
-    property string selectedUrl: ""
+
+    signal urlSelected(string url)
 
     Component {
         id: fakeBookmarkEntry
@@ -42,7 +43,7 @@ Grid {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: favoritesGrid.selectedUrl = url
+                    onClicked: urlSelected(url)
                 }
             }
         }
