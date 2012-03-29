@@ -9,6 +9,8 @@ var SecondaryColor = "#8b8b8b"
 var SecondaryFontSize = 20
 var InterfaceColor = "#efefef"
 var DefaultSwipeLenght = 50
+var NavBarLongMargin = 17
+var NavBarShortMargin = 8
 
 var StatusBarHeight = 30
 var PortraitHeight = 854 - StatusBarHeight

@@ -7,7 +7,7 @@ Rectangle {
 
     property variant currentWebView: null
     property variant navBarHeight: 105
-    property variant navBarMargins: 8
+    property variant navBarMargins: UiConstants.NavBarLongMargin
 
     property alias url: input.text
     property alias navBarTimer: navBarTimer
@@ -23,16 +23,13 @@ Rectangle {
     Image {
         id: navBarBase
         source: ":/mobile/navbar/bg_image"
-        anchors {
-            fill: parent
-            margins: 9
-        }
+        anchors.fill: parent
 
         Button {
             id: buttonBack
             anchors {
-                margins: navBarMargins
                 left: parent.left
+                leftMargin: UiConstants.NavBarLongMargin
             }
             pressedImage: ":/mobile/navbar/btn_nav_back_pressed"
             unpressedImage: ":/mobile/navbar/btn_nav_back_unpressed"
@@ -43,8 +40,8 @@ Rectangle {
         Button {
             id: buttonNext
             anchors {
-                margins: navBarMargins
                 left: { buttonBack.visible ? buttonBack.right : parent.left }
+                leftMargin: buttonBack.visible ? UiConstants.NavBarShortMargin : UiConstants.NavBarLongMargin
             }
             pressedImage: ":/mobile/navbar/btn_nav_next_pressed"
             unpressedImage: ":/mobile/navbar/btn_nav_next_unpressed"
@@ -58,10 +55,11 @@ Rectangle {
             horizontalTileMode: BorderImage.Repeat
             verticalTileMode: BorderImage.Repeat
             anchors {
-                margins: navBarMargins
-                left: { buttonNext.visible ? buttonNext.right : (buttonBack.visible ? buttonBack.right: parent.left) }
-                right: buttonSettings.left
+                left: { buttonNext.visible ? buttonNext.right : (buttonBack.visible ? buttonBack.right : parent.left) }
+                leftMargin: buttonNext.visible || buttonBack.visible ? UiConstants.NavBarShortMargin : UiConstants.NavBarLongMargin
                 verticalCenter: parent.verticalCenter
+                right: buttonSettings.left
+                rightMargin: UiConstants.NavBarShortMargin
             }
             source: ":/mobile/navbar/url_input"
             Item {
@@ -142,4 +140,6 @@ Rectangle {
         interval: 2000
         onTriggered: navigationBar.state = "hidden"
     }
+
+
 }
