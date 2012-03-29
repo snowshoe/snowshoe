@@ -25,8 +25,12 @@
         <file alias="app/topsites_pressed">images/view_menu_topsites_pressed.png</file>
         <file alias="fav/btn_favorite_pressed">images/button_favorite_pressed.png</file>
         <file alias="fav/btn_favorite">images/button_favorite_unpressed.png</file>
+        <file alias="fav/icon01">images/fav_01.png</file>
+        <file alias="fav/icon02">images/fav_02.png</file>
+        <file alias="fav/icon03">images/fav_03.png</file>
         <file alias="nav/btn_plus">images/button_plus.png</file>
         <file alias="nav/btn_close">images/button_close.png</file>
+        <file alias="nav/border">images/border_mask_oneview.png</file>
         <file alias="navbar/bg_image">images/urlbar_bg_browsing.png</file>
         <file alias="navbar/btn_nav_back_unpressed">images/button_back_unpressed.png</file>
         <file alias="navbar/btn_nav_back_pressed">images/button_back_pressed.png</file>

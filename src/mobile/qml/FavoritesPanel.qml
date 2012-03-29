@@ -7,11 +7,11 @@ Grid {
 
     Component {
         id: fakeBookmarkEntry
-        Rectangle {
-            color: "darkgrey"
-            radius: 22
+        Image {
+            id: fakeImage
             width: 192
             height: 286
+            property string url: ""
 
             Behavior on scale {
                 NumberAnimation {
@@ -31,20 +31,21 @@ Grid {
                     anchors.topMargin: 209
                 }
                 Text {
-                    text: "foobar.com"
+                    text: fakeImage.url
                     color: "#515050"
                     font.pixelSize: 20
                     font.family: "Nokia Pure Text Light"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 14
+                    anchors.bottomMargin: 6
                 }
             }
         }
     }
 
     Component.onCompleted: {
+        var urls = ["kde.org", "google.com", "qt.nokia.com"];
        for (var i = 0; i < 3; ++i)
-           fakeBookmarkEntry.createObject(favoritesGrid);
+           fakeBookmarkEntry.createObject(favoritesGrid, {source: ":/mobile/fav/icon0"+(i+1), url: urls[i]});
     }
 }

@@ -33,6 +33,15 @@ Item {
                 webView.loadHtml(UiConstants.HtmlFor404Page)
         }
     }
+
+    Image {
+        id: borders
+        visible: closeButton.visible
+        anchors.left: parent.left
+        anchors.leftMargin: -40
+        source: ":/mobile/nav/border"
+    }
+
     // FIXME: This is outside WebView due to a qt-webkit bug
     MouseArea {
         id: mouseArea
