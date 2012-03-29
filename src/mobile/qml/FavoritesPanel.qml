@@ -4,6 +4,7 @@ Grid {
     id: favoritesGrid
     columns: 2
     spacing: 16
+    property string selectedUrl: ""
 
     Component {
         id: fakeBookmarkEntry
@@ -39,12 +40,16 @@ Grid {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 6
                 }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: favoritesGrid.selectedUrl = url
+                }
             }
         }
     }
 
     Component.onCompleted: {
-        var urls = ["kde.org", "google.com", "qt.nokia.com"];
+       var urls = ["kde.org", "google.com", "qt.nokia.com"];
        for (var i = 0; i < 3; ++i)
            fakeBookmarkEntry.createObject(favoritesGrid, {source: ":/mobile/fav/icon0"+(i+1), url: urls[i]});
     }

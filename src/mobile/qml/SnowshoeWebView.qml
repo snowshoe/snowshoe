@@ -47,6 +47,7 @@ Item {
         id: mouseArea
         anchors.fill: webView
         visible: !webViewItem.active
+        propagateComposedEvents: true // Allow multi-touch to reach pinchArea
         onClicked: fullScreenRequested();
     }
 
