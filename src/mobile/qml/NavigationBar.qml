@@ -140,6 +140,4 @@ Rectangle {
         interval: 2000
         onTriggered: navigationBar.state = "hidden"
     }
-
-
 }
