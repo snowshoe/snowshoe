@@ -11,10 +11,12 @@ Item {
     signal webViewMinimized()
     property alias urlInputFocus: navigationBar.urlInputFocus
     property alias url: navigationBar.url
+    property variant visibleTab: null
 
     NavigationBar {
         id: navigationBar
         state: "hidden"
+        currentWebView: navigationPanel.visibleTab
     }
 
     PinchArea {
@@ -76,8 +78,8 @@ Item {
                     TabManager.goToPreviousTab();
                 else // swipe left
                     TabManager.goToNextTab();
+                visibleTab = TabManager.getCurrentTab()
 
-                navigationBar.update()
                 navigationPanel.webViewMaximized()
             }
         }
@@ -104,11 +106,11 @@ Item {
             navigationPanel.hasOpennedTabs = true;
             tab.fullScreenRequested.connect(webViewMaximized);
             tab.closeTabRequested.connect(closeCurrentTab);
+            visibleTab = tab
         } else {
             tab.url = url;
         }
         navigationPanel.webViewMaximized();
-        navigationBar.update(url)
         return tab;
     }
 

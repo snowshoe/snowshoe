@@ -9,7 +9,7 @@ Rectangle {
     property variant navBarHeight: 105
     property variant navBarMargins: UiConstants.NavBarLongMargin
 
-    property alias url: input.text
+    property string url: currentWebView ? currentWebView.url : ""
     property alias navBarTimer: navBarTimer
 
     property alias urlInputFocus: urlArea.pressed
@@ -79,7 +79,7 @@ Rectangle {
                     font.pixelSize: UiConstants.DefaultFontSize
                     font.family: UiConstants.DefaultFontFamily
                     color: UiConstants.PrimaryColor
-                    text: ""
+                    text: navigationBar.url
                 }
                 MouseArea {
                     id: urlArea
@@ -108,11 +108,6 @@ Rectangle {
             visible: true
             onClicked: null
         }
-    }
-
-    function update(url) {
-        currentWebView = TabManager.getCurrentTab()
-        input.text = url ? url : currentWebView.url
     }
 
     states: [
