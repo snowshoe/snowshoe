@@ -124,7 +124,7 @@ function doTabOverviewLayout()
         tab.width = size[0];
         tab.height = size[1];
         col++;
-        tab.closeButton.visible = true;
+        tab.visibility = currentTabLayout === OVERVIEW_LAYOUT && overviewGridSize === 1;
     }
 }
 
@@ -138,8 +138,8 @@ function doTabFullScreenLayout()
         tab.x = WINDOW_WIDTH * (i - currentTab);
         tab.y = NAVBAR_HEIGHT;
         tab.visible = tab.x === 0;
-        tab.active = false;
-        tab.closeButton.visible = false;
+        tab.active = tab.x === 0;
+        tab.visibility = false;
     }
 }
 

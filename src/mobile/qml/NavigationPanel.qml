@@ -19,26 +19,6 @@ Item {
         currentWebView: navigationPanel.visibleTab
     }
 
-    PinchArea {
-        id: pinchArea
-        visible: false
-        anchors.bottom: tabBar.top
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        z: 99
-
-        onPinchFinished: {
-            if (pinch.scale > 1.0 && TabManager.overviewGridSize > 1)
-                TabManager.overviewGridSize--;
-            else if (pinch.scale < 1.0 && TabManager.overviewGridSize < TabManager.MAX_GRID_SIZE)
-                TabManager.overviewGridSize++;
-            else
-                return;
-            TabManager.doTabOverviewLayout();
-        }
-    }
-
     Item {
         id: tabBar
         width: UiConstants.PortraitWidth
@@ -106,7 +86,8 @@ Item {
             navigationPanel.hasOpennedTabs = true;
             tab.fullScreenRequested.connect(webViewMaximized);
             tab.closeTabRequested.connect(closeCurrentTab);
-            visibleTab = tab
+            tab.overviewChanged.connect(changeOverview);
+            visibleTab = tab;
         } else {
             tab.url = url;
         }
@@ -138,5 +119,22 @@ Item {
         TabManager.removeTab(TabManager.currentTab)
         if (TabManager.tabCount() === 0)
             hasOpennedTabs = false;
+    }
+
+    function changeOverview(scale)
+    {
+        if (scale > 1.0)
+            if (TabManager.overviewGridSize > 1) {
+                TabManager.overviewGridSize--;
+            } else {
+                webViewMaximized();
+                return;
+            }
+        else if (scale < 1.0 && TabManager.overviewGridSize < TabManager.MAX_GRID_SIZE)
+            TabManager.overviewGridSize++;
+        else
+            return;
+
+        TabManager.doTabOverviewLayout();
     }
 }

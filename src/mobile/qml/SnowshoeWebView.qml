@@ -11,8 +11,10 @@ Item {
     property alias canGoForward: webView.canGoForward
     property variant statusIndicator
     property bool active: true
+    property bool visibility: false
     signal fullScreenRequested()
     signal closeTabRequested()
+    signal overviewChanged(double scale)
     property alias closeButton: closeButton
 
     function goBack() { webView.goBack() }
@@ -27,6 +29,7 @@ Item {
     WebView {
         id: webView
         anchors.fill: parent
+        enabled: webViewItem.active
 
         onLoadingChanged: {
             if (loadRequest.status !== WebView.LoadFailedStatus
@@ -45,34 +48,45 @@ Item {
         source: ":/mobile/nav/border"
     }
 
-    // FIXME: This is outside WebView due to a qt-webkit bug
-    MouseArea {
-        id: mouseArea
-        anchors.fill: webView
-        visible: !webViewItem.active
-        propagateComposedEvents: true // Allow multi-touch to reach pinchArea
-        onClicked: fullScreenRequested();
-    }
+    Item {
+        id: clicksHandler
+        anchors.fill: parent
 
-    Image {
-        id: closeButton
-        anchors {
-            top: parent.top
-            right: parent.right
+        PinchArea {
+            id: pinchArea
+            visible: false // FIXME: https://bugreports.qt-project.org/browse/QTBUG-25058
+                           // Should use "webViewItem.visibility" but MeeGo's pinchArea captures all touch events
+            anchors.fill: parent
+            onPinchFinished: overviewChanged(pinch.scale);
         }
-        source: ":/mobile/nav/btn_close"
-        visible: !webViewItem.active
-        z: 1
         MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            enabled: !webViewItem.active
+            propagateComposedEvents: true // Allow multi-touch to reach pinchArea
+            onClicked: fullScreenRequested();
+            onWheel: overviewChanged(wheel.angleDelta.y); // Allow testing on desktop, using mouse wheel
+        }
+        Image {
+            id: closeButton
             anchors {
-                verticalCenter: parent.verticalCenter
-                horizontalCenter: parent.horizontalCenter
+                top: parent.top
+                right: parent.right
             }
-            // Avoid a "too big" clickable area
-            height: parent.height * 0.7
-            width: parent.width * 0.7
+            source: ":/mobile/nav/btn_close"
+            visible: webViewItem.visibility
+            z: 1
+            MouseArea {
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    horizontalCenter: parent.horizontalCenter
+                }
+                // Avoid a "too big" clickable area
+                height: parent.height * 0.7
+                width: parent.width * 0.7
 
-            onClicked: closeTabRequested();
+                onClicked: closeTabRequested();
+            }
         }
     }
 }
