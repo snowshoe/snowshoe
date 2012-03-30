@@ -14,6 +14,7 @@ Item {
     property bool active: true
     property bool visibility: false
     signal tabSelected(int tabNumber)
+    signal fullScreenRequested()
     signal closeTabRequested()
     signal overviewChanged(double scale)
     property alias closeButton: closeButton
