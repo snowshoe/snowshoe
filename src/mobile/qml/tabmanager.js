@@ -42,12 +42,13 @@ function removeTab(index)
     setTabLayout(currentTabLayout);
 }
 
-function createTab(url, webViewParent, statusParent)
+function createTab(url, navigationPanel, statusParent)
 {
-    var webView = Qt.createComponent("SnowshoeWebView.qml").createObject(webViewParent,
+    var webView = Qt.createComponent("SnowshoeWebView.qml").createObject(navigationPanel,
                                                                          { "url" : url,
                                                                            "width" : WINDOW_WIDTH,
-                                                                           "height" : WINDOW_HEIGHT });
+                                                                           "height" : WINDOW_HEIGHT,
+                                                                           "navBar" : navigationPanel.navBar });
     var statusBarIndicator = Qt.createComponent("StatusBarIndicator.qml").createObject(statusParent);
     webView.statusIndicator = statusBarIndicator;
 

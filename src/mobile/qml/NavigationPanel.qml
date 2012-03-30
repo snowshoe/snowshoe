@@ -9,6 +9,7 @@ Item {
     property bool hasOpennedTabs: false
     signal webViewMaximized()
     signal webViewMinimized()
+    property alias navBar: navigationBar
     property alias urlInputFocus: navigationBar.urlInputFocus
     property alias url: navigationBar.url
     property variant visibleTab: null
@@ -97,12 +98,13 @@ Item {
         if (value) {
             TabManager.currentTabLayout = TabManager.FULLSCREEN_LAYOUT;
             tabBar.state = "";
-            if (navigationBar.state == "hidden") {
+            if (navigationBar.state == "hidden")
                 navigationBar.state = "visible";
-            } else {
-                navigationBar.state = "hidden";
-                return;
-            }
+            var tab = TabManager.getCurrentTab();
+            if (tab.loading)
+                navigationBar.hidingTimer.stop();
+            else
+                navigationBar.hidingTimer.restart();
         } else {
             TabManager.currentTabLayout = TabManager.OVERVIEW_LAYOUT;
             tabBar.state = "hidden";

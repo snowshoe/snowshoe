@@ -10,7 +10,7 @@ Rectangle {
     property variant navBarMargins: UiConstants.NavBarLongMargin
 
     property string url: currentWebView ? currentWebView.url : ""
-    property alias navBarTimer: navBarTimer
+    property alias hidingTimer: hidingTimer
 
     property alias urlInputFocus: urlArea.pressed
 
@@ -34,7 +34,10 @@ Rectangle {
             pressedImage: ":/mobile/navbar/btn_nav_back_pressed"
             unpressedImage: ":/mobile/navbar/btn_nav_back_unpressed"
             visible: { currentWebView ? currentWebView.canGoBack : false }
-            onClicked: currentWebView.goBack()
+            onClicked: {
+                currentWebView.goBack();
+                hidingTimer.stop();
+            }
         }
 
         Button {
@@ -46,7 +49,10 @@ Rectangle {
             pressedImage: ":/mobile/navbar/btn_nav_next_pressed"
             unpressedImage: ":/mobile/navbar/btn_nav_next_unpressed"
             visible: { currentWebView ? currentWebView.canGoForward : false }
-            onClicked: currentWebView.goForward()
+            onClicked: {
+                currentWebView.goForward();
+                hidingTimer.stop();
+            }
         }
 
         BorderImage {
@@ -93,7 +99,15 @@ Rectangle {
                 pressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_pressed" : ":/mobile/navbar/btn_nav_reload_pressed" }
                 unpressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_unpressed" : ":/mobile/navbar/btn_nav_reload_unpressed" }
                 visible: true
-                onClicked: { loading ? currentWebView.stop() : currentWebView.reload() }
+                onClicked: {
+                    if (loading) {
+                        currentWebView.stop();
+                        hidingTimer.restart();
+                    } else {
+                        currentWebView.reload();
+                        hidingTimer.stop();
+                    }
+                }
             }
         }
 
@@ -119,7 +133,6 @@ Rectangle {
         State {
             name: "visible"
             AnchorChanges { target: navigationBar; anchors.top: parent.top; anchors.bottom: undefined }
-            PropertyChanges { target: navBarTimer; running: true }
         }
 
     ]
@@ -131,7 +144,7 @@ Rectangle {
         }
     ]
     Timer {
-        id: navBarTimer
+        id: hidingTimer
         interval: 2000
         onTriggered: navigationBar.state = "hidden"
     }

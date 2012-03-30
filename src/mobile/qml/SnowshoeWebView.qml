@@ -17,6 +17,7 @@ Item {
     signal closeTabRequested()
     signal overviewChanged(double scale)
     property alias closeButton: closeButton
+    property variant navBar
 
     function goBack() { webView.goBack() }
     function goForward() { webView.goForward() }
@@ -33,6 +34,12 @@ Item {
         enabled: webViewItem.active
 
         onLoadingChanged: {
+            if (loadRequest.status === WebView.LoadStartedStatus) {
+                navBar.state = "visible";
+                navBar.hidingTimer.stop();
+            } else
+                navBar.hidingTimer.restart();
+
             if (loadRequest.status !== WebView.LoadFailedStatus
                 || (loadRequest.errorDomain === WebView.NetworkErrorDomain
                     && loadRequest.errorCode === NetworkReply.OperationCanceledError))
