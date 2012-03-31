@@ -1,11 +1,14 @@
 .pragma library
 
-var WINDOW_WIDTH = 480;
-var WINDOW_HEIGHT = 767;
+Qt.include("UiConstants.js")
+
+var WINDOW_WIDTH = PortraitWidth;
+var WINDOW_HEIGHT = PortraitHeight;
 var TAB_Y_OFFSET = 24 * 2 + /*BUTTON HEIGHT*/ 56;
 var TAB_SIZE_TABLE = [ null,        // invalid state
-                      [400, 582],   // just one tab (gridsize = 1)
-                      [192, 286] ]; // 4 tabs in a grid (gridsize = 2)
+                      [400, 582, 0, 0],   // just one tab (gridsize = 1)
+                      [192, 286, 16, 16] ]; // 4 tabs in a grid (gridsize = 2)
+                    //[width, height, horizontalspacing, verticalspacing]
 
 var NAVBAR_HEIGHT
 
@@ -29,8 +32,10 @@ function removeTab(index)
     var end = tabs.length - 1;
     tabs[index][0].destroy();
     tabs[index][1].destroy();
-    for (var i = index; i < tabs.length - 1; i++)
+    for (var i = index; i < tabs.length - 1; i++) {
         tabs[i] = tabs[i+1];
+        tabs[i][0].tabNumber = i;
+     }
     tabs.pop();
     if (currentTab !== 0)
         currentTab--;
@@ -47,7 +52,8 @@ function createTab(url, webViewParent, statusParent)
     webView.statusIndicator = statusBarIndicator;
 
     tabs.push([webView, statusBarIndicator]);
-    setCurrentTab(tabs.length - 1);
+    webView.tabNumber = tabs.length - 1;
+    setCurrentTab(webView.tabNumber);
     return webView;
 }
 
@@ -95,8 +101,8 @@ function doTabOverviewLayout()
     var size = TAB_SIZE_TABLE[overviewGridSize];
     var xMargin = 40;
     var yMargin = 16;
-    var xStep = (WINDOW_WIDTH - xMargin * 2) / overviewGridSize;
-    var yStep = (WINDOW_HEIGHT - yMargin * 2) / overviewGridSize;
+    var xStep = size[2]
+    var yStep = size[3]
 
     var line = 0;
     var col = 0;
@@ -119,8 +125,8 @@ function doTabOverviewLayout()
         }
 
         tab.visible = true;
-        tab.x = xMargin + col * xStep;
-        tab.y = TAB_Y_OFFSET + yMargin * line * yStep;
+        tab.x = xMargin + col * (size[0] + xStep);
+        tab.y = TAB_Y_OFFSET + line * (size[1] + yStep);
         tab.width = size[0];
         tab.height = size[1];
         col++;

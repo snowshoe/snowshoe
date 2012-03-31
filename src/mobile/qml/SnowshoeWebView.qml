@@ -5,6 +5,7 @@ import "UiConstants.js" as UiConstants
 
 Item {
     id: webViewItem
+    property variant tabNumber
     property alias url: webView.url
     property alias loading: webView.loading
     property alias canGoBack: webView.canGoBack
@@ -12,7 +13,7 @@ Item {
     property variant statusIndicator
     property bool active: true
     property bool visibility: false
-    signal fullScreenRequested()
+    signal tabSelected(int tabNumber)
     signal closeTabRequested()
     signal overviewChanged(double scale)
     property alias closeButton: closeButton
@@ -64,7 +65,7 @@ Item {
             anchors.fill: parent
             enabled: !webViewItem.active
             propagateComposedEvents: true // Allow multi-touch to reach pinchArea
-            onClicked: fullScreenRequested();
+            onClicked: tabSelected(tabNumber);
             onWheel: overviewChanged(wheel.angleDelta.y); // Allow testing on desktop, using mouse wheel
         }
         Image {

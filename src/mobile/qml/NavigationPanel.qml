@@ -84,7 +84,7 @@ Item {
             tabBarRow.width = ((tabCount + 1) * statusBarIndicator.width) + indicatorSpacing
             statusBarIndicator.x = (tabCount * statusBarIndicator.width) + indicatorSpacing
             navigationPanel.hasOpennedTabs = true;
-            tab.fullScreenRequested.connect(webViewMaximized);
+            tab.tabSelected.connect(selectTab);
             tab.closeTabRequested.connect(closeCurrentTab);
             tab.overviewChanged.connect(changeOverview);
             visibleTab = tab;
@@ -136,5 +136,11 @@ Item {
             return;
 
         TabManager.doTabOverviewLayout();
+    }
+
+    function selectTab(tabNumber)
+    {
+        webViewMaximized();
+        TabManager.setCurrentTab(tabNumber);
     }
 }

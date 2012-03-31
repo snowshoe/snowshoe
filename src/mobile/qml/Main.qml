@@ -16,9 +16,11 @@ Rectangle {
 
     PanelToggle {
         id: panelToggle
-        anchors.top: parent.top
-        anchors.topMargin: 24
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors {
+            top: parent.top
+            topMargin: 24
+            horizontalCenter: parent.horizontalCenter
+        }
         navigationEnabled: navigationPanel.hasOpennedTabs
         onTopSitesSelected: {
             rootPage.state = "favorites";
@@ -31,7 +33,11 @@ Rectangle {
     FavoritesPanel {
         id: favoritesPanel
         opacity: 0
-        anchors.centerIn: parent
+        anchors {
+            top: panelToggle.bottom
+            topMargin: 24
+            horizontalCenter: parent.horizontalCenter
+        }
         onUrlSelected: navigationPanel.openUrl(UrlTools.fromUserInput(url), true)
     }
 
