@@ -66,11 +66,11 @@ function setCurrentTab(tabIndex)
 {
     if (currentTab !== -1) {
         tabs[currentTab][1].active = false;
-        tabs[currentTab][0].state = "";
+        tabs[currentTab][0].state = ""
     }
     currentTab = tabIndex;
     tabs[currentTab][1].active = true;
-    setTabLayout(currentTabLayout);
+    setTabLayout(FULLSCREEN_LAYOUT);
 }
 
 function goToNextTab()
@@ -101,8 +101,8 @@ function doTabOverviewLayout()
     var size = TAB_SIZE_TABLE[overviewGridSize];
     var xMargin = 40;
     var yMargin = 16;
-    var xStep = size[2];
-    var yStep = size[3];
+    var xStep = size[2]
+    var yStep = size[3]
 
     var line = 0;
     var col = 0;
