@@ -87,6 +87,8 @@ Item {
             tab.tabSelected.connect(selectTab);
             tab.closeTabRequested.connect(closeCurrentTab);
             tab.overviewChanged.connect(changeOverview);
+            tab.tabGoBack.connect(TabManager.goToPreviousTab);
+            tab.tabGoForward.connect(TabManager.goToNextTab);
             visibleTab = tab;
         } else {
             tab.url = url;

@@ -16,6 +16,8 @@ Item {
     signal tabSelected(int tabNumber)
     signal closeTabRequested()
     signal overviewChanged(double scale)
+    signal tabGoBack()
+    signal tabGoForward()
     property alias closeButton: closeButton
 
     function goBack() { webView.goBack() }
@@ -62,11 +64,26 @@ Item {
         }
         MouseArea {
             id: mouseArea
+            property int lastX
+            property int lastY
             anchors.fill: parent
             enabled: !webViewItem.active
             propagateComposedEvents: true // Allow multi-touch to reach pinchArea
-            onClicked: tabSelected(tabNumber);
+            //onClicked: tabSelected(tabNumber);
             onWheel: overviewChanged(wheel.angleDelta.y); // Allow testing on desktop, using mouse wheel
+            onPressed: {
+                lastX = mouse.x
+                lastY = mouse.y
+            }
+            onReleased: {
+                if (Math.abs(mouse.y - lastY) < UiConstants.DefaultSwipeLenght / 2
+                    || Math.abs(mouse.x - lastX) < UiConstants.DefaultSwipeLenght / 2)
+                    tabSelected(tabNumber);
+                else if (mouse.x > lastX) // swipe right
+                    tabGoBack();
+                else if (mouse.x < lastX)// swipe left
+                    tabGoForward();
+            }
         }
         Image {
             id: closeButton
