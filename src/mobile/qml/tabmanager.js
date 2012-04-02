@@ -3,7 +3,7 @@
 Qt.include("UiConstants.js")
 
 var WINDOW_WIDTH = PortraitWidth;
-var WINDOW_HEIGHT = PortraitHeight;
+var WINDOW_HEIGHT = PortraitHeight - 54; // TabBar height
 var TAB_Y_OFFSET = 24 * 2 + /*BUTTON HEIGHT*/ 56;
 var TAB_SIZE_TABLE = [ null,        // invalid state
                       [400, 582, 0, 0],   // just one tab (gridsize = 1)
