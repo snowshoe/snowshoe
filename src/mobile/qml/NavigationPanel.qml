@@ -33,9 +33,10 @@ Item {
             anchors.fill: parent
         }
 
-        Item {
+        Row {
             id: tabBarRow
             anchors.centerIn: parent
+            spacing: 10
         }
         MouseArea {
             property int lastX
@@ -78,11 +79,7 @@ Item {
         // BUG: https://bugs.webkit.org/show_bug.cgi?id=82506
         if (shouldOpenNewTab) {
             var statusBarIndicator = tab.statusIndicator;
-            statusBarIndicator.anchors.verticalCenter = tabBarRow.verticalCenter
-            var tabCount = TabManager.tabCount()
-            var indicatorSpacing = tabCount * 4
-            tabBarRow.width = ((tabCount + 1) * statusBarIndicator.width) + indicatorSpacing
-            statusBarIndicator.x = (tabCount * statusBarIndicator.width) + indicatorSpacing
+            var tabCount = TabManager.tabCount();
             navigationPanel.hasOpennedTabs = true;
             tab.tabSelected.connect(selectTab);
             tab.closeTabRequested.connect(closeCurrentTab);
