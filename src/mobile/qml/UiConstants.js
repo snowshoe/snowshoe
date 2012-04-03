@@ -13,6 +13,7 @@ var NavBarLongMargin = 17
 var NavBarShortMargin = 8
 
 var StatusBarHeight = 30
+var TabBarHeight = 57
 var PortraitHeight = 854 - StatusBarHeight
 var PortraitWidth = 480
 var LandscapeHeight = 854

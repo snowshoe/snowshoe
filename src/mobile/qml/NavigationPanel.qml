@@ -23,7 +23,7 @@ Item {
     Item {
         id: tabBar
         width: UiConstants.PortraitWidth
-        height: 57
+        height: UiConstants.TabBarHeight
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
