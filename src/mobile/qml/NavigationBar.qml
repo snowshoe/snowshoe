@@ -6,15 +6,13 @@ Rectangle {
     id: navigationBar
 
     property variant currentWebView: null
-    property variant navBarHeight: 105
-    property variant navBarMargins: UiConstants.NavBarLongMargin
 
     property string url: currentWebView ? currentWebView.url : ""
     property alias hidingTimer: hidingTimer
 
     property alias urlInputFocus: urlArea.pressed
 
-    height: navBarHeight
+    height: UiConstants.NavBarHeight
     anchors {
         left: parent.left
         right: parent.right
@@ -114,7 +112,7 @@ Rectangle {
         Button {
             id: buttonSettings
             anchors {
-                margins: navBarMargins
+                margins: UiConstants.NavBarLongMargin
                 right: parent.right
             }
             pressedImage: ":/mobile/navbar/btn_nav_settings_pressed"

@@ -74,7 +74,6 @@ Item {
 
     function openUrl(url, shouldOpenNewTab)
     {
-        TabManager.NAVBAR_HEIGHT = navigationBar.navBarHeight;
         var tab = shouldOpenNewTab ? TabManager.createTab(url, navigationPanel, tabBarRow) : TabManager.getCurrentTab()
         // FIXME: we cannot set the same url to a webview while it is loading.
         // BUG: https://bugs.webkit.org/show_bug.cgi?id=82506

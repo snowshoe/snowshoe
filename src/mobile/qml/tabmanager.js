@@ -10,8 +10,6 @@ var TAB_SIZE_TABLE = [ null,        // invalid state
                       [192, 286, 16, 16] ]; // 4 tabs in a grid (gridsize = 2)
                     //[width, height, horizontalspacing, verticalspacing]
 
-var NAVBAR_HEIGHT
-
 var FULLSCREEN_LAYOUT = 1;
 var OVERVIEW_LAYOUT = 2;
 
@@ -143,7 +141,7 @@ function doTabFullScreenLayout()
         tab.width = WINDOW_WIDTH;
         tab.height = WINDOW_HEIGHT;
         tab.x = WINDOW_WIDTH * (i - currentTab);
-        tab.y = NAVBAR_HEIGHT;
+        tab.y = NavBarHeight;
         tab.visible = tab.x === 0;
         tab.active = tab.x === 0;
         tab.visibility = false;

@@ -11,6 +11,7 @@ var InterfaceColor = "#efefef"
 var DefaultSwipeLenght = 50
 var NavBarLongMargin = 17
 var NavBarShortMargin = 8
+var NavBarHeight = 105
 
 var StatusBarHeight = 30
 var TabBarHeight = 57
