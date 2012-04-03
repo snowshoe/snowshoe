@@ -71,7 +71,7 @@ function setCurrentTab(tabIndex)
     }
     currentTab = tabIndex;
     tabs[currentTab][1].active = true;
-    setTabLayout(FULLSCREEN_LAYOUT);
+    setTabLayout(currentTabLayout);
 }
 
 function goToNextTab()

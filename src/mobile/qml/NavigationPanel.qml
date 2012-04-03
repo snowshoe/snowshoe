@@ -141,5 +141,6 @@ Item {
     {
         webViewMaximized();
         TabManager.setCurrentTab(tabNumber);
+        navigationPanel.visibleTab = TabManager.getCurrentTab();
     }
 }
