@@ -40,11 +40,8 @@ Item {
             } else
                 navBar.hidingTimer.restart();
 
-            if (loadRequest.status !== WebView.LoadFailedStatus
-                || (loadRequest.errorDomain === WebView.NetworkErrorDomain
-                    && loadRequest.errorCode === NetworkReply.OperationCanceledError))
-                return
-            webView.loadHtml(UiConstants.HtmlFor404Page)
+            if (loadRequest.status === WebView.LoadFailedStatus)
+                webView.loadHtml(UiConstants.HtmlFor404Page)
         }
     }
 
