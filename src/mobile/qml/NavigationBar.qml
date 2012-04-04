@@ -1,32 +1,17 @@
 import QtQuick 2.0
 import "UiConstants.js" as UiConstants
-import "tabmanager.js" as TabManager
 
 Rectangle {
     id: navigationBar
 
     property QtObject currentWebView: null
-
     property string url: currentWebView ? currentWebView.url : ""
-    property alias hidingTimer: hidingTimer
-
     property alias urlInputFocus: urlArea.pressed
 
     height: UiConstants.NavBarHeight
     anchors {
         left: parent.left
         right: parent.right
-    }
-
-    Connections {
-        target: currentWebView
-        onLoadingChanged: {
-            if (currentWebView.loading) {
-                navigationBar.state = "visible";
-                navigationBar.hidingTimer.stop();
-            } else
-                navigationBar.hidingTimer.restart();
-        }
     }
 
     Image {
@@ -122,30 +107,5 @@ Rectangle {
             visible: true
             onClicked: null
         }
-    }
-
-    states: [
-        State {
-            name: "hidden"
-            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.top }
-            StateChangeScript { script: TabManager.doTabResetY(); }
-        },
-        State {
-            name: "visible"
-            AnchorChanges { target: navigationBar; anchors.top: parent.top; anchors.bottom: undefined }
-        }
-
-    ]
-    transitions: [
-        Transition {
-            to: "visible"
-            reversible: true
-            AnchorAnimation { duration: 200 }
-        }
-    ]
-    Timer {
-        id: hidingTimer
-        interval: 2000
-        onTriggered: navigationBar.state = "hidden"
     }
 }

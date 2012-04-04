@@ -13,10 +13,47 @@ Item {
     property alias url: navigationBar.url
     property QtObject visibleTab: null
 
+    Connections {
+        target: visibleTab
+        onLoadingChanged: {
+            if (visibleTab.loading) {
+                navigationBar.state = "visible";
+                navigationBarHidingTimer.stop();
+            } else
+                navigationBarHidingTimer.restart();
+        }
+    }
+
     NavigationBar {
         id: navigationBar
         state: "hidden"
         currentWebView: navigationPanel.visibleTab
+
+        states: [
+            State {
+                name: "hidden"
+                AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.top }
+                StateChangeScript { script: TabManager.doTabResetY(); }
+            },
+            State {
+                name: "visible"
+                AnchorChanges { target: navigationBar; anchors.top: parent.top; anchors.bottom: undefined }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                to: "visible"
+                reversible: true
+                AnchorAnimation { duration: 200 }
+            }
+        ]
+
+        Timer {
+            id: navigationBarHidingTimer
+            interval: 2000
+            onTriggered: navigationBar.state = "hidden"
+        }
     }
 
     Item {
@@ -100,9 +137,9 @@ Item {
                 navigationBar.state = "visible";
             var tab = TabManager.getCurrentTab();
             if (tab.loading)
-                navigationBar.hidingTimer.stop();
+                navigationBarHidingTimer.stop();
             else
-                navigationBar.hidingTimer.restart();
+                navigationBarHidingTimer.restart();
         } else {
             TabManager.currentTabLayout = TabManager.OVERVIEW_LAYOUT;
             tabBar.state = "hidden";
