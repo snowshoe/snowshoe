@@ -32,10 +32,7 @@ Rectangle {
             pressedImage: ":/mobile/navbar/btn_nav_back_pressed"
             unpressedImage: ":/mobile/navbar/btn_nav_back_unpressed"
             visible: { currentWebView ? currentWebView.canGoBack : false }
-            onClicked: {
-                currentWebView.goBack();
-                hidingTimer.stop();
-            }
+            onClicked: currentWebView.goBack()
         }
 
         Button {
@@ -47,10 +44,7 @@ Rectangle {
             pressedImage: ":/mobile/navbar/btn_nav_next_pressed"
             unpressedImage: ":/mobile/navbar/btn_nav_next_unpressed"
             visible: { currentWebView ? currentWebView.canGoForward : false }
-            onClicked: {
-                currentWebView.goForward();
-                hidingTimer.stop();
-            }
+            onClicked: currentWebView.goForward()
         }
 
         BorderImage {
@@ -98,13 +92,10 @@ Rectangle {
                 unpressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_unpressed" : ":/mobile/navbar/btn_nav_reload_unpressed" }
                 visible: true
                 onClicked: {
-                    if (loading) {
+                    if (loading)
                         currentWebView.stop();
-                        hidingTimer.restart();
-                    } else {
+                    else
                         currentWebView.reload();
-                        hidingTimer.stop();
-                    }
                 }
             }
         }
