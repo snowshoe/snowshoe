@@ -45,8 +45,7 @@ function createTab(url, navigationPanel, statusParent)
     var webView = Qt.createComponent("SnowshoeWebView.qml").createObject(navigationPanel,
                                                                          { "url" : url,
                                                                            "width" : WINDOW_WIDTH,
-                                                                           "height" : WINDOW_HEIGHT,
-                                                                           "navBar" : navigationPanel.navBar });
+                                                                           "height" : WINDOW_HEIGHT });
     var statusBarIndicator = Qt.createComponent("StatusBarIndicator.qml").createObject(statusParent);
     webView.statusIndicator = statusBarIndicator;
 

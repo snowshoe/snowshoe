@@ -9,10 +9,9 @@ Item {
     property bool hasOpennedTabs: false
     signal webViewMaximized()
     signal webViewMinimized()
-    property alias navBar: navigationBar
     property alias urlInputFocus: navigationBar.urlInputFocus
     property alias url: navigationBar.url
-    property variant visibleTab: null
+    property QtObject visibleTab: null
 
     NavigationBar {
         id: navigationBar

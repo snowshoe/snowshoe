@@ -5,7 +5,7 @@ import "tabmanager.js" as TabManager
 Rectangle {
     id: navigationBar
 
-    property variant currentWebView: null
+    property QtObject currentWebView: null
 
     property string url: currentWebView ? currentWebView.url : ""
     property alias hidingTimer: hidingTimer
@@ -16,6 +16,17 @@ Rectangle {
     anchors {
         left: parent.left
         right: parent.right
+    }
+
+    Connections {
+        target: currentWebView
+        onLoadingChanged: {
+            if (currentWebView.loading) {
+                navigationBar.state = "visible";
+                navigationBar.hidingTimer.stop();
+            } else
+                navigationBar.hidingTimer.restart();
+        }
     }
 
     Image {
