@@ -64,6 +64,7 @@ OTHER_FILES += \
     mobile/qml/SearchItem.qml \
     mobile/qml/SuggestionsDelegate.qml \
     mobile/qml/Scrollbar.qml \
+    mobile/qml/SwipeArea.qml \
     mobile/qtc_packaging/debian_harmattan/rules \
     mobile/qtc_packaging/debian_harmattan/README \
     mobile/qtc_packaging/debian_harmattan/manifest.aegis \

@@ -75,31 +75,23 @@ Item {
             anchors.centerIn: parent
             spacing: 10
         }
-        MouseArea {
-            property int lastX
-            property int lastY
+
+        SwipeArea {
             anchors.fill: parent
 
-            onPressed: {
-                lastX = mouse.x
-                lastY = mouse.y
+            onSwipeRight: {
+                TabManager.goToPreviousTab();
+                visibleTab = TabManager.getCurrentTab();
+                navigationPanel.webViewMaximized();
             }
 
-            onReleased: {
-                if (Math.abs(mouse.y - lastY) > height * 3
-                    || Math.abs(mouse.x - lastX) < UiConstants.DefaultSwipeLenght) {
-                    navigationPanel.webViewMinimized();
-                    return;
-                }
-
-                if (mouse.x > lastX) // swipe right
-                    TabManager.goToPreviousTab();
-                else // swipe left
-                    TabManager.goToNextTab();
-                visibleTab = TabManager.getCurrentTab()
-
-                navigationPanel.webViewMaximized()
+            onSwipeLeft: {
+                TabManager.goToNextTab();
+                visibleTab = TabManager.getCurrentTab();
+                navigationPanel.webViewMaximized();
             }
+
+            onClicked: navigationPanel.webViewMinimized()
         }
 
         states: State {
