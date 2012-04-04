@@ -16,6 +16,7 @@
 
 #include "BookmarkModel.h"
 #include "DatabaseManager.h"
+#include "HistoryModel.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QString>
@@ -54,6 +55,9 @@ DatabaseManager::DatabaseManager()
 
     m_bookmarkModel = new BookmarkModel(m_database);
     m_bookmarkModel->setEditStrategy(QSqlTableModel::OnFieldChange);
+
+    m_historyModel.reset(new HistoryModel(m_database));
+    m_historyModel->setEditStrategy(QSqlTableModel::OnFieldChange);
 }
 
 DatabaseManager::~DatabaseManager()
@@ -77,17 +81,32 @@ bool DatabaseManager::initialize()
     if (m_bookmarkModel->lastError().isValid())
         return false;
 
+    m_historyModel->setTable(QLatin1String("history"));
+    if (m_historyModel->lastError().isValid())
+        return false;
+
     m_bookmarkModel->generateRoleNames();
+    m_historyModel->generateRoleNames();
     // Populate the model.
     m_bookmarkModel->select();
+    m_historyModel->populate();
 
     return createdTables;
 }
 
 bool DatabaseManager::createTables()
 {
-    QSqlQuery sqlQuery;
-    return sqlQuery.exec(m_bookmarkModel->tableCreateQuery());
+    QSqlQuery bookmarkCreateQuery;
+    bookmarkCreateQuery.prepare(m_bookmarkModel->tableCreateQuery());
+    if (!bookmarkCreateQuery.exec())
+        return false;
+
+    QSqlQuery historyCreateQuery;
+    historyCreateQuery.prepare(m_historyModel->tableCreateQuery());
+    if (!historyCreateQuery.exec())
+        return false;
+
+    return true;
 }
 
 BookmarkModel* DatabaseManager::bookmarkDataBaseModel() const

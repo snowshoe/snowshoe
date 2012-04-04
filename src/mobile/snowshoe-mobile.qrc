@@ -17,9 +17,7 @@
         <file>qml/PanelToggle.qml</file>
         <file>qml/PagedGrid.qml</file>
         <file>qml/UrlSuggestions.qml</file>
-        <file>qml/SuggestionsDelegate.qml</file>
         <file>qml/SuggestionItem.qml</file>
-        <file>qml/SearchItem.qml</file>
         <file>qml/Scrollbar.qml</file>
         <file alias="app/bg_image">images/app_bg.png</file>
         <file alias="app/thumb_overlayer">images/thumb_overlayer.png</file>
@@ -47,8 +45,9 @@
         <file alias="navbar/btn_nav_settings_pressed">images/button_options_pressed.png</file>
         <file alias="navbar/url_input">images/url_bar.png</file>
         <file alias="scrollbar/bg_image">images/scrollbar_base.png</file>
-        <file alias="scrollbar/bullet">images/scrollbar_bullet.png</file>
         <file alias="scrollbar/btn_google_search">images/button_google_search.png</file>
+        <file alias="scrollbar/btn_url_suggestion">images/button_url_suggestion.png</file>
+        <file alias="scrollbar/bullet">images/scrollbar_bullet.png</file>
         <file alias="scrollbar/suggestions_overlayer">images/url_suggestions_overlayer.png</file>
         <file alias="scrollbar/suggestions_separator">images/url_suggestions_separator.png</file>
         <file alias="tabs/bg_image">images/tabbar_bg.png</file>

@@ -42,6 +42,8 @@ Item {
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadFailedStatus)
                 webView.loadHtml(UiConstants.HtmlFor404Page)
+            else if (loadRequest.status == WebView.LoadSucceededStatus)
+                HistoryModel.insert(webView.url, webView.title)
         }
     }
 }

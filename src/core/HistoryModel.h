@@ -14,38 +14,45 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-import QtQuick 2.0
+#ifndef HistoryModel_h
+#define HistoryModel_h
 
-Item {
-    id: delegate
-    height: 80
-    width: delegate.ListView.view.width
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlTableModel>
 
-    function bestDelegate(isSearch) {
-        if(isSearch)
-            return searchDelegate;
-        return suggestionDelegate;
-    }
+class HistoryModel : public QSqlTableModel {
+    Q_OBJECT
+    Q_PROPERTY(QString filterString READ filterString WRITE setFilterString NOTIFY filterStringChanged)
+public:
+    HistoryModel(QSqlDatabase, QObject* parent = 0);
+    void generateRoleNames();
+    QString tableCreateQuery() const;
+    QString filterString() const { return m_filterString; };
+    void setFilterString(const QString&);
 
-    Component {
-        id: searchDelegate
-        SearchItem {
-            onSearchSelected: delegate.ListView.view.searchSelected()
-        }
-    }
+    QVariant data(const QModelIndex&, int role) const;
 
-    Component {
-        id: suggestionDelegate
-        SuggestionItem {
-            url: itemUrl
-            title: itemTitle
-            onSuggestionSelected: delegate.ListView.view.suggestionSelected(url)
-        }
-    }
+    Q_INVOKABLE void insert(const QString& url, const QString& title);
+    void populate();
 
-    Loader {
-        id: itemDisplay
-        anchors.fill: parent
-        sourceComponent: bestDelegate(isSearch)
-    }
-}
+Q_SIGNALS:
+    void filterStringChanged();
+
+private:
+    void sortByRecentlyVisited();
+    void sortByMostVisited();
+    int visitsCount(const QString& url);
+
+    enum Column {
+        Id,
+        Url,
+        Title,
+        VisitsCount,
+        LastVisit
+    };
+
+    QHash<int, QByteArray> m_roles;
+    QString m_filterString;
+};
+
+#endif

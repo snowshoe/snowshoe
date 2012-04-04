@@ -128,9 +128,19 @@ Rectangle {
                 }
                 verticalAlignment: TextInput.AlignVCenter
                 input.focus: false
+                input.onTextChanged: HistoryModel.filterString = input.text
+
+                function isSearchString(text) {
+                    return text.indexOf('.') == -1;
+                }
 
                 onAccepted: {
-                    navigationPanel.openUrl(UrlTools.fromUserInput(urlBar.text), rootPage.shouldOpenNewTab)
+                    if (isSearchString(urlBar.text)) {
+                        var searchUrl = "http://www.google.com/search?q=" + urlBar.text.split(" ").join("+")
+                        navigationPanel.openUrl(searchUrl, rootPage.shouldOpenNewTab)
+                    }
+                    else
+                        navigationPanel.openUrl(UrlTools.fromUserInput(urlBar.text), rootPage.shouldOpenNewTab)
                 }
 
                 Image {
@@ -170,11 +180,6 @@ Rectangle {
             onSuggestionSelected: {
                 navigationPanel.openUrl(UrlTools.fromUserInput(suggestedUrl), rootPage.shouldOpenNewTab)
             }
-            onSearchSelected: {
-                var searchUrl = "http://www.google.com/search?q=" + urlBar.text.replace(" ", "+")
-                navigationPanel.openUrl(searchUrl, rootPage.shouldOpenNewTab)
-            }
-            opacity: urlBar.text != "" && urlBar.text.length > 0
 
             Image {
                 id: separator

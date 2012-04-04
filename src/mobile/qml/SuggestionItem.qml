@@ -20,16 +20,23 @@ import "UiConstants.js" as UiConstants
 Item {
     id: suggestedItem
 
-    property alias url: suggestedUrl.text
+    property string url
     property alias title: suggestedTitle.text
 
-    signal searchSelected()
     signal suggestionSelected(string url)
 
     Image {
         id: suggestionRect
         source: ":/mobile/url/bg_browsing"
         anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+    }
+
+    Image {
+        id: icon
+        source: ":/mobile/scrollbar/btn_url_suggestion"
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: UiConstants.DefaultMargin
     }
 
     Text {
@@ -39,7 +46,7 @@ Item {
         font.pixelSize: UiConstants.DefaultFontSize
         font.family: UiConstants.DefaultFontFamily
         anchors {
-            left: parent.left
+            left: icon.right
             right: parent.right
             top: parent.top
             leftMargin: UiConstants.DefaultMargin
@@ -50,13 +57,13 @@ Item {
 
     Text {
         id: suggestedUrl
-        text: ""
+        text: suggestedItem.url
         color: UiConstants.SecondaryColor
         font.pixelSize: UiConstants.SecondaryFontSize
         font.family: UiConstants.DefaultFontFamily
         font.weight: Font.Light
         anchors {
-            left: parent.left
+            left: icon.right
             right: parent.right
             bottom: parent.bottom
             leftMargin: UiConstants.DefaultMargin
@@ -78,11 +85,6 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked: {
-            if (suggestedItem.isSearch)
-                suggestedItem.searchSelected()
-            else
-                suggestedItem.suggestionSelected(suggestedUrl.text)
-        }
+        onClicked: suggestedItem.suggestionSelected(suggestedItem.url)
     }
 }

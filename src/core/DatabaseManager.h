@@ -17,9 +17,11 @@
 #ifndef DatabaseManager_h
 #define DatabaseManager_h
 
+#include <QtCore/QScopedPointer>
 #include <QtSql/QSqlDatabase>
 
 class BookmarkModel;
+class HistoryModel;
 
 class DatabaseManager {
 public:
@@ -28,6 +30,7 @@ public:
     bool initialize();
 
     BookmarkModel* bookmarkDataBaseModel() const;
+    HistoryModel* historyDataBaseModel() { return m_historyModel.data(); }
 
 protected:
     bool createTables();
@@ -41,6 +44,7 @@ private:
     static DatabaseManager* m_instance;
     QSqlDatabase m_database;
     BookmarkModel* m_bookmarkModel;
+    QScopedPointer<HistoryModel> m_historyModel;
 };
 
 #endif
