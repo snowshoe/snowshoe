@@ -216,10 +216,4 @@ Rectangle {
             }
         }
     ]
-
-    Timer {
-        running: true
-        interval: 800
-        onTriggered: rootPage.state = "favorites"
-    }
 }
