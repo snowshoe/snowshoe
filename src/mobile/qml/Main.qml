@@ -73,7 +73,10 @@ Rectangle {
             navigationPanel.setFullScreen(false);
         }
 
-        onUrlInputFocusChanged: rootPage.showUrlInputForCurrentTab()
+        onUrlInputFocusChanged: {
+            if (urlInputFocus)
+                rootPage.showUrlInputForCurrentTab()
+        }
     }
 
     Image {
@@ -116,11 +119,14 @@ Rectangle {
             UrlBar {
                 id: urlBar
                 anchors {
-                    fill: parent
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: cancelButton.left
                     topMargin: 21
                     bottomMargin: 22
                     leftMargin: UiConstants.DefaultMargin
-                    rightMargin: UiConstants.DefaultMargin
+                    rightMargin: UiConstants.NavBarShortMargin
                 }
                 verticalAlignment: TextInput.AlignVCenter
                 input.focus: false
@@ -130,7 +136,7 @@ Rectangle {
                 }
 
                 Image {
-                    source: clearUrlButton.pressed ? ":/mobile/url/btn_cancel_pressed" : ":/mobile/url/btn_cancel_unpressed"
+                    source: clearUrlButton.pressed ? ":/mobile/url/btn_erase_pressed" : ":/mobile/url/btn_erase_unpressed"
                     visible: urlBar.text != ""
                     anchors {
                         verticalCenter: parent.verticalCenter
@@ -142,6 +148,19 @@ Rectangle {
                         onClicked: urlBar.text = ""
                     }
                 }
+            }
+            Button {
+                id: cancelButton
+                anchors {
+                    right: parent.right
+                    topMargin: 21
+                    bottomMargin: 22
+                    rightMargin: UiConstants.DefaultMargin
+                }
+                pressedImage: ":/mobile/url/btn_cancel_pressed"
+                unpressedImage: ":/mobile/url/btn_cancel_unpressed"
+                visible: true
+                onClicked: rootPage.state = rootPage.previousState
             }
         }
 
@@ -167,6 +186,7 @@ Rectangle {
         }
     }
 
+    property string previousState: ""
     state: "favorites"
     states: [
         State {
@@ -236,6 +256,7 @@ Rectangle {
     function showUrlInputForCurrentTab() {
         urlBar.text = navigationPanel.url;
         rootPage.shouldOpenNewTab = false;
+        rootPage.previousState = rootPage.state;
         rootPage.state = "typeNewUrl";
     }
 }

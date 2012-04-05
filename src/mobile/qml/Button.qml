@@ -27,8 +27,8 @@ Item {
 
     signal clicked()
     anchors.verticalCenter: parent.verticalCenter
-    height: 57
-    width: 56
+    height: buttonImage.height
+    width: buttonImage.width
 
     Image {
         id: buttonImage
