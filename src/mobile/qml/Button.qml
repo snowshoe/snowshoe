@@ -1,5 +1,4 @@
 /****************************************************************************
-
  *   Copyright (C) 2012  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
  *   This file may be used under the terms of the GNU Lesser                *
