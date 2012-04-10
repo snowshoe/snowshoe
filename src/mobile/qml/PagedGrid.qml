@@ -72,8 +72,9 @@ Item {
             }
 
             item.visible = true;
-            item.x = xMargin + col * (size[0] + xStep);
-            item.y = line * (size[1] + yStep);
+            var coords = mapToItem(item.parent, xMargin + col * (size[0] + xStep), line * (size[1] + yStep));
+            item.x = coords.x;
+            item.y = coords.y;
             item.width = size[0];
             item.height = size[1];
             col++;
