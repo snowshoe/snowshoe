@@ -4,6 +4,7 @@
         <file>qml/FavoritesPanel.qml</file>
         <file>qml/NavigationBar.qml</file>
         <file>qml/NavigationPanel.qml</file>
+        <file>qml/NavigationOverlay.qml</file>
         <file>qml/StatusBarIndicator.qml</file>
         <file>qml/SwipeArea.qml</file>
         <file>qml/SnowshoeWebView.qml</file>

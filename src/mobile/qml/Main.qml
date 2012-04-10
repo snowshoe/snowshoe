@@ -73,12 +73,7 @@ Rectangle {
             navigationPanel.setFullScreen(false);
         }
 
-        onUrlInputFocusChanged: {
-            urlBar.text = navigationPanel.url
-            rootPage.shouldOpenNewTab = false
-            rootPage.state = "typeNewUrl"
-        }
-
+        onUrlInputFocusChanged: rootPage.showUrlInputForCurrentTab()
     }
 
     Image {
@@ -94,11 +89,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                urlBar.text = ""
-                rootPage.shouldOpenNewTab = true
-                rootPage.state = "typeNewUrl"
-            }
+            onClicked: rootPage.showUrlInputForNewTab()
         }
     }
 
@@ -191,6 +182,7 @@ Rectangle {
         },
         State {
             name: "navigationFullScreen"
+            StateChangeScript { script: panelToggle.resetToTabs() }
             PropertyChanges { target: panelToggle; opacity: 0 }
             PropertyChanges { target: navigationPanel; opacity: 1 }
             AnchorChanges { target: panelToggle; anchors.bottom: parent.top; anchors.top: undefined }
@@ -234,4 +226,16 @@ Rectangle {
             }
         }
     ]
+
+    function showUrlInputForNewTab() {
+        urlBar.text = "";
+        rootPage.shouldOpenNewTab = true;
+        rootPage.state = "typeNewUrl";
+    }
+
+    function showUrlInputForCurrentTab() {
+        urlBar.text = navigationPanel.url;
+        rootPage.shouldOpenNewTab = false;
+        rootPage.state = "typeNewUrl";
+    }
 }

@@ -53,6 +53,7 @@ OTHER_FILES += \
     mobile/qml/main-harmattan.qml \
     mobile/qml/NavigationBar.qml \
     mobile/qml/NavigationPanel.qml \
+    mobile/qml/NavigationOverlay.qml \
     mobile/qml/PanelToggle.qml \
     mobile/qml/PanelToggleButton.qml \
     mobile/qml/PagedGrid.qml \

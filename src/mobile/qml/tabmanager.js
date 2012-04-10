@@ -58,10 +58,12 @@ function removeTab(index)
 
 function createTab(url, navigationPanel, statusParent)
 {
+    // We set 'z' because WebView must be below the other components of NavigationPanel.
     var webView = Qt.createComponent("SnowshoeWebView.qml").createObject(navigationPanel,
                                                                          { "url" : url,
                                                                            "width" : WINDOW_WIDTH,
-                                                                           "height" : WINDOW_HEIGHT });
+                                                                           "height" : WINDOW_HEIGHT,
+                                                                           "z": -1 });
     var statusBarIndicator = Qt.createComponent("StatusBarIndicator.qml").createObject(statusParent);
     webView.statusIndicator = statusBarIndicator;
 

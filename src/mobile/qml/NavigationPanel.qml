@@ -32,39 +32,65 @@ Item {
     Connections {
         target: visibleTab
         onLoadingChanged: {
-            if (visibleTab.loading) {
-                navigationBar.state = "visible";
-                navigationBarHidingTimer.stop();
-            } else
-                navigationBarHidingTimer.restart();
+            if (navigationPanel.state !== "withNavigationBar")
+                return;
+            navigationBarHidingTimer.updateStateForCurrentTab();
+        }
+    }
+
+    NavigationOverlay {
+        id: overlay
+        visible: false
+        anchors {
+            top: parent.top
+            bottom: tabBar.top
+            left: parent.left
+            right: parent.right
+        }
+
+        onShowThumbnails: {
+            navigationPanel.state = "";
+            navigationPanel.webViewMinimized();
+        }
+
+        onCloseTab: {
+            closeCurrentTab();
+            navigationPanel.state = "";
+        }
+
+        onDismissOverlay: {
+            navigationPanel.state = "";
+        }
+
+        onGoToNextTab: {
+            TabManager.goToNextTab();
+            visibleTab = TabManager.getCurrentTab();
+        }
+
+        onGoToPreviousTab: {
+            TabManager.goToPreviousTab();
+            visibleTab = TabManager.getCurrentTab();
         }
     }
 
     NavigationBar {
         id: navigationBar
         currentWebView: navigationPanel.visibleTab
-
-        // WebViews will be children of navigationPanel, zIndex makes sure bars stay on top.
-        z: 1
-
         anchors.top: parent.bottom
-
-        states: State {
-            name: "visible"
-            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.bottom }
-        }
-
-        transitions: Transition {
-            to: "visible"
-            reversible: true
-            AnchorAnimation { duration: 200 }
-        }
 
         Timer {
             id: navigationBarHidingTimer
             interval: 2000
             onTriggered: {
-                navigationBar.state = "";
+                navigationPanel.state = "";
+            }
+
+            function updateStateForCurrentTab() {
+                if (navigationPanel.visibleTab.loading) {
+                    navigationPanel.state = "withNavigationBar";
+                    stop();
+                } else
+                    restart();
             }
         }
     }
@@ -76,7 +102,6 @@ Item {
         anchors.bottom: navigationBar.top
         anchors.left: parent.left
         anchors.right: parent.right
-        z: 1
 
         Image {
             source: ":/mobile/tabs/bg_image"
@@ -89,28 +114,34 @@ Item {
             spacing: 10
         }
 
-        SwipeArea {
+        MouseArea {
             anchors.fill: parent
-
-            onSwipeRight: {
-                TabManager.goToPreviousTab();
-                visibleTab = TabManager.getCurrentTab();
-                navigationPanel.webViewMaximized();
+            onClicked: {
+                navigationPanel.state = "withNavigationBarAndOverlay";
             }
-
-            onSwipeLeft: {
-                TabManager.goToNextTab();
-                visibleTab = TabManager.getCurrentTab();
-                navigationPanel.webViewMaximized();
-            }
-
-            onClicked: navigationPanel.webViewMinimized()
         }
 
         states: State {
             name: "hidden"
             PropertyChanges { target: tabBar; visible: false; }
         }
+    }
+
+    states: [
+        State {
+            name: "withNavigationBar"
+            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.bottom }
+        },
+        State {
+            name: "withNavigationBarAndOverlay"
+            extend: "withNavigationBar"
+            PropertyChanges { target: overlay; visible: true }
+            StateChangeScript { script: navigationBarHidingTimer.stop() }
+        }
+    ]
+
+    transitions: Transition {
+        AnchorAnimation { duration: 200 }
     }
 
     function openUrl(url, shouldOpenNewTab)
@@ -138,17 +169,12 @@ Item {
         if (value) {
             TabManager.currentTabLayout = TabManager.FULLSCREEN_LAYOUT;
             tabBar.state = "";
-            if (navigationBar.state == "hidden")
-                navigationBar.state = "visible";
-            var tab = TabManager.getCurrentTab();
-            if (tab.loading)
-                navigationBarHidingTimer.stop();
-            else
-                navigationBarHidingTimer.restart();
+            navigationPanel.state = "withNavigationBar";
+            navigationBarHidingTimer.updateStateForCurrentTab();
         } else {
             TabManager.currentTabLayout = TabManager.OVERVIEW_LAYOUT;
             tabBar.state = "hidden";
-            navigationBar.state = "hidden";
+            navigationPanel.state = "";
         }
         TabManager.setTabLayout(TabManager.currentTabLayout, 1);
     }
