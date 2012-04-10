@@ -156,17 +156,9 @@ function doTabFullScreenLayout()
         tab.width = WINDOW_WIDTH;
         tab.height = WINDOW_HEIGHT;
         tab.x = WINDOW_WIDTH * (i - currentTab);
-        tab.y = NavBarHeight;
+        tab.y = 0;
         tab.visible = tab.x === 0;
         tab.active = tab.x === 0;
         tab.visibility = false;
-    }
-}
-
-function doTabResetY()
-{
-    if (currentTab !== -1) {
-        tabs[currentTab][0].y = 0;
-        tabs[currentTab][0].active = true;
     }
 }

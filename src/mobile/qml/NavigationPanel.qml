@@ -42,33 +42,30 @@ Item {
 
     NavigationBar {
         id: navigationBar
-        state: "hidden"
         currentWebView: navigationPanel.visibleTab
 
-        states: [
-            State {
-                name: "hidden"
-                AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.top }
-                StateChangeScript { script: TabManager.doTabResetY(); }
-            },
-            State {
-                name: "visible"
-                AnchorChanges { target: navigationBar; anchors.top: parent.top; anchors.bottom: undefined }
-            }
-        ]
+        // WebViews will be children of navigationPanel, zIndex makes sure bars stay on top.
+        z: 1
 
-        transitions: [
-            Transition {
-                to: "visible"
-                reversible: true
-                AnchorAnimation { duration: 200 }
-            }
-        ]
+        anchors.top: parent.bottom
+
+        states: State {
+            name: "visible"
+            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.bottom }
+        }
+
+        transitions: Transition {
+            to: "visible"
+            reversible: true
+            AnchorAnimation { duration: 200 }
+        }
 
         Timer {
             id: navigationBarHidingTimer
             interval: 2000
-            onTriggered: navigationBar.state = "hidden"
+            onTriggered: {
+                navigationBar.state = "";
+            }
         }
     }
 
@@ -76,7 +73,7 @@ Item {
         id: tabBar
         width: UiConstants.PortraitWidth
         height: UiConstants.TabBarHeight
-        anchors.bottom: parent.bottom
+        anchors.bottom: navigationBar.top
         anchors.left: parent.left
         anchors.right: parent.right
         z: 1
