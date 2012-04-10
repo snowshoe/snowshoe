@@ -18,8 +18,13 @@ import QtQuick 2.0
 
 PagedGrid {
     id: favoritesGrid
+    model: topSitesModel
 
     signal urlSelected(string url)
+
+    ItemModel {
+        id: topSitesModel
+    }
 
     Component {
         id: fakeBookmarkEntry
@@ -65,7 +70,7 @@ PagedGrid {
        var urls = ["kde.org", "google.com", "qt.nokia.com"];
        for (var i = 0; i < 3; ++i) {
            var elem = fakeBookmarkEntry.createObject(favoritesGrid, {source: ":/mobile/fav/icon0"+(i+1), url: urls[i]});
-           addItem(elem);
+           topSitesModel.add(elem);
        }
 
     }

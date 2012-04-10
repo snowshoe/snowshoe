@@ -16,35 +16,30 @@
 
 import QtQuick 2.0
 // TODO: Use a Qt model instead of this javascript file.
-import "itemmodel.js" as Model
 import "UiConstants.js" as UiConstants
 
 Item {
+    property QtObject model
+    // The default height is equal to two items + the margin between them
+    height: UiConstants.PagedGridSizeTable[1]*2 + UiConstants.PagedGridSizeTable[3]
+
     property int page: 0
+    property int pageCount: 0
 
     signal itemClicked(variant item);
 
-    function addItem(item)
-    {
-        Model.add(item);
-        if ((page+1) * UiConstants.PagedGridItemsPerPage < Model.count())
-            page++;
-        else
-            _relayout();
+    Connections {
+        target: model
+        onCountChanged: {
+            pageCount = model.count / UiConstants.PagedGridItemsPerPage;
+            page = Math.min(page, pageCount);
+            relayout();
+        }
     }
 
-    function removeItem(index)
-    {
-        Model.remove(index);
-        if (page * UiConstants.PagedGridItemsPerPage > Model.count())
-            page--;
-        else
-            _relayout();
-    }
+    onPageChanged: relayout();
 
-    onPageChanged: _relayout();
-
-    function _relayout()
+    function relayout()
     {
         var size = UiConstants.PagedGridSizeTable;
         var xMargin = 40;
@@ -54,12 +49,12 @@ Item {
 
         var line = 0;
         var col = 0;
-        var count = Model.count();
+        var count = model.count;
         var firstTabToShow = page * UiConstants.PagedGridItemsPerPage;
         var lastTabToShow = Math.min(firstTabToShow + UiConstants.PagedGridItemsPerPage, count);
         for (var i = 0; i < count; ++i)
         {
-            var item = Model.get(i);
+            var item = model.get(i);
 
             if (i >= lastTabToShow || i < firstTabToShow) {
                 item.visible = false;
@@ -88,10 +83,10 @@ Item {
 
         onClicked: {
             var firstTabToShow = page * UiConstants.PagedGridItemsPerPage;
-            var lastTabToShow = Math.min(firstTabToShow + UiConstants.PagedGridItemsPerPage, Model.count());
+            var lastTabToShow = Math.min(firstTabToShow + UiConstants.PagedGridItemsPerPage, model.count);
 
             for (var i = firstTabToShow; i < lastTabToShow; ++i) {
-                var item = Model.get(i);
+                var item = model.get(i);
                 var x = mouse.x - item.x;
                 var y = mouse.y - item.y;
                 if (x >= 0 &&

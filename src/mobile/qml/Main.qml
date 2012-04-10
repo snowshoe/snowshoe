@@ -53,7 +53,6 @@ Rectangle {
             top: panelToggle.bottom
             left: parent.left
             right: parent.right
-            bottom: plusButton.top
             topMargin: 24
         }
         onUrlSelected: navigationPanel.openUrl(UrlTools.fromUserInput(url), true)
@@ -66,11 +65,9 @@ Rectangle {
 
         onWebViewMaximized: {
             rootPage.state = "navigationFullScreen";
-            navigationPanel.setFullScreen(true);
         }
         onWebViewMinimized: {
             rootPage.state = "navigation";
-            navigationPanel.setFullScreen(false);
         }
 
         onUrlInputFocusChanged: {

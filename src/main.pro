@@ -47,8 +47,7 @@ OTHER_FILES += \
     desktop/qml/main.qml \
     mobile/qml/Button.qml \
     mobile/qml/FavoritesPanel.qml \
-    mobile/qml/tabmanager.js \
-    mobile/qml/itemmodel.js \
+    mobile/qml/ItemModel.qml \
     mobile/qml/Main.qml \
     mobile/qml/main-harmattan.qml \
     mobile/qml/NavigationBar.qml \

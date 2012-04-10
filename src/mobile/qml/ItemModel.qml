@@ -14,29 +14,57 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-var _items = new Array()
+import QtQuick 2.0
 
-function count()
-{
-    return _items.length;
-}
+Item {
+    property int count: 0
+    property QtObject currentElement;
+    property var _items: new Array();
 
-function get(index)
-{
-    return _items[index];
-}
+    function get(index)
+    {
+        return _items[index];
+    }
 
-function remove(index)
-{
-    var end = _items.length - 1;
-    _items[index].destroy();
-    for (var i = index; i < _items.length - 1; i++) {
-        _items[i] = _items[i+1];
-     }
-    _items.pop();
-}
+    function remove(elem)
+    {
+        var index = _items.indexOf(elem);
+        if (index === -1)
+            return;
 
-function add(item)
-{
-    _items.push(item);
+        _items.splice(index, 1);
+        elem.destroy();
+        count--;
+
+        if (!count) {
+            currentElement = null;
+        } else {
+            if (index === count)
+                index--;
+            currentElement = _items[index];
+        }
+    }
+
+    function add(item)
+    {
+        _items.push(item);
+        count++;
+        currentElement = item;
+    }
+
+    function nextItem()
+    {
+        var index = _items.indexOf(currentElement);
+        if (!count || index === count - 1)
+            return;
+        currentElement = _items[index + 1];
+    }
+
+    function previousItem()
+    {
+        var index = _items.indexOf(currentElement);
+        if (!count || !index)
+            return;
+        currentElement = _items[index - 1];
+    }
 }

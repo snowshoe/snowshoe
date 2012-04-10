@@ -18,16 +18,15 @@ import QtQuick 2.0
 import QtWebKit 3.0
 // What to do on Qt5 !?
 import "UiConstants.js" as UiConstants
-import "tabmanager.js" as TabManager
 
 Item {
     id: navigationPanel
-    property bool hasOpennedTabs: false
+    property bool hasOpennedTabs: tabsModel.count
     signal webViewMaximized()
     signal webViewMinimized()
     property alias urlInputFocus: navigationBar.urlInputFocus
     property alias url: navigationBar.url
-    property QtObject visibleTab: null
+    property QtObject visibleTab: tabsModel.currentElement
 
     Connections {
         target: visibleTab
@@ -44,6 +43,36 @@ Item {
         value: navigationPanel.state !== "withNavigationBarAndOverlay"
     }
 
+    ItemModel {
+        id: tabsModel
+
+        function hideNonCurrentElements() {
+            for (var i = 0; i < count; ++i) {
+                var item = get(i);
+                item.visible = item === currentElement
+            }
+        }
+
+        function showAll() {
+            for (var i = 0; i < count; ++i)
+                get(i).visible = true;
+        }
+    }
+
+    PagedGrid {
+        id: tabsGrid
+        model: tabsModel
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            topMargin: UiConstants.NavigationPanelYOffset
+        }
+
+        onItemClicked: tabsModel.currentElement = item;
+    }
+
     NavigationOverlay {
         id: overlay
         visible: false
@@ -56,11 +85,11 @@ Item {
 
         onShowThumbnails: {
             navigationPanel.state = "";
-            navigationPanel.webViewMinimized();
+            tabsModel.currentElement = null;
         }
 
         onCloseTab: {
-            closeCurrentTab();
+            tabsModel.remove(visibleTab);
             navigationPanel.state = "";
         }
 
@@ -69,13 +98,11 @@ Item {
         }
 
         onGoToNextTab: {
-            TabManager.goToNextTab();
-            visibleTab = TabManager.getCurrentTab();
+            tabsModel.nextItem();
         }
 
         onGoToPreviousTab: {
-            TabManager.goToPreviousTab();
-            visibleTab = TabManager.getCurrentTab();
+            tabsModel.previousItem();
         }
     }
 
@@ -150,69 +177,33 @@ Item {
         AnchorAnimation { duration: 200 }
     }
 
+    Component {
+        id: snowShoeWebView
+        SnowshoeWebView {}
+    }
+
     function openUrl(url, shouldOpenNewTab)
     {
-        var tab = shouldOpenNewTab ? TabManager.createTab(url, navigationPanel, tabBarRow) : TabManager.getCurrentTab()
-        // FIXME: we cannot set the same url to a webview while it is loading.
-        // BUG: https://bugs.webkit.org/show_bug.cgi?id=82506
-        if (shouldOpenNewTab) {
-            var statusBarIndicator = tab.statusIndicator;
-            var tabCount = TabManager.tabCount();
-            navigationPanel.hasOpennedTabs = true;
-            tab.tabSelected.connect(selectTab);
-            tab.closeTabRequested.connect(closeCurrentTab);
-            visibleTab = tab;
-        } else {
-            tab.url = url;
+        var webView = snowShoeWebView.createObject(this, { "url" : url,
+                                                           "width" : UiConstants.PortraitWidth,
+                                                           "height" : UiConstants.PortraitHeight,
+                                                           "z" : -1});
+
+        tabsModel.add(webView);
+    }
+
+    onVisibleTabChanged: {
+        if (!visibleTab && tabsModel.count) {
+            tabsModel.showAll();
+            tabsGrid.relayout();
+            navigationPanel.webViewMinimized();
+        } else if (visibleTab) {
+            visibleTab.x = 0;
+            visibleTab.y = 0;
+            visibleTab.width = UiConstants.PortraitWidth;
+            visibleTab.height = UiConstants.PortraitHeight;
+            tabsModel.hideNonCurrentElements();
+            webViewMaximized();
         }
-        navigationPanel.webViewMaximized();
-        return tab;
-    }
-
-    function setFullScreen(value)
-    {
-        if (value) {
-            TabManager.currentTabLayout = TabManager.FULLSCREEN_LAYOUT;
-            tabBar.state = "";
-            navigationPanel.state = "withNavigationBar";
-            navigationBarHidingTimer.updateStateForCurrentTab();
-        } else {
-            TabManager.currentTabLayout = TabManager.OVERVIEW_LAYOUT;
-            tabBar.state = "hidden";
-            navigationPanel.state = "";
-        }
-        // FIXME: This magic number will disappear when we start to use PagedGrid for the tabs.
-        TabManager.setTabLayout(TabManager.currentTabLayout, 2);
-    }
-
-    function closeCurrentTab()
-    {
-        TabManager.removeTab(TabManager.currentTab)
-        if (TabManager.tabCount() === 0)
-            hasOpennedTabs = false;
-    }
-
-    function changeOverview(scale)
-    {
-        if (scale > 1.0)
-            if (TabManager.overviewGridSize > 1) {
-                TabManager.overviewGridSize--;
-            } else {
-                webViewMaximized();
-                return;
-            }
-        else if (scale < 1.0 && TabManager.overviewGridSize < TabManager.MAX_GRID_SIZE)
-            TabManager.overviewGridSize++;
-        else
-            return;
-
-        TabManager.doTabOverviewLayout();
-    }
-
-    function selectTab(tabNumber)
-    {
-        webViewMaximized();
-        TabManager.setCurrentTab(tabNumber);
-        navigationPanel.visibleTab = TabManager.getCurrentTab();
     }
 }

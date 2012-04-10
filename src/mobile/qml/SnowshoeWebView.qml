@@ -22,18 +22,12 @@ import "UiConstants.js" as UiConstants
 Item {
     id: webViewItem
 
-    property variant tabNumber
     property alias url: webView.url
     property alias loading: webView.loading
     property alias canGoBack: webView.canGoBack
     property alias canGoForward: webView.canGoForward
-    property variant statusIndicator
     property bool active: true
-    property bool closeButtonVisible: false
     property bool interactive: true
-
-    signal tabSelected(int tabNumber)
-    signal closeTabRequested()
 
     function goBack() { webView.goBack() }
     function goForward() { webView.goForward() }
@@ -48,36 +42,6 @@ Item {
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadFailedStatus)
                 webView.loadHtml(UiConstants.HtmlFor404Page)
-        }
-    }
-
-    Image {
-        id: borders
-        visible: closeButton.visible
-        anchors.left: parent.left
-        anchors.leftMargin: -40
-        source: ":/mobile/nav/border"
-    }
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        enabled: !webViewItem.active
-        onClicked: tabSelected(tabNumber)
-    }
-
-    Image {
-        id: closeButton
-        anchors.top: parent.top
-        anchors.right: parent.right
-        source: ":/mobile/nav/btn_close"
-        visible: webViewItem.closeButtonVisible
-
-        MouseArea {
-            anchors.centerIn: parent
-            height: parent.height * 0.7
-            width: parent.width * 0.7
-            onClicked: closeTabRequested()
         }
     }
 }
