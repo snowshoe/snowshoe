@@ -8,7 +8,7 @@ Homepage: https://github.com/snowshoe/snowshoe
 
 Package: snowshoe-mobile
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, qt-components2
+Depends: ${shlibs:Depends}, ${misc:Depends}, qt-components2 (>= 2.0~20120228b5), webkit-snapshot (>= 113677)
 Description: Snowshoe mobile browser.
  Snowshoe mobile browser.
 XSBC-Maemo-Display-Name: Snowshoe Mobile
