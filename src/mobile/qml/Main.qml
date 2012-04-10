@@ -35,8 +35,10 @@ Rectangle {
         opacity: 0
         anchors {
             top: panelToggle.bottom
+            left: parent.left
+            right: parent.right
+            bottom: plusButton.top
             topMargin: 24
-            horizontalCenter: parent.horizontalCenter
         }
         onUrlSelected: navigationPanel.openUrl(UrlTools.fromUserInput(url), true)
     }

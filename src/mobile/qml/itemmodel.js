@@ -1,5 +1,3 @@
-.pragma library
-
 /****************************************************************************
  *   Copyright (C) 2012  Instituto Nokia de Tecnologia (INdT)               *
  *                                                                          *
@@ -16,29 +14,29 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-var DefaultMargin = 17
-var DefaultFontSize = 22
-var DefaultFontFamily = "Nokia Pure Text"
-var HtmlFor404Page = "<html><body><h1>=(</h1><h2>Snowshoe says: 404! File not found.</h2><h1>=~</h1></body></html>"
-var PrimaryColor = "#3e3e3e"
-var SecondaryColor = "#8b8b8b"
-var SecondaryFontSize = 20
-var InterfaceColor = "#efefef"
-var DefaultSwipeLenght = 50
-var NavBarLongMargin = 17
-var NavBarShortMargin = 8
-var NavBarHeight = 105
+var _items = new Array()
 
-var StatusBarHeight = 30
-var TabBarHeight = 57
-var PortraitHeight = 854 - StatusBarHeight
-var PortraitWidth = 480
-var LandscapeHeight = 854
-var LandscapeWidth = 480 - StatusBarHeight
+function count()
+{
+    return _items.length;
+}
 
-// Paged grid constants
+function get(index)
+{
+    return _items[index];
+}
 
-// [width, height, horizontalspacing, verticalspacing], the table index refers to the grid size
-var PagedGridSizeTable = [192, 286, 16, 16]; // 4 tabs in a grid
-var PagedGridItemsPerPage = 4;
-var PagedGridNumColumns = 2;
+function remove(index)
+{
+    var end = _items.length - 1;
+    _items[index].destroy();
+    for (var i = index; i < _items.length - 1; i++) {
+        _items[i] = _items[i+1];
+     }
+    _items.pop();
+}
+
+function add(item)
+{
+    _items.push(item);
+}

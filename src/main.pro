@@ -48,12 +48,14 @@ OTHER_FILES += \
     mobile/qml/Button.qml \
     mobile/qml/FavoritesPanel.qml \
     mobile/qml/tabmanager.js \
+    mobile/qml/itemmodel.js \
     mobile/qml/Main.qml \
     mobile/qml/main-harmattan.qml \
     mobile/qml/NavigationBar.qml \
     mobile/qml/NavigationPanel.qml \
     mobile/qml/PanelToggle.qml \
     mobile/qml/PanelToggleButton.qml \
+    mobile/qml/PagedGrid.qml \
     mobile/qml/StatusBarIndicator.qml \
     mobile/qml/SnowshoeWebView.qml \
     mobile/qml/UiConstants.js \
