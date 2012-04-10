@@ -23,6 +23,8 @@ Item {
 
     signal swipeRight()
     signal swipeLeft()
+    signal swipeUp()
+    signal swipeDown()
     signal clicked()
 
     MouseArea {
@@ -39,18 +41,26 @@ Item {
         onReleased: {
             var horizontalDelta = mouse.x - lastX;
             var verticalDelta = mouse.y - lastY;
-            var swipeLength = swipeArea.swipeLength;
+            var isHorizontalSwipe = Math.abs(horizontalDelta) >= swipeArea.swipeLength;
+            var isVerticalSwipe = Math.abs(verticalDelta) >= swipeArea.swipeLength;
 
-            if (Math.abs(horizontalDelta) < swipeLength) {
-                if (Math.abs(verticalDelta) < swipeLength)
-                    swipeArea.clicked();
+            if (!isHorizontalSwipe && !isVerticalSwipe) {
+                swipeArea.clicked();
                 return;
             }
 
-            if (horizontalDelta > 0)
-                swipeArea.swipeRight();
-            else
-                swipeArea.swipeLeft();
+            if (isHorizontalSwipe) {
+                if (horizontalDelta > 0)
+                    swipeArea.swipeRight();
+                else
+                    swipeArea.swipeLeft();
+            } else {
+                if (verticalDelta > 0)
+                    swipeArea.swipeDown();
+                else
+                    swipeArea.swipeUp();
+            }
+
         }
     }
 }
