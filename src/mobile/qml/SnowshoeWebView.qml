@@ -29,7 +29,8 @@ Item {
     property alias canGoForward: webView.canGoForward
     property variant statusIndicator
     property bool active: true
-    property bool visibility: false
+    property bool closeButtonVisible: false
+
     signal tabSelected(int tabNumber)
     signal closeTabRequested()
 
@@ -69,7 +70,7 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         source: ":/mobile/nav/btn_close"
-        visible: webViewItem.visibility
+        visible: webViewItem.closeButtonVisible
 
         MouseArea {
             anchors.centerIn: parent

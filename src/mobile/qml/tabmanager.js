@@ -146,7 +146,7 @@ function doTabOverviewLayout()
         tab.width = size[0];
         tab.height = size[1];
         col++;
-        tab.visibility = currentTabLayout === OVERVIEW_LAYOUT && overviewGridSize === 1;
+        tab.closeButtonVisible = currentTabLayout === OVERVIEW_LAYOUT && overviewGridSize === 1;
     }
 }
 
@@ -161,6 +161,6 @@ function doTabFullScreenLayout()
         tab.y = 0;
         tab.visible = tab.x === 0;
         tab.active = tab.x === 0;
-        tab.visibility = false;
+        tab.closeButtonVisible = false;
     }
 }
