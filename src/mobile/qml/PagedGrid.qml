@@ -76,8 +76,7 @@ Item {
         }
     }
 
-    MouseArea {
-        id: mouseArea
+    SwipeArea {
         anchors.fill: parent
         z: 1
 
@@ -97,6 +96,16 @@ Item {
                     break;
                 }
             }
+        }
+
+        onSwipeLeft: {
+            if (page > 0)
+                page--;
+        }
+
+        onSwipeRight: {
+            if (page < pageCount - 1)
+                page++;
         }
     }
 }

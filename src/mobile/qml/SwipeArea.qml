@@ -25,7 +25,7 @@ Item {
     signal swipeLeft()
     signal swipeUp()
     signal swipeDown()
-    signal clicked()
+    signal clicked(variant mouse)
 
     MouseArea {
         property int lastX
@@ -45,7 +45,7 @@ Item {
             var isVerticalSwipe = Math.abs(verticalDelta) >= swipeArea.swipeLength;
 
             if (!isHorizontalSwipe && !isVerticalSwipe) {
-                swipeArea.clicked();
+                swipeArea.clicked(mouse);
                 return;
             }
 
