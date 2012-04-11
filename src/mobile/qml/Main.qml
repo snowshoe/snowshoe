@@ -248,14 +248,17 @@ Rectangle {
     ]
 
     function showUrlInputForNewTab() {
-        urlBar.text = "";
         rootPage.shouldOpenNewTab = true;
-        rootPage.state = "typeNewUrl";
+        showUrlInput();
     }
 
     function showUrlInputForCurrentTab() {
-        urlBar.text = navigationPanel.url;
         rootPage.shouldOpenNewTab = false;
+        showUrlInput();
+    }
+
+    function showUrlInput() {
+        urlBar.text = rootPage.shouldOpenNewTab ? "" : navigationPanel.url;
         rootPage.previousState = rootPage.state;
         rootPage.state = "typeNewUrl";
     }
