@@ -79,7 +79,7 @@ Rectangle {
     Image {
         id: plusButton
         opacity: 0
-        source: ":/mobile/nav/btn_plus"
+        source: plusButtonMouseArea.pressed ? ":/mobile/nav/btn_plus_pressed" : ":/mobile/nav/btn_plus_unpressed"
         width: 56
         height: 57
 
@@ -88,6 +88,7 @@ Rectangle {
         anchors.horizontalCenter: rootPage.horizontalCenter
 
         MouseArea {
+            id: plusButtonMouseArea
             anchors.fill: parent
             onClicked: rootPage.showUrlInputForNewTab()
         }

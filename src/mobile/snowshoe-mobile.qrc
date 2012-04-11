@@ -32,12 +32,13 @@
         <file alias="fav/icon01">images/fav_01.png</file>
         <file alias="fav/icon02">images/fav_02.png</file>
         <file alias="fav/icon03">images/fav_03.png</file>
-        <file alias="nav/btn_plus">images/button_plus.png</file>
+        <file alias="nav/btn_plus_unpressed">images/button_plus_unpressed.png</file>
+        <file alias="nav/btn_plus_pressed">images/button_plus_pressed.png</file>
         <file alias="navbar/bg_image">images/urlbar_bg_browsing.png</file>
         <file alias="navbar/btn_nav_back_unpressed">images/button_back_unpressed.png</file>
         <file alias="navbar/btn_nav_back_pressed">images/button_back_pressed.png</file>
-        <file alias="navbar/btn_nav_next_unpressed">images/button_next_unpressed.png</file>
-        <file alias="navbar/btn_nav_next_pressed">images/button_next_pressed.png</file>
+        <file alias="navbar/btn_nav_forward_unpressed">images/button_forward_unpressed.png</file>
+        <file alias="navbar/btn_nav_forward_pressed">images/button_forward_pressed.png</file>
         <file alias="navbar/btn_nav_reload_unpressed">images/button_refresh_unpressed.png</file>
         <file alias="navbar/btn_nav_reload_pressed">images/button_refresh_pressed.png</file>
         <file alias="navbar/btn_nav_stop_unpressed">images/button_erase_unpressed.png</file>

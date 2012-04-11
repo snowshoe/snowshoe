@@ -53,8 +53,8 @@ Rectangle {
                 left: { buttonBack.visible ? buttonBack.right : parent.left }
                 leftMargin: buttonBack.visible ? UiConstants.NavBarShortMargin : UiConstants.NavBarLongMargin
             }
-            pressedImage: ":/mobile/navbar/btn_nav_next_pressed"
-            unpressedImage: ":/mobile/navbar/btn_nav_next_unpressed"
+            pressedImage: ":/mobile/navbar/btn_nav_forward_pressed"
+            unpressedImage: ":/mobile/navbar/btn_nav_forward_unpressed"
             visible: { currentWebView ? currentWebView.canGoForward : false }
             onClicked: currentWebView.goForward()
         }
