@@ -64,6 +64,16 @@ PagedGrid {
         }
     }
 
+    IndicatorRow {
+        anchors {
+            top: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            topMargin: 16
+        }
+        itemCount: favoritesGrid.pageCount
+        currentItem: favoritesGrid.page
+    }
+
     onItemClicked: urlSelected(item.url)
 
     Component.onCompleted: {

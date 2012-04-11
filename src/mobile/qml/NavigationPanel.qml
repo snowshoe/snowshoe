@@ -73,6 +73,18 @@ Item {
         onItemClicked: tabsModel.currentElement = item;
     }
 
+    IndicatorRow {
+        id: pageBarRow
+        anchors {
+            top: tabsGrid.bottom
+            horizontalCenter: parent.horizontalCenter
+            topMargin: 16
+        }
+        itemCount: tabsGrid.pageCount
+        currentItem: tabsGrid.page
+        visible: !tabBarRow.visible
+    }
+
     NavigationOverlay {
         id: overlay
         visible: false
@@ -141,10 +153,11 @@ Item {
             anchors.fill: parent
         }
 
-        Row {
+        IndicatorRow {
             id: tabBarRow
             anchors.centerIn: parent
-            spacing: 10
+            itemCount: tabsModel.count
+            currentItem: tabsModel.currentElementIndex
         }
 
         MouseArea {
@@ -152,11 +165,6 @@ Item {
             onClicked: {
                 navigationPanel.state = "withNavigationBarAndOverlay";
             }
-        }
-
-        states: State {
-            name: "hidden"
-            PropertyChanges { target: tabBar; visible: false; }
         }
     }
 
@@ -188,7 +196,6 @@ Item {
                                                            "width" : UiConstants.PortraitWidth,
                                                            "height" : UiConstants.PortraitHeight,
                                                            "z" : -1});
-
         tabsModel.add(webView);
     }
 
@@ -197,6 +204,7 @@ Item {
             tabsModel.showAll();
             tabsGrid.relayout();
             navigationPanel.webViewMinimized();
+            tabBar.visible = false;
         } else if (visibleTab) {
             visibleTab.x = 0;
             visibleTab.y = 0;
@@ -204,6 +212,7 @@ Item {
             visibleTab.height = UiConstants.PortraitHeight - UiConstants.TabBarHeight;
             tabsModel.hideNonCurrentElements();
             webViewMaximized();
+            tabBar.visible = true;
         }
     }
 }

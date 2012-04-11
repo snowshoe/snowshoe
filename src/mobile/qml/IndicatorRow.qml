@@ -17,57 +17,19 @@
 import QtQuick 2.0
 
 Item {
-    property int count: 0
-    property QtObject currentElement: null
-    property int currentElementIndex: -1
-    property var _items: new Array()
+    property int itemCount: 0
+    property int currentItem: 0
+    height: 9
 
-    function get(index)
-    {
-        return _items[index];
-    }
+    Row {
+        spacing: 10
+        anchors.horizontalCenter: parent.horizontalCenter
 
-    function remove(elem)
-    {
-        var index = _items.indexOf(elem);
-        if (index === -1)
-            return;
-
-        _items.splice(index, 1);
-        elem.destroy();
-        count--;
-
-        if (!count) {
-            currentElement = null;
-        } else {
-            if (index === count)
-                index--;
-            currentElement = _items[index];
+        Repeater {
+            model: itemCount
+            StatusBarIndicator {
+                active: modelData === currentItem
+            }
         }
     }
-
-    function add(item)
-    {
-        _items.push(item);
-        count++;
-        currentElement = item;
-    }
-
-    function nextItem()
-    {
-        var index = _items.indexOf(currentElement);
-        if (!count || index === count - 1)
-            return;
-        currentElement = _items[index + 1];
-    }
-
-    function previousItem()
-    {
-        var index = _items.indexOf(currentElement);
-        if (!count || !index)
-            return;
-        currentElement = _items[index - 1];
-    }
-
-    onCurrentElementChanged: currentElementIndex = _items.indexOf(currentElement);
 }

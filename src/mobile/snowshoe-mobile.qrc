@@ -2,6 +2,7 @@
     <qresource prefix="/mobile">
         <file>qml/Button.qml</file>
         <file>qml/FavoritesPanel.qml</file>
+        <file>qml/IndicatorRow.qml</file>
         <file>qml/NavigationBar.qml</file>
         <file>qml/NavigationPanel.qml</file>
         <file>qml/NavigationOverlay.qml</file>
