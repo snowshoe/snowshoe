@@ -181,7 +181,8 @@ Item {
             tabBar.state = "hidden";
             navigationPanel.state = "";
         }
-        TabManager.setTabLayout(TabManager.currentTabLayout, 1);
+        // FIXME: This magic number will disappear when we start to use PagedGrid for the tabs.
+        TabManager.setTabLayout(TabManager.currentTabLayout, 2);
     }
 
     function closeCurrentTab()
