@@ -155,7 +155,6 @@ Item {
             navigationPanel.hasOpennedTabs = true;
             tab.tabSelected.connect(selectTab);
             tab.closeTabRequested.connect(closeCurrentTab);
-            tab.overviewChanged.connect(changeOverview);
             visibleTab = tab;
         } else {
             tab.url = url;
