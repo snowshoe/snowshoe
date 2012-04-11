@@ -31,7 +31,7 @@ Item {
     Connections {
         target: model
         onCountChanged: {
-            pageCount = model.count / UiConstants.PagedGridItemsPerPage;
+            pageCount = Math.ceil(model.count / UiConstants.PagedGridItemsPerPage);
             page = Math.min(page, pageCount);
             relayout();
         }
