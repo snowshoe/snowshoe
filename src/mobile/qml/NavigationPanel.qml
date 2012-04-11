@@ -38,6 +38,12 @@ Item {
         }
     }
 
+    Binding {
+        target: visibleTab
+        property: "interactive"
+        value: navigationPanel.state !== "withNavigationBarAndOverlay"
+    }
+
     NavigationOverlay {
         id: overlay
         visible: false

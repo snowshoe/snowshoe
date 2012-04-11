@@ -30,6 +30,7 @@ Item {
     property variant statusIndicator
     property bool active: true
     property bool closeButtonVisible: false
+    property bool interactive: true
 
     signal tabSelected(int tabNumber)
     signal closeTabRequested()
@@ -42,7 +43,7 @@ Item {
     WebView {
         id: webView
         anchors.fill: parent
-        enabled: webViewItem.active
+        enabled: webViewItem.active && webViewItem.interactive
 
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadFailedStatus)
