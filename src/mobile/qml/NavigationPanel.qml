@@ -201,7 +201,7 @@ Item {
             visibleTab.x = 0;
             visibleTab.y = 0;
             visibleTab.width = UiConstants.PortraitWidth;
-            visibleTab.height = UiConstants.PortraitHeight;
+            visibleTab.height = UiConstants.PortraitHeight - UiConstants.TabBarHeight;
             tabsModel.hideNonCurrentElements();
             webViewMaximized();
         }
