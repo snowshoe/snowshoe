@@ -38,8 +38,8 @@
         <file alias="navbar/btn_nav_back_pressed">images/button_back_pressed.png</file>
         <file alias="navbar/btn_nav_forward_unpressed">images/button_forward_unpressed.png</file>
         <file alias="navbar/btn_nav_forward_pressed">images/button_forward_pressed.png</file>
-        <file alias="navbar/btn_nav_reload_unpressed">images/button_refresh_unpressed.png</file>
-        <file alias="navbar/btn_nav_reload_pressed">images/button_refresh_pressed.png</file>
+        <file alias="navbar/btn_nav_reload_unpressed">images/button_reload_unpressed.png</file>
+        <file alias="navbar/btn_nav_reload_pressed">images/button_reload_pressed.png</file>
         <file alias="navbar/btn_nav_stop_unpressed">images/button_erase_unpressed.png</file>
         <file alias="navbar/btn_nav_stop_pressed">images/button_erase_pressed.png</file>
         <file alias="navbar/url_input">images/url_bar.png</file>
