@@ -25,9 +25,8 @@ Item {
     signal openNewTab()
     signal favoriteTab()
 
-    Image {
+    Item {
         id: overlayBarBase
-        source: ":/mobile/overlaybar/bg_image"
         anchors.fill: parent
 
         Button {

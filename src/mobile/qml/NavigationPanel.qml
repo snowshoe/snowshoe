@@ -59,6 +59,15 @@ Item {
         }
     }
 
+    Image {
+        id: barsBackground
+        height: tabBar.height
+        source: ":/mobile/app/bg_image"
+        anchors.bottom: parent.bottom
+        fillMode: Image.Pad
+        verticalAlignment: Image.AlignBottom
+    }
+
     PagedGrid {
         id: tabsGrid
         model: tabsModel
@@ -168,11 +177,6 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        Image {
-            source: ":/mobile/tabs/bg_image"
-            anchors.fill: parent
-        }
-
         IndicatorRow {
             id: tabBarRow
             anchors.centerIn: parent
@@ -192,6 +196,7 @@ Item {
         State {
             name: "withNavigationBar"
             AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.bottom }
+            PropertyChanges { target: barsBackground; height: tabBar.height + navigationBar.height }
         },
         State {
             name: "withNavigationBarAndOverlay"
@@ -199,11 +204,13 @@ Item {
             PropertyChanges { target: overlay; visible: true }
             AnchorChanges { target: overlayBar; anchors.top: undefined; anchors.bottom: navigationBar.top }
             StateChangeScript { script: navigationBarHidingTimer.stop() }
+            PropertyChanges { target: barsBackground; height: tabBar.height + navigationBar.height + overlayBar.height }
         }
     ]
 
     transitions: Transition {
         AnchorAnimation { duration: 200 }
+        PropertyAnimation { target: barsBackground; properties: "height"; duration: 200 }
     }
 
     Component {
