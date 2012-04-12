@@ -32,7 +32,7 @@ Item {
         target: model
         onCountChanged: {
             pageCount = Math.ceil(model.count / UiConstants.PagedGridItemsPerPage);
-            page = Math.min(page, pageCount);
+            page = Math.min(page, pageCount - 1);
             relayout();
         }
     }
