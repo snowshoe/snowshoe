@@ -31,7 +31,7 @@ Item {
     Connections {
         target: visibleTab
         onLoadingChanged: {
-            if (navigationPanel.state !== "withNavigationBar")
+            if (navigationPanel.state === "withNavigationBarAndOverlay")
                 return;
             navigationBarHidingTimer.updateStateForCurrentTab();
         }
