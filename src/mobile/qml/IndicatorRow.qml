@@ -28,7 +28,7 @@ Item {
         Repeater {
             model: itemCount
             StatusBarIndicator {
-                active: modelData === currentItem
+                active: currentItem < 0 ? false : modelData === currentItem
             }
         }
     }
