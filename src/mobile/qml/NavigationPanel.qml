@@ -54,8 +54,11 @@ Item {
         }
 
         function showAll() {
-            for (var i = 0; i < count; ++i)
-                get(i).visible = true;
+            for (var i = 0; i < count; ++i) {
+                var item = get(i);
+                item.visible = true;
+                item.interactive = false;
+            }
         }
     }
 
