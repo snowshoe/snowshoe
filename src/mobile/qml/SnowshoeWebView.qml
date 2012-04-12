@@ -22,7 +22,7 @@ import "UiConstants.js" as UiConstants
 Item {
     id: webViewItem
 
-    property alias url: webView.url
+    property string url
     property alias loading: webView.loading
     property alias canGoBack: webView.canGoBack
     property alias canGoForward: webView.canGoForward
@@ -31,8 +31,18 @@ Item {
 
     function goBack() { webView.goBack() }
     function goForward() { webView.goForward() }
-    function reload() { webView.reload() }
+    function reload() {
+        // When we load a 404 page using loadHtml, webView.url becomes "about:blank". Requesting a reload with
+        // that address won't reload the original requested page, so it's safer to do this explicit call here.
+        load(url)
+    }
     function stop() { webView.stop() }
+
+    // FIXME: webView.url should reflect url requested by the user (https://bugs.webkit.org/show_bug.cgi?id=77554)
+    function load(newUrl) {
+        webViewItem.url = newUrl // Keep the url requested originally, so we can display on navbar.
+        webView.url = newUrl // Request to load the new url on our internal webview.
+    }
 
     WebView {
         id: webView
@@ -40,10 +50,15 @@ Item {
         enabled: webViewItem.active && webViewItem.interactive
 
         onLoadingChanged: {
+            if (webView.url == "about:blank")
+                return;
+
             if (loadRequest.status === WebView.LoadFailedStatus)
                 webView.loadHtml(UiConstants.HtmlFor404Page)
-            else if (loadRequest.status == WebView.LoadSucceededStatus)
+            else if (loadRequest.status === WebView.LoadSucceededStatus) {
+                webViewItem.url = webView.url // Updates the url displayed on navbar as it could have been redirected.
                 HistoryModel.insert(webView.url, webView.title)
+            }
         }
     }
 }

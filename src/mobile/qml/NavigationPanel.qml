@@ -225,15 +225,15 @@ Item {
 
     function openUrl(url)
     {
-        tabsModel.currentElement.url = url
+        tabsModel.currentElement.load(url)
         webViewMaximized()
     }
     function openUrlInNewTab(url)
     {
-        var webView = snowShoeWebView.createObject(this, { "url" : url,
-                                                           "width" : UiConstants.PortraitWidth,
+        var webView = snowShoeWebView.createObject(this, { "width" : UiConstants.PortraitWidth,
                                                            "height" : UiConstants.PortraitHeight,
                                                            "z" : -1});
+        webView.load(url);
         tabsModel.add(webView);
     }
 
