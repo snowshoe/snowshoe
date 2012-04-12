@@ -42,8 +42,6 @@
         <file alias="navbar/btn_nav_reload_pressed">images/button_refresh_pressed.png</file>
         <file alias="navbar/btn_nav_stop_unpressed">images/button_erase_unpressed.png</file>
         <file alias="navbar/btn_nav_stop_pressed">images/button_erase_pressed.png</file>
-        <file alias="navbar/btn_nav_settings_unpressed">images/button_options_unpressed.png</file>
-        <file alias="navbar/btn_nav_settings_pressed">images/button_options_pressed.png</file>
         <file alias="navbar/url_input">images/url_bar.png</file>
         <file alias="overlaybar/bg_image">images/tabbar_bg.png</file>
         <file alias="overlaybar/btn_thumbview_unpressed">images/button_thumbview_unpressed.png</file>

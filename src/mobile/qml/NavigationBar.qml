@@ -63,8 +63,8 @@ Item {
             left: { buttonNext.visible ? buttonNext.right : (buttonBack.visible ? buttonBack.right : parent.left) }
             leftMargin: buttonNext.visible || buttonBack.visible ? UiConstants.NavBarShortMargin : UiConstants.NavBarLongMargin
             verticalCenter: parent.verticalCenter
-            right: buttonSettings.left
-            rightMargin: UiConstants.NavBarShortMargin
+            right: parent.right
+            rightMargin: UiConstants.NavBarLongMargin
         }
         source: ":/mobile/navbar/url_input"
         Item {
@@ -105,17 +105,5 @@ Item {
                     currentWebView.reload();
             }
         }
-    }
-
-    Button {
-        id: buttonSettings
-        anchors {
-            margins: UiConstants.NavBarLongMargin
-            right: parent.right
-        }
-        pressedImage: ":/mobile/navbar/btn_nav_settings_pressed"
-        unpressedImage: ":/mobile/navbar/btn_nav_settings_unpressed"
-        visible: true
-        onClicked: null
     }
 }
