@@ -49,6 +49,7 @@ OTHER_FILES += \
     mobile/qml/FavoritesPanel.qml \
     mobile/qml/ItemModel.qml \
     mobile/qml/IndicatorRow.qml \
+    mobile/qml/UrlInputPanel.qml \
     mobile/qml/Main.qml \
     mobile/qml/main-harmattan.qml \
     mobile/qml/NavigationBar.qml \

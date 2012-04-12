@@ -25,21 +25,16 @@ Item {
     property alias input: input
     signal accepted()
 
-    Rectangle {
-        anchors.fill: root
-        color: "#fff"
-    }
-
     BorderImage {
         id: border
-        source: ":/mobile/url/border"
-        border { left: 25; top: 25; right: 25; bottom: 25 }
-        anchors.fill: root
+        source: ":/mobile/navbar/url_input"
+        border { left: 26; top: 26; right: 26; bottom: 26 }
+        anchors.fill: parent
     }
 
     TextInput {
         id: input
-        anchors { fill: root; leftMargin: 15; rightMargin: 60 }
+        anchors { fill: parent; leftMargin: 15; rightMargin: 60 }
         font.pixelSize: UiConstants.DefaultFontSize
         font.family: UiConstants.DefaultFontFamily
         font.weight: Font.Light

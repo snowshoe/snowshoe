@@ -94,105 +94,20 @@ Rectangle {
         }
     }
 
-    Rectangle {
-        id: urlArea
-        color: "white"
+    UrlInputPanel {
+        id: urlInputPanel
+        anchors.fill: parent
         opacity: 0
-        anchors.fill: rootPage
-
-        Item {
-            id: urlBarBackground
-            height: 100
-            anchors {
-                bottom: urlArea.bottom
-                left: urlArea.left
-                right: urlArea.right
-            }
-
-            Image {
-                source: ":/mobile/url/bg_typing"
-                anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
-            }
-
-            UrlBar {
-                id: urlBar
-                anchors {
-                    top: parent.top
-                    bottom: parent.bottom
-                    left: parent.left
-                    right: cancelButton.left
-                    topMargin: 21
-                    bottomMargin: 22
-                    leftMargin: UiConstants.DefaultMargin
-                    rightMargin: UiConstants.NavBarShortMargin
-                }
-                verticalAlignment: TextInput.AlignVCenter
-                input.focus: false
-                input.onTextChanged: HistoryModel.filterString = input.text
-
-                function isSearchString(text) {
-                    return text.indexOf('.') == -1;
-                }
-
-                onAccepted: {
-                    var url = null
-                    if (isSearchString(urlBar.text))
-                        url = "http://www.google.com/search?q=" + urlBar.text.split(" ").join("+")
-                    else
-                        url = UrlTools.fromUserInput(urlBar.text)
-                    if (rootPage.shouldOpenNewTab)
-                        navigationPanel.openUrlInNewTab(url)
-                    else
-                        navigationPanel.openUrl(url)
-                }
-
-                Image {
-                    source: clearUrlButton.pressed ? ":/mobile/url/btn_erase_pressed" : ":/mobile/url/btn_erase_unpressed"
-                    visible: urlBar.text != ""
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        right: parent.right
-                    }
-                    MouseArea {
-                        id: clearUrlButton
-                        anchors.fill: parent
-                        onClicked: urlBar.text = ""
-                    }
-                }
-            }
-            Button {
-                id: cancelButton
-                anchors {
-                    right: parent.right
-                    topMargin: 21
-                    bottomMargin: 22
-                    rightMargin: UiConstants.DefaultMargin
-                }
-                pressedImage: ":/mobile/url/btn_cancel_pressed"
-                unpressedImage: ":/mobile/url/btn_cancel_unpressed"
-                visible: true
-                onClicked: rootPage.state = rootPage.previousState
-            }
+        onUrlRequested: {
+            urlInputPanel.unfocusUrlBar();
+            if (rootPage.shouldOpenNewTab)
+                navigationPanel.openUrlInNewTab(url);
+            else
+                navigationPanel.openUrl(url);
         }
-
-        UrlSuggestions {
-            id: urlSuggestions
-            width: rootPage.width
-            clip: true
-            anchors { top: urlArea.top; bottom: urlBarBackground.top; }
-            onSuggestionSelected: {
-                var url = UrlTools.fromUserInput(suggestedUrl)
-                if (rootPage.shouldOpenNewTab)
-                    navigationPanel.openUrlInNewTab(url)
-                else
-                    navigationPanel.openUrl(url)
-            }
-
-            Image {
-                id: separator
-                source: ":/mobile/scrollbar/suggestions_separator"
-                anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
-            }
+        onCancelRequested: {
+            urlInputPanel.unfocusUrlBar();
+            rootPage.state = rootPage.previousState;
         }
     }
 
@@ -220,8 +135,8 @@ Rectangle {
         },
         State {
             name: "typeNewUrl"
-            PropertyChanges { target: urlSuggestions; contentY: 0 }
-            PropertyChanges { target: urlArea; opacity: 1 }
+            PropertyChanges { target: urlInputPanel; opacity: 1 }
+            PropertyChanges { target: panelToggle; opacity: 0 }
         }
     ]
 
@@ -235,25 +150,19 @@ Rectangle {
             PropertyAnimation { property: "opacity"; duration: 300 }
             SequentialAnimation {
                 AnchorAnimation { duration: 300; easing.type: Easing.InOutQuad }
-                PropertyAction { target: urlBar.input; property: "focus"; value: "true" }
+                ScriptAction { script: urlInputPanel.focusUrlBar() }
             }
         },
         Transition {
             from: "typeNewUrl"
             to: "navigationFullScreen"
-            SequentialAnimation {
-                PropertyAction { target: urlBar.input; property: "focus"; value: "false" }
-                PropertyAnimation { property: "opacity"; duration: 300; easing.type: Easing.InOutQuad }
-            }
+            PropertyAnimation { property: "opacity"; duration: 300; easing.type: Easing.InOutQuad }
         },
         Transition {
             from: "navigation"
             to: "navigationFullScreen"
             reversible: true
-            SequentialAnimation {
-                NumberAnimation { targets: [navigationPanel, panelToggle, plusButton]; property: "opacity"; duration: 200 }
-                PropertyAction { target: urlArea; property: "opacity" }
-            }
+            NumberAnimation { targets: [navigationPanel, panelToggle, plusButton]; property: "opacity"; duration: 200 }
         }
     ]
 
@@ -268,7 +177,7 @@ Rectangle {
     }
 
     function showUrlInput() {
-        urlBar.text = rootPage.shouldOpenNewTab ? "" : navigationPanel.url;
+        urlInputPanel.text = rootPage.shouldOpenNewTab ? "" : navigationPanel.url;
         rootPage.previousState = rootPage.state;
         navigationPanel.state = "";
         rootPage.state = "typeNewUrl";

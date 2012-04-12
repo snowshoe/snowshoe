@@ -17,6 +17,7 @@
         <file>qml/main-harmattan.qml</file>
         <file>qml/PanelToggle.qml</file>
         <file>qml/PagedGrid.qml</file>
+        <file>qml/UrlInputPanel.qml</file>
         <file>qml/UrlSuggestions.qml</file>
         <file>qml/SuggestionItem.qml</file>
         <file>qml/Scrollbar.qml</file>
