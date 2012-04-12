@@ -38,8 +38,8 @@ do case "$ARG" in
     d) DEBIAN=1;;
     r) RUN=1;;
     c) CLEAN=1;;
-    h) echo $HELP && exit 0;;
-    ?) echo $HELP && exit 1;;
+    h) echo -e $HELP && exit 0;;
+    ?) echo -e $HELP && exit 1;;
 esac
 done
 
