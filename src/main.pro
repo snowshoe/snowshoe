@@ -54,6 +54,7 @@ OTHER_FILES += \
     mobile/qml/NavigationBar.qml \
     mobile/qml/NavigationPanel.qml \
     mobile/qml/NavigationOverlay.qml \
+    mobile/qml/OverlayBar.qml \
     mobile/qml/PanelToggle.qml \
     mobile/qml/PanelToggleButton.qml \
     mobile/qml/PagedGrid.qml \

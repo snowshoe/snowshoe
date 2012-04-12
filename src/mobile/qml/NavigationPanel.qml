@@ -118,6 +118,26 @@ Item {
         }
     }
 
+    OverlayBar {
+        id: overlayBar
+        visible: overlay.visible
+        anchors {
+            top: navigationBar.top
+            left: parent.left
+            right: parent.right
+        }
+
+        onShowThumbnails: {
+            navigationPanel.state = "";
+            tabsModel.currentElement = null;
+        }
+
+        onOpenNewTab: {
+            navigationPanel.state = "";
+            rootPage.showUrlInputForNewTab();
+        }
+    }
+
     NavigationBar {
         id: navigationBar
         currentWebView: navigationPanel.visibleTab
@@ -144,7 +164,7 @@ Item {
         id: tabBar
         width: UiConstants.PortraitWidth
         height: UiConstants.TabBarHeight
-        anchors.bottom: navigationBar.top
+        anchors.bottom: overlayBar.top
         anchors.left: parent.left
         anchors.right: parent.right
 
@@ -177,6 +197,7 @@ Item {
             name: "withNavigationBarAndOverlay"
             extend: "withNavigationBar"
             PropertyChanges { target: overlay; visible: true }
+            AnchorChanges { target: overlayBar; anchors.top: undefined; anchors.bottom: navigationBar.top }
             StateChangeScript { script: navigationBarHidingTimer.stop() }
         }
     ]

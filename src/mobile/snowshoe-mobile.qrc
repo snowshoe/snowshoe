@@ -6,6 +6,7 @@
         <file>qml/NavigationBar.qml</file>
         <file>qml/NavigationPanel.qml</file>
         <file>qml/NavigationOverlay.qml</file>
+        <file>qml/OverlayBar.qml</file>
         <file>qml/StatusBarIndicator.qml</file>
         <file>qml/SwipeArea.qml</file>
         <file>qml/SnowshoeWebView.qml</file>
@@ -44,6 +45,13 @@
         <file alias="navbar/btn_nav_settings_unpressed">images/button_options_unpressed.png</file>
         <file alias="navbar/btn_nav_settings_pressed">images/button_options_pressed.png</file>
         <file alias="navbar/url_input">images/url_bar.png</file>
+        <file alias="overlaybar/bg_image">images/tabbar_bg.png</file>
+        <file alias="overlaybar/btn_thumbview_unpressed">images/button_thumbview_unpressed.png</file>
+        <file alias="overlaybar/btn_thumbview_pressed">images/button_thumbview_pressed.png</file>
+        <file alias="overlaybar/btn_plus_unpressed">images/button_plus_unpressed.png</file>
+        <file alias="overlaybar/btn_plus_pressed">images/button_plus_pressed.png</file>
+        <file alias="overlaybar/btn_favorite_unpressed">images/button_favorite_unpressed.png</file>
+        <file alias="overlaybar/btn_favorite_pressed">images/button_favorite_pressed.png</file>
         <file alias="scrollbar/bg_image">images/scrollbar_base.png</file>
         <file alias="scrollbar/btn_google_search">images/button_google_search.png</file>
         <file alias="scrollbar/btn_url_suggestion">images/button_url_suggestion.png</file>

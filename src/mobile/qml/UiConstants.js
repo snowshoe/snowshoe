@@ -28,7 +28,8 @@ var DefaultSwipeLenght = 50
 var NavBarLongMargin = 17
 var NavBarShortMargin = 8
 var NavBarHeight = 105
-
+var OverlayBarLongMargin = 128
+var OverlayBarHeight = 64
 var StatusBarHeight = 30
 var TabBarHeight = 57
 var PortraitHeight = 854 - StatusBarHeight
