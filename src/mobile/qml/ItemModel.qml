@@ -40,7 +40,7 @@ Item {
         if (!count) {
             currentElement = null;
         } else {
-            if (index === count)
+            if (index > 0)
                 index--;
             currentElement = _items[index];
         }
