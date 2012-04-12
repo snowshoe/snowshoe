@@ -63,7 +63,7 @@ fi
 LOGFILE=/tmp/$PROJECTFOLDER-build.txt
 
 # Build project
-scratchbox -s <<EOF
+/scratchbox/login -s <<EOF
 cd $PROJECTFOLDER
 export PATH=/opt/qt5/bin:\$PATH
 $BUILD_COMMAND 2>&1 | tee $LOGFILE
