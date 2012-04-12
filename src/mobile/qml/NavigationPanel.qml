@@ -142,7 +142,6 @@ Item {
         }
 
         onOpenNewTab: {
-            navigationPanel.state = "";
             rootPage.showUrlInputForNewTab();
         }
     }
@@ -218,7 +217,12 @@ Item {
         SnowshoeWebView {}
     }
 
-    function openUrl(url, shouldOpenNewTab)
+    function openUrl(url)
+    {
+        tabsModel.currentElement.url = url
+        webViewMaximized()
+    }
+    function openUrlInNewTab(url)
     {
         var webView = snowShoeWebView.createObject(this, { "url" : url,
                                                            "width" : UiConstants.PortraitWidth,

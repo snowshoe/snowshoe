@@ -55,7 +55,7 @@ Rectangle {
             right: parent.right
             topMargin: 24
         }
-        onUrlSelected: navigationPanel.openUrl(UrlTools.fromUserInput(url), true)
+        onUrlSelected: navigationPanel.openUrlInNewTab(UrlTools.fromUserInput(url))
     }
 
     NavigationPanel {
@@ -135,12 +135,15 @@ Rectangle {
                 }
 
                 onAccepted: {
-                    if (isSearchString(urlBar.text)) {
-                        var searchUrl = "http://www.google.com/search?q=" + urlBar.text.split(" ").join("+")
-                        navigationPanel.openUrl(searchUrl, rootPage.shouldOpenNewTab)
-                    }
+                    var url = null
+                    if (isSearchString(urlBar.text))
+                        url = "http://www.google.com/search?q=" + urlBar.text.split(" ").join("+")
                     else
-                        navigationPanel.openUrl(UrlTools.fromUserInput(urlBar.text), rootPage.shouldOpenNewTab)
+                        url = UrlTools.fromUserInput(urlBar.text)
+                    if (rootPage.shouldOpenNewTab)
+                        navigationPanel.openUrlInNewTab(url)
+                    else
+                        navigationPanel.openUrl(url)
                 }
 
                 Image {
@@ -178,7 +181,11 @@ Rectangle {
             clip: true
             anchors { top: urlArea.top; bottom: urlBarBackground.top; }
             onSuggestionSelected: {
-                navigationPanel.openUrl(UrlTools.fromUserInput(suggestedUrl), rootPage.shouldOpenNewTab)
+                var url = UrlTools.fromUserInput(suggestedUrl)
+                if (rootPage.shouldOpenNewTab)
+                    navigationPanel.openUrlInNewTab(url)
+                else
+                    navigationPanel.openUrl(url)
             }
 
             Image {
@@ -263,6 +270,7 @@ Rectangle {
     function showUrlInput() {
         urlBar.text = rootPage.shouldOpenNewTab ? "" : navigationPanel.url;
         rootPage.previousState = rootPage.state;
+        navigationPanel.state = "";
         rootPage.state = "typeNewUrl";
     }
 }
