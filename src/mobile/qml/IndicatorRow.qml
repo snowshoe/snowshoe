@@ -19,16 +19,21 @@ import QtQuick 2.0
 Item {
     property int itemCount: 0
     property int currentItem: 0
-    height: 9
+    property int loadProgress: 0
+    height: 21
+
+    function roundProgress() {
+        return (Math.floor(loadProgress / 5)) * 5;
+    }
 
     Row {
-        spacing: 10
         anchors.horizontalCenter: parent.horizontalCenter
 
         Repeater {
             model: itemCount
             StatusBarIndicator {
                 active: index === currentItem
+                loadProgress: active ? roundProgress() : 0
             }
         }
     }

@@ -26,6 +26,7 @@ Item {
     property alias loading: webView.loading
     property alias canGoBack: webView.canGoBack
     property alias canGoForward: webView.canGoForward
+    property alias loadProgress: webView.loadProgress
     property bool active: true
     property bool interactive: true
 

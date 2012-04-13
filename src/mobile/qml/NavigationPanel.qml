@@ -188,6 +188,7 @@ Item {
             anchors.centerIn: parent
             itemCount: tabsModel.count
             currentItem: tabsModel.currentElementIndex
+            loadProgress: visibleTab ? visibleTab.loadProgress : 0
         }
 
         MouseArea {

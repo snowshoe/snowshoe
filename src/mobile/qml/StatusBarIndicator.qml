@@ -19,6 +19,28 @@ import QtQuick 2.0
 Image {
     z: 1
     property bool active: true
+    property int loadProgress
 
-    source: active ? ":/mobile/tabs/pagination_active" : ":/mobile/tabs/pagination_inactive"
+    source: active ? ":/mobile/indicator/loading_active" : ":/mobile/indicator/loading_inactive"
+
+    Image {
+        id: progressIndicator
+        anchors.fill: parent
+        visible: loadProgress > 0
+        source: ":/mobile/indicator/loading_" + loadProgress
+
+        states: [
+            State {
+                name: "hideProgress"; when: loadProgress === 100
+                PropertyChanges { target: progressIndicator; opacity: 0 }
+            }
+        ]
+
+        transitions: Transition {
+            from: ""; to: "hideProgress"
+            PropertyAnimation { target: progressIndicator; properties: "opacity"; duration: 200 }
+        }
+
+    }
 }
+
