@@ -23,11 +23,11 @@ Item {
     id: navigationPanel
 
     property bool hasOpennedTabs: tabsModel.count
-    property alias urlInputFocus: navigationBar.urlInputFocus
     property alias url: navigationBar.url
     property QtObject visibleTab: tabsModel.currentElement
 
     signal newTabRequested()
+    signal urlInputRequested()
     signal webViewMaximized()
     signal webViewMinimized()
 
@@ -154,6 +154,8 @@ Item {
         id: navigationBar
         currentWebView: navigationPanel.visibleTab
         anchors.top: parent.bottom
+
+        onUrlInputRequested: navigationPanel.urlInputRequested()
 
         Timer {
             id: navigationBarHidingTimer

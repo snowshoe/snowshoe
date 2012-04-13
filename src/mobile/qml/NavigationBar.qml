@@ -22,7 +22,8 @@ Item {
 
     property QtObject currentWebView: null
     property string url: currentWebView ? currentWebView.url : ""
-    property alias urlInputFocus: urlArea.pressed
+
+    signal urlInputRequested()
 
     height: UiConstants.NavBarHeight
     anchors {
@@ -87,8 +88,8 @@ Item {
                 text: navigationBar.url
             }
             MouseArea {
-                id: urlArea
                 anchors.fill: parent
+                onPressed: navigationBar.urlInputRequested()
             }
         }
         Button {

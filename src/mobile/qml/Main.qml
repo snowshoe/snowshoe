@@ -63,16 +63,13 @@ Rectangle {
         anchors.fill: parent
 
         onNewTabRequested: urlInputPanel.showForNewTab()
+        onUrlInputRequested: urlInputPanel.showForCurrentTab()
+
         onWebViewMaximized: {
             rootPage.state = "navigationFullScreen";
         }
         onWebViewMinimized: {
             rootPage.state = "navigation";
-        }
-
-        onUrlInputFocusChanged: {
-            if (urlInputFocus)
-                urlInputPanel.showForCurrentTab()
         }
     }
 
