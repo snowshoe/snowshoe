@@ -71,18 +71,12 @@ Item {
                 urlArea.urlRequested(urlToRequest);
             }
 
-            Image {
-                source: clearUrlButton.pressed ? ":/mobile/url/btn_erase_pressed" : ":/mobile/url/btn_erase_unpressed"
-                visible: urlBar.text != ""
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    right: parent.right
-                }
-                MouseArea {
-                    id: clearUrlButton
-                    anchors.fill: parent
-                    onClicked: urlBar.text = ""
-                }
+            Button {
+                pressedImage: ":/mobile/url/btn_erase_pressed"
+                unpressedImage: ":/mobile/url/btn_erase_unpressed"
+                visible: urlBar.text !== ""
+                anchors.right: parent.right
+                onClicked: urlBar.text = ""
             }
         }
 
