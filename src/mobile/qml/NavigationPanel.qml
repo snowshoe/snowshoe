@@ -21,12 +21,15 @@ import "UiConstants.js" as UiConstants
 
 Item {
     id: navigationPanel
+
     property bool hasOpennedTabs: tabsModel.count
-    signal webViewMaximized()
-    signal webViewMinimized()
     property alias urlInputFocus: navigationBar.urlInputFocus
     property alias url: navigationBar.url
     property QtObject visibleTab: tabsModel.currentElement
+
+    signal newTabRequested()
+    signal webViewMaximized()
+    signal webViewMinimized()
 
     Connections {
         target: visibleTab
@@ -144,9 +147,7 @@ Item {
             tabsModel.currentElement = null;
         }
 
-        onOpenNewTab: {
-            rootPage.showUrlInputForNewTab();
-        }
+        onOpenNewTab: navigationPanel.newTabRequested()
     }
 
     NavigationBar {

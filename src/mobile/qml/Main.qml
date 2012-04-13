@@ -23,7 +23,6 @@ Rectangle {
     height: UiConstants.PortraitHeight
     color: "#aaa"
     clip: true
-    property bool shouldOpenNewTab: false
 
     Image {
         anchors.fill: parent
@@ -63,6 +62,7 @@ Rectangle {
         opacity: 0
         anchors.fill: parent
 
+        onNewTabRequested: urlInputPanel.showForNewTab()
         onWebViewMaximized: {
             rootPage.state = "navigationFullScreen";
         }
@@ -72,7 +72,7 @@ Rectangle {
 
         onUrlInputFocusChanged: {
             if (urlInputFocus)
-                rootPage.showUrlInputForCurrentTab()
+                urlInputPanel.showForCurrentTab()
         }
     }
 
@@ -90,17 +90,37 @@ Rectangle {
         MouseArea {
             id: plusButtonMouseArea
             anchors.fill: parent
-            onClicked: rootPage.showUrlInputForNewTab()
+            onClicked: urlInputPanel.showForNewTab()
         }
     }
 
     UrlInputPanel {
         id: urlInputPanel
+
+        property bool shouldOpenNewTab: false
+
+        function showForNewTab() {
+            shouldOpenNewTab = true;
+            _show();
+        }
+
+        function showForCurrentTab() {
+            shouldOpenNewTab = false;
+            _show();
+        }
+
+        function _show() {
+            text = shouldOpenNewTab ? "" : navigationPanel.url;
+            rootPage.previousState = rootPage.state;
+            navigationPanel.state = "";
+            rootPage.state = "typeNewUrl";
+        }
+
         anchors.fill: parent
         opacity: 0
         onUrlRequested: {
             urlInputPanel.unfocusUrlBar();
-            if (rootPage.shouldOpenNewTab)
+            if (shouldOpenNewTab)
                 navigationPanel.openUrlInNewTab(url);
             else
                 navigationPanel.openUrl(url);
@@ -165,21 +185,4 @@ Rectangle {
             NumberAnimation { targets: [navigationPanel, panelToggle, plusButton]; property: "opacity"; duration: 200 }
         }
     ]
-
-    function showUrlInputForNewTab() {
-        rootPage.shouldOpenNewTab = true;
-        showUrlInput();
-    }
-
-    function showUrlInputForCurrentTab() {
-        rootPage.shouldOpenNewTab = false;
-        showUrlInput();
-    }
-
-    function showUrlInput() {
-        urlInputPanel.text = rootPage.shouldOpenNewTab ? "" : navigationPanel.url;
-        rootPage.previousState = rootPage.state;
-        navigationPanel.state = "";
-        rootPage.state = "typeNewUrl";
-    }
 }
