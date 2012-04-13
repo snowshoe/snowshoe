@@ -44,3 +44,5 @@ var NavigationPanelYOffset = 24 * 2 + /*BUTTON HEIGHT*/ 56;
 var PagedGridSizeTable = [192, 263, 16, 16]; // 4 tabs in a grid
 var PagedGridItemsPerPage = 4;
 var PagedGridNumColumns = 2;
+var PagedGridCloseButtonWidth = 90;
+var PagedGridCloseButtonHeight = 90;

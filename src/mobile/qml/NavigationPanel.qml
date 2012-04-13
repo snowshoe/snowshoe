@@ -87,6 +87,7 @@ Item {
         }
 
         onItemClicked: tabsModel.currentElement = item;
+        onItemClosed: tabsModel.remove(item);
     }
 
     IndicatorRow {

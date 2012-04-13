@@ -37,12 +37,14 @@ Item {
         elem.destroy();
         count--;
 
-        if (!count) {
-            currentElement = null;
-        } else {
-            if (index > 0)
-                index--;
-            currentElement = _items[index];
+        if (currentElement) {
+            if (!count) {
+                currentElement = null;
+            } else {
+                if (index > 0)
+                    index--;
+                currentElement = _items[index];
+            }
         }
     }
 

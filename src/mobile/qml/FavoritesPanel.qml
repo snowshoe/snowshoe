@@ -19,6 +19,7 @@ import QtQuick 2.0
 PagedGrid {
     id: favoritesGrid
     model: topSitesModel
+    showCloseButtons: false
 
     signal urlSelected(string url)
 

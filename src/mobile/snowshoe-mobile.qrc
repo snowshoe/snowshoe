@@ -87,9 +87,13 @@
         <file alias="url/btn_erase_pressed">images/button_erase_pressed.png</file>
         <file alias="url/btn_cancel_unpressed">images/button_cancel_unpressed.png</file>
         <file alias="url/btn_cancel_pressed">images/button_cancel_pressed.png</file>
-        <file alias="grid/mask1">images/thumb_mask_01.png</file>
-        <file alias="grid/mask2">images/thumb_mask_02.png</file>
-        <file alias="grid/mask3">images/thumb_mask_03.png</file>
-        <file alias="grid/mask4">images/thumb_mask_04.png</file>
+        <file alias="grid/mask0">images/thumb_mask_01.png</file>
+        <file alias="grid/mask1">images/thumb_mask_02.png</file>
+        <file alias="grid/mask2">images/thumb_mask_03.png</file>
+        <file alias="grid/mask3">images/thumb_mask_04.png</file>
+        <file alias="grid/btn_close0">images/thumb_close_01.png</file>
+        <file alias="grid/btn_close1">images/thumb_close_02.png</file>
+        <file alias="grid/btn_close2">images/thumb_close_03.png</file>
+        <file alias="grid/btn_close3">images/thumb_close_04.png</file>
     </qresource>
 </RCC>

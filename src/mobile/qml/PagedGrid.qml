@@ -19,20 +19,25 @@ import QtQuick 2.0
 import "UiConstants.js" as UiConstants
 
 Item {
+    id: pagedGrid
     property QtObject model
     // The default height is equal to two items + the margin between them
     height: UiConstants.PagedGridSizeTable[1]*2 + UiConstants.PagedGridSizeTable[3]
 
     property int page: 0
     property int pageCount: 0
+    property bool showCloseButtons: true
+    // Number of visible tabs
+    property int visibleTabs: 0
 
     signal itemClicked(variant item);
+    signal itemClosed(variant item);
 
     Connections {
         target: model
         onCountChanged: {
             pageCount = Math.ceil(model.count / UiConstants.PagedGridItemsPerPage);
-            page = Math.min(page, pageCount - 1);
+            page = pageCount ? Math.min(page, pageCount - 1) : 0;
             relayout();
         }
     }
@@ -52,6 +57,7 @@ Item {
         var count = model.count;
         var firstTabToShow = page * UiConstants.PagedGridItemsPerPage;
         var lastTabToShow = Math.min(firstTabToShow + UiConstants.PagedGridItemsPerPage, count);
+        visibleTabs = lastTabToShow - firstTabToShow;
         for (var i = 0; i < count; ++i)
         {
             var item = model.get(i);
@@ -77,22 +83,32 @@ Item {
     }
 
     SwipeArea {
+        id: swipeArea
         anchors.fill: parent
         z: 1
 
         onClicked: {
             var firstTabToShow = page * UiConstants.PagedGridItemsPerPage;
-            var lastTabToShow = Math.min(firstTabToShow + UiConstants.PagedGridItemsPerPage, model.count);
+            var lastTabToShow = Math.min(firstTabToShow + UiConstants.PagedGridItemsPerPage, pagedGrid.model.count);
 
             for (var i = firstTabToShow; i < lastTabToShow; ++i) {
-                var item = model.get(i);
-                var x = mouse.x - item.x;
-                var y = mouse.y - item.y;
+                var item = pagedGrid.model.get(i);
+                var mousePos = swipeArea.mapToItem(item.parent, mouse.x, mouse.y);
+                var x = mousePos.x - item.x;
+                var y = mousePos.y - item.y;
                 if (x >= 0 &&
                     y >= 0 &&
                     x <= item.width &&
                     y <= item.height) {
-                    parent.itemClicked(item);
+
+                    // Check if the click was on close button
+                    if (showCloseButtons &&
+                        y < UiConstants.PagedGridCloseButtonHeight &&
+                        item.width - x < UiConstants.PagedGridCloseButtonWidth) {
+                        itemClosed(item);
+                    } else {
+                        parent.itemClicked(item);
+                    }
                     break;
                 }
             }
@@ -117,17 +133,22 @@ Item {
         spacing: 16
         columns: 2
 
-        Image {
-            source: "qrc:///mobile/grid/mask1"
-        }
-        Image {
-            source: "qrc:///mobile/grid/mask2"
-        }
-        Image {
-            source: "qrc:///mobile/grid/mask3"
-        }
-        Image {
-            source: "qrc:///mobile/grid/mask4"
+        Repeater {
+            model: 4
+
+            Image {
+                source: "qrc:///mobile/grid/mask" + index
+                visible: index < visibleTabs
+                Image {
+                    id: closeBtn
+                    source: "qrc:///mobile/grid/btn_close" + index
+                    visible: showCloseButtons
+                    anchors {
+                        top: parent.top
+                        right: parent.right
+                    }
+                }
+            }
         }
     }
 }
