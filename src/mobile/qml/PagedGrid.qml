@@ -50,7 +50,8 @@ Item {
 
     function relayout()
     {
-        if (!visible)
+        // FIXME: Remove this early return. "pageCount > 1" is a workaround for N9, but this code looks wrong anyway.
+        if (!visible && pageCount > 1)
             return;
 
         var size = UiConstants.PagedGridSizeTable;
