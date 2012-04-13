@@ -40,12 +40,19 @@ Item {
             page = pageCount ? Math.min(page, pageCount - 1) : 0;
             relayout();
         }
+        onCurrentElementIndexChanged: {
+            if (model.currentElementIndex !== -1)
+                page = Math.floor(model.currentElementIndex / UiConstants.PagedGridItemsPerPage);
+        }
     }
 
     onPageChanged: relayout();
 
     function relayout()
     {
+        if (!visible)
+            return;
+
         var size = UiConstants.PagedGridSizeTable;
         var xMargin = 40;
         var yMargin = 16;
