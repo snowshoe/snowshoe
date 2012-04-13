@@ -97,7 +97,6 @@ Item {
             anchors.right: parent.right
             pressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_pressed" : ":/mobile/navbar/btn_nav_reload_pressed" }
             unpressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_unpressed" : ":/mobile/navbar/btn_nav_reload_unpressed" }
-            visible: true
             onClicked: {
                 if (loading)
                     currentWebView.stop();
