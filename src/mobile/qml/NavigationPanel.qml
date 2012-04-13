@@ -158,6 +158,10 @@ Item {
         anchors.top: parent.bottom
 
         onUrlInputRequested: navigationPanel.urlInputRequested()
+        onStopRequested: navigationPanel.state = "withNavigationBar"
+        onReloadRequested: navigationPanel.state = "withNavigationBar"
+        onBackRequested: navigationPanel.state = "withNavigationBar"
+        onForwardRequested: navigationPanel.state = "withNavigationBar"
 
         Timer {
             id: navigationBarHidingTimer

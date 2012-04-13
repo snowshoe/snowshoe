@@ -24,6 +24,10 @@ Item {
     property string url: currentWebView ? currentWebView.url : ""
 
     signal urlInputRequested()
+    signal backRequested()
+    signal forwardRequested()
+    signal stopRequested()
+    signal reloadRequested()
 
     height: UiConstants.NavBarHeight
     anchors {
@@ -40,7 +44,10 @@ Item {
         pressedImage: ":/mobile/navbar/btn_nav_back_pressed"
         unpressedImage: ":/mobile/navbar/btn_nav_back_unpressed"
         visible: { currentWebView ? currentWebView.canGoBack : false }
-        onClicked: currentWebView.goBack()
+        onClicked: {
+            currentWebView.goBack()
+            backRequested()
+        }
     }
 
     Button {
@@ -52,7 +59,10 @@ Item {
         pressedImage: ":/mobile/navbar/btn_nav_forward_pressed"
         unpressedImage: ":/mobile/navbar/btn_nav_forward_unpressed"
         visible: { currentWebView ? currentWebView.canGoForward : false }
-        onClicked: currentWebView.goForward()
+        onClicked: {
+            currentWebView.goForward()
+            forwardRequested()
+        }
     }
 
     BorderImage {
@@ -99,10 +109,13 @@ Item {
             pressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_pressed" : ":/mobile/navbar/btn_nav_reload_pressed" }
             unpressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_unpressed" : ":/mobile/navbar/btn_nav_reload_unpressed" }
             onClicked: {
-                if (loading)
+                if (loading) {
                     currentWebView.stop();
-                else
+                    stopRequested();
+                } else {
                     currentWebView.reload();
+                    reloadRequested();
+                }
             }
         }
     }
