@@ -99,13 +99,13 @@ Item {
         }
 
         onSwipeLeft: {
-            if (page > 0)
-                page--;
+            if (page < pageCount - 1)
+                page++;
         }
 
         onSwipeRight: {
-            if (page < pageCount - 1)
-                page++;
+            if (page > 0)
+                page--;
         }
     }
 }
