@@ -15,38 +15,26 @@
  ****************************************************************************/
 
 import QtQuick 2.0
-import "UiConstants.js" as UiConstants
 
 Item {
-    id: rootButton
-
-    property bool disabled
-
     property string pressedImage
     property string unpressedImage
 
     signal clicked()
+
     anchors.verticalCenter: parent.verticalCenter
-    height: buttonImage.height
-    width: buttonImage.width
+    height: image.height
+    width: image.width
 
     Image {
-        id: buttonImage
+        id: image
         anchors.centerIn: parent
-        source: {
-            if (buttonMouseArea.isPressed)
-                return pressedImage
-            else
-                return unpressedImage
-        }
+        source: mouseArea.pressed ? pressedImage : unpressedImage
     }
 
     MouseArea {
-        id: buttonMouseArea
-        anchors.fill: buttonImage
-        onClicked: rootButton.clicked();
-        property bool isPressed: false
-        onPressed: { isPressed = true }
-        onReleased: { isPressed = false }
+        id: mouseArea
+        anchors.fill: image
+        onClicked: parent.clicked();
     }
 }
