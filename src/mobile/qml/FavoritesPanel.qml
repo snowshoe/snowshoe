@@ -31,8 +31,10 @@ PagedGrid {
         id: fakeBookmarkEntry
         Image {
             id: fakeImage
-            width: 192
-            height: 286
+            z: -1
+            clip: true
+            verticalAlignment: Image.AlignTop
+            fillMode: Image.Pad
             property string url: ""
 
             Behavior on scale {
@@ -43,14 +45,16 @@ PagedGrid {
             }
 
             Image {
-                source: ":/mobile/app/thumb_overlayer"
+                source: "qrc:///mobile/app/thumb_overlayer"
                 anchors.fill: parent
 
                 Image {
-                    source: ":/mobile/fav/btn_favorite"
+                    source: "qrc:///mobile/overlaybar/btn_favorite_unpressed"
+                    width: 40
+                    height: 40
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
-                    anchors.topMargin: 209
+                    anchors.topMargin: 186
                 }
                 Text {
                     text: fakeImage.url
