@@ -21,9 +21,25 @@ Item {
     id: suggestedItem
 
     property string url
-    property alias title: suggestedTitle.text
+    property string title
+    property bool isGoogleSearch: url.length > UiConstants.GoogleSearchPatternLength
+                                  && url.substring(0, UiConstants.GoogleSearchPatternLength) === UiConstants.GoogleSearchPattern
+    property string keywords: ""
 
     signal suggestionSelected(string url)
+    onIsGoogleSearchChanged: {
+        if (!isGoogleSearch)
+            return;
+
+        // Extract keywords from google's search page title. It removes words until it finds "-", starting from last word.
+        // It follows the format: <keywords> - <google page title>
+        var i;
+        for (i = title.length - 1; i >= 0; --i) {
+            if (title.charAt(i) === '-')
+                break;
+        }
+        keywords = title.substring(0, --i);
+    }
 
     Image {
         id: suggestionRect
@@ -33,15 +49,14 @@ Item {
 
     Image {
         id: icon
-        source: ":/mobile/scrollbar/btn_url_suggestion"
+        source: isGoogleSearch ? ":/mobile/scrollbar/btn_google_search" : ":/mobile/scrollbar/btn_url_suggestion"
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        anchors.leftMargin: UiConstants.DefaultMargin
     }
 
     Text {
         id: suggestedTitle
-        text: ""
+        text: isGoogleSearch ? keywords : suggestedItem.title
         color: UiConstants.PrimaryColor
         font.pixelSize: UiConstants.DefaultFontSize
         font.family: UiConstants.DefaultFontFamily
@@ -51,13 +66,13 @@ Item {
             top: parent.top
             leftMargin: UiConstants.DefaultMargin
             rightMargin: UiConstants.DefaultMargin
-            topMargin: 11
+            topMargin: 13
         }
     }
 
     Text {
         id: suggestedUrl
-        text: suggestedItem.url
+        text: isGoogleSearch ? "Google Search" : suggestedItem.url
         color: UiConstants.SecondaryColor
         font.pixelSize: UiConstants.SecondaryFontSize
         font.family: UiConstants.DefaultFontFamily
@@ -68,7 +83,7 @@ Item {
             bottom: parent.bottom
             leftMargin: UiConstants.DefaultMargin
             rightMargin: UiConstants.DefaultMargin
-            bottomMargin: 19
+            bottomMargin: 17
         }
     }
 

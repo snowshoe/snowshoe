@@ -66,7 +66,7 @@ Item {
             onAccepted: {
                 var urlToRequest;
                 if (isSearchString(urlBar.text))
-                    urlToRequest = "http://www.google.com/search?q=" + urlBar.text.split(" ").join("+");
+                    urlToRequest = UiConstants.GoogleSearchPattern + urlBar.text.split(" ").join("+");
                 else
                     urlToRequest = UrlTools.fromUserInput(urlBar.text);
                 urlArea.urlRequested(urlToRequest);

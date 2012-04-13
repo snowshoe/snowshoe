@@ -46,3 +46,6 @@ var PagedGridItemsPerPage = 4;
 var PagedGridNumColumns = 2;
 var PagedGridCloseButtonWidth = 90;
 var PagedGridCloseButtonHeight = 90;
+
+var GoogleSearchPattern = "http://www.google.com/search?q=";
+var GoogleSearchPatternLength = GoogleSearchPattern.length;
