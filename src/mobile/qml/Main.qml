@@ -33,7 +33,7 @@ Rectangle {
         id: panelToggle
         anchors {
             top: parent.top
-            topMargin: 24
+            topMargin: 32
             horizontalCenter: parent.horizontalCenter
         }
         navigationEnabled: navigationPanel.hasOpennedTabs
@@ -52,7 +52,7 @@ Rectangle {
             top: panelToggle.bottom
             left: parent.left
             right: parent.right
-            topMargin: 24
+            topMargin: 32
         }
         onUrlSelected: navigationPanel.openUrlInNewTab(UrlTools.fromUserInput(url))
     }
@@ -77,11 +77,9 @@ Rectangle {
         id: plusButton
         opacity: 0
         source: plusButtonMouseArea.pressed ? ":/mobile/nav/btn_plus_pressed" : ":/mobile/nav/btn_plus_unpressed"
-        width: 56
-        height: 57
 
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 24
+        anchors.bottomMargin: 32
         anchors.horizontalCenter: rootPage.horizontalCenter
 
         MouseArea {

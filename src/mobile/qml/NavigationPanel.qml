@@ -95,7 +95,7 @@ Item {
         anchors {
             top: tabsGrid.bottom
             horizontalCenter: parent.horizontalCenter
-            topMargin: 16
+            topMargin: 25
         }
         itemCount: tabsGrid.pageCount
         currentItem: tabsGrid.page
