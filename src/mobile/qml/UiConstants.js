@@ -37,7 +37,7 @@ var PortraitWidth = 480
 var LandscapeHeight = 854
 var LandscapeWidth = 480 - StatusBarHeight
 
-var NavigationPanelYOffset = 24 * 2 + /*BUTTON HEIGHT*/ 56;
+var NavigationPanelYOffset = 32 * 2 + /*BUTTON HEIGHT*/ 56;
 
 // Paged grid constants
 // [width, height, horizontalspacing, verticalspacing], the table index refers to the grid size

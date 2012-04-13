@@ -73,7 +73,7 @@ PagedGrid {
         anchors {
             top: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            topMargin: 16
+            topMargin: 25
         }
         itemCount: favoritesGrid.pageCount
         currentItem: favoritesGrid.page
