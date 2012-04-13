@@ -23,6 +23,7 @@ Item {
     property alias verticalAlignment: input.verticalAlignment
     property alias text: input.text
     property alias input: input
+    property bool hasExtraRightMargin: false
     signal accepted()
 
     BorderImage {
@@ -34,7 +35,12 @@ Item {
 
     TextInput {
         id: input
-        anchors { fill: parent; leftMargin: 15; rightMargin: 60 }
+
+        anchors {
+            fill: parent
+            leftMargin: 15
+            rightMargin: hasExtraRightMargin ? 60 : 15
+        }
         font.pixelSize: UiConstants.DefaultFontSize
         font.family: UiConstants.DefaultFontFamily
         font.weight: Font.Light

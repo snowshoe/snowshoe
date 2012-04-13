@@ -57,6 +57,7 @@ Item {
             verticalAlignment: TextInput.AlignVCenter
             input.focus: false
             input.onTextChanged: HistoryModel.filterString = input.text
+            hasExtraRightMargin: eraseButton.visible
 
             function isSearchString(text) {
                 return text.indexOf('.') == -1;
@@ -72,6 +73,7 @@ Item {
             }
 
             Button {
+                id: eraseButton
                 pressedImage: ":/mobile/url/btn_erase_pressed"
                 unpressedImage: ":/mobile/url/btn_erase_unpressed"
                 visible: urlBar.text !== ""
