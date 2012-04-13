@@ -77,6 +77,7 @@ Item {
     PagedGrid {
         id: tabsGrid
         model: tabsModel
+        visible: visibleTab === null
 
         anchors {
             top: parent.top

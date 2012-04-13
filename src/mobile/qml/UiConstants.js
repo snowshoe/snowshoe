@@ -41,6 +41,6 @@ var NavigationPanelYOffset = 24 * 2 + /*BUTTON HEIGHT*/ 56;
 
 // Paged grid constants
 // [width, height, horizontalspacing, verticalspacing], the table index refers to the grid size
-var PagedGridSizeTable = [192, 286, 16, 16]; // 4 tabs in a grid
+var PagedGridSizeTable = [192, 263, 16, 16]; // 4 tabs in a grid
 var PagedGridItemsPerPage = 4;
 var PagedGridNumColumns = 2;

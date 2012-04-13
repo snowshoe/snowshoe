@@ -108,4 +108,26 @@ Item {
                 page--;
         }
     }
+
+    Grid {
+        anchors {
+            fill: parent
+            leftMargin: 40
+        }
+        spacing: 16
+        columns: 2
+
+        Image {
+            source: "qrc:///mobile/grid/mask1"
+        }
+        Image {
+            source: "qrc:///mobile/grid/mask2"
+        }
+        Image {
+            source: "qrc:///mobile/grid/mask3"
+        }
+        Image {
+            source: "qrc:///mobile/grid/mask4"
+        }
+    }
 }
