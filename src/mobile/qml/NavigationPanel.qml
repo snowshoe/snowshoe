@@ -190,7 +190,13 @@ Item {
 
         IndicatorRow {
             id: tabBarRow
-            anchors.centerIn: parent
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+                topMargin: 25
+                bottomMargin: 27
+            }
             itemCount: tabsModel.count
             currentItem: tabsModel.currentElementIndex
             loadProgress: visibleTab ? visibleTab.loadProgress : 0
@@ -238,7 +244,7 @@ Item {
     function openUrlInNewTab(url)
     {
         var webView = snowShoeWebView.createObject(this, { "width" : UiConstants.PortraitWidth,
-                                                           "height" : UiConstants.PortraitHeight,
+                                                           "height" : UiConstants.PortraitHeight - UiConstants.TabBarHeight,
                                                            "z" : -1});
         webView.load(url);
         tabsModel.add(webView);
