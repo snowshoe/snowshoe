@@ -29,7 +29,7 @@ Item {
     signal stopRequested()
     signal reloadRequested()
 
-    height: UiConstants.NavBarHeight
+    height: urlBar.height
     anchors {
         left: parent.left
         right: parent.right

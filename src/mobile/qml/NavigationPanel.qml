@@ -142,6 +142,7 @@ Item {
             top: navigationBar.top
             left: parent.left
             right: parent.right
+            bottomMargin: 27
         }
 
         onShowThumbnails: {
@@ -156,6 +157,7 @@ Item {
         id: navigationBar
         currentWebView: navigationPanel.visibleTab
         anchors.top: parent.bottom
+        anchors.bottomMargin: 31
 
         onUrlInputRequested: navigationPanel.urlInputRequested()
         onStopRequested: navigationPanel.state = "withNavigationBar"
@@ -214,7 +216,11 @@ Item {
         State {
             name: "withNavigationBar"
             AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.bottom }
-            PropertyChanges { target: barsBackground; height: tabBar.height + navigationBar.height }
+            PropertyChanges {
+                target: barsBackground
+                height: tabBar.height + tabBar.anchors.topMargin + tabBar.anchors.bottomMargin
+                        + navigationBar.height + navigationBar.anchors.topMargin + navigationBar.anchors.bottomMargin
+            }
         },
         State {
             name: "withNavigationBarAndOverlay"
@@ -222,7 +228,12 @@ Item {
             PropertyChanges { target: overlay; visible: true }
             AnchorChanges { target: overlayBar; anchors.top: undefined; anchors.bottom: navigationBar.top }
             StateChangeScript { script: navigationBarHidingTimer.stop() }
-            PropertyChanges { target: barsBackground; height: tabBar.height + navigationBar.height + overlayBar.height }
+            PropertyChanges {
+                target: barsBackground
+                height: tabBar.height + tabBar.anchors.topMargin + tabBar.anchors.bottomMargin
+                        + navigationBar.height + navigationBar.anchors.topMargin + navigationBar.anchors.bottomMargin
+                        + overlayBar.height + overlayBar.anchors.topMargin + overlayBar.anchors.bottomMargin
+            }
         }
     ]
 
