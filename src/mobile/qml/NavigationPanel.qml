@@ -221,11 +221,20 @@ Item {
                 height: tabBar.height + tabBar.anchors.topMargin + tabBar.anchors.bottomMargin
                         + navigationBar.height + navigationBar.anchors.topMargin + navigationBar.anchors.bottomMargin
             }
+
+            // TODO: avoid dealing with webView's height. This was used to allow N9 users to be able to click
+            // on tabbar indicators without sending all the clicks to the webView component
+            PropertyChanges {
+                target: visibleTab
+                height: UiConstants.PortraitHeight - barsBackground.height
+                restoreEntryValues: false
+            }
         },
         State {
             name: "withNavigationBarAndOverlay"
             extend: "withNavigationBar"
             PropertyChanges { target: overlay; visible: true }
+            PropertyChanges { target: overlay; opacity: 0.5 }
             AnchorChanges { target: overlayBar; anchors.top: undefined; anchors.bottom: navigationBar.top }
             StateChangeScript { script: navigationBarHidingTimer.stop() }
             PropertyChanges {
@@ -234,12 +243,19 @@ Item {
                         + navigationBar.height + navigationBar.anchors.topMargin + navigationBar.anchors.bottomMargin
                         + overlayBar.height + overlayBar.anchors.topMargin + overlayBar.anchors.bottomMargin
             }
+            PropertyChanges {
+                target: visibleTab
+                height: UiConstants.PortraitHeight - UiConstants.TabBarHeight
+                restoreEntryValues: false
+            }
         }
     ]
 
     transitions: Transition {
-        AnchorAnimation { duration: 200 }
-        PropertyAnimation { target: barsBackground; properties: "height"; duration: 200 }
+        AnchorAnimation { duration: 100 }
+        PropertyAnimation { target: visibleTab; properties: "height"; duration: 100 }
+        PropertyAnimation { target: barsBackground; properties: "height"; duration: 100 }
+        PropertyAnimation { target: overlay; properties: "opacity"; duration: 200 }
     }
 
     Component {

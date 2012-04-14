@@ -19,7 +19,7 @@ import QtQuick 2.0
 Rectangle {
     id: overlay
     color: "black"
-    opacity: 0.5
+    opacity: 0
 
     signal showThumbnails()
     signal closeTab()
