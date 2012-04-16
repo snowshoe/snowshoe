@@ -11,7 +11,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, qt-components2 (>= 2.0~20120228b5), webkit-snapshot (>= 113677)
 Description: Snowshoe mobile browser.
  Snowshoe mobile browser.
-XSBC-Maemo-Display-Name: Snowshoe Mobile
+XSBC-Maemo-Display-Name: Snowshoe
 XB-Maemo-Icon-26:
  iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
  AAAOTQAADiYBwNzaZQAAIABJREFUeJzNm3d4HNd19n93ZrYvgEUHiE6AvYC9d4pFlCiSsklJLpIs
