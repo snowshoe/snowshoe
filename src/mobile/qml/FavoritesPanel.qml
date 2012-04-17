@@ -43,29 +43,6 @@ PagedGrid {
                     easing.type: Easing.InOutQuad
                 }
             }
-
-            Image {
-                source: "qrc:///mobile/app/thumb_overlayer"
-                anchors.fill: parent
-
-                Image {
-                    source: "qrc:///mobile/overlaybar/btn_favorite_unpressed"
-                    width: 40
-                    height: 40
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    anchors.topMargin: 186
-                }
-                Text {
-                    text: fakeImage.url
-                    color: "#515050"
-                    font.pixelSize: 20
-                    font.family: "Nokia Pure Text Light"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 6
-                }
-            }
         }
     }
 
@@ -82,7 +59,7 @@ PagedGrid {
     onItemClicked: urlSelected(item.url)
 
     Component.onCompleted: {
-       var urls = ["kde.org", "google.com", "qt.nokia.com"];
+       var urls = ["kde.org", "google.com", "qt.nokia.comksadfgjsafgsjkadf"];
        for (var i = 0; i < 3; ++i) {
            var elem = fakeBookmarkEntry.createObject(favoritesGrid, {source: ":/mobile/fav/icon0"+(i+1), url: urls[i]});
            topSitesModel.add(elem);

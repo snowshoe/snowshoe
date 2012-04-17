@@ -32,6 +32,7 @@ Item {
 
     signal itemClicked(variant item);
     signal itemClosed(variant item);
+    signal relayoutFinished()
 
     Connections {
         target: model
@@ -88,6 +89,7 @@ Item {
             item.height = size[1];
             col++;
         }
+        relayoutFinished();
     }
 
     SwipeArea {
@@ -145,8 +147,40 @@ Item {
             model: 4
 
             Image {
-                source: "qrc:///mobile/grid/mask" + index
                 visible: index < visibleTabs
+
+                source: "qrc:///mobile/grid/overlayer"
+                height: UiConstants.PagedGridSizeTable[1]
+                fillMode: Image.Pad
+                verticalAlignment: Image.AlignBottom
+                clip: true
+
+                Text {
+                    id: url
+                    text: ""
+                    color: "#515050"
+                    horizontalAlignment: paintedWidth > width ? Text.AlignLeft : Text.AlignHCenter
+                    font.pixelSize: 20
+                    font.family: "Nokia Pure Text Light"
+                    anchors {
+                        bottom: parent.bottom
+                        left: parent.left
+                        right: parent.right
+                        bottomMargin: 10
+                        leftMargin: 14
+                        rightMargin: 14
+                    }
+
+                }
+                Image {
+                    source: "qrc:///mobile/scrollbar/suggestions_overlayer"
+                    visible: url.paintedWidth > url.width
+                    width: 30
+                    anchors {
+                        verticalCenter: url.verticalCenter
+                        right: parent.right
+                    }
+                }
                 Image {
                     id: closeBtn
                     source: "qrc:///mobile/grid/btn_close" + index
@@ -154,6 +188,27 @@ Item {
                     anchors {
                         top: parent.top
                         right: parent.right
+                    }
+                }
+                Image {
+                    source: "qrc:///mobile/grid/btn_favorite_unpressed"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: 186
+                }
+                Image {
+                    source: "qrc:///mobile/grid/mask" + index
+                }
+
+                Connections {
+                    target: pagedGrid
+                    onRelayoutFinished: {
+                        if (index < visibleTabs) {
+                            var rawUrl = pagedGrid.model.get(page * UiConstants.PagedGridItemsPerPage + index).url;
+                            rawUrl = rawUrl.replace(/(https?|file):\/\/\/?(www\.)?/, "");
+                            rawUrl = rawUrl.replace(/\/.*/, "");
+                            url.text = rawUrl;
+                        }
                     }
                 }
             }
