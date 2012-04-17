@@ -3,7 +3,7 @@ Encoding=UTF-8
 Version=1.0
 Type=Application
 Terminal=false
-Name=Snowshoe Mobile
+Name=Snowshoe
 Exec=/usr/bin/invoker --type=e -s /usr/bin/snowshoe_launcher
 Icon=/usr/share/themes/base/meegotouch/icons/snowshoe80.png
 X-Window-Icon=

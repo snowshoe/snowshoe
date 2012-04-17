@@ -1,3 +1,9 @@
+snowshoe-mobile (0.1.8) unstable; urgency=low
+
+  * Updated info on control and desktop files: app name and description.
+
+ -- Luciano Wolf <luciano.wolf@openbossa.org>  Tue, 17 Apr 2012 16:37:56 -0300
+
 snowshoe-mobile (0.1.7) unstable; urgency=low
 
   * New snapshot.
