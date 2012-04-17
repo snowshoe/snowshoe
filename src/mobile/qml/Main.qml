@@ -107,7 +107,6 @@ Rectangle {
         function _show() {
             text = shouldOpenNewTab ? "" : navigationPanel.url;
             rootPage.previousState = rootPage.state;
-            navigationPanel.state = "";
             rootPage.state = "typeNewUrl";
         }
 
@@ -115,6 +114,7 @@ Rectangle {
         opacity: 0
         onUrlRequested: {
             urlInputPanel.unfocusUrlBar();
+            navigationPanel.state = "";
             if (shouldOpenNewTab)
                 navigationPanel.openUrlInNewTab(url);
             else
