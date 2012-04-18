@@ -159,7 +159,7 @@ Item {
                     id: url
                     text: ""
                     color: "#515050"
-                    horizontalAlignment: paintedWidth > width ? Text.AlignLeft : Text.AlignHCenter
+                    horizontalAlignment: urlFade.visible ? Text.AlignLeft : Text.AlignHCenter
                     font.pixelSize: 20
                     font.family: "Nokia Pure Text Light"
                     anchors {
@@ -173,6 +173,7 @@ Item {
 
                 }
                 Image {
+                    id: urlFade
                     source: "qrc:///mobile/scrollbar/suggestions_overlayer"
                     visible: url.paintedWidth > url.width
                     width: 30
