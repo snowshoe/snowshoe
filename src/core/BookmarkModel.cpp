@@ -70,7 +70,8 @@ void BookmarkModel::remove(const QString& url)
     if (!contains(url))
         return;
     QSqlQuery sqlQuery(database());
-    sqlQuery.prepare(QString(QLatin1String("SELECT id FROM bookmarks WHERE url = '%1'")).arg(url));
+    sqlQuery.prepare(QLatin1String("SELECT id FROM bookmarks WHERE url = ?"));
+    sqlQuery.addBindValue(url);
     sqlQuery.exec();
     sqlQuery.first();
     int indexToDelete = -1;
@@ -92,7 +93,8 @@ void BookmarkModel::update(int index, const QString& name, const QString& url)
 bool BookmarkModel::contains(const QString& url)
 {
     QSqlQuery sqlQuery(database());
-    sqlQuery.prepare(QString(QLatin1String("SELECT id FROM bookmarks WHERE url = '%1'")).arg(url));
+    sqlQuery.prepare(QLatin1String("SELECT id FROM bookmarks WHERE url = ?"));
+    sqlQuery.addBindValue(url);
     sqlQuery.exec();
     return sqlQuery.first();
 }
