@@ -45,8 +45,8 @@ Rectangle {
         }
     }
 
-    FavoritesPanel {
-        id: favoritesPanel
+    TopSitesPanel {
+        id: topSitesPanel
         opacity: 0
         anchors {
             top: panelToggle.bottom
@@ -132,7 +132,7 @@ Rectangle {
         State {
             name: "favorites"
             PropertyChanges { target: plusButton; opacity: 1 }
-            PropertyChanges { target: favoritesPanel; opacity: 1 }
+            PropertyChanges { target: topSitesPanel; opacity: 1 }
         },
         State {
             name: "navigation"

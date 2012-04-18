@@ -17,7 +17,7 @@
 import QtQuick 2.0
 
 PagedGrid {
-    id: favoritesGrid
+    id: topSitesGrid
     model: topSitesModel
     showCloseButtons: false
 
@@ -52,8 +52,8 @@ PagedGrid {
             horizontalCenter: parent.horizontalCenter
             topMargin: 25
         }
-        itemCount: favoritesGrid.pageCount
-        currentItem: favoritesGrid.page
+        itemCount: topSitesGrid.pageCount
+        currentItem: topSitesGrid.page
     }
 
     onItemClicked: urlSelected(item.url)
@@ -61,7 +61,7 @@ PagedGrid {
     Component.onCompleted: {
        var urls = ["kde.org", "google.com", "qt.nokia.com"];
        for (var i = 0; i < 3; ++i) {
-           var elem = fakeBookmarkEntry.createObject(favoritesGrid, {source: ":/mobile/fav/icon0"+(i+1), url: urls[i]});
+           var elem = fakeBookmarkEntry.createObject(topSitesGrid, {source: ":/mobile/fav/icon0"+(i+1), url: urls[i]});
            topSitesModel.add(elem);
        }
 

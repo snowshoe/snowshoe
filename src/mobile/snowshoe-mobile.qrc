@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/mobile">
         <file>qml/Button.qml</file>
-        <file>qml/FavoritesPanel.qml</file>
         <file>qml/IndicatorRow.qml</file>
         <file>qml/NavigationBar.qml</file>
         <file>qml/NavigationPanel.qml</file>
@@ -21,6 +20,7 @@
         <file>qml/UrlSuggestions.qml</file>
         <file>qml/SuggestionItem.qml</file>
         <file>qml/Scrollbar.qml</file>
+        <file>qml/TopSitesPanel.qml</file>
         <file alias="app/bg_image">images/app_bg.png</file>
         <file alias="app/tabs_unpressed">images/view_menu_tabs_unpressed.png</file>
         <file alias="app/tabs_pressed">images/view_menu_tabs_pressed.png</file>
