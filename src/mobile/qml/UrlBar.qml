@@ -47,7 +47,7 @@ Item {
         color: UiConstants.PrimaryColor
         clip: true
         text: ""
-        inputMethodHints: Qt.ImhNoPredictiveText
+        inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
 
         onFocusChanged: if (!focus) closeSoftwareInputPanel()
         onAccepted: root.accepted()
