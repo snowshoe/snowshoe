@@ -14,50 +14,40 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#include "BookmarkFilter.h"
+#ifndef RowsRangeFilter_h
+#define RowsRangeFilter_h
 
-BookmarkFilter::BookmarkFilter(QObject *parent)
-    : QSortFilterProxyModel(parent)
-    , m_startRow(-1)
-    , m_endRow(-1)
-{
-    connect(this, SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(onRowsChanged(QModelIndex, int, int)));
-    connect(this, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(onRowsChanged(QModelIndex, int, int)));
-    connect(this, SIGNAL(modelReset()), this, SIGNAL(rowCountChanged()));
-}
+#include <QtCore/QSortFilterProxyModel>
 
-bool BookmarkFilter::filterAcceptsRow(int sourceRow, const QModelIndex&) const
-{
-    return sourceRow >= m_startRow && (sourceRow <= m_endRow || m_endRow == -1);
-}
+class RowsRangeFilter : public QSortFilterProxyModel {
+    Q_OBJECT
+    Q_PROPERTY(QAbstractItemModel* sourceModel READ sourceModel WRITE setSourceModel)
+    Q_PROPERTY(int startRow READ startRow WRITE setStartRow NOTIFY startRowChanged)
+    Q_PROPERTY(int endRow READ endRow WRITE setEndRow NOTIFY endRowChanged)
+    Q_PROPERTY(int rowCount READ rowCount NOTIFY rowCountChanged)
 
-int BookmarkFilter::startRow() const
-{
-    return m_startRow;
-}
+public:
+    RowsRangeFilter(QObject *parent = 0);
 
-void BookmarkFilter::setStartRow(int row)
-{
-    m_startRow = row;
-    emit startRowChanged();
-    invalidate();
-    emit rowCountChanged();
-}
+    bool filterAcceptsRow(int, const QModelIndex&) const;
 
-int BookmarkFilter::endRow() const
-{
-    return m_endRow;
-}
+    int startRow() const;
+    void setStartRow(int);
 
-void BookmarkFilter::setEndRow(int row)
-{
-    m_endRow = row;
-    emit endRowChanged();
-    invalidate();
-    emit rowCountChanged();
-}
+    int endRow() const;
+    void setEndRow(int);
 
-void BookmarkFilter::onRowsChanged(QModelIndex, int, int)
-{
-    emit rowCountChanged();
-}
+signals:
+    void startRowChanged();
+    void endRowChanged();
+    void rowCountChanged();
+
+private slots:
+    void onRowsChanged(QModelIndex, int, int);
+
+private:
+    int m_startRow;
+    int m_endRow;
+};
+
+#endif // BookmarkFilter_h

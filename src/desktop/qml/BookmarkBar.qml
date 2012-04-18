@@ -39,7 +39,7 @@ Item {
         orientation: ListView.Horizontal
         property int maximumBookmarkWidth: 150
 
-        BookmarkFilter {
+        RowsRangeFilter {
             id: filteredModel
             sourceModel: BookmarkModel
             endRow: Math.floor(listView.width / (listView.maximumBookmarkWidth + listView.spacing)) - 1

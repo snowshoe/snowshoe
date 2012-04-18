@@ -36,7 +36,7 @@ PopupWindow {
         border { left: 12; top: 6; right: 12; bottom: 16 }
     }
 
-    BookmarkFilter {
+    RowsRangeFilter {
         id: filteredModel
     }
 

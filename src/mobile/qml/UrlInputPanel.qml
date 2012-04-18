@@ -37,7 +37,7 @@ Item {
         id: urlBarBackground
         height: 100
         anchors {
-            bottom: urlArea.bottom
+            top: suggestionsBackground.bottom
             left: urlArea.left
             right: urlArea.right
         }
@@ -97,10 +97,11 @@ Item {
     }
 
     Rectangle {
+        id: suggestionsBackground
         color: "white"
+        height: 400 + radius
         anchors {
             top: parent.top
-            bottom: urlBarBackground.top
             left: parent.left
             right: parent.right
             leftMargin: 1
@@ -112,7 +113,6 @@ Item {
 
         UrlSuggestions {
             id: urlSuggestions
-            width: rootPage.width
             clip: true
             anchors {
                 fill: parent

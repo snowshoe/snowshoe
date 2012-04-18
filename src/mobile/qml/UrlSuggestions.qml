@@ -15,12 +15,14 @@
  ****************************************************************************/
 
 import QtQuick 2.0
+import Snowshoe 1.0
 import "UiConstants.js" as UiConstants
 
 ListView {
     id: suggestionsList
     signal suggestionSelected(string suggestedUrl)
     clip: true
+    interactive: false
     delegate: SuggestionItem {
         url: model.url
         title: model.title
@@ -29,13 +31,11 @@ ListView {
         onSuggestionSelected: suggestionsList.suggestionSelected(url)
     }
 
-    model: HistoryModel
-
-    Scrollbar {
-        list: suggestionsList
-        width: 6
-        height: parent.height
-        anchors { right: parent.right; top: parent.top; rightMargin: 6; bottom: parent.bottom }
-        opacity: list.moving ? 1 : 0
+    RowsRangeFilter {
+        id: suggestionsModel
+        sourceModel: HistoryModel
+        endRow: 4
     }
+
+    model: suggestionsModel
 }

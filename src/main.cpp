@@ -17,7 +17,7 @@
 #include "desktop/BrowserWindow.h"
 #include "mobile/BrowserWindowMobile.h"
 
-#include "BookmarkFilter.h"
+#include "RowsRangeFilter.h"
 #include "DatabaseManager.h"
 #include "PopupWindow.h"
 
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
     app.setOrganizationName(QLatin1String("Snowshoe"));
     app.setApplicationVersion("1.0.0");
 
-    qmlRegisterType<BookmarkFilter>("Snowshoe", 1, 0, "BookmarkFilter");
+    qmlRegisterType<RowsRangeFilter>("Snowshoe", 1, 0, "RowsRangeFilter");
     qmlRegisterUncreatableType<QAbstractItemModel>("Snowshoe", 1, 0, "QAbstractItemModel", QObject::tr("You can't create a QAbstractItemModel"));
     qmlRegisterType<PopupWindow>("Snowshoe", 1, 0, "PopupWindow");
 

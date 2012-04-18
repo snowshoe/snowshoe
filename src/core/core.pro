@@ -6,7 +6,7 @@ QT +=  declarative sql widgets quick
 
 SOURCES += \
     ApplicationStateTracker.cpp \
-    BookmarkFilter.cpp \
+    RowsRangeFilter.cpp \
     BookmarkModel.cpp \
     HistoryModel.cpp \
     DatabaseManager.cpp \
@@ -14,7 +14,7 @@ SOURCES += \
 
 HEADERS += \
     ApplicationStateTracker.h \
-    BookmarkFilter.h \
+    RowsRangeFilter.h \
     BookmarkModel.h \
     HistoryModel.h \
     DatabaseManager.h \
