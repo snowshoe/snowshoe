@@ -16,47 +16,62 @@
 
 import QtQuick 2.0
 
-PagedGrid {
-    id: topSitesGrid
-    model: topSitesModel
-    showCloseButtons: false
+Item {
+    id: root
+    height: topSitesGrid.height + 25 + indicatorRow.height
 
     signal urlSelected(string url)
 
-    ItemModel {
-        id: topSitesModel
-    }
-
-    Component {
-        id: fakeBookmarkEntry
-        Image {
-            id: fakeImage
-            z: -1
-            clip: true
-            verticalAlignment: Image.AlignTop
-            fillMode: Image.Pad
-            property string url: ""
-
-            Behavior on scale {
-                NumberAnimation {
-                    duration: 400
-                    easing.type: Easing.InOutQuad
-                }
-            }
-        }
-    }
-
     IndicatorRow {
+        id: indicatorRow
         anchors {
-            top: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-            topMargin: 25
+            bottom: root.bottom
+            left: root.left
+            right: root.right
         }
         itemCount: topSitesGrid.pageCount
         currentItem: topSitesGrid.page
     }
 
-    onItemClicked: urlSelected(item.url)
+    PagedGrid {
+        id: topSitesGrid
+        model: topSitesModel
+        showCloseButtons: false
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
+
+        ItemModel {
+            id: topSitesModel
+        }
+
+        Component {
+            id: fakeBookmarkEntry
+            Image {
+                id: fakeImage
+                z: -1
+                clip: true
+                verticalAlignment: Image.AlignTop
+                fillMode: Image.Pad
+                property string url: ""
+
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 400
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+            }
+        }
+
+        onItemClicked: {
+            console.log('clicked on url' + item.url)
+            root.urlSelected(item.url)
+        }
+    }
 
     Component.onCompleted: {
        var urls = ["http://www.kde.org/", "http://www.google.com/", "http://www.qt.nokia.com/"];
@@ -69,6 +84,5 @@ PagedGrid {
            var elem = fakeBookmarkEntry.createObject(topSitesGrid, {source: ":/mobile/fav/icon0"+(i+1), url: urls[i]});
            topSitesModel.add(elem);
        }
-
     }
 }

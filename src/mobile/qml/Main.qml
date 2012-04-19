@@ -78,8 +78,8 @@ Rectangle {
         opacity: 0
         source: plusButtonMouseArea.pressed ? ":/mobile/nav/btn_plus_pressed" : ":/mobile/nav/btn_plus_unpressed"
 
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 32
+        anchors.top: topSitesPanel.bottom
+        anchors.topMargin: 27
         anchors.horizontalCenter: rootPage.horizontalCenter
 
         MouseArea {
