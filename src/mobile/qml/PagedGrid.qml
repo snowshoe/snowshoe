@@ -116,6 +116,8 @@ Item {
                         y < UiConstants.PagedGridCloseButtonHeight &&
                         item.width - x < UiConstants.PagedGridCloseButtonWidth) {
                         itemClosed(item);
+                    } else if (y > item.height - 85) {
+                        BookmarkModel.toggleFavorite(item.url);
                     } else {
                         parent.itemClicked(item);
                     }
@@ -183,7 +185,6 @@ Item {
                     }
                 }
                 Image {
-                    id: closeBtn
                     source: "qrc:///mobile/grid/btn_close" + index
                     visible: showCloseButtons
                     anchors {
@@ -192,7 +193,9 @@ Item {
                     }
                 }
                 Image {
-                    source: "qrc:///mobile/grid/btn_favorite_unpressed"
+                    id: favoriteBtn
+                    property bool enabled
+                    source: enabled ? "qrc:///mobile/grid/btn_favorite_pressed" : "qrc:///mobile/grid/btn_favorite_unpressed"
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: 186
@@ -206,9 +209,20 @@ Item {
                     onRelayoutFinished: {
                         if (index < visibleTabs) {
                             var rawUrl = pagedGrid.model.get(page * UiConstants.PagedGridItemsPerPage + index).url;
+                            favoriteBtn.enabled = BookmarkModel.contains(rawUrl);
                             rawUrl = rawUrl.replace(/(https?|file):\/\/\/?(www\.)?/, "");
                             rawUrl = rawUrl.replace(/\/.*/, "");
                             url.text = rawUrl;
+
+                        }
+                    }
+                }
+                Connections {
+                    target: BookmarkModel
+                    onCountChanged: {
+                        if (index < visibleTabs) {
+                            var rawUrl = pagedGrid.model.get(page * UiConstants.PagedGridItemsPerPage + index).url;
+                            favoriteBtn.enabled = BookmarkModel.contains(rawUrl);
                         }
                     }
                 }

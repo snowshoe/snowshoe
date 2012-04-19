@@ -25,6 +25,7 @@ BookmarkModel::BookmarkModel(QSqlDatabase database, QObject *parent)
 {
     connect(this, SIGNAL(rowsInserted(const QModelIndex&, int, int)), SIGNAL(countChanged()));
     connect(this, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), SIGNAL(countChanged()));
+    setEditStrategy(OnManualSubmit);
 }
 
 void BookmarkModel::generateRoleNames()
@@ -63,12 +64,14 @@ void BookmarkModel::insert(const QString& name, const QString& url)
     record.setValue(QLatin1String("url"), url);
 
     insertRecord(-1, record);
+    submitAll();
 }
 
 void BookmarkModel::remove(const QString& url)
 {
     if (!contains(url))
         return;
+
     QSqlQuery sqlQuery(database());
     sqlQuery.prepare(QLatin1String("SELECT id FROM bookmarks WHERE url = ?"));
     sqlQuery.addBindValue(url);
@@ -81,7 +84,19 @@ void BookmarkModel::remove(const QString& url)
             break;
         }
     }
-    removeRow(indexToDelete);
+
+    if (indexToDelete >= 0) {
+        removeRow(indexToDelete);
+        submitAll();
+    }
+}
+
+void BookmarkModel::toggleFavorite(const QString& url)
+{
+    if (contains(url))
+        remove(url);
+    else
+        insert(url, url);
 }
 
 void BookmarkModel::update(int index, const QString& name, const QString& url)

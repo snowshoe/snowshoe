@@ -21,9 +21,11 @@ Item {
     id: overlayBar
     height: UiConstants.OverlayBarHeight
 
+    property bool favorite: false
+
     signal showThumbnails()
     signal openNewTab()
-    signal favoriteTab()
+    signal favoriteToggled()
 
     Item {
         id: overlayBarBase
@@ -54,9 +56,9 @@ Item {
                 right: parent.right
                 rightMargin: UiConstants.OverlayBarLongMargin
             }
-            pressedImage: ":/mobile/overlaybar/btn_favorite_pressed"
-            unpressedImage: ":/mobile/overlaybar/btn_favorite_unpressed"
-            onClicked: overlayBar.favoriteTab()
+            pressedImage: favorite ? "qrc:///mobile/overlaybar/btn_favorite_unpressed" : "qrc:///mobile/overlaybar/btn_favorite_pressed"
+            unpressedImage: favorite ? "qrc:///mobile/overlaybar/btn_favorite_pressed" : "qrc:///mobile/overlaybar/btn_favorite_unpressed"
+            onClicked: overlayBar.favoriteToggled()
         }
     }
 }

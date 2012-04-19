@@ -151,6 +151,16 @@ Item {
         }
 
         onOpenNewTab: navigationPanel.newTabRequested()
+
+        onFavoriteToggled: BookmarkModel.toggleFavorite(visibleTab.url);
+
+        Connections {
+            target: BookmarkModel
+            onCountChanged: {
+                if (visibleTab)
+                    overlayBar.favorite = BookmarkModel.contains(visibleTab.url);
+            }
+        }
     }
 
     NavigationBar {
@@ -180,6 +190,8 @@ Item {
                     restart();
             }
         }
+
+        onUrlChanged: overlayBar.favorite = BookmarkModel.contains(url);
     }
 
     Item {

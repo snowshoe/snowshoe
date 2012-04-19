@@ -19,6 +19,7 @@
 
 #include "DatabaseManager.h"
 #include "HistoryModel.h"
+#include "BookmarkModel.h"
 #include "UrlTools.h"
 #include <QtCore/QCoreApplication>
 #include <QtQml/QQmlContext>
@@ -38,7 +39,10 @@ void BrowserWindowMobile::setupDeclarativeEnvironment()
 {
     QQmlContext* context = rootContext();
     context->setContextProperty("BrowserWindow", this);
-    context->setContextProperty("HistoryModel", DatabaseManager::instance()->historyDataBaseModel());
+
+    DatabaseManager* dbManager = DatabaseManager::instance();
+    context->setContextProperty("HistoryModel", dbManager->historyDataBaseModel());
+    context->setContextProperty("BookmarkModel", dbManager->bookmarkDataBaseModel());
     context->setContextProperty("UrlTools", new UrlTools(this));
 
     QObject::connect(engine(), SIGNAL(quit()), qApp, SLOT(quit()));

@@ -54,7 +54,6 @@ DatabaseManager::DatabaseManager()
     m_database.setDatabaseName(dataBaseName);
 
     m_bookmarkModel = new BookmarkModel(m_database);
-    m_bookmarkModel->setEditStrategy(QSqlTableModel::OnFieldChange);
 
     m_historyModel.reset(new HistoryModel(m_database));
     m_historyModel->setEditStrategy(QSqlTableModel::OnFieldChange);

@@ -59,8 +59,13 @@ PagedGrid {
     onItemClicked: urlSelected(item.url)
 
     Component.onCompleted: {
-       var urls = ["kde.org", "google.com", "qt.nokia.com"];
+       var urls = ["http://www.kde.org/", "http://www.google.com/", "http://www.qt.nokia.com/"];
        for (var i = 0; i < 3; ++i) {
+           //!!! Start of temporary code while topsites isn't ready.
+           if (!BookmarkModel.contains(urls[i]))
+               BookmarkModel.insert(urls[i], urls[i]);
+           //!!! End of temporary code
+
            var elem = fakeBookmarkEntry.createObject(topSitesGrid, {source: ":/mobile/fav/icon0"+(i+1), url: urls[i]});
            topSitesModel.add(elem);
        }
