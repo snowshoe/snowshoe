@@ -67,10 +67,7 @@ Item {
             }
         }
 
-        onItemClicked: {
-            console.log('clicked on url' + item.url)
-            root.urlSelected(item.url)
-        }
+        onItemClicked: root.urlSelected(item.url)
     }
 
     Component.onCompleted: {
