@@ -106,7 +106,8 @@ Rectangle {
 
         function _show() {
             text = shouldOpenNewTab ? "" : navigationPanel.url;
-            rootPage.previousState = rootPage.state;
+            if (rootPage.state !== "typeNewUrl")
+                rootPage.previousState = rootPage.state;
             rootPage.state = "typeNewUrl";
         }
 
