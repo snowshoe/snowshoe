@@ -162,16 +162,18 @@ Rectangle {
         },
         Transition {
             to: "typeNewUrl"
-            PropertyAnimation { property: "opacity"; duration: 300 }
+            PropertyAnimation { property: "opacity"; duration: 200; easing.type: Easing.InCubic }
             SequentialAnimation {
-                AnchorAnimation { duration: 300; easing.type: Easing.InOutQuad }
+                PauseAnimation { duration: 300 }
                 ScriptAction { script: urlInputPanel.focusUrlBar() }
             }
         },
         Transition {
             from: "typeNewUrl"
-            to: "navigationFullScreen"
-            PropertyAnimation { property: "opacity"; duration: 300; easing.type: Easing.InOutQuad }
+            SequentialAnimation {
+                PauseAnimation { duration: 300 }
+                PropertyAnimation { property: "opacity"; duration: 200; easing.type: Easing.InCubic }
+            }
         },
         Transition {
             from: "navigation"
