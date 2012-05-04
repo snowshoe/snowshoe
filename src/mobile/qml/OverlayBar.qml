@@ -37,16 +37,16 @@ Item {
                 left: parent.left
                 leftMargin: UiConstants.OverlayBarLongMargin
             }
-            pressedImage: ":/mobile/overlaybar/btn_thumbview_pressed"
-            unpressedImage: ":/mobile/overlaybar/btn_thumbview_unpressed"
+            pressedImage: "qrc:///mobile/overlaybar/btn_thumbview_pressed"
+            unpressedImage: "qrc:///mobile/overlaybar/btn_thumbview_unpressed"
             onClicked: overlayBar.showThumbnails()
         }
 
         Button {
             id: buttonPlus
             anchors.horizontalCenter: parent.horizontalCenter
-            pressedImage: ":/mobile/overlaybar/btn_plus_pressed"
-            unpressedImage: ":/mobile/overlaybar/btn_plus_unpressed"
+            pressedImage: "qrc:///mobile/overlaybar/btn_plus_pressed"
+            unpressedImage: "qrc:///mobile/overlaybar/btn_plus_unpressed"
             onClicked: overlayBar.openNewTab()
         }
 

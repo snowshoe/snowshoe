@@ -45,7 +45,7 @@ Row {
 
     Image {
         id: topsites
-        source: ":/mobile/app/topsites" + (active ? "_pressed" : "_unpressed")
+        source: "qrc:///mobile/app/topsites" + (active ? "_pressed" : "_unpressed")
         property bool active;
 
         MouseArea {
@@ -55,7 +55,7 @@ Row {
     }
     Image {
         id: tabs
-        source: ":/mobile/app/tabs" + (active ? "_pressed" : "_unpressed")
+        source: "qrc:///mobile/app/tabs" + (active ? "_pressed" : "_unpressed")
         property bool active;
 
         MouseArea {

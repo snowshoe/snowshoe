@@ -26,7 +26,7 @@ Rectangle {
 
     Image {
         anchors.fill: parent
-        source: ":/mobile/app/bg_image"
+        source: "qrc:///mobile/app/bg_image"
     }
 
     PanelToggle {
@@ -76,7 +76,7 @@ Rectangle {
     Image {
         id: plusButton
         opacity: 0
-        source: plusButtonMouseArea.pressed ? ":/mobile/nav/btn_plus_pressed" : ":/mobile/nav/btn_plus_unpressed"
+        source: plusButtonMouseArea.pressed ? "qrc:///mobile/nav/btn_plus_pressed" : "qrc:///mobile/nav/btn_plus_unpressed"
 
         anchors.top: topSitesPanel.bottom
         anchors.topMargin: 27

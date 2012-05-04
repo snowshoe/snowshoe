@@ -28,7 +28,7 @@ Item {
 
     BorderImage {
         id: border
-        source: ":/mobile/navbar/url_input"
+        source: "qrc:///mobile/navbar/url_input"
         border { left: 26; top: 26; right: 26; bottom: 26 }
         anchors.fill: parent
     }

@@ -43,13 +43,13 @@ Item {
 
     Image {
         id: suggestionRect
-        source: ":/mobile/url/bg_browsing"
+        source: "qrc:///mobile/url/bg_browsing"
         anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
     }
 
     Image {
         id: icon
-        source: isGoogleSearch ? ":/mobile/scrollbar/btn_google_search" : ":/mobile/scrollbar/btn_url_suggestion"
+        source: isGoogleSearch ? "qrc:///mobile/scrollbar/btn_google_search" : "qrc:///mobile/scrollbar/btn_url_suggestion"
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
     }
@@ -89,7 +89,7 @@ Item {
 
     Image {
         id: fadingLayer
-        source: ":/mobile/scrollbar/suggestions_overlayer"
+        source: "qrc:///mobile/scrollbar/suggestions_overlayer"
         anchors {
             right: parent.right
             top: parent.top

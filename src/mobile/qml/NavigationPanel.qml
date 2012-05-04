@@ -68,7 +68,7 @@ Item {
     Image {
         id: barsBackground
         height: tabBar.height
-        source: ":/mobile/app/bg_image"
+        source: "qrc:///mobile/app/bg_image"
         anchors.bottom: parent.bottom
         fillMode: Image.Pad
         verticalAlignment: Image.AlignBottom

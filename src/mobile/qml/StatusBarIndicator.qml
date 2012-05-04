@@ -21,13 +21,13 @@ Image {
     property bool active: true
     property int loadProgress
 
-    source: active ? ":/mobile/indicator/loading_active" : ":/mobile/indicator/loading_inactive"
+    source: active ? "qrc:///mobile/indicator/loading_active" : "qrc:///mobile/indicator/loading_inactive"
 
     Image {
         id: progressIndicator
         anchors.fill: parent
         visible: loadProgress > 0
-        source: ":/mobile/indicator/loading_" + loadProgress
+        source: "qrc:///mobile/indicator/loading_" + loadProgress
 
         states: [
             State {

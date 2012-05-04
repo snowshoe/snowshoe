@@ -78,7 +78,7 @@ Item {
                BookmarkModel.insert(urls[i], urls[i]);
            //!!! End of temporary code
 
-           var elem = fakeBookmarkEntry.createObject(topSitesGrid, {source: ":/mobile/fav/icon0"+(i+1), url: urls[i]});
+           var elem = fakeBookmarkEntry.createObject(topSitesGrid, {source: "qrc:///mobile/fav/icon0"+(i+1), url: urls[i]});
            topSitesModel.add(elem);
        }
     }

@@ -126,5 +126,5 @@ void BrowserWindow::setupDeclarativeEnvironment()
     QObject::connect(engine(), SIGNAL(quit()), qApp, SLOT(quit()));
 
     setResizeMode(QQuickView::SizeRootObjectToView);
-    setSource(QUrl("qrc:/qml/main.qml"));
+    setSource(QUrl("qrc:///qml/main.qml"));
 }

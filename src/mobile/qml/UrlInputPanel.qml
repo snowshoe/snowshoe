@@ -74,8 +74,8 @@ Item {
 
             Button {
                 id: eraseButton
-                pressedImage: ":/mobile/url/btn_erase_pressed"
-                unpressedImage: ":/mobile/url/btn_erase_unpressed"
+                pressedImage: "qrc:///mobile/url/btn_erase_pressed"
+                unpressedImage: "qrc:///mobile/url/btn_erase_unpressed"
                 visible: urlBar.text !== ""
                 anchors.right: parent.right
                 onClicked: urlBar.text = ""
@@ -90,8 +90,8 @@ Item {
                 bottomMargin: 22
                 rightMargin: UiConstants.DefaultMargin
             }
-            pressedImage: ":/mobile/url/btn_cancel_pressed"
-            unpressedImage: ":/mobile/url/btn_cancel_unpressed"
+            pressedImage: "qrc:///mobile/url/btn_cancel_pressed"
+            unpressedImage: "qrc:///mobile/url/btn_cancel_unpressed"
             onClicked: urlArea.cancelRequested()
         }
     }

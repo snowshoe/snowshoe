@@ -41,8 +41,8 @@ Item {
             left: parent.left
             leftMargin: UiConstants.NavBarLongMargin
         }
-        pressedImage: ":/mobile/navbar/btn_nav_back_pressed"
-        unpressedImage: ":/mobile/navbar/btn_nav_back_unpressed"
+        pressedImage: "qrc:///mobile/navbar/btn_nav_back_pressed"
+        unpressedImage: "qrc:///mobile/navbar/btn_nav_back_unpressed"
         visible: { currentWebView ? currentWebView.canGoBack : false }
         onClicked: {
             currentWebView.goBack()
@@ -56,8 +56,8 @@ Item {
             left: { buttonBack.visible ? buttonBack.right : parent.left }
             leftMargin: buttonBack.visible ? UiConstants.NavBarShortMargin : UiConstants.NavBarLongMargin
         }
-        pressedImage: ":/mobile/navbar/btn_nav_forward_pressed"
-        unpressedImage: ":/mobile/navbar/btn_nav_forward_unpressed"
+        pressedImage: "qrc:///mobile/navbar/btn_nav_forward_pressed"
+        unpressedImage: "qrc:///mobile/navbar/btn_nav_forward_unpressed"
         visible: { currentWebView ? currentWebView.canGoForward : false }
         onClicked: {
             currentWebView.goForward()
@@ -77,7 +77,7 @@ Item {
             right: parent.right
             rightMargin: UiConstants.NavBarLongMargin
         }
-        source: ":/mobile/navbar/url_input"
+        source: "qrc:///mobile/navbar/url_input"
         Item {
             anchors {
                 fill: parent
@@ -106,8 +106,8 @@ Item {
             id: reloadStopButton
             property bool loading: { currentWebView ? currentWebView.loading : false }
             anchors.right: parent.right
-            pressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_pressed" : ":/mobile/navbar/btn_nav_reload_pressed" }
-            unpressedImage: { loading ? ":/mobile/navbar/btn_nav_stop_unpressed" : ":/mobile/navbar/btn_nav_reload_unpressed" }
+            pressedImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_pressed" : "qrc:///mobile/navbar/btn_nav_reload_pressed" }
+            unpressedImage: { loading ? "qrc:///mobile/navbar/btn_nav_stop_unpressed" : "qrc:///mobile/navbar/btn_nav_reload_unpressed" }
             onClicked: {
                 if (loading) {
                     currentWebView.stop();
