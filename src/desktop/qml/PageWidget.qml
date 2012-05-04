@@ -72,6 +72,9 @@ Item {
 
         onTitleChanged: { root.title = title }
 
+
+        experimental.preferences.fullScreenEnabled: true
+
         experimental.onDownloadRequested: {
             downloadItem.destinationPath = BrowserWindow.decideDownloadPath(downloadItem.suggestedFilename)
             downloadItem.start()
@@ -85,6 +88,14 @@ Item {
                 return
             }
             request.action = WebView.AcceptRequest
+        }
+
+        experimental.onEnterFullScreenRequested : {
+            toggleFullScreen();
+        }
+
+        experimental.onExitFullScreenRequested : {
+            toggleFullScreen();
         }
     }
 
