@@ -17,9 +17,6 @@
 import com.nokia.meego 2.0
 
 PageStackWindow {
-    // Hiding the status bar until the Orientation problems on N9 are fixed.
-    // Tentative fix: https://codereview.qt-project.org/#change,24423
-    showStatusBar: false
 
     initialPage: Page {
         orientationLock: PageOrientation.LockPortrait

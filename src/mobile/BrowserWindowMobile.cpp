@@ -53,4 +53,6 @@ void BrowserWindowMobile::setupDeclarativeEnvironment()
 #else
     setSource(QUrl("qrc:///mobile/qml/Main.qml"));
 #endif
+
+    reportContentOrientationChange(Qt::PortraitOrientation);
 }
