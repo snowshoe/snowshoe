@@ -15,6 +15,7 @@
  ****************************************************************************/
 
 import QtQuick 2.0
+import "UiConstants.js" as UiConstants
 
 Item {
     id: root
@@ -31,56 +32,63 @@ Item {
         }
         itemCount: topSitesGrid.pageCount
         maxItems: 3
-        currentItem: topSitesGrid.page
+        currentItem: topSitesGrid.currentPage
+    }
+
+    Component {
+        id: bookmarkEntry
+        Image {
+            property string url: model.url
+
+            source: "qrc:///mobile/grid/overlayer"
+            height: UiConstants.PagedGridSizeTable[1]
+            fillMode: Image.Pad
+            verticalAlignment: Image.AlignBottom
+            clip: true
+
+            Text {
+                id: displayedUrl
+                text: url.replace(/(https?|file):\/\/\/?(www\.)?/, "").replace(/\/.*/, "");
+                color: "#515050"
+                horizontalAlignment: urlFade.visible ? Text.AlignLeft : Text.AlignHCenter
+                font.pixelSize: 20
+                font.family: "Nokia Pure Text Light"
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottomMargin: 10
+                    leftMargin: 14
+                    rightMargin: 14
+                }
+
+            }
+            Image {
+                id: urlFade
+                source: "qrc:///mobile/scrollbar/suggestions_overlayer"
+                visible: displayedUrl.paintedWidth > displayedUrl.width
+                width: 30
+                anchors {
+                    verticalCenter: displayedUrl.verticalCenter
+                    right: parent.right
+                }
+            }
+        }
     }
 
     PagedGrid {
         id: topSitesGrid
-        model: topSitesModel
-        showCloseButtons: false
-
+        model: BookmarkModel
+        delegate: bookmarkEntry
         anchors {
-            top: parent.top
             left: parent.left
             right: parent.right
+            top: parent.top
         }
-
-        ItemModel {
-            id: topSitesModel
+        onItemClicked: {
+            var item = topSitesGrid.itemAt(index)
+            if (y < 176) root.urlSelected(item.url)
+            else BookmarkModel.remove(item.url)
         }
-
-        Component {
-            id: fakeBookmarkEntry
-            Image {
-                id: fakeImage
-                z: -1
-                clip: true
-                verticalAlignment: Image.AlignTop
-                fillMode: Image.Pad
-                property string url: ""
-
-                Behavior on scale {
-                    NumberAnimation {
-                        duration: 400
-                        easing.type: Easing.InOutQuad
-                    }
-                }
-            }
-        }
-
-        onItemClicked: root.urlSelected(item.url)
-    }
-
-    Component.onCompleted: {
-       var urls = ["http://www.kde.org/", "http://www.google.com/", "http://www.qt.nokia.com/"];
-       for (var i = 0; i < 3; ++i) {
-           //!!! Start of temporary code while topsites isn't ready.
-           if (!BookmarkModel.contains(urls[i]))
-               BookmarkModel.insert(urls[i], urls[i]);
-           //!!! End of temporary code
-
-           var elem = fakeBookmarkEntry.createObject(topSitesGrid, {source: "qrc:///mobile/fav/icon0"+(i+1), url: urls[i]});
-           topSitesModel.add(elem);
-       }
     }
 }

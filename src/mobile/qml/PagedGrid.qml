@@ -15,81 +15,55 @@
  ****************************************************************************/
 
 import QtQuick 2.0
-// TODO: Use a Qt model instead of this javascript file.
-import "UiConstants.js" as UiConstants
+import Snowshoe 1.0
 
 Item {
     id: pagedGrid
-    property QtObject model
-    // The default height is equal to two items + the margin between them
-    height: UiConstants.PagedGridSizeTable[1]*2 + UiConstants.PagedGridSizeTable[3]
 
+    // Read/write properties.
+    property QtObject model: null
+    property Component delegate: null
+    property int extraMargin: 40
+    property int itemWidth: 192
+    property int itemHeight: 263
+
+    property int rowsPerPage: 2
+    property int columnsPerPage: 2
+    property int spacing: 16
+    property int currentPage: 0
+
+    // Read only properties.
     property int page: 0
-    property int pageCount: 0
-    property bool showCloseButtons: true
-    // Number of visible tabs
-    property int visibleTabs: 0
+    property int pageWidth: columnsPerPage * itemWidth + (columnsPerPage - 1) * spacing
+    property int pageHeight: rowsPerPage * itemHeight + (rowsPerPage - 1) * spacing
+    property int itemsPerPage: rowsPerPage * columnsPerPage
+    property alias pageCount: grid.pageCount
 
-    signal itemClicked(variant item);
-    signal itemClosed(variant item);
-    signal relayoutFinished()
+    width: grid.pageWidth + 2 * extraMargin
+    height: grid.pageHeight
+    clip: true
 
-    Connections {
-        target: model
-        onCountChanged: {
-            pageCount = Math.ceil(model.count / UiConstants.PagedGridItemsPerPage);
-            page = pageCount ? Math.min(page, pageCount - 1) : 0;
-            relayout();
-        }
-        onCurrentElementIndexChanged: {
-            if (model.currentElementIndex !== -1)
-                page = Math.floor(model.currentElementIndex / UiConstants.PagedGridItemsPerPage);
-        }
+    // x and y will be given in coordinates relative to the clicked item.
+    signal itemClicked(int index, int x, int y);
+
+    function itemAt(index) {
+        return grid.itemAt(index)
     }
 
-    onPageChanged: relayout();
+    PageFillGrid {
+        id: grid
+        model: pagedGrid.model
+        delegate: pagedGrid.delegate
+        spacing: pagedGrid.spacing
+        itemWidth: pagedGrid.itemWidth
+        itemHeight: pagedGrid.itemHeight
+        rowsPerPage: pagedGrid.rowsPerPage
+        columnsPerPage: pagedGrid.columnsPerPage
+        x: extraMargin - currentPage * (pageWidth + pagedGrid.spacing)
 
-    function relayout()
-    {
-        // FIXME: Remove this early return. "pageCount > 1" is a workaround for N9, but this code looks wrong anyway.
-        if (!visible && pageCount > 1)
-            return;
-
-        var size = UiConstants.PagedGridSizeTable;
-        var xMargin = 40;
-        var yMargin = 16;
-        var xStep = size[2]
-        var yStep = size[3]
-
-        var line = 0;
-        var col = 0;
-        var count = model.count;
-        var firstTabToShow = page * UiConstants.PagedGridItemsPerPage;
-        var lastTabToShow = Math.min(firstTabToShow + UiConstants.PagedGridItemsPerPage, count);
-        visibleTabs = lastTabToShow - firstTabToShow;
-        for (var i = 0; i < count; ++i)
-        {
-            var item = model.get(i);
-
-            if (i >= lastTabToShow || i < firstTabToShow) {
-                item.visible = false;
-                continue;
-            }
-
-            if (col >= UiConstants.PagedGridNumColumns) {
-                line++;
-                col = 0;
-            }
-
-            item.visible = true;
-            var coords = mapToItem(item.parent, xMargin + col * (size[0] + xStep), line * (size[1] + yStep));
-            item.x = coords.x;
-            item.y = coords.y;
-            item.width = size[0];
-            item.height = size[1];
-            col++;
+        Behavior on x {
+            NumberAnimation { duration: 100 }
         }
-        relayoutFinished();
     }
 
     SwipeArea {
@@ -98,135 +72,33 @@ Item {
         z: 1
 
         onClicked: {
-            var firstTabToShow = page * UiConstants.PagedGridItemsPerPage;
-            var lastTabToShow = Math.min(firstTabToShow + UiConstants.PagedGridItemsPerPage, pagedGrid.model.count);
+            // Track down which item has been pressed on current page.
+            var x = mouse.x - extraMargin;
+            var y = mouse.y;
+            if (!pageCount || x < 0 || x >= grid.pageWidth)
+                return;
 
-            for (var i = firstTabToShow; i < lastTabToShow; ++i) {
-                var item = pagedGrid.model.get(i);
-                var mousePos = swipeArea.mapToItem(item.parent, mouse.x, mouse.y);
-                var x = mousePos.x - item.x;
-                var y = mousePos.y - item.y;
-                if (x >= 0 &&
-                    y >= 0 &&
-                    x <= item.width &&
-                    y <= item.height) {
-
-                    // Check if the click was on close button
-                    if (showCloseButtons &&
-                        y < UiConstants.PagedGridCloseButtonHeight &&
-                        item.width - x < UiConstants.PagedGridCloseButtonWidth) {
-                        itemClosed(item);
-                    } else if (y > item.height - 85) {
-                        BookmarkModel.toggleFavorite(item.url);
-                    } else {
-                        parent.itemClicked(item);
-                    }
-                    break;
+            var row = Math.floor(y / (itemHeight + spacing)), column = Math.floor(x / (itemWidth + spacing));
+            var topLeftX = (itemWidth + spacing) * column, topLeftY = (itemHeight + spacing) * row;
+            var bottomRightX = topLeftX + itemWidth, bottomRightY = topLeftY + itemHeight;
+            if (x >= topLeftX && x <= bottomRightX && y >= topLeftY && y <= bottomRightY) {
+                var itemIndex = currentPage * grid.itemsPerPage + row * columnsPerPage + column
+                var item = grid.itemAt(itemIndex)
+                if (item != null) {
+                    // Emit a signal pointing the item clicked and the internal position of the click.
+                    pagedGrid.itemClicked(itemIndex, x - topLeftX, y - topLeftY);
                 }
             }
         }
 
         onSwipeLeft: {
-            if (page < pageCount - 1)
-                page++;
+            if (currentPage < pageCount - 1)
+                ++currentPage;
         }
 
         onSwipeRight: {
-            if (page > 0)
-                page--;
-        }
-    }
-
-    Grid {
-        anchors {
-            fill: parent
-            leftMargin: 40
-        }
-        spacing: 16
-        columns: 2
-
-        Repeater {
-            model: 4
-
-            Image {
-                visible: index < visibleTabs
-
-                source: "qrc:///mobile/grid/overlayer"
-                height: UiConstants.PagedGridSizeTable[1]
-                fillMode: Image.Pad
-                verticalAlignment: Image.AlignBottom
-                clip: true
-
-                Text {
-                    id: url
-                    text: ""
-                    color: "#515050"
-                    horizontalAlignment: urlFade.visible ? Text.AlignLeft : Text.AlignHCenter
-                    font.pixelSize: 20
-                    font.family: "Nokia Pure Text Light"
-                    anchors {
-                        bottom: parent.bottom
-                        left: parent.left
-                        right: parent.right
-                        bottomMargin: 10
-                        leftMargin: 14
-                        rightMargin: 14
-                    }
-
-                }
-                Image {
-                    id: urlFade
-                    source: "qrc:///mobile/scrollbar/suggestions_overlayer"
-                    visible: url.paintedWidth > url.width
-                    width: 30
-                    anchors {
-                        verticalCenter: url.verticalCenter
-                        right: parent.right
-                    }
-                }
-                Image {
-                    source: "qrc:///mobile/grid/btn_close" + index
-                    visible: showCloseButtons
-                    anchors {
-                        top: parent.top
-                        right: parent.right
-                    }
-                }
-                Image {
-                    id: favoriteBtn
-                    property bool enabled
-                    source: enabled ? "qrc:///mobile/grid/btn_favorite_pressed" : "qrc:///mobile/grid/btn_favorite_unpressed"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    anchors.topMargin: 186
-                }
-                Image {
-                    source: "qrc:///mobile/grid/mask" + index
-                }
-
-                Connections {
-                    target: pagedGrid
-                    onRelayoutFinished: {
-                        if (index < visibleTabs) {
-                            var rawUrl = pagedGrid.model.get(page * UiConstants.PagedGridItemsPerPage + index).url;
-                            favoriteBtn.enabled = BookmarkModel.contains(rawUrl);
-                            rawUrl = rawUrl.replace(/(https?|file):\/\/\/?(www\.)?/, "");
-                            rawUrl = rawUrl.replace(/\/.*/, "");
-                            url.text = rawUrl;
-
-                        }
-                    }
-                }
-                Connections {
-                    target: BookmarkModel
-                    onCountChanged: {
-                        if (index < visibleTabs) {
-                            var rawUrl = pagedGrid.model.get(page * UiConstants.PagedGridItemsPerPage + index).url;
-                            favoriteBtn.enabled = BookmarkModel.contains(rawUrl);
-                        }
-                    }
-                }
-            }
+            if (currentPage > 0)
+                --currentPage;
         }
     }
 }

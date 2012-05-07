@@ -99,7 +99,7 @@ Item {
         }
         itemCount: tabsGrid.pageCount
         maxItems: 3
-        currentItem: tabsGrid.page
+        currentItem: tabsGrid.currentPage
         visible: !tabBarRow.visible
     }
 
