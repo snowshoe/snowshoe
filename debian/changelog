@@ -1,3 +1,9 @@
+snowshoe-mobile (0.2.0) unstable; urgency=low
+
+  * UI reworked.
+
+ -- Lauro Moura <lauro.neto@openbossa.org>  Mon, 07 May 2012 16:51:11 -0300
+
 snowshoe-mobile (0.1.8) unstable; urgency=low
 
   * Updated info on control and desktop files: app name and description.
