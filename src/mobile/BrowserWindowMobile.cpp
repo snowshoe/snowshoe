@@ -49,10 +49,9 @@ void BrowserWindowMobile::setupDeclarativeEnvironment()
 
     setResizeMode(QQuickView::SizeRootObjectToView);
 #if defined(SNOWSHOE_MEEGO_HARMATTAN)
+    reportContentOrientationChange(Qt::PortraitOrientation);
     setSource(QUrl("qrc:///mobile/qml/main-harmattan.qml"));
 #else
     setSource(QUrl("qrc:///mobile/qml/Main.qml"));
 #endif
-
-    reportContentOrientationChange(Qt::PortraitOrientation);
 }
