@@ -30,6 +30,7 @@ Item {
             right: root.right
         }
         itemCount: topSitesGrid.pageCount
+        maxItems: 3
         currentItem: topSitesGrid.page
     }
 

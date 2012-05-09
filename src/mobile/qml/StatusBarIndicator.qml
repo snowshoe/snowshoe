@@ -19,9 +19,13 @@ import QtQuick 2.0
 Image {
     z: 1
     property bool active: true
+    property bool valid: true
     property int loadProgress
 
-    source: active ? "qrc:///mobile/indicator/loading_active" : "qrc:///mobile/indicator/loading_inactive"
+    source: valid ? (active ? "qrc:///mobile/indicator/loading_active" : "qrc:///mobile/indicator/loading_inactive")
+                   : "qrc:///mobile/indicator/loading_active"
+    // FIXME: Use this JUST while the asset isn't ready
+    opacity: valid ? 1.0 : 0.2
 
     Image {
         id: progressIndicator
@@ -43,4 +47,3 @@ Image {
 
     }
 }
-

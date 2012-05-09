@@ -19,6 +19,7 @@ import QtQuick 2.0
 Item {
     property int itemCount: 0
     property int currentItem: 0
+    property int maxItems: 0
     property int loadProgress: 0
     height: 21
 
@@ -30,8 +31,9 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Repeater {
-            model: itemCount
+            model: maxItems
             StatusBarIndicator {
+                valid: index < itemCount
                 active: index === currentItem
                 loadProgress: active ? roundProgress() : 0
             }

@@ -98,6 +98,7 @@ Item {
             topMargin: 25
         }
         itemCount: tabsGrid.pageCount
+        maxItems: 3
         currentItem: tabsGrid.page
         visible: !tabBarRow.visible
     }
@@ -212,6 +213,7 @@ Item {
                 bottomMargin: 27
             }
             itemCount: tabsModel.count
+            maxItems: pageBarRow.maxItems * UiConstants.PagedGridItemsPerPage
             currentItem: tabsModel.currentElementIndex
             loadProgress: visibleTab ? visibleTab.loadProgress : 0
         }
