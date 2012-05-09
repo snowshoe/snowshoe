@@ -22,9 +22,10 @@ import "UiConstants.js" as UiConstants
 Item {
     id: navigationPanel
 
-    property bool hasOpennedTabs: tabsModel.count
+    property bool hasOpennedTabs: TabsModel.count > 0
     property alias url: navigationBar.url
-    property QtObject visibleTab: tabsModel.currentElement
+    property QtObject visibleTab: TabsModel.currentWebView
+    property QtObject lastVisibleTab
 
     signal newTabRequested()
     signal urlInputRequested()
@@ -46,25 +47,6 @@ Item {
         value: navigationPanel.state !== "withNavigationBarAndOverlay"
     }
 
-    ItemModel {
-        id: tabsModel
-
-        function hideNonCurrentElements() {
-            for (var i = 0; i < count; ++i) {
-                var item = get(i);
-                item.visible = item === currentElement
-            }
-        }
-
-        function showAll() {
-            for (var i = 0; i < count; ++i) {
-                var item = get(i);
-                item.visible = true;
-                item.interactive = false;
-            }
-        }
-    }
-
     Image {
         id: barsBackground
         height: tabBar.height
@@ -74,10 +56,71 @@ Item {
         verticalAlignment: Image.AlignBottom
     }
 
+    Component {
+        id: tabEntry
+        Image {
+            property string url: model.url
+            source: model.screenshot
+            height: UiConstants.PagedGridSizeTable[1]
+            width: UiConstants.PagedGridSizeTable[0]
+            clip: true
+
+            Image {
+                source: "qrc:///mobile/grid/overlayer"
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+
+            Text {
+                id: displayedUrl
+                text: url.replace(/(https?|file):\/\/\/?(www\.)?/, "").replace(/\/.*/, "");
+                color: "#515050"
+                horizontalAlignment: urlFade.visible ? Text.AlignLeft : Text.AlignHCenter
+                font.pixelSize: 20
+                font.family: "Nokia Pure Text Light"
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottomMargin: 10
+                    leftMargin: 14
+                    rightMargin: 14
+                }
+
+            }
+            Image {
+                id: urlFade
+                source: "qrc:///mobile/scrollbar/suggestions_overlayer"
+                visible: displayedUrl.paintedWidth > displayedUrl.width
+                width: 30
+                anchors {
+                    verticalCenter: displayedUrl.verticalCenter
+                    right: parent.right
+                }
+            }
+
+            Image {
+                source: "qrc:///mobile/grid/mask" + Math.max(0, index)
+            }
+
+            Image {
+                source: "qrc:///mobile/grid/btn_close" + Math.max(0, index)
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                }
+            }
+        }
+    }
+
     PagedGrid {
         id: tabsGrid
-        model: tabsModel
-        visible: visibleTab === null
+        model: TabsModel
+        delegate: tabEntry
+        visible: TabsModel.currentWebViewIndex < 0
 
         anchors {
             top: parent.top
@@ -86,8 +129,13 @@ Item {
             topMargin: UiConstants.NavigationPanelYOffset
         }
 
-        onItemClicked: tabsModel.currentElement = item;
-        onItemClosed: tabsModel.remove(item);
+        onItemClicked: {
+            if (y < UiConstants.PagedGridCloseButtonHeight
+                && (UiConstants.PagedGridSizeTable[0] - x) <= UiConstants.PagedGridCloseButtonWidth) {
+                TabsModel.remove(index);
+            } else
+                TabsModel.currentWebViewIndex = index;
+        }
     }
 
     IndicatorRow {
@@ -115,11 +163,11 @@ Item {
 
         onShowThumbnails: {
             navigationPanel.state = "";
-            tabsModel.currentElement = null;
+            TabsModel.currentWebViewIndex = index;
         }
 
         onCloseTab: {
-            tabsModel.remove(visibleTab);
+            TabsModel.remove(TabsModel.currentWebViewIndex);
             navigationPanel.state = "";
         }
 
@@ -128,11 +176,13 @@ Item {
         }
 
         onGoToNextTab: {
-            tabsModel.nextItem();
+            if (TabsModel.currentWebViewIndex + 1 < TabsModel.count)
+                TabsModel.currentWebViewIndex++;
         }
 
         onGoToPreviousTab: {
-            tabsModel.previousItem();
+            if (TabsModel.currentWebViewIndex > 0)
+                TabsModel.currentWebViewIndex--;
         }
     }
 
@@ -148,7 +198,7 @@ Item {
 
         onShowThumbnails: {
             navigationPanel.state = "";
-            tabsModel.currentElement = null;
+            TabsModel.currentWebViewIndex = -1;
         }
 
         onOpenNewTab: navigationPanel.newTabRequested()
@@ -212,10 +262,10 @@ Item {
                 topMargin: 25
                 bottomMargin: 27
             }
-            itemCount: tabsModel.count
+            itemCount: TabsModel.count
             maxItems: pageBarRow.maxItems * UiConstants.PagedGridItemsPerPage
-            currentItem: tabsModel.currentElementIndex
-            loadProgress: visibleTab ? visibleTab.loadProgress : 0
+            currentItem: Math.max(0, TabsModel.currentWebViewIndex)
+            loadProgress: visibleTab != null ? visibleTab.loadProgress : 0
         }
 
         MouseArea {
@@ -279,7 +329,7 @@ Item {
 
     function openUrl(url)
     {
-        tabsModel.currentElement.load(url)
+        TabsModel.currentWebView.load(url)
         webViewMaximized()
     }
     function openUrlInNewTab(url)
@@ -288,23 +338,21 @@ Item {
                                                            "height" : UiConstants.PortraitHeight - UiConstants.TabBarHeight,
                                                            "z" : -1});
         webView.load(url);
-        tabsModel.add(webView);
+        TabsModel.append(webView);
     }
 
     onVisibleTabChanged: {
-        if (!visibleTab && tabsModel.count) {
-            tabsModel.showAll();
-            tabsGrid.relayout();
-            navigationPanel.webViewMinimized();
-            tabBar.visible = false;
-        } else if (visibleTab) {
-            visibleTab.x = 0;
-            visibleTab.y = 0;
-            visibleTab.width = UiConstants.PortraitWidth;
-            visibleTab.height = UiConstants.PortraitHeight - UiConstants.TabBarHeight;
-            tabsModel.hideNonCurrentElements();
+        if (lastVisibleTab)
+            lastVisibleTab.visible = false;
+        lastVisibleTab = visibleTab;
+
+        if (visibleTab) {
+            visibleTab.visible = true;
             webViewMaximized();
             tabBar.visible = true;
+        } else {
+            webViewMinimized();
+            tabBar.visible = false;
         }
     }
 }

@@ -73,6 +73,17 @@ Item {
                     right: parent.right
                 }
             }
+            Image {
+                id: favoriteButton
+                property bool enabled
+                source: enabled ? "qrc:///mobile/grid/btn_favorite_pressed" : "qrc:///mobile/grid/btn_favorite_unpressed"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: 186
+            }
+            Image {
+                source: "qrc:///mobile/grid/mask" + Math.max(0, index)
+            }
         }
     }
 

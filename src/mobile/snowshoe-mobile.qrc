@@ -10,7 +10,6 @@
         <file>qml/SwipeArea.qml</file>
         <file>qml/SnowshoeWebView.qml</file>
         <file>qml/UiConstants.js</file>
-        <file>qml/ItemModel.qml</file>
         <file>qml/UrlBar.qml</file>
         <file>qml/Main.qml</file>
         <file>qml/main-harmattan.qml</file>

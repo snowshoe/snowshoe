@@ -9,6 +9,7 @@ SOURCES += \
     RowsRangeFilter.cpp \
     BookmarkModel.cpp \
     HistoryModel.cpp \
+    TabsModel.cpp \
     DatabaseManager.cpp \
     PopupWindow.cpp
 
@@ -17,6 +18,7 @@ HEADERS += \
     RowsRangeFilter.h \
     BookmarkModel.h \
     HistoryModel.h \
+    TabsModel.h \
     DatabaseManager.h \
     PopupWindow.h \
     UrlTools.h 
