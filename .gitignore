@@ -9,3 +9,4 @@ moc_*.cpp
 snowshoe
 snowshoe.pro.user
 *~
+.directory
