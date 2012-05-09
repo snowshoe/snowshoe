@@ -20,6 +20,7 @@ Row {
     id: panelToggle
 
     property bool navigationEnabled: true
+    spacing: -20
 
     signal topSitesSelected()
     signal tabsSelected()
@@ -45,7 +46,8 @@ Row {
 
     Image {
         id: topsites
-        source: "qrc:///mobile/app/topsites" + (active ? "_pressed" : "_unpressed")
+        source: "qrc:///mobile/app/mysites_" + (active ? "pressed" : "unpressed")
+        z: active ? 1 : 0
         property bool active;
 
         MouseArea {
@@ -55,7 +57,8 @@ Row {
     }
     Image {
         id: tabs
-        source: "qrc:///mobile/app/tabs" + (active ? "_pressed" : "_unpressed")
+        source: "qrc:///mobile/app/tabs_" + (navigationEnabled ? (active ? "pressed" : "unpressed") : "disabled")
+        z: active ? 1 : 0
         property bool active;
 
         MouseArea {

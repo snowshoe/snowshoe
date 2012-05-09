@@ -52,7 +52,7 @@ Rectangle {
             top: panelToggle.bottom
             left: parent.left
             right: parent.right
-            topMargin: 32
+            topMargin: 24
         }
         onUrlSelected: navigationPanel.openUrlInNewTab(UrlTools.fromUserInput(url))
     }
