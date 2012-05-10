@@ -16,6 +16,7 @@
 
 import QtQuick 2.0
 import QtWebKit 3.0
+import QtWebKit.experimental 1.0
 
 import "UiConstants.js" as UiConstants
 
@@ -49,6 +50,9 @@ Item {
         id: webView
         anchors.fill: parent
         enabled: webViewItem.active && webViewItem.interactive
+
+        experimental.preferredMinimumContentsWidth: 980
+        experimental.devicePixelRatio: 1.5
 
         onLoadingChanged: {
             if (webView.url == "about:blank")
