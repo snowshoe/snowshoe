@@ -1,6 +1,6 @@
-snowshoe-mobile (0.2.0) unstable; urgency=low
+snowshoe-mobile (0.2.5) unstable; urgency=low
 
-  * UI reworked.
+  * UI reworked, updated Qt and WebKit.
 
  -- Lauro Moura <lauro.neto@openbossa.org>  Mon, 07 May 2012 16:51:11 -0300
 
