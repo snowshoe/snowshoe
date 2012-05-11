@@ -266,6 +266,7 @@ Item {
             maxItems: pageBarRow.maxItems * UiConstants.PagedGridItemsPerPage
             currentItem: Math.max(0, TabsModel.currentWebViewIndex)
             loadProgress: visibleTab != null ? visibleTab.loadProgress : 0
+            blinkOnZeroProgress: true
         }
 
         MouseArea {

@@ -17,10 +17,12 @@
 import QtQuick 2.0
 
 Image {
+    id: indicator
     z: 1
     property bool active: true
     property bool valid: true
     property int loadProgress
+    property bool blinkOnZeroProgress
 
     source: valid ? (active ? "qrc:///mobile/indicator/loading_active" : "qrc:///mobile/indicator/loading_inactive")
                    : "qrc:///mobile/indicator/loading_active"
@@ -44,6 +46,15 @@ Image {
             from: ""; to: "hideProgress"
             PropertyAnimation { target: progressIndicator; properties: "opacity"; duration: 200 }
         }
+    }
 
+    Timer {
+        running: blinkOnZeroProgress && active && loadProgress === 0
+        repeat: true
+        interval: 500
+        onTriggered: {
+            indicator.opacity = indicator.opacity === 1.0 ? 0.1 : 1.0;
+        }
+        onRunningChanged: if (!running) indicator.opacity = 1.0;
     }
 }

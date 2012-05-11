@@ -17,10 +17,12 @@
 import QtQuick 2.0
 
 Item {
+    id: indicatorRow
     property int itemCount: 0
     property int currentItem: 0
     property int maxItems: 0
     property int loadProgress: 0
+    property bool blinkOnZeroProgress: false
     height: 21
 
     function roundProgress() {
@@ -35,6 +37,7 @@ Item {
             StatusBarIndicator {
                 valid: index < itemCount
                 active: index === currentItem
+                blinkOnZeroProgress: indicatorRow.blinkOnZeroProgress
                 loadProgress: active ? roundProgress() : 0
             }
         }
