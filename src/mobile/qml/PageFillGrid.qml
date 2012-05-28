@@ -17,19 +17,21 @@
 import QtQuick 2.0
 import Snowshoe 1.0
 
-Row {
+Item {
     id: root
 
-    // Read/write properties.
     property QtObject model: null
     property Component delegate: null
+    property Component emptyItemDelegate: null
     property int itemWidth: 192
     property int itemHeight: 263
     property int rowsPerPage: 2
     property int columnsPerPage: 2
+    property int spacing: 0
+    property int maxPages: 1
 
     // Read only properties.
-    property int pageCount: model != null && itemsPerPage ? Math.ceil(model.count / itemsPerPage) : 0
+    property int pageCount: Math.min(maxPages, model != null && itemsPerPage ? Math.ceil(model.count / itemsPerPage) : 0)
     property int itemsPerPage: rowsPerPage * columnsPerPage
     property int pageWidth: columnsPerPage * itemWidth + (columnsPerPage - 1) * spacing
     property int pageHeight: rowsPerPage * itemHeight + (rowsPerPage - 1) * spacing
@@ -43,29 +45,66 @@ Row {
         return pageItem.thumbs.itemAt(offset);
     }
 
-    Repeater {
-        id: pageRepeater
-        model: pageCount
+    Grid {
+        spacing: root.spacing
+        rows: root.rowsPerPage
 
-        Grid {
-            property alias thumbs: thumbRepeater
-            width: pageWidth
-            height: pageHeight
-            spacing: root.spacing
-            columns: root.columnsPerPage
+        anchors {
+            top: pages.top
+            right: pages.right
+        }
 
-            RowsRangeFilter {
-                id: currentPageModel
-                sourceModel: root.model
-                startRow: index * itemsPerPage
-                endRow: startRow + itemsPerPage - 1
-            }
+        Repeater {
+            model: itemsPerPage
+            delegate: emptyItemDelegate
+        }
+    }
 
-            Repeater {
-                id: thumbRepeater
-                model: currentPageModel
-                delegate: pagedGrid.delegate
+    Row {
+        id: pages
+        spacing: root.spacing
+
+        Repeater {
+            id: pageRepeater
+            model: pageCount
+
+            Grid {
+                property alias thumbs: thumbRepeater
+                width: pageWidth
+                height: pageHeight
+                spacing: root.spacing
+                columns: root.columnsPerPage
+
+                RowsRangeFilter {
+                    id: currentPageModel
+                    sourceModel: root.model
+                    startRow: index * itemsPerPage
+                    endRow: startRow + itemsPerPage - 1
+                }
+
+                Repeater {
+                    id: thumbRepeater
+                    model: currentPageModel
+                    delegate: pagedGrid.delegate
+                }
             }
         }
     }
+
+    Grid {
+        visible: (maxPages - pageCount) > 0
+        spacing: root.spacing
+        rows: root.rowsPerPage
+        anchors {
+            top: pages.top
+            left: pages.right
+            leftMargin: root.spacing
+        }
+        Repeater {
+            model: itemsPerPage
+            delegate: emptyItemDelegate
+        }
+    }
+
+
 }

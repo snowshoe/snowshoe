@@ -91,6 +91,8 @@ Item {
         id: topSitesGrid
         model: BookmarkModel
         delegate: bookmarkEntry
+        emptyItemDelegate: Image { source: "qrc:///mobile/grid/thumb_empty_slot"; }
+        maxPages: indicatorRow.maxItems
         anchors {
             left: parent.left
             right: parent.right

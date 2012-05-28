@@ -121,6 +121,8 @@ Item {
         model: TabsModel
         delegate: tabEntry
         visible: TabsModel.currentWebViewIndex < 0
+        emptyItemDelegate: Image { source: "qrc:///mobile/grid/thumb_empty_slot" }
+        maxPages: pageBarRow.maxItems
 
         anchors {
             top: parent.top

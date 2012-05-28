@@ -23,6 +23,7 @@ Item {
     // Read/write properties.
     property QtObject model: null
     property Component delegate: null
+    property Component emptyItemDelegate: null
     property int extraMargin: 40
     property int itemWidth: 192
     property int itemHeight: 263
@@ -31,6 +32,7 @@ Item {
     property int columnsPerPage: 2
     property int spacing: 16
     property int currentPage: 0
+    property int maxPages: 1
 
     // Read only properties.
     property int page: 0
@@ -59,6 +61,8 @@ Item {
         itemHeight: pagedGrid.itemHeight
         rowsPerPage: pagedGrid.rowsPerPage
         columnsPerPage: pagedGrid.columnsPerPage
+        maxPages: pagedGrid.maxPages
+        emptyItemDelegate: pagedGrid.emptyItemDelegate
         x: extraMargin - currentPage * (pageWidth + pagedGrid.spacing)
 
         Behavior on x {

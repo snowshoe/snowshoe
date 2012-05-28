@@ -97,5 +97,6 @@
         <file alias="grid/btn_close1">images/thumb_close_02.png</file>
         <file alias="grid/btn_close2">images/thumb_close_03.png</file>
         <file alias="grid/btn_close3">images/thumb_close_04.png</file>
+        <file alias="grid/thumb_empty_slot">images/thumb_slot.png</file>
     </qresource>
 </RCC>
