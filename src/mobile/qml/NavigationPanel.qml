@@ -151,7 +151,7 @@ Item {
         visible: !tabBarRow.visible
     }
 
-    NavigationOverlay {
+    SwipeArea {
         id: overlay
         visible: false
         anchors {
@@ -161,29 +161,21 @@ Item {
             right: parent.right
         }
 
-        onShowThumbnails: {
-            navigationPanel.state = "";
-            TabsModel.currentWebViewIndex = index;
-        }
+        function dismiss() { navigationPanel.state = ""; }
 
-        onCloseTab: {
-            TabsModel.remove(TabsModel.currentWebViewIndex);
-            navigationPanel.state = "";
-        }
-
-        onDismissOverlay: {
-            navigationPanel.state = "";
-        }
-
-        onGoToNextTab: {
+        function goToNextTab() {
             if (TabsModel.currentWebViewIndex + 1 < TabsModel.count)
                 TabsModel.currentWebViewIndex++;
         }
 
-        onGoToPreviousTab: {
+        function goToPreviousTab() {
             if (TabsModel.currentWebViewIndex > 0)
                 TabsModel.currentWebViewIndex--;
         }
+
+        onSwipeLeft: overlay.goToNextTab()
+        onSwipeRight: overlay.goToPreviousTab()
+        onClicked: overlay.dismiss()
     }
 
     OverlayBar {
@@ -299,7 +291,6 @@ Item {
             name: "withNavigationBarAndOverlay"
             extend: "withNavigationBar"
             PropertyChanges { target: overlay; visible: true }
-            PropertyChanges { target: overlay; opacity: 0.5 }
             AnchorChanges { target: overlayBar; anchors.top: undefined; anchors.bottom: navigationBar.top }
             StateChangeScript { script: navigationBarHidingTimer.stop() }
             PropertyChanges {
@@ -320,7 +311,6 @@ Item {
         AnchorAnimation { duration: 100 }
         PropertyAnimation { target: visibleTab; properties: "height"; duration: 100 }
         PropertyAnimation { target: barsBackground; properties: "height"; duration: 100 }
-        PropertyAnimation { target: overlay; properties: "opacity"; duration: 200 }
     }
 
     Component {
