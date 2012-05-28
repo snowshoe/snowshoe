@@ -4,7 +4,6 @@
         <file>qml/IndicatorRow.qml</file>
         <file>qml/NavigationBar.qml</file>
         <file>qml/NavigationPanel.qml</file>
-        <file>qml/NavigationOverlay.qml</file>
         <file>qml/OverlayBar.qml</file>
         <file>qml/StatusBarIndicator.qml</file>
         <file>qml/SwipeArea.qml</file>
