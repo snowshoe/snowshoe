@@ -74,6 +74,25 @@ Rectangle {
     }
 
     Image {
+        source: "qrc:///mobile/app/side_shadow"
+        z: 99
+        anchors {
+            left: parent.left
+            verticalCenter: parent.verticalCenter
+        }
+    }
+    Image {
+        source: "qrc:///mobile/app/side_shadow"
+        z: 99
+        mirror: true
+        anchors {
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+        }
+    }
+
+
+    Image {
         id: plusButton
         opacity: 0
         source: plusButtonMouseArea.pressed ? "qrc:///mobile/nav/btn_plus_pressed" : "qrc:///mobile/nav/btn_plus_unpressed"

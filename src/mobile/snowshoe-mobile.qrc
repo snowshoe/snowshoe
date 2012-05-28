@@ -22,6 +22,7 @@
         <file>qml/Scrollbar.qml</file>
         <file>qml/TopSitesPanel.qml</file>
         <file alias="app/bg_image">images/app_bg.png</file>
+        <file alias="app/side_shadow">images/overlayer.png</file>
         <file alias="app/tabs_disabled">images/view_menu_tabs_disable.png</file>
         <file alias="app/tabs_unpressed">images/view_menu_tabs_unpressed.png</file>
         <file alias="app/tabs_pressed">images/view_menu_tabs_pressed.png</file>
