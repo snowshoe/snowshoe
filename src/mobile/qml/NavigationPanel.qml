@@ -269,11 +269,11 @@ Item {
             blinkOnZeroProgress: true
         }
 
-        MouseArea {
+        SwipeArea {
             anchors.fill: parent
-            onClicked: {
-                navigationPanel.state = "withNavigationBarAndOverlay";
-            }
+            onSwipeLeft: overlay.goToNextTab()
+            onSwipeRight: overlay.goToPreviousTab()
+            onClicked: navigationPanel.state = "withNavigationBarAndOverlay";
         }
     }
 
