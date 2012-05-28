@@ -16,74 +16,46 @@
 
 import QtQuick 2.0
 
-Row {
+Image {
     id: panelToggle
 
     property bool navigationEnabled: true
-    spacing: -20
 
     signal topSitesSelected()
     signal tabsSelected()
 
     function resetToTabs() {
-        state = "tabs";
-    }
-
-    function selectFavorites() {
-        if (panelToggle.state === "topsites")
-            return;
-        panelToggle.state = "topsites";
-        topSitesSelected();
+        topsites.visible = false;
     }
 
     onNavigationEnabledChanged: {
         if (!navigationEnabled)
-            selectFavorites();
+            topsites.visible = true;
     }
 
-    state: "topsites"
-
+    source: navigationEnabled ? "qrc:///mobile/app/menu_unpressed" : "qrc:///mobile/app/menu_disabled"
 
     Image {
         id: topsites
-        source: "qrc:///mobile/app/mysites_" + (active ? "pressed" : "unpressed")
-        z: active ? 1 : 0
-        property bool active;
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: panelToggle.selectFavorites()
-        }
+        source: "qrc:///mobile/app/mysites_pressed"
+        onVisibleChanged: visible ? topSitesSelected() : tabsSelected()
     }
+    MouseArea {
+        anchors.fill: topsites
+        onClicked: topsites.visible = true
+    }
+
     Image {
         id: tabs
-        source: "qrc:///mobile/app/tabs_" + (navigationEnabled ? (active ? "pressed" : "unpressed") : "disabled")
-        z: active ? 1 : 0
-        property bool active;
+        source: "qrc:///mobile/app/tabs_pressed"
+        anchors.right:  parent.right
+        visible: !topsites.visible
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if (!navigationEnabled)
-                    return;
-                panelToggle.state = "tabs";
-                tabsSelected();
-            }
-        }
     }
-
-    states: [
-        State {
-            name: "topsites"
-            PropertyChanges { target: topsites; active: true }
-            PropertyChanges { target: tabs; active: false }
-        },
-        State {
-            name: "tabs"
-            PropertyChanges { target: topsites; active: false }
-            PropertyChanges { target: tabs; active: true }
-        }
-    ]
-
+    MouseArea {
+        anchors.fill: tabs
+        visible: navigationEnabled
+        onClicked: topsites.visible = false
+    }
 }
 
