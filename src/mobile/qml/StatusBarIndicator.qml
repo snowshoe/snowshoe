@@ -24,10 +24,14 @@ Image {
     property int loadProgress
     property bool blinkOnZeroProgress
 
-    source: valid ? (active ? "qrc:///mobile/indicator/loading_active" : "qrc:///mobile/indicator/loading_inactive")
-                   : "qrc:///mobile/indicator/loading_active"
-    // FIXME: Use this JUST while the asset isn't ready
-    opacity: valid ? 1.0 : 0.2
+    source: {
+        if (!valid)
+            return "qrc:///mobile/indicator/page_slot";
+        else if (active)
+            return "qrc:///mobile/indicator/page_active";
+        else
+            return "qrc:///mobile/indicator/page_inactive"
+    }
 
     Image {
         id: progressIndicator
