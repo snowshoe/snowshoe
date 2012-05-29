@@ -21,11 +21,11 @@ Item {
     id: overlayBar
     height: UiConstants.OverlayBarHeight
 
-    property bool favorite: false
+    property bool pin: false
 
     signal showThumbnails()
     signal openNewTab()
-    signal favoriteToggled()
+    signal pinToggled()
 
     Item {
         id: overlayBarBase
@@ -35,7 +35,7 @@ Item {
             id: buttonThumbview
             anchors {
                 left: parent.left
-                leftMargin: UiConstants.OverlayBarLongMargin
+                leftMargin: UiConstants.OverlayBarSideMargin
             }
             pressedImage: "qrc:///mobile/overlaybar/btn_thumbview_pressed"
             unpressedImage: "qrc:///mobile/overlaybar/btn_thumbview_unpressed"
@@ -43,22 +43,50 @@ Item {
         }
 
         Button {
+            id: buttonShare
+            anchors {
+                left: buttonThumbview.right
+                margins: UiConstants.OverlayBarInsideMargin
+            }
+            pressedImage: "qrc:///mobile/overlaybar/btn_share_pressed"
+            unpressedImage: "qrc:///mobile/overlaybar/btn_share_unpressed"
+            onClicked: null
+        }
+
+        Button {
             id: buttonPlus
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors {
+                left: buttonShare.right
+                margins: UiConstants.OverlayBarInsideMargin
+            }
             pressedImage: "qrc:///mobile/overlaybar/btn_plus_pressed"
             unpressedImage: "qrc:///mobile/overlaybar/btn_plus_unpressed"
             onClicked: overlayBar.openNewTab()
         }
 
         Button {
-            id: buttonFavorites
+            id: buttonPin
+            anchors {
+                left: buttonPlus.right
+                margins: UiConstants.OverlayBarInsideMargin
+            }
+            pressedImage: pin ? "qrc:///mobile/overlaybar/btn_pin_unpressed" : "qrc:///mobile/overlaybar/btn_pin_pressed"
+            unpressedImage: pin ? "qrc:///mobile/overlaybar/btn_pin_pressed" : "qrc:///mobile/overlaybar/btn_pin_unpressed"
+            onClicked: {
+                overlayBar.pinToggled();
+                pin = !pin;
+            }
+        }
+
+        Button {
+            id: buttonSettings
             anchors {
                 right: parent.right
-                rightMargin: UiConstants.OverlayBarLongMargin
+                rightMargin: UiConstants.OverlayBarSideMargin
             }
-            pressedImage: favorite ? "qrc:///mobile/overlaybar/btn_favorite_unpressed" : "qrc:///mobile/overlaybar/btn_favorite_pressed"
-            unpressedImage: favorite ? "qrc:///mobile/overlaybar/btn_favorite_pressed" : "qrc:///mobile/overlaybar/btn_favorite_unpressed"
-            onClicked: overlayBar.favoriteToggled()
+            pressedImage: "qrc:///mobile/overlaybar/btn_settings_pressed"
+            unpressedImage: "qrc:///mobile/overlaybar/btn_settings_unpressed"
+            onClicked: null
         }
     }
 }

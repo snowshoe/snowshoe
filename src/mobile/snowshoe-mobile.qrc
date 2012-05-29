@@ -69,10 +69,14 @@
         <file alias="overlaybar/bg_image">images/tabbar_bg.png</file>
         <file alias="overlaybar/btn_thumbview_unpressed">images/button_thumbview_unpressed.png</file>
         <file alias="overlaybar/btn_thumbview_pressed">images/button_thumbview_pressed.png</file>
+        <file alias="overlaybar/btn_share_unpressed">images/button_share_unpressed.png</file>
+        <file alias="overlaybar/btn_share_pressed">images/button_share_pressed.png</file>
         <file alias="overlaybar/btn_plus_unpressed">images/button_plus_unpressed.png</file>
         <file alias="overlaybar/btn_plus_pressed">images/button_plus_pressed.png</file>
-        <file alias="overlaybar/btn_favorite_unpressed">images/button_favorite_unpressed.png</file>
-        <file alias="overlaybar/btn_favorite_pressed">images/button_favorite_pressed.png</file>
+        <file alias="overlaybar/btn_pin_unpressed">images/button_pin_unpressed.png</file>
+        <file alias="overlaybar/btn_pin_pressed">images/button_pin_pressed.png</file>
+	<file alias="overlaybar/btn_settings_unpressed">images/button_settings_unpressed.png</file>
+        <file alias="overlaybar/btn_settings_pressed">images/button_settings_pressed.png</file>
         <file alias="scrollbar/bg_image">images/scrollbar_base.png</file>
         <file alias="scrollbar/btn_google_search">images/button_google_search.png</file>
         <file alias="scrollbar/btn_url_suggestion">images/button_url_suggestion.png</file>
@@ -87,8 +91,8 @@
         <file alias="url/btn_cancel_unpressed">images/button_cancel_unpressed.png</file>
         <file alias="url/btn_cancel_pressed">images/button_cancel_pressed.png</file>
         <file alias="grid/overlayer">images/thumb_overlayer.png</file>
-        <file alias="grid/btn_favorite_pressed">images/thumb_favorite_pressed.png</file>
-        <file alias="grid/btn_favorite_unpressed">images/thumb_favorite_unpressed.png</file>
+        <file alias="grid/btn_pin_pressed">images/thumb_pin_pressed.png</file>
+        <file alias="grid/btn_pin_unpressed">images/thumb_pin_unpressed.png</file>
         <file alias="grid/mask0">images/thumb_mask_01.png</file>
         <file alias="grid/mask1">images/thumb_mask_02.png</file>
         <file alias="grid/mask2">images/thumb_mask_03.png</file>

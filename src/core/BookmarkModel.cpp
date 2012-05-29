@@ -91,7 +91,7 @@ void BookmarkModel::remove(const QString& url)
     }
 }
 
-void BookmarkModel::toggleFavorite(const QString& url)
+void BookmarkModel::togglePin(const QString& url)
 {
     if (contains(url))
         remove(url);

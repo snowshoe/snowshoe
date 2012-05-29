@@ -37,7 +37,7 @@ public:
     Q_INVOKABLE void remove(const QString& url);
     Q_INVOKABLE void update(int index, const QString& name, const QString& url);
     Q_INVOKABLE bool contains(const QString& url);
-    Q_INVOKABLE void toggleFavorite(const QString& url);
+    Q_INVOKABLE void togglePin(const QString& url);
 
 Q_SIGNALS:
     void countChanged();

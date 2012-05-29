@@ -74,9 +74,8 @@ Item {
                 }
             }
             Image {
-                id: favoriteButton
-                property bool enabled
-                source: enabled ? "qrc:///mobile/grid/btn_favorite_pressed" : "qrc:///mobile/grid/btn_favorite_unpressed"
+                id: pinButton
+                source: "qrc:///mobile/grid/btn_pin_pressed"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 186

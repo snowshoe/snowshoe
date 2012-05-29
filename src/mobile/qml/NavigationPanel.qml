@@ -180,31 +180,35 @@ Item {
         onClicked: overlay.dismiss()
     }
 
-    OverlayBar {
-        id: overlayBar
-        visible: overlay.visible
-        anchors {
-            top: navigationBar.top
-            left: parent.left
-            right: parent.right
-            bottomMargin: 27
-        }
+    Item {
+        id: tabBar
+        width: UiConstants.PortraitWidth
+        height: UiConstants.TabBarHeight
+        anchors.top: barsBackground.top
+        anchors.left: parent.left
+        anchors.right: parent.right
 
-        onShowThumbnails: {
-            navigationPanel.state = "";
-            TabsModel.currentWebViewIndex = -1;
-        }
-
-        onOpenNewTab: navigationPanel.newTabRequested()
-
-        onFavoriteToggled: BookmarkModel.toggleFavorite(visibleTab.url);
-
-        Connections {
-            target: BookmarkModel
-            onCountChanged: {
-                if (visibleTab)
-                    overlayBar.favorite = BookmarkModel.contains(visibleTab.url);
+        IndicatorRow {
+            id: tabBarRow
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+                topMargin: 25
+                bottomMargin: 27
             }
+            itemCount: TabsModel.count
+            maxItems: pageBarRow.maxItems * UiConstants.PagedGridItemsPerPage
+            currentItem: Math.max(0, TabsModel.currentWebViewIndex)
+            loadProgress: visibleTab != null ? visibleTab.loadProgress : 0
+            blinkOnZeroProgress: true
+        }
+
+        SwipeArea {
+            anchors.fill: parent
+            onSwipeLeft: overlay.goToNextTab()
+            onSwipeRight: overlay.goToPreviousTab()
+            onClicked: navigationPanel.state = "withNavigationBarAndOverlay";
         }
     }
 
@@ -236,45 +240,41 @@ Item {
             }
         }
 
-        onUrlChanged: overlayBar.favorite = BookmarkModel.contains(url);
+        onUrlChanged: overlayBar.pin = BookmarkModel.contains(url);
     }
 
-    Item {
-        id: tabBar
-        width: UiConstants.PortraitWidth
-        height: UiConstants.TabBarHeight
-        anchors.bottom: overlayBar.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        IndicatorRow {
-            id: tabBarRow
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                horizontalCenter: parent.horizontalCenter
-                topMargin: 25
-                bottomMargin: 27
-            }
-            itemCount: TabsModel.count
-            maxItems: pageBarRow.maxItems * UiConstants.PagedGridItemsPerPage
-            currentItem: Math.max(0, TabsModel.currentWebViewIndex)
-            loadProgress: visibleTab != null ? visibleTab.loadProgress : 0
-            blinkOnZeroProgress: true
+    OverlayBar {
+        id: overlayBar
+        visible: overlay.visible
+        anchors {
+            top: parent.bottom
+            left: parent.left
+            right: parent.right
+            bottomMargin: 31
         }
 
-        SwipeArea {
-            anchors.fill: parent
-            onSwipeLeft: overlay.goToNextTab()
-            onSwipeRight: overlay.goToPreviousTab()
-            onClicked: navigationPanel.state = "withNavigationBarAndOverlay";
+        onShowThumbnails: {
+            navigationPanel.state = "";
+            TabsModel.currentWebViewIndex = -1;
+        }
+
+        onOpenNewTab: navigationPanel.newTabRequested()
+
+        onPinToggled: BookmarkModel.togglePin(visibleTab.url);
+
+        Connections {
+            target: BookmarkModel
+            onCountChanged: {
+                if (visibleTab)
+                    overlayBar.pin = BookmarkModel.contains(visibleTab.url);
+            }
         }
     }
 
     states: [
         State {
             name: "withNavigationBar"
-            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: parent.bottom }
+            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: overlayBar.top }
             PropertyChanges {
                 target: barsBackground
                 height: tabBar.height + tabBar.anchors.topMargin + tabBar.anchors.bottomMargin
@@ -293,7 +293,7 @@ Item {
             name: "withNavigationBarAndOverlay"
             extend: "withNavigationBar"
             PropertyChanges { target: overlay; visible: true }
-            AnchorChanges { target: overlayBar; anchors.top: undefined; anchors.bottom: navigationBar.top }
+            AnchorChanges { target: overlayBar; anchors.top: undefined; anchors.bottom: parent.bottom }
             StateChangeScript { script: navigationBarHidingTimer.stop() }
             PropertyChanges {
                 target: barsBackground
