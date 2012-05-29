@@ -39,6 +39,7 @@ Item {
         id: bookmarkEntry
         Image {
             property string url: model.url
+            property bool fadeUrl: false
 
             source: "qrc:///mobile/grid/overlayer"
             height: UiConstants.PagedGridSizeTable[1]
@@ -50,7 +51,7 @@ Item {
                 id: displayedUrl
                 text: url.replace(/(https?|file):\/\/\/?(www\.)?/, "").replace(/\/.*/, "");
                 color: "#515050"
-                horizontalAlignment: urlFade.visible ? Text.AlignLeft : Text.AlignHCenter
+                horizontalAlignment: fadeUrl ? Text.AlignLeft : Text.AlignHCenter
                 font.pixelSize: 20
                 font.family: "Nokia Pure Text Light"
                 anchors {
@@ -61,12 +62,13 @@ Item {
                     leftMargin: 14
                     rightMargin: 14
                 }
+                onWidthChanged: fadeUrl = paintedWidth > width
 
             }
             Image {
                 id: urlFade
                 source: "qrc:///mobile/scrollbar/suggestions_overlayer"
-                visible: displayedUrl.paintedWidth > displayedUrl.width
+                visible: fadeUrl
                 width: 30
                 anchors {
                     verticalCenter: displayedUrl.verticalCenter
