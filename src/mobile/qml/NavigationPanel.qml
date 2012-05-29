@@ -219,10 +219,10 @@ Item {
         anchors.bottomMargin: 31
 
         onUrlInputRequested: navigationPanel.urlInputRequested()
-        onStopRequested: navigationPanel.state = "withNavigationBar"
-        onReloadRequested: navigationPanel.state = "withNavigationBar"
-        onBackRequested: navigationPanel.state = "withNavigationBar"
-        onForwardRequested: navigationPanel.state = "withNavigationBar"
+        onStopRequested: navigationPanel.state = "withNavigationBarAndOverlay"
+        onReloadRequested: navigationPanel.state = "withNavigationBarAndOverlay"
+        onBackRequested: navigationPanel.state = "withNavigationBarAndOverlay"
+        onForwardRequested: navigationPanel.state = "withNavigationBarAndOverlay"
 
         Timer {
             id: navigationBarHidingTimer
@@ -233,7 +233,7 @@ Item {
 
             function updateStateForCurrentTab() {
                 if (navigationPanel.visibleTab.loading) {
-                    navigationPanel.state = "withNavigationBar";
+                    navigationPanel.state = "withNavigationBarAndOverlay";
                     stop();
                 } else
                     restart();
@@ -273,26 +273,9 @@ Item {
 
     states: [
         State {
-            name: "withNavigationBar"
-            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: overlayBar.top }
-            PropertyChanges {
-                target: barsBackground
-                height: tabBar.height + tabBar.anchors.topMargin + tabBar.anchors.bottomMargin
-                        + navigationBar.height + navigationBar.anchors.topMargin + navigationBar.anchors.bottomMargin
-            }
-
-            // TODO: avoid dealing with webView's height. This was used to allow N9 users to be able to click
-            // on tabbar indicators without sending all the clicks to the webView component
-            PropertyChanges {
-                target: visibleTab
-                height: UiConstants.PortraitHeight - barsBackground.height
-                restoreEntryValues: false
-            }
-        },
-        State {
             name: "withNavigationBarAndOverlay"
-            extend: "withNavigationBar"
             PropertyChanges { target: overlay; visible: true }
+            AnchorChanges { target: navigationBar; anchors.top: undefined; anchors.bottom: overlayBar.top }
             AnchorChanges { target: overlayBar; anchors.top: undefined; anchors.bottom: parent.bottom }
             StateChangeScript { script: navigationBarHidingTimer.stop() }
             PropertyChanges {
