@@ -57,8 +57,8 @@ Image {
         repeat: true
         interval: 500
         onTriggered: {
-            indicator.opacity = indicator.opacity === 1.0 ? 0.1 : 1.0;
+            progressIndicator.opacity = progressIndicator.opacity === 1.0 ? 0.0 : 1.0;
         }
-        onRunningChanged: if (!running) indicator.opacity = 1.0;
+        onRunningChanged: if (!running) progressIndicator.opacity = 1.0;
     }
 }
