@@ -87,6 +87,8 @@ Item {
                     model: currentPageModel
                     delegate: pagedGrid.delegate
                 }
+
+                move: Transition { NumberAnimation { properties: "x,y"; duration: 200 } }
             }
         }
     }
