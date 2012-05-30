@@ -52,6 +52,11 @@ Item {
         return grid.itemAt(index)
     }
 
+    onPageCountChanged: {
+        if (pageCount === currentPage && currentPage > 0)
+            --currentPage;
+    }
+
     PageFillGrid {
         id: grid
         model: pagedGrid.model
