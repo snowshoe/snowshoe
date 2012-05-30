@@ -86,8 +86,10 @@ void BookmarkModel::remove(const QString& url)
     }
 
     if (indexToDelete >= 0) {
+        beginRemoveRows(QModelIndex(), indexToDelete, indexToDelete);
         removeRow(indexToDelete);
         submitAll();
+        endRemoveRows();
     }
 }
 
