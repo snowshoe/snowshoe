@@ -41,7 +41,7 @@ Item {
             property string url: model.url
             property bool fadeUrl: false
 
-            source: "qrc:///mobile/grid/overlayer"
+            source: "qrc:///mobile/grid/pin_overlayer"
             height: UiConstants.PagedGridSizeTable[1]
             fillMode: Image.Pad
             verticalAlignment: Image.AlignBottom
