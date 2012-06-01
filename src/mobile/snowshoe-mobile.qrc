@@ -26,8 +26,6 @@
         <file alias="app/menu_disabled">images/view_menu_bg_disable.png</file>
         <file alias="app/tabs_pressed">images/view_menu_tabs_pressed.png</file>
         <file alias="app/mysites_pressed">images/view_menu_mysites_pressed.png</file>
-        <file alias="fav/icon01">images/fav_01.png</file>
-        <file alias="fav/icon02">images/fav_02.png</file>
         <file alias="fav/icon03">images/fav_03.png</file>
         <file alias="indicator/page_active">images/pagination_active.png</file>
         <file alias="indicator/page_inactive">images/pagination_inactive.png</file>
@@ -81,7 +79,6 @@
         <file alias="scrollbar/btn_url_suggestion">images/button_url_suggestion.png</file>
         <file alias="scrollbar/bullet">images/scrollbar_bullet.png</file>
         <file alias="scrollbar/suggestions_overlayer">images/url_suggestions_overlayer.png</file>
-        <file alias="scrollbar/suggestions_separator">images/url_suggestions_separator.png</file>
         <file alias="url/border">images/url_bar.png</file>
         <file alias="url/bg_typing">images/urlbar_bg_typing.png</file>
         <file alias="url/bg_browsing">images/urlbar_bg_browsing.png</file>
