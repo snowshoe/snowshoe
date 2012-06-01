@@ -79,14 +79,14 @@ void BookmarkModel::remove(const QString& url)
     sqlQuery.first();
     int indexToDelete = -1;
     for (int row = 0; row < rowCount(); ++row) {
-        if (index(row, 0).data(Qt::DisplayRole).toInt() == sqlQuery.value(0).toInt()) {
+        if (createIndex(row, 0).data(Qt::DisplayRole).toInt() == sqlQuery.value(0).toInt()) {
             indexToDelete = row;
             break;
         }
     }
 
     if (indexToDelete >= 0) {
-        beginRemoveRows(QModelIndex(), indexToDelete, indexToDelete);
+        beginRemoveRows(createIndex(indexToDelete, 0), indexToDelete, indexToDelete);
         removeRow(indexToDelete);
         submitAll();
         endRemoveRows();
@@ -103,8 +103,8 @@ void BookmarkModel::togglePin(const QString& url)
 
 void BookmarkModel::update(int index, const QString& name, const QString& url)
 {
-    setData(this->index(index, 1), name);
-    setData(this->index(index, 2), url);
+    setData(createIndex(index, 1), name);
+    setData(createIndex(index, 2), url);
 }
 
 bool BookmarkModel::contains(const QString& url)
@@ -123,7 +123,7 @@ QVariant BookmarkModel::data(const QModelIndex& index, int role) const
         value = QSqlQueryModel::data(index, role);
     else {
         const int columnId = role - Qt::UserRole;
-        const QModelIndex modelIndex = this->index(index.row(), columnId);
+        const QModelIndex modelIndex = createIndex(index.row(), columnId);
         value = QSqlTableModel::data(modelIndex, Qt::DisplayRole);
     }
     return value;

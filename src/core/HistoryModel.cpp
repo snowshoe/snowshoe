@@ -84,7 +84,7 @@ QVariant HistoryModel::data(const QModelIndex& index, int role) const
         return QVariant();
 
     const int columnId = role - Qt::UserRole;
-    const QModelIndex modelIndex = this->index(index.row(), columnId);
+    const QModelIndex modelIndex = createIndex(index.row(), columnId);
     return QSqlTableModel::data(modelIndex, Qt::DisplayRole);
 }
 
