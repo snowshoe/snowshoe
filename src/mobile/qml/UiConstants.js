@@ -47,5 +47,9 @@ var PagedGridNumColumns = 2;
 var PagedGridCloseButtonWidth = 90;
 var PagedGridCloseButtonHeight = 90;
 
+// Maximum number of pages for top sites and open tabs
+var TopSitesMaxPages = 3;
+var TabsMaxPages = 3;
+
 var GoogleSearchPattern = "http://www.google.com/search?q=";
 var GoogleSearchPatternLength = GoogleSearchPattern.length;

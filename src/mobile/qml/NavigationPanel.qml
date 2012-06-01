@@ -144,7 +144,7 @@ Item {
             topMargin: 25
         }
         itemCount: tabsGrid.pageCount
-        maxItems: 3
+        maxItems: UiConstants.TabsMaxPages
         currentItem: tabsGrid.currentPage
         visible: !tabBarRow.visible
     }

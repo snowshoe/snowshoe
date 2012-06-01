@@ -31,7 +31,7 @@ Item {
             right: root.right
         }
         itemCount: topSitesGrid.pageCount
-        maxItems: 3
+        maxItems: UiConstants.TopSitesMaxPages
         currentItem: topSitesGrid.currentPage
     }
 
