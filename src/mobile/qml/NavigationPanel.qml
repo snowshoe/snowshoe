@@ -56,99 +56,6 @@ Item {
         verticalAlignment: Image.AlignBottom
     }
 
-    Component {
-        id: tabEntry
-        Image {
-            property string url: model.url
-            source: model.screenshot
-            height: UiConstants.PagedGridSizeTable[1]
-            width: UiConstants.PagedGridSizeTable[0]
-            clip: true
-
-            Text {
-                text: index + (tabsGrid.currentPage * 4) + 1
-                color: "#C1C2C3"
-                font.pixelSize: 30
-                font.family: "Nokia Pure Headline Light"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                anchors {
-                    top: parent.top
-                    bottom: parent.bottom
-                    left: parent.left
-                    right: parent.right
-                    topMargin: 108
-                    bottomMargin: 103
-                    leftMargin: 69
-                    rightMargin: 62
-                }
-            }
-
-            Text {
-                id: displayedUrl
-                text: url.replace(/(https?|file):\/\/\/?(www\.)?/, "").replace(/\/.*/, "");
-                color: "#515050"
-                horizontalAlignment: urlFade.visible ? Text.AlignLeft : Text.AlignHCenter
-                font.pixelSize: 20
-                font.family: "Nokia Pure Text Light"
-                anchors {
-                    bottom: parent.bottom
-                    left: parent.left
-                    right: parent.right
-                    bottomMargin: 10
-                    leftMargin: 14
-                    rightMargin: 14
-                }
-            }
-            Image {
-                id: urlFade
-                source: "qrc:///mobile/grid/overlayer_tabs_url"
-                visible: displayedUrl.paintedWidth > displayedUrl.width
-                anchors {
-                    bottom: parent.bottom
-                    right: parent.right
-                }
-            }
-        }
-    }
-
-    PagedGrid {
-        id: tabsGrid
-        model: TabsModel
-        delegate: tabEntry
-        visible: TabsModel.currentWebViewIndex < 0
-        emptyItemDelegate: Image { source: "qrc:///mobile/grid/thumb_empty_slot" }
-        maxPages: pageBarRow.maxItems
-
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            topMargin: UiConstants.NavigationPanelYOffset
-        }
-
-        onItemClicked: {
-            if (y < UiConstants.PagedGridCloseButtonHeight
-                && (UiConstants.PagedGridSizeTable[0] - x) <= UiConstants.PagedGridCloseButtonWidth) {
-                TabsModel.remove(index);
-            } else
-                TabsModel.currentWebViewIndex = index;
-        }
-    }
-
-    IndicatorRow {
-        id: pageBarRow
-        anchors {
-            top: tabsGrid.bottom
-            horizontalCenter: parent.horizontalCenter
-            topMargin: 25
-        }
-        itemCount: tabsGrid.pageCount
-        maxItems: UiConstants.TabsMaxPages
-        currentItem: tabsGrid.currentPage
-        visible: !tabBarRow.visible
-    }
-
     SwipeArea {
         id: overlay
         visible: false
@@ -194,7 +101,7 @@ Item {
                 bottomMargin: 27
             }
             itemCount: TabsModel.count
-            maxItems: pageBarRow.maxItems * UiConstants.PagedGridItemsPerPage
+            maxItems: UiConstants.TabsMaxPages * UiConstants.PagedGridItemsPerPage
             currentItem: Math.max(0, TabsModel.currentWebViewIndex)
             loadProgress: visibleTab != null ? visibleTab.loadProgress : 0
             blinkOnZeroProgress: true

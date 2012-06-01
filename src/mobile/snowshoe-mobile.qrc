@@ -19,6 +19,7 @@
         <file>qml/UrlSuggestions.qml</file>
         <file>qml/SuggestionItem.qml</file>
         <file>qml/Scrollbar.qml</file>
+        <file>qml/TabsPanel.qml</file>
         <file>qml/TopSitesPanel.qml</file>
         <file alias="app/bg_image">images/app_bg.png</file>
         <file alias="app/side_shadow">images/overlayer.png</file>

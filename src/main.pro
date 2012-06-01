@@ -46,6 +46,7 @@ OTHER_FILES += \
     desktop/qml/UrlEdit.qml \
     desktop/qml/main.qml \
     mobile/qml/Button.qml \
+    mobile/qml/TabsPanel.qml \
     mobile/qml/TopSitesPanel.qml \
     mobile/qml/IndicatorRow.qml \
     mobile/qml/UrlInputPanel.qml \

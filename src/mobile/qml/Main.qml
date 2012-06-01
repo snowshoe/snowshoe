@@ -57,6 +57,17 @@ Rectangle {
         onUrlSelected: navigationPanel.openUrlInNewTab(UrlTools.fromUserInput(url))
     }
 
+    TabsPanel {
+        id: tabsPanel
+        opacity: 0
+        anchors {
+            top: panelToggle.bottom
+            left: parent.left
+            right: parent.right
+            topMargin: 32
+        }
+    }
+
     NavigationPanel {
         id: navigationPanel
         opacity: 0
@@ -154,6 +165,7 @@ Rectangle {
             PropertyChanges { target: plusButton; opacity: 1 }
             PropertyChanges { target: panelToggle; opacity: 1 }
             PropertyChanges { target: topSitesPanel; opacity: 1 }
+            PropertyChanges { target: tabsPanel; opacity: 0 }
             PropertyChanges { target: navigationPanel; opacity: 0 }
         },
         State {
@@ -162,7 +174,8 @@ Rectangle {
             PropertyChanges { target: plusButton; opacity: 1 }
             PropertyChanges { target: panelToggle; opacity: 1 }
             PropertyChanges { target: topSitesPanel; opacity: 0 }
-            PropertyChanges { target: navigationPanel; opacity: 1 }
+            PropertyChanges { target: tabsPanel; opacity: 1 }
+            PropertyChanges { target: navigationPanel; opacity: 0 }
         },
         State {
             name: "navigationFullScreen"
@@ -170,6 +183,7 @@ Rectangle {
             PropertyChanges { target: plusButton; opacity: 0 }
             PropertyChanges { target: panelToggle; opacity: 0 }
             PropertyChanges { target: topSitesPanel; opacity: 0 }
+            PropertyChanges { target: tabsPanel; opacity: 0 }
             PropertyChanges { target: navigationPanel; opacity: 1 }
         },
         State {
@@ -178,6 +192,7 @@ Rectangle {
             PropertyChanges { target: plusButton; opacity: 0 }
             PropertyChanges { target: panelToggle; opacity: 0 }
             PropertyChanges { target: topSitesPanel; opacity: 0 }
+            PropertyChanges { target: tabsPanel; opacity: 0 }
             PropertyChanges { target: navigationPanel; opacity: 0 }
         }
     ]
