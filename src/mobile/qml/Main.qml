@@ -152,24 +152,33 @@ Rectangle {
         State {
             name: "favorites"
             PropertyChanges { target: plusButton; opacity: 1 }
+            PropertyChanges { target: panelToggle; opacity: 1 }
             PropertyChanges { target: topSitesPanel; opacity: 1 }
+            PropertyChanges { target: navigationPanel; opacity: 0 }
         },
         State {
             name: "navigation"
             StateChangeScript { script: panelToggle.resetToTabs() }
             PropertyChanges { target: plusButton; opacity: 1 }
+            PropertyChanges { target: panelToggle; opacity: 1 }
+            PropertyChanges { target: topSitesPanel; opacity: 0 }
             PropertyChanges { target: navigationPanel; opacity: 1 }
         },
         State {
             name: "navigationFullScreen"
             StateChangeScript { script: panelToggle.resetToTabs() }
+            PropertyChanges { target: plusButton; opacity: 0 }
             PropertyChanges { target: panelToggle; opacity: 0 }
+            PropertyChanges { target: topSitesPanel; opacity: 0 }
             PropertyChanges { target: navigationPanel; opacity: 1 }
         },
         State {
             name: "typeNewUrl"
             PropertyChanges { target: urlInputPanel; opacity: 1 }
+            PropertyChanges { target: plusButton; opacity: 0 }
             PropertyChanges { target: panelToggle; opacity: 0 }
+            PropertyChanges { target: topSitesPanel; opacity: 0 }
+            PropertyChanges { target: navigationPanel; opacity: 0 }
         }
     ]
 
