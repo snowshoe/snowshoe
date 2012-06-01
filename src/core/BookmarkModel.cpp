@@ -63,7 +63,10 @@ void BookmarkModel::insert(const QString& name, const QString& url)
     record.setValue(QLatin1String("name"), name);
     record.setValue(QLatin1String("url"), url);
 
+    QModelIndex index = QModelIndex();
+    beginInsertRows(index, rowCount(index), rowCount(index));
     insertRecord(-1, record);
+    endInsertRows();
     submitAll();
 }
 
