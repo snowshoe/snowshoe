@@ -165,8 +165,6 @@ Rectangle {
             StateChangeScript { script: panelToggle.resetToTabs() }
             PropertyChanges { target: panelToggle; opacity: 0 }
             PropertyChanges { target: navigationPanel; opacity: 1 }
-            AnchorChanges { target: panelToggle; anchors.bottom: parent.top; anchors.top: undefined }
-            AnchorChanges { target: plusButton; anchors.bottom: undefined; anchors.top: parent.bottom }
         },
         State {
             name: "typeNewUrl"
