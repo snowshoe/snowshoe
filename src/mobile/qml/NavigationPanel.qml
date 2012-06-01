@@ -65,12 +65,22 @@ Item {
             width: UiConstants.PagedGridSizeTable[0]
             clip: true
 
-            Image {
-                source: "qrc:///mobile/grid/overlayer"
+            Text {
+                text: index + (tabsGrid.currentPage * 4) + 1
+                color: "#C1C2C3"
+                font.pixelSize: 30
+                font.family: "Nokia Pure Headline Light"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
                 anchors {
+                    top: parent.top
                     bottom: parent.bottom
                     left: parent.left
                     right: parent.right
+                    topMargin: 108
+                    bottomMargin: 103
+                    leftMargin: 69
+                    rightMargin: 62
                 }
             }
 
@@ -89,27 +99,13 @@ Item {
                     leftMargin: 14
                     rightMargin: 14
                 }
-
             }
             Image {
                 id: urlFade
-                source: "qrc:///mobile/scrollbar/suggestions_overlayer"
+                source: "qrc:///mobile/grid/overlayer_tabs_url"
                 visible: displayedUrl.paintedWidth > displayedUrl.width
-                width: 30
                 anchors {
-                    verticalCenter: displayedUrl.verticalCenter
-                    right: parent.right
-                }
-            }
-
-            Image {
-                source: "qrc:///mobile/grid/mask" + Math.max(0, index)
-            }
-
-            Image {
-                source: "qrc:///mobile/grid/btn_close" + Math.max(0, index)
-                anchors {
-                    top: parent.top
+                    bottom: parent.bottom
                     right: parent.right
                 }
             }

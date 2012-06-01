@@ -41,11 +41,30 @@ Item {
             property string url: model.url
             property bool fadeUrl: false
 
-            source: "qrc:///mobile/grid/pin_overlayer"
+            source: "qrc:///mobile/grid/thumb_mysites_placeholder"
             height: UiConstants.PagedGridSizeTable[1]
             fillMode: Image.Pad
             verticalAlignment: Image.AlignBottom
             clip: true
+
+            Text {
+                text: index + (topSitesGrid.currentPage * 4) + 1
+                color: "#C1C2C3"
+                font.pixelSize: 30
+                font.family: "Nokia Pure Headline Light"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                    topMargin: 69
+                    bottomMargin: 142
+                    leftMargin: 69
+                    rightMargin: 62
+                }
+            }
 
             Text {
                 id: displayedUrl
@@ -67,11 +86,10 @@ Item {
             }
             Image {
                 id: urlFade
-                source: "qrc:///mobile/scrollbar/suggestions_overlayer"
+                source: "qrc:///mobile/grid/overlayer_mysites_url"
                 visible: fadeUrl
-                width: 30
                 anchors {
-                    verticalCenter: displayedUrl.verticalCenter
+                    bottom: parent.bottom
                     right: parent.right
                 }
             }
@@ -81,9 +99,6 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 186
-            }
-            Image {
-                source: "qrc:///mobile/grid/mask" + Math.max(0, index)
             }
         }
     }

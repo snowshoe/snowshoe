@@ -26,7 +26,6 @@
         <file alias="app/menu_disabled">images/view_menu_bg_disable.png</file>
         <file alias="app/tabs_pressed">images/view_menu_tabs_pressed.png</file>
         <file alias="app/mysites_pressed">images/view_menu_mysites_pressed.png</file>
-        <file alias="fav/icon03">images/fav_03.png</file>
         <file alias="indicator/page_active">images/pagination_active.png</file>
         <file alias="indicator/page_inactive">images/pagination_inactive.png</file>
         <file alias="indicator/page_slot">images/pagination_slot.png</file>
@@ -72,7 +71,7 @@
         <file alias="overlaybar/btn_plus_pressed">images/button_plus_pressed.png</file>
         <file alias="overlaybar/btn_pin_unpressed">images/button_pin_unpressed.png</file>
         <file alias="overlaybar/btn_pin_pressed">images/button_pin_pressed.png</file>
-	<file alias="overlaybar/btn_settings_unpressed">images/button_settings_unpressed.png</file>
+        <file alias="overlaybar/btn_settings_unpressed">images/button_settings_unpressed.png</file>
         <file alias="overlaybar/btn_settings_pressed">images/button_settings_pressed.png</file>
         <file alias="scrollbar/bg_image">images/scrollbar_base.png</file>
         <file alias="scrollbar/btn_google_search">images/button_google_search.png</file>
@@ -86,18 +85,12 @@
         <file alias="url/btn_erase_pressed">images/button_erase_pressed.png</file>
         <file alias="url/btn_cancel_unpressed">images/button_cancel_unpressed.png</file>
         <file alias="url/btn_cancel_pressed">images/button_cancel_pressed.png</file>
-        <file alias="grid/pin_overlayer">images/thumb_pin_overlayer.png</file>
-        <file alias="grid/overlayer">images/thumb_overlayer.png</file>
         <file alias="grid/btn_pin_pressed">images/thumb_pin_pressed.png</file>
         <file alias="grid/btn_pin_unpressed">images/thumb_pin_unpressed.png</file>
-        <file alias="grid/mask0">images/thumb_mask_01.png</file>
-        <file alias="grid/mask1">images/thumb_mask_02.png</file>
-        <file alias="grid/mask2">images/thumb_mask_03.png</file>
-        <file alias="grid/mask3">images/thumb_mask_04.png</file>
-        <file alias="grid/btn_close0">images/thumb_close_01.png</file>
-        <file alias="grid/btn_close1">images/thumb_close_02.png</file>
-        <file alias="grid/btn_close2">images/thumb_close_03.png</file>
-        <file alias="grid/btn_close3">images/thumb_close_04.png</file>
         <file alias="grid/thumb_empty_slot">images/thumb_slot.png</file>
+        <file alias="grid/thumb_tabs_placeholder">images/thumb_tabs_placeholder.png</file>
+        <file alias="grid/thumb_mysites_placeholder">images/thumb_mysites_placeholder.png</file>
+        <file alias="grid/overlayer_tabs_url">images/overlayer_label_tabs.png</file>
+        <file alias="grid/overlayer_mysites_url">images/overlayer_label_mysites.png</file>
     </qresource>
 </RCC>

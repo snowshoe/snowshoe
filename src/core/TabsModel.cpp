@@ -43,7 +43,7 @@ QVariant TabsModel::data(const QModelIndex& index, int role) const
             return data->property("url");
         break;
     case ScreenshotRole:
-        static QString defaultScreenShot = QLatin1String("qrc:///mobile/fav/icon03");
+        static QString defaultScreenShot = QLatin1String("qrc:///mobile/grid/thumb_tabs_placeholder");
         return QVariant::fromValue(defaultScreenShot);
     }
     return QVariant();
