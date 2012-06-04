@@ -38,7 +38,7 @@ Item {
         Image {
             property string url: model.url
             property bool fadeUrl: false
-            source: model.screenshot
+            source: model.thumbnail
             height: UiConstants.PagedGridSizeTable[1]
             fillMode: Image.Pad
             verticalAlignment: Image.AlignBottom

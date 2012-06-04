@@ -38,11 +38,8 @@ void BookmarkModel::generateRoleNames()
 
 QString BookmarkModel::tableCreateQuery() const
 {
-    const QLatin1String bookmarkQuery("CREATE TABLE IF NOT EXISTS bookmarks (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                  "name VARCHAR, url VARCHAR, dateAdded DATE);");
-
-    return bookmarkQuery;
-
+    return QStringLiteral("CREATE TABLE IF NOT EXISTS bookmarks (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                          "name VARCHAR, url VARCHAR, dateAdded DATE, thumbnail BLOB DEFAULT NULL);");
 }
 
 void BookmarkModel::setFilter(const QString& filter)
@@ -121,13 +118,17 @@ bool BookmarkModel::contains(const QString& url)
 
 QVariant BookmarkModel::data(const QModelIndex& index, int role) const
 {
-    QVariant value;
     if (role < Qt::UserRole)
-        value = QSqlQueryModel::data(index, role);
-    else {
-        const int columnId = role - Qt::UserRole;
-        const QModelIndex modelIndex = createIndex(index.row(), columnId);
-        value = QSqlTableModel::data(modelIndex, Qt::DisplayRole);
+        return QSqlQueryModel::data(index, role);
+
+    const int columnId = role - Qt::UserRole;
+
+    // FIXME: placeholder waiting for the time we can get some webpage thumbnails.
+    if (columnId == fieldIndex("thumbnail")) {
+        static QString defaultThumbnail = QStringLiteral("qrc:///mobile/grid/thumb_mysites_placeholder");
+        return QVariant::fromValue(defaultThumbnail);
     }
-    return value;
+
+    const QModelIndex modelIndex = createIndex(index.row(), columnId);
+    return QSqlTableModel::data(modelIndex, Qt::DisplayRole);
 }

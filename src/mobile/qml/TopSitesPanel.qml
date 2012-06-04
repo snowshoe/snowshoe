@@ -40,7 +40,7 @@ Item {
         Image {
             property string url: model.url
             property bool fadeUrl: false
-            source: "qrc:///mobile/grid/thumb_mysites_placeholder"
+            source: model.thumbnail
             height: UiConstants.PagedGridSizeTable[1]
             fillMode: Image.Pad
             verticalAlignment: Image.AlignBottom

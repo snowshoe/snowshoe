@@ -18,7 +18,7 @@
 
 enum TabModelRole {
     UrlRole = Qt::UserRole + 1,
-    ScreenshotRole
+    ThumbnailRole
 };
 
 TabsModel::TabsModel(QObject* parent)
@@ -42,9 +42,9 @@ QVariant TabsModel::data(const QModelIndex& index, int role) const
         if (data)
             return data->property("url");
         break;
-    case ScreenshotRole:
-        static QString defaultScreenShot = QLatin1String("qrc:///mobile/grid/thumb_tabs_placeholder");
-        return QVariant::fromValue(defaultScreenShot);
+    case ThumbnailRole:
+        static QString defaultThumbnail = QStringLiteral("qrc:///mobile/grid/thumb_tabs_placeholder");
+        return QVariant::fromValue(defaultThumbnail);
     }
     return QVariant();
 }
@@ -101,7 +101,7 @@ void TabsModel::generateRolenames()
 {
     QHash<int, QByteArray> roles;
     roles[UrlRole] = QByteArray("url");
-    roles[ScreenshotRole] = QByteArray("screenshot");
+    roles[ThumbnailRole] = QByteArray("thumbnail");
     setRoleNames(roles);
 }
 
