@@ -35,6 +35,7 @@ Item {
     property int itemsPerPage: rowsPerPage * columnsPerPage
     property int pageWidth: columnsPerPage * itemWidth + (columnsPerPage - 1) * spacing
     property int pageHeight: rowsPerPage * itemHeight + (rowsPerPage - 1) * spacing
+    property bool isEmpty: pageCount === 0
 
     function itemAt(index) {
         var pageForIndex = Math.floor(index / grid.itemsPerPage), offset = index % grid.itemsPerPage;
@@ -46,6 +47,7 @@ Item {
     }
 
     Grid {
+        visible: !isEmpty
         spacing: root.spacing
         rows: root.rowsPerPage
 
@@ -100,7 +102,7 @@ Item {
         anchors {
             top: pages.top
             left: pages.right
-            leftMargin: root.spacing
+            leftMargin: isEmpty ? 0 : root.spacing
         }
         Repeater {
             model: itemsPerPage
