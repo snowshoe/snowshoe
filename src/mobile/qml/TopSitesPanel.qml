@@ -19,7 +19,7 @@ import "UiConstants.js" as UiConstants
 
 Item {
     id: root
-    height: topSitesGrid.height + 25 + indicatorRow.height
+    height: pagedGrid.height + 25 + indicatorRow.height
 
     signal urlSelected(string url)
 
@@ -30,17 +30,16 @@ Item {
             left: root.left
             right: root.right
         }
-        itemCount: topSitesGrid.pageCount
+        itemCount: pagedGrid.pageCount
         maxItems: UiConstants.TopSitesMaxPages
-        currentItem: topSitesGrid.currentPage
+        currentItem: pagedGrid.currentPage
     }
 
     Component {
-        id: bookmarkEntry
+        id: pagedItemDelegate
         Image {
             property string url: model.url
             property bool fadeUrl: false
-
             source: "qrc:///mobile/grid/thumb_mysites_placeholder"
             height: UiConstants.PagedGridSizeTable[1]
             fillMode: Image.Pad
@@ -48,7 +47,7 @@ Item {
             clip: true
 
             Text {
-                text: index + (topSitesGrid.currentPage * 4) + 1
+                text: index + (pagedGrid.currentPage * 4) + 1
                 color: "#C1C2C3"
                 font.pixelSize: 30
                 font.family: "Nokia Pure Headline Light"
@@ -82,7 +81,6 @@ Item {
                     rightMargin: 14
                 }
                 onWidthChanged: fadeUrl = paintedWidth > width
-
             }
             Image {
                 id: urlFade
@@ -104,10 +102,10 @@ Item {
     }
 
     PagedGrid {
-        id: topSitesGrid
+        id: pagedGrid
         model: BookmarkModel
-        delegate: bookmarkEntry
-        emptyItemDelegate: Image { source: "qrc:///mobile/grid/thumb_empty_slot"; }
+        delegate: pagedItemDelegate
+        emptyItemDelegate: Image { source: "qrc:///mobile/grid/thumb_empty_slot" }
         maxPages: indicatorRow.maxItems
         anchors {
             left: parent.left
@@ -115,9 +113,11 @@ Item {
             top: parent.top
         }
         onItemClicked: {
-            var item = topSitesGrid.itemAt(index)
-            if (y < 176) root.urlSelected(item.url)
-            else BookmarkModel.remove(item.url)
+            var item = pagedGrid.itemAt(index)
+            if (y < 176)
+                root.urlSelected(item.url)
+            else
+                BookmarkModel.remove(item.url)
         }
     }
 }
