@@ -2,7 +2,7 @@ TEMPLATE = lib
 CONFIG = staticlib qt
 TARGET= snowshoe
 
-QT += quick sql widgets quick
+QT += sql widgets quick
 
 SOURCES += \
     ApplicationStateTracker.cpp \
