@@ -82,8 +82,6 @@ void TabsModel::remove(int pos)
     QPointer<QObject> item = m_list.takeAt(pos);
     endRemoveRows();
     delete item;
-    QModelIndex start = createIndex(pos, 0), end = createIndex(m_list.size() - 1, 0);
-    emit dataChanged(start, end);
     if (currentWebViewIndex() < 0)
         return;
 
