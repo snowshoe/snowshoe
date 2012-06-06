@@ -121,6 +121,9 @@ void tst_DataBase::update()
     QSqlRecord record;
 
     bookmarkModel->insert("Google", "http://www.google.com");
+    // Wait 1 second to guarantee that the timestamp of the
+    // updated field will be different from the first one.
+    QTest::qWait(1000);
     {
         record = bookmarkModel->record(0);
 

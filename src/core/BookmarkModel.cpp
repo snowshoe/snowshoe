@@ -16,6 +16,7 @@
 
 #include "BookmarkModel.h"
 
+#include <QtCore/QDateTime>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlRecord>
@@ -59,6 +60,7 @@ void BookmarkModel::insert(const QString& name, const QString& url)
     QSqlRecord record = this->record();
     record.setValue(QLatin1String("name"), name);
     record.setValue(QLatin1String("url"), url);
+    record.setValue(QLatin1String("dateAdded"), QDateTime::currentDateTime().toTime_t());
 
     QModelIndex index = QModelIndex();
     beginInsertRows(index, rowCount(index), rowCount(index));
@@ -103,8 +105,14 @@ void BookmarkModel::togglePin(const QString& url)
 
 void BookmarkModel::update(int index, const QString& name, const QString& url)
 {
-    setData(createIndex(index, 1), name);
-    setData(createIndex(index, 2), url);
+    QModelIndex nameIndex = createIndex(index, 1);
+    QModelIndex urlIndex = createIndex(index, 2);
+    QModelIndex dateAddedIndex = createIndex(index, 3);
+    setData(nameIndex, name);
+    setData(urlIndex, url);
+    setData(dateAddedIndex, QDateTime::currentDateTime().toTime_t());
+    emit dataChanged(nameIndex, dateAddedIndex);
+    submitAll();
 }
 
 bool BookmarkModel::contains(const QString& url)

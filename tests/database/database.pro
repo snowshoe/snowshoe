@@ -4,15 +4,17 @@ TEMPLATE = app
 QT += testlib sql script
 
 INCLUDEPATH += \
-    $$SNOWSHOE_SOURCE_TREE
+    $$SNOWSHOE_SOURCE_TREE/core
 
 SOURCES += \
     tst_database.cpp
 
 SOURCES += \
-    $$SNOWSHOE_SOURCE_TREE/BookmarkModel.cpp \
-    $$SNOWSHOE_SOURCE_TREE/DatabaseManager.cpp
+    $$SNOWSHOE_SOURCE_TREE/core/BookmarkModel.cpp \
+    $$SNOWSHOE_SOURCE_TREE/core/HistoryModel.cpp \
+    $$SNOWSHOE_SOURCE_TREE/core/DatabaseManager.cpp
 
 HEADERS += \
-    $$SNOWSHOE_SOURCE_TREE/BookmarkModel.h \
-    $$SNOWSHOE_SOURCE_TREE/DatabaseManager.h
+    $$SNOWSHOE_SOURCE_TREE/core/BookmarkModel.h \
+    $$SNOWSHOE_SOURCE_TREE/core/HistoryModel.h \
+    $$SNOWSHOE_SOURCE_TREE/core/DatabaseManager.h
