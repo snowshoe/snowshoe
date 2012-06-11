@@ -45,7 +45,7 @@ Item {
             clip: true
 
             Text {
-                text: index + (pagedGrid.currentPage * 4) + 1
+                text: index + (pagedGrid.currentPage * pagedGrid.itemsPerPage) + 1
                 color: "#C1C2C3"
                 font.pixelSize: 30
                 font.family: "Nokia Pure Headline Light"

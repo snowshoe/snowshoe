@@ -47,17 +47,16 @@ Item {
     }
 
     Grid {
-        visible: !isEmpty
         spacing: root.spacing
         rows: root.rowsPerPage
 
         anchors {
             top: pages.top
-            right: pages.right
+            left: pages.left
         }
 
         Repeater {
-            model: itemsPerPage
+            model: maxPages * itemsPerPage
             delegate: emptyItemDelegate
         }
     }
@@ -68,7 +67,7 @@ Item {
 
         Repeater {
             id: pageRepeater
-            model: pageCount
+            model: maxPages
 
             Grid {
                 property alias thumbs: thumbRepeater
@@ -92,21 +91,6 @@ Item {
 
                 move: Transition { NumberAnimation { properties: "x,y"; duration: 200 } }
             }
-        }
-    }
-
-    Grid {
-        visible: (maxPages - pageCount) > 0
-        spacing: root.spacing
-        rows: root.rowsPerPage
-        anchors {
-            top: pages.top
-            left: pages.right
-            leftMargin: isEmpty ? 0 : root.spacing
-        }
-        Repeater {
-            model: itemsPerPage
-            delegate: emptyItemDelegate
         }
     }
 

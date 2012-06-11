@@ -82,17 +82,7 @@ void TabsModel::remove(int pos)
     QPointer<QObject> item = m_list.takeAt(pos);
     endRemoveRows();
     delete item;
-    // FIXME: Calling "beginRemoveRows(...)" and "endRemoveRows()" methods should've been
-    // enough for the view to adapt to removal changes, instead of having to emit a
-    // "dataChanged(...)" signal as well. Nevertheless, The combined use of a QML Repeater
-    // item with RowsRangeFilter, our custom QSortFilterProxyModel, has showed unable to
-    // tackle the changes to the model, resulting in strange UI behavior.
-    // This may have something to do with QQuickRepeater::setModel() not connecting
-    // the model (our RowsRangeFilter) to the "destroyingItem(...)" signal, whose lines
-    // where commented out in qt5/qtdeclarative/src/quick/items/qquickrepeater.cpp
-    // since time immemorial (not shows on the git history).
-    // For now I just fixed the index of the last item in the range of altered items.
-    QModelIndex start = createIndex(pos, 0), end = createIndex(m_list.size() - 2, 0);
+    QModelIndex start = createIndex(pos, 0), end = createIndex(m_list.size() - 1, 0);
     emit dataChanged(start, end);
     if (currentWebViewIndex() < 0)
         return;
