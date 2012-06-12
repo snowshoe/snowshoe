@@ -22,7 +22,6 @@ import "UiConstants.js" as UiConstants
 Item {
     id: navigationPanel
 
-    property bool hasOpennedTabs: TabsModel.count > 0
     property alias url: navigationBar.url
     property QtObject visibleTab: TabsModel.currentWebView
     property QtObject lastVisibleTab

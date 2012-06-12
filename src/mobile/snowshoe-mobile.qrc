@@ -24,7 +24,6 @@
         <file alias="app/bg_image">images/app_bg.png</file>
         <file alias="app/side_shadow">images/overlayer.png</file>
         <file alias="app/menu_unpressed">images/view_menu_bg_unpressed.png</file>
-        <file alias="app/menu_disabled">images/view_menu_bg_disable.png</file>
         <file alias="app/tabs_pressed">images/view_menu_tabs_pressed.png</file>
         <file alias="app/mysites_pressed">images/view_menu_mysites_pressed.png</file>
         <file alias="indicator/page_active">images/pagination_active.png</file>

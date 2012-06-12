@@ -36,7 +36,6 @@ Rectangle {
             topMargin: 32
             horizontalCenter: parent.horizontalCenter
         }
-        navigationEnabled: navigationPanel.hasOpennedTabs
         onTopSitesSelected: {
             rootPage.state = "favorites";
         }

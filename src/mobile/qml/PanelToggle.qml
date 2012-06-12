@@ -19,18 +19,12 @@ import QtQuick 2.0
 Image {
     id: panelToggle
 
-    property bool navigationEnabled: true
     property alias topSitesButtonSelected: topsites.visible
 
     signal topSitesSelected()
     signal tabsSelected()
 
-    onNavigationEnabledChanged: {
-        if (!navigationEnabled)
-            topsites.visible = true;
-    }
-
-    source: navigationEnabled ? "qrc:///mobile/app/menu_unpressed" : "qrc:///mobile/app/menu_disabled"
+    source: "qrc:///mobile/app/menu_unpressed"
 
     Image {
         id: topsites
@@ -51,7 +45,6 @@ Image {
     }
     MouseArea {
         anchors.fill: tabs
-        visible: navigationEnabled
         onClicked: topsites.visible = false
     }
 }
