@@ -162,6 +162,7 @@ Rectangle {
     states: [
         State {
             name: "favorites"
+            PropertyChanges { target: panelToggle; topSitesButtonSelected: true }
             PropertyChanges { target: plusButton; opacity: 1 }
             PropertyChanges { target: panelToggle; opacity: 1 }
             PropertyChanges { target: topSitesPanel; opacity: 1 }
@@ -170,7 +171,7 @@ Rectangle {
         },
         State {
             name: "navigation"
-            StateChangeScript { script: panelToggle.resetToTabs() }
+            PropertyChanges { target: panelToggle; topSitesButtonSelected: false }
             PropertyChanges { target: plusButton; opacity: 1 }
             PropertyChanges { target: panelToggle; opacity: 1 }
             PropertyChanges { target: topSitesPanel; opacity: 0 }
@@ -179,7 +180,7 @@ Rectangle {
         },
         State {
             name: "navigationFullScreen"
-            StateChangeScript { script: panelToggle.resetToTabs() }
+            PropertyChanges { target: panelToggle; topSitesButtonSelected: false }
             PropertyChanges { target: plusButton; opacity: 0 }
             PropertyChanges { target: panelToggle; opacity: 0 }
             PropertyChanges { target: topSitesPanel; opacity: 0 }

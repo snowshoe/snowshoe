@@ -20,13 +20,10 @@ Image {
     id: panelToggle
 
     property bool navigationEnabled: true
+    property alias topSitesButtonSelected: topsites.visible
 
     signal topSitesSelected()
     signal tabsSelected()
-
-    function resetToTabs() {
-        topsites.visible = false;
-    }
 
     onNavigationEnabledChanged: {
         if (!navigationEnabled)
