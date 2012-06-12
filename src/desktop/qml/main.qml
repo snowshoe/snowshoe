@@ -181,6 +181,11 @@ Item {
     }
 
     Shortcut {
+        key: "Ctrl+I"
+        onTriggered: tabWidget.activePage.toggleInspector()
+    }
+
+    Shortcut {
         key: "F5"
         onTriggered: tabWidget.activePage.webView.reload()
     }

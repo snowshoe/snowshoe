@@ -28,6 +28,7 @@ Item {
     property string title: "New Tab"
     property string currentUrl
     property bool active: false
+    state: "inspectorHidden"
 
     property variant tab;
 
@@ -35,7 +36,12 @@ Item {
 
     WebView {
         id: webView
-        anchors.fill: parent
+
+        // anchors.fill : root doesn't play nice with when using AnchorChanges we set them explicitely.
+        anchors.top: root.top
+        anchors.left: root.left
+        anchors.right: root.right
+        anchors.bottom: root.bottom
 
         visible: false
 
@@ -74,6 +80,7 @@ Item {
 
 
         experimental.preferences.fullScreenEnabled: true
+        experimental.preferences.developerExtrasEnabled: true
 
         experimental.onDownloadRequested: {
             downloadItem.destinationPath = BrowserWindow.decideDownloadPath(downloadItem.suggestedFilename)
@@ -99,6 +106,37 @@ Item {
         }
     }
 
+    Rectangle {
+        id: sizeGrip
+        color: "gray"
+        visible: false
+        height: 10
+        anchors {
+            left: root.left
+            right: root.right
+        }
+        y: Math.round(root.height * 2 / 3)
+
+        MouseArea {
+            anchors.fill: parent
+            drag.target: sizeGrip
+            drag.minimumY: 0
+            drag.maximumY: root.height
+            drag.axis: Drag.YAxis
+        }
+    }
+
+    WebView {
+        id: inspector
+        visible: false
+        anchors {
+            left: root.left
+            right: root.right
+            top: sizeGrip.bottom
+            bottom: root.bottom
+        }
+    }
+
     function loadUrl(url)
     {
         webView.url = url
@@ -108,6 +146,15 @@ Item {
     function fallbackUrl(url)
     {
         return "http://www.google.com/search?q=" + url;
+    }
+
+    function toggleInspector() {
+        if (!UrlTools.isValid(webView.url))
+            return;
+        if (state == "inspectorHidden")
+            state = "inspectorShown";
+        else
+            state = "inspectorHidden";
     }
 
     NewTab {
@@ -120,4 +167,46 @@ Item {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
     }
+
+    states: [
+        State {
+            name: "inspectorShown"
+            PropertyChanges {
+                target: inspector
+                visible: true
+            }
+            PropertyChanges {
+                target: sizeGrip
+                visible: true
+            }
+            PropertyChanges {
+                target: inspector
+                url: webView.experimental.remoteInspectorUrl
+            }
+            AnchorChanges {
+                target: webView
+                anchors.bottom: sizeGrip.top
+            }
+        },
+        State {
+            name: "inspectorHidden"
+            PropertyChanges {
+                target: inspector
+                visible: false
+            }
+            PropertyChanges {
+                target: sizeGrip
+                visible: false
+            }
+            PropertyChanges {
+                target: inspector
+                url: ""
+            }
+            AnchorChanges {
+                target: webView
+                anchors.bottom: root.bottom
+            }
+        }
+
+    ]
 }
