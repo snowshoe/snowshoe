@@ -54,6 +54,7 @@ int main(int argc, char** argv)
         if (pos != -1)
             arguments.removeAt(pos);
         arguments = arguments.mid(1);
+        qputenv("QT_WEBKIT_THEME_NAME", "qstyle");
         qputenv("QTWEBKIT_INSPECTOR_SERVER", "127.0.0.1:9222");
         QQuickWebViewExperimental::setFlickableViewportEnabled(false);
         window = new BrowserWindow(arguments);
