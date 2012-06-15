@@ -73,8 +73,8 @@ Item {
             pressedImage: pin ? "qrc:///mobile/overlaybar/btn_pin_unpressed" : "qrc:///mobile/overlaybar/btn_pin_pressed"
             unpressedImage: pin ? "qrc:///mobile/overlaybar/btn_pin_pressed" : "qrc:///mobile/overlaybar/btn_pin_unpressed"
             onClicked: {
-                overlayBar.pinToggled();
                 pin = !pin;
+                overlayBar.pinToggled();
             }
         }
 
