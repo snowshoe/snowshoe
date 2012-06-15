@@ -58,8 +58,8 @@ Item {
                     bottom: parent.bottom
                     left: parent.left
                     right: parent.right
-                    topMargin: 108
-                    bottomMargin: 103
+                    topMargin: 110
+                    bottomMargin: 101
                     leftMargin: 69
                     rightMargin: 62
                 }

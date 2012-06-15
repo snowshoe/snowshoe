@@ -33,7 +33,7 @@ Item {
         verticalAlignment: Text.AlignBottom
         anchors {
             fill: parent
-            bottomMargin: 9
+            bottomMargin: 5
             leftMargin: 14
             rightMargin: 14
         }

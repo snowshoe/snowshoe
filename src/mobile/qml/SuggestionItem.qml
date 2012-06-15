@@ -83,7 +83,7 @@ Item {
             bottom: parent.bottom
             leftMargin: UiConstants.DefaultMargin
             rightMargin: UiConstants.DefaultMargin
-            bottomMargin: 17
+            bottomMargin: 16
         }
     }
 
