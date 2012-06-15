@@ -37,7 +37,6 @@ Item {
         id: pagedItemDelegate
         Image {
             property string url: model.url
-            property bool fadeUrl: false
             source: model.thumbnail
             height: UiConstants.PagedGridSizeTable[1]
             fillMode: Image.Pad
@@ -63,29 +62,13 @@ Item {
                 }
             }
 
-            Text {
+            PageThumbUrl {
                 id: displayedUrl
-                text: url.replace(/(https?|file):\/\/\/?(www\.)?/, "").replace(/\/.*/, "");
-                color: "#515050"
-                horizontalAlignment: fadeUrl ? Text.AlignLeft : Text.AlignHCenter
-                font.pixelSize: 20
-                font.family: "Nokia Pure Text Light"
+                url: model.url
+                urlFadeImage: "qrc:///mobile/grid/overlayer_tabs_url"
                 anchors {
                     bottom: parent.bottom
                     left: parent.left
-                    right: parent.right
-                    bottomMargin: 10
-                    leftMargin: 14
-                    rightMargin: 14
-                }
-                onWidthChanged: fadeUrl = paintedWidth > width
-            }
-            Image {
-                id: urlFade
-                source: "qrc:///mobile/grid/overlayer_tabs_url"
-                visible: fadeUrl
-                anchors {
-                    bottom: parent.bottom
                     right: parent.right
                 }
             }

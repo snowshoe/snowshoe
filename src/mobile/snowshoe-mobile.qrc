@@ -15,6 +15,7 @@
         <file>qml/PanelToggle.qml</file>
         <file>qml/PagedGrid.qml</file>
         <file>qml/PageFillGrid.qml</file>
+        <file>qml/PageThumbUrl.qml</file>
         <file>qml/UrlInputPanel.qml</file>
         <file>qml/UrlSuggestions.qml</file>
         <file>qml/SuggestionItem.qml</file>

@@ -60,6 +60,7 @@ OTHER_FILES += \
     mobile/qml/PanelToggleButton.qml \
     mobile/qml/PagedGrid.qml \
     mobile/qml/PageFillGrid.qml \
+    mobile/qml/PageThumbUrl.qml \
     mobile/qml/StatusBarIndicator.qml \
     mobile/qml/SnowshoeWebView.qml \
     mobile/qml/UiConstants.js \
