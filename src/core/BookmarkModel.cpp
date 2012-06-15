@@ -55,14 +55,19 @@ bool BookmarkModel::select()
 
 void BookmarkModel::insert(const QString& name, const QString& url)
 {
-    if (contains(url))
+    if (url.isEmpty() || contains(url))
         return;
-    QSqlRecord record = this->record();
-    record.setValue(QLatin1String("name"), name);
-    record.setValue(QLatin1String("url"), url);
-    record.setValue(QLatin1String("dateAdded"), QDateTime::currentDateTime().toTime_t());
-
-    insertRecord(-1, record);
+    QModelIndex index = QModelIndex();
+    beginInsertRows(index, rowCount(index), rowCount(index));
+    QSqlQuery sqlQuery(database());
+    static QString insertStatement = QLatin1String("INSERT INTO bookmarks (name, url, dateAdded) VALUES (?, ?, ?)");
+    sqlQuery.prepare(insertStatement);
+    sqlQuery.addBindValue(name);
+    sqlQuery.addBindValue(url);
+    sqlQuery.addBindValue(QDateTime::currentDateTime().toTime_t());
+    sqlQuery.exec();
+    select();
+    endInsertRows();
     submitAll();
 }
 
