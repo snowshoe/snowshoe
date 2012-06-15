@@ -62,10 +62,7 @@ void BookmarkModel::insert(const QString& name, const QString& url)
     record.setValue(QLatin1String("url"), url);
     record.setValue(QLatin1String("dateAdded"), QDateTime::currentDateTime().toTime_t());
 
-    QModelIndex index = QModelIndex();
-    beginInsertRows(index, rowCount(index), rowCount(index));
     insertRecord(-1, record);
-    endInsertRows();
     submitAll();
 }
 
