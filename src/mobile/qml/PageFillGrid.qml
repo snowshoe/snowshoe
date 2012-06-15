@@ -71,6 +71,7 @@ Item {
 
             Grid {
                 property alias thumbs: thumbRepeater
+                property int pageOffset: index * itemsPerPage
                 width: pageWidth
                 height: pageHeight
                 spacing: root.spacing

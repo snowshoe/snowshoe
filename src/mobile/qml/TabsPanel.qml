@@ -34,8 +34,9 @@ Item {
     }
 
     Component {
-        id: pagedItemDelegate
+        id: pagedItemComponent
         Image {
+            id: pagedItem
             property string url: model.url
             source: model.thumbnail
             height: UiConstants.PagedGridSizeTable[1]
@@ -44,7 +45,9 @@ Item {
             clip: true
 
             Text {
-                text: index + (pagedGrid.currentPage * pagedGrid.itemsPerPage) + 1
+                // FIXME: We should expose a property like index to PageFillGrid's delegate rather than
+                // depending on PageFillGrid internal structure as we retrieve parent's attribute.
+                text: pagedItem.parent.pageOffset + index + 1
                 color: "#C1C2C3"
                 font.pixelSize: 30
                 font.family: "Nokia Pure Headline Light"
@@ -78,7 +81,7 @@ Item {
     PagedGrid {
         id: pagedGrid
         model: TabsModel
-        delegate: pagedItemDelegate
+        delegate: pagedItemComponent
         emptyItemDelegate: Image { source: "qrc:///mobile/grid/thumb_empty_slot" }
         maxPages: indicatorRow.maxItems
         anchors {
