@@ -94,6 +94,7 @@ Item {
                 }
                 font.pixelSize: UiConstants.DefaultFontSize
                 font.family: UiConstants.DefaultFontFamily
+                font.weight: Font.Light
                 color: UiConstants.PrimaryColor
                 text: navigationBar.url
             }
