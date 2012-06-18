@@ -5,6 +5,8 @@ QT += declarative sql widgets webkit-private quick core-private gui-private quic
 
 LIBS += -Lcore/ -lsnowshoe
 
+PRE_TARGETDEPS += core/libsnowshoe.a
+
 INCLUDEPATH += core
 
 linux-g++-maemo {
