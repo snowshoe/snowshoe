@@ -161,11 +161,7 @@ Rectangle {
 //       then to true on start up causing a cascade misbehaviour, the workaround
 //       is to set the state of the root element on Component.onCompleted.
 //  state: "favorites"
-    Component.onCompleted: {
-        state = "favorites";
-        if (!BookmarkModel.count)
-            urlInputPanel.showForNewTab();
-    }
+    Component.onCompleted: state = "favorites"
 
     states: [
         State {
