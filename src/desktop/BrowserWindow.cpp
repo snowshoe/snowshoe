@@ -38,6 +38,11 @@ BrowserWindow::BrowserWindow(const QStringList& arguments)
     , m_browserView(0)
 {
     setWindowFlags(Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint);
+    QSurfaceFormat surfaceFormat;
+    surfaceFormat.setAlphaBufferSize(8);
+    setFormat(surfaceFormat);
+    setClearBeforeRendering(true);
+    setClearColor(QColor(Qt::transparent));
     qmlRegisterType<Shortcut>("Snowshoe", 1, 0, "Shortcut");
     restoreWindowGeometry();
     setupDeclarativeEnvironment();

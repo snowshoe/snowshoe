@@ -22,6 +22,11 @@ PopupWindow::PopupWindow(QWindow* parent)
     : QQuickCanvas(parent)
 {
     setWindowFlags(Qt::Popup);
+    QSurfaceFormat surfaceFormat;
+    surfaceFormat.setAlphaBufferSize(8);
+    setFormat(surfaceFormat);
+    setClearBeforeRendering(true);
+    setClearColor(QColor(Qt::transparent));
 }
 
 void PopupWindow::showEvent(QShowEvent* ev)
