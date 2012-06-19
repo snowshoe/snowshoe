@@ -30,6 +30,7 @@ public:
 
     QStringList urlsFromCommandLine() const { return m_urlsFromCommandLine; }
 
+    Q_INVOKABLE QPoint ensureInsideScreen(int x, int y, int width, int height);
     Q_INVOKABLE QPoint mapToGlobal(int x, int y);
     // FIXME: Move to appropriate object exposed to handle download.
     Q_INVOKABLE QString decideDownloadPath(const QString& suggestedPath);

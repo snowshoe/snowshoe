@@ -80,6 +80,7 @@ Item {
                 var point = mapToItem(tabWidget, x + width, height);
                 var globalPos = BrowserWindow.mapToGlobal(point.x - 200 + width, point.y);
                 var menu = dropDownMenuComponent.createObject();
+                globalPos = BrowserWindow.ensureInsideScreen(globalPos.x, globalPos.y, menu.width, menu.height);
                 menu.x = globalPos.x;
                 menu.y = globalPos.y;
                 menu.show();

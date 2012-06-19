@@ -27,13 +27,13 @@ Item {
         id: overlay
         source: "qrc:///combobox/item_over_bg"
         border { left: 2; top: 2; right: 2; bottom: 2 }
-        visible: false
+        visible: mouseArea.containsMouse
     }
 
     Text {
         id: text
         font.pixelSize: 11
-        text: name
+        text: model.name
         elide: Text.ElideRight
         anchors {
             verticalCenter: parent.verticalCenter
@@ -50,14 +50,9 @@ Item {
     }
 
     MouseArea {
+        id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
-        onEntered: {
-            overlay.visible = true;
-        }
-        onExited: {
-            overlay.visible = false;
-        }
         onClicked: parent.clicked()
     }
 }

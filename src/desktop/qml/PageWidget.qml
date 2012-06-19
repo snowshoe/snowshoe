@@ -81,6 +81,12 @@ Item {
 
         experimental.preferences.fullScreenEnabled: true
         experimental.preferences.developerExtrasEnabled: true
+        experimental.itemSelector: ItemSelector {
+            contentArea: root.parent
+            // FIXME: We should be able to use Screen.height from QtQuick.Window to
+            // calculate this but it isn't working yet.
+            maxHeight: 600
+        }
 
         experimental.onDownloadRequested: {
             downloadItem.destinationPath = BrowserWindow.decideDownloadPath(downloadItem.suggestedFilename)

@@ -14,44 +14,46 @@
  *   GNU Lesser General Public License for more details.                    *
  ****************************************************************************/
 
-#include "PopupWindow.h"
+import QtQuick 2.0
 
-#include <QtCore/QTimer>
+Item {
+    signal clicked(int index)
 
-PopupWindow::PopupWindow(QWindow* parent)
-    : QQuickCanvas(parent)
-{
-    setWindowFlags(Qt::Popup);
-    QSurfaceFormat surfaceFormat;
-    surfaceFormat.setAlphaBufferSize(8);
-    setFormat(surfaceFormat);
-    setClearBeforeRendering(true);
-    setClearColor(QColor(Qt::transparent));
-}
+    width: ListView.view.width
+    height: ListView.view.elementHeight
 
-void PopupWindow::showEvent(QShowEvent* ev)
-{
-    QQuickCanvas::showEvent(ev);
-    // In XCB, we are only guaranteed to grab the mouse if there's a platformWindow
-    // created. This happens right after this event is sent.
-    QTimer::singleShot(0, this, SLOT(setMouseGrab()));
-}
+    BorderImage {
+        anchors.fill: parent
+        id: overlay
+        source: "qrc:///combobox/item_over_bg"
+        border { left: 2; top: 2; right: 2; bottom: 2 }
+        visible: mouseArea.containsMouse
+    }
 
-void PopupWindow::hideEvent(QHideEvent* ev)
-{
-    QQuickCanvas::hideEvent(ev);
-    setMouseGrabEnabled(false);
-}
+    Text {
+        id: text
+        font.pixelSize: 11
+        text: model.text
+        elide: Text.ElideRight
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            leftMargin: 8
+            rightMargin: 8
+            right: parent.right
+        }
+        onWidthChanged: {
+            if (width > parent.ListView.view.width)
+                parent.ListView.view.width = width
+        }
 
-void PopupWindow::mousePressEvent(QMouseEvent* ev)
-{
-    QQuickCanvas::mousePressEvent(ev);
-    const bool outsideWindow = ev->x() < 0 || ev->x() > width() || ev->y() < 0 || ev->y() > height();
-    if (outsideWindow)
-        hide();
-}
+    }
 
-void PopupWindow::setMouseGrab()
-{
-    setMouseGrabEnabled(true);
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        hoverEnabled: true
+        enabled: model.enabled
+        onClicked: parent.clicked(model.index)
+    }
 }

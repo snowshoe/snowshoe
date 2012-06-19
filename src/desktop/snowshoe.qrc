@@ -68,5 +68,8 @@
         <file alias="urlbar/btn_nav_refresh_disable">images/urlbar/component_btn_nav_refresh_disable.png</file>
         <file alias="pagewidget/link_status_bg_left">images/pagewidget/link_status_bg_left.png</file>
         <file alias="pagewidget/link_status_bg_right">images/pagewidget/link_status_bg_right.png</file>
+        <file>qml/ItemSelector.qml</file>
+        <file>qml/ItemSelectorDelegate.qml</file>
+        <file>qml/ScrollIndicator.qml</file>
     </qresource>
 </RCC>

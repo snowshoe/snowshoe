@@ -50,6 +50,19 @@ BrowserWindow::BrowserWindow(const QStringList& arguments)
     Q_ASSERT(m_browserView);
 }
 
+QPoint BrowserWindow::ensureInsideScreen(int x, int y, int width, int height)
+{
+    QPoint newPos(x, y);
+    QRect availableGeometry = screen()->availableGeometry();
+    int right = x + width;
+    int bottom = y + height;
+    if (right > availableGeometry.width())
+        newPos.setX(x - (right - availableGeometry.width()));
+    if (bottom > availableGeometry.height())
+        newPos.setY(y - (bottom - availableGeometry.height()));
+    return newPos;
+}
+
 QPoint BrowserWindow::mapToGlobal(int x, int y)
 {
     return QWindow::mapToGlobal(QPoint(x, y));
