@@ -81,6 +81,7 @@ Item {
 
         experimental.preferences.fullScreenEnabled: true
         experimental.preferences.developerExtrasEnabled: true
+        experimental.preferences.webGLEnabled: true
         experimental.itemSelector: ItemSelector {
             contentArea: root.parent
             // FIXME: We should be able to use Screen.height from QtQuick.Window to
