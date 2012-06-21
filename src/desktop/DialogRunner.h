@@ -21,11 +21,10 @@
 #include <QObject>
 #include <QStringList>
 
-class DialogRunner : public QObject
-{
+class DialogRunner : public QObject {
     Q_OBJECT
 public:
-    explicit DialogRunner(QObject *parent = 0);
+    explicit DialogRunner(QObject* parent = 0);
 
     Q_INVOKABLE void openFileDialog(QObject* filePickerModel);
 
