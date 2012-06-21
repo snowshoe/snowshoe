@@ -89,6 +89,21 @@ Item {
             maxHeight: 600
         }
 
+        experimental.filePicker: Item {
+            id: picker
+            // We can't use the model directly in the Connection below.
+            property QtObject filePickerModel: model
+            Connections {
+                target: DialogRunner
+                onFileDialogAccepted: picker.filePickerModel.accept(selectedFiles)
+                onFileDialogRejected: picker.filePickerModel.reject()
+            }
+
+            Component.onCompleted: {
+                DialogRunner.openFileDialog(filePickerModel)
+            }
+        }
+
         experimental.onDownloadRequested: {
             downloadItem.destinationPath = BrowserWindow.decideDownloadPath(downloadItem.suggestedFilename)
             downloadItem.start()

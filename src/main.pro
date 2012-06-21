@@ -15,12 +15,14 @@ linux-g++-maemo {
 
 SOURCES += \
     desktop/BrowserWindow.cpp \
+    desktop/DialogRunner.cpp \
     desktop/Shortcut.cpp \
     mobile/BrowserWindowMobile.cpp \
     main.cpp
 
 HEADERS += \
     desktop/BrowserWindow.h \
+    desktop/DialogRunner.h \
     mobile/BrowserWindowMobile.h \
     desktop/Shortcut.h \
 

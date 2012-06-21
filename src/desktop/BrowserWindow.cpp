@@ -19,6 +19,7 @@
 
 #include "BookmarkModel.h"
 #include "DatabaseManager.h"
+#include "DialogRunner.h"
 #include "Shortcut.h"
 #include "UrlTools.h"
 #include <QtCore/QCoreApplication>
@@ -138,6 +139,7 @@ void BrowserWindow::setupDeclarativeEnvironment()
     QQmlContext* context = rootContext();
     context->setContextProperty("BookmarkModel", DatabaseManager::instance()->bookmarkDataBaseModel());
     context->setContextProperty("BrowserWindow", this);
+    context->setContextProperty("DialogRunner", new DialogRunner(this));
     context->setContextProperty("UrlTools", new UrlTools(this));
     context->setContextProperty("StateTracker", &m_stateTracker);
 
