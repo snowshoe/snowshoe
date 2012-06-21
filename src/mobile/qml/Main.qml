@@ -109,7 +109,7 @@ Rectangle {
         source: plusButtonMouseArea.pressed ? "qrc:///mobile/nav/btn_plus_pressed" : "qrc:///mobile/nav/btn_plus_unpressed"
 
         anchors.top: topSitesPanel.bottom
-        anchors.topMargin: 27
+        anchors.topMargin: 21
         anchors.horizontalCenter: rootPage.horizontalCenter
 
         MouseArea {

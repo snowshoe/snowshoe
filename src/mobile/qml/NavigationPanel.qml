@@ -51,7 +51,7 @@ Item {
 
     Image {
         id: barsBackground
-        height: tabBar.height
+        height: UiConstants.TabBarHeight
         source: "qrc:///mobile/app/bg_image"
         anchors.bottom: parent.bottom
         fillMode: Image.Pad
@@ -186,9 +186,8 @@ Item {
             StateChangeScript { script: navigationBarHidingTimer.stop() }
             PropertyChanges {
                 target: barsBackground
-                height: tabBar.height + tabBar.anchors.topMargin + tabBar.anchors.bottomMargin
-                        + navigationBar.height + navigationBar.anchors.topMargin + navigationBar.anchors.bottomMargin
-                        + overlayBar.height + overlayBar.anchors.topMargin + overlayBar.anchors.bottomMargin
+                height: tabBar.height + navigationBar.height + navigationBar.anchors.bottomMargin
+                        + overlayBar.height + overlayBar.anchors.bottomMargin
             }
             PropertyChanges {
                 target: visibleTab

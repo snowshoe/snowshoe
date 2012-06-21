@@ -46,7 +46,7 @@ Item {
             id: buttonShare
             anchors {
                 left: buttonThumbview.right
-                margins: UiConstants.OverlayBarInsideMargin
+                leftMargin: UiConstants.OverlayBarInsideMargin
             }
             pressedImage: "qrc:///mobile/overlaybar/btn_share_pressed"
             unpressedImage: "qrc:///mobile/overlaybar/btn_share_unpressed"
@@ -57,7 +57,7 @@ Item {
             id: buttonPlus
             anchors {
                 left: buttonShare.right
-                margins: UiConstants.OverlayBarInsideMargin
+                right: buttonPin.left
             }
             pressedImage: "qrc:///mobile/overlaybar/btn_plus_pressed"
             unpressedImage: "qrc:///mobile/overlaybar/btn_plus_unpressed"
@@ -67,8 +67,8 @@ Item {
         Button {
             id: buttonPin
             anchors {
-                left: buttonPlus.right
-                margins: UiConstants.OverlayBarInsideMargin
+                right: buttonSettings.left
+                rightMargin: UiConstants.OverlayBarInsideMargin
             }
             pressedImage: pin ? "qrc:///mobile/overlaybar/btn_pin_unpressed" : "qrc:///mobile/overlaybar/btn_pin_pressed"
             unpressedImage: pin ? "qrc:///mobile/overlaybar/btn_pin_pressed" : "qrc:///mobile/overlaybar/btn_pin_unpressed"
