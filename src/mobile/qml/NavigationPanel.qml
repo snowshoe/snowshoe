@@ -23,6 +23,7 @@ Item {
     id: navigationPanel
 
     property bool hasOpennedTabs: TabsModel.count > 0
+    property bool isLocalEvent: false
     property alias url: navigationBar.url
     property QtObject visibleTab: TabsModel.currentWebView
     property QtObject lastVisibleTab
@@ -35,9 +36,10 @@ Item {
     Connections {
         target: visibleTab
         onLoadingChanged: {
-            if (navigationPanel.state === "withNavigationBarAndOverlay")
+            if (isLocalEvent)
                 return;
             navigationBarHidingTimer.updateStateForCurrentTab();
+            isLocalEvent = true;
         }
     }
 
@@ -69,11 +71,13 @@ Item {
         function dismiss() { navigationPanel.state = ""; }
 
         function goToNextTab() {
+            isLocalEvent = true;
             if (TabsModel.currentWebViewIndex + 1 < TabsModel.count)
                 TabsModel.currentWebViewIndex++;
         }
 
         function goToPreviousTab() {
+            isLocalEvent = true;
             if (TabsModel.currentWebViewIndex > 0)
                 TabsModel.currentWebViewIndex--;
         }
@@ -135,11 +139,10 @@ Item {
             }
 
             function updateStateForCurrentTab() {
-                if (navigationPanel.visibleTab.loading) {
+                if (!isLocalEvent) {
                     navigationPanel.state = "withNavigationBarAndOverlay";
-                    stop();
-                } else
                     restart();
+                }
             }
         }
 
@@ -157,13 +160,13 @@ Item {
         }
 
         onShowThumbnails: {
-            navigationPanel.state = "";
+            navigationBarHidingTimer.stop();
             TabsModel.currentWebViewIndex = -1;
         }
 
         onOpenNewTab: navigationPanel.newTabRequested()
 
-        onPinToggled: BookmarkModel.togglePin(visibleTab.url);
+        onPinToggled: BookmarkModel.togglePin(visibleTab.url)
 
         Connections {
             target: BookmarkModel
@@ -208,8 +211,9 @@ Item {
 
     function openUrl(url)
     {
-        TabsModel.currentWebView.load(url)
-        webViewMaximized()
+        TabsModel.currentWebView.load(url);
+        webViewMaximized();
+        isLocalEvent = false;
     }
     function openUrlInNewTab(url)
     {
@@ -218,6 +222,7 @@ Item {
                                                            "z" : -1});
         webView.load(url);
         TabsModel.append(webView);
+        isLocalEvent = false;
     }
 
     onVisibleTabChanged: {
@@ -229,6 +234,10 @@ Item {
             visibleTab.visible = true;
             webViewMaximized();
             tabBar.visible = true;
+            if (isLocalEvent)
+                isLocalEvent = false;
+            else
+                navigationBarHidingTimer.restart();
         } else {
             webViewMinimized();
             tabBar.visible = false;
