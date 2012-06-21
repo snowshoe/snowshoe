@@ -35,6 +35,8 @@ public:
     // FIXME: Move to appropriate object exposed to handle download.
     Q_INVOKABLE QString decideDownloadPath(const QString& suggestedPath);
 
+    Q_INVOKABLE void closeWindow();
+
 protected:
     virtual bool event(QEvent*);
     virtual void moveEvent(QMoveEvent*);

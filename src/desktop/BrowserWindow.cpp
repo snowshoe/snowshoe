@@ -101,6 +101,14 @@ QString BrowserWindow::decideDownloadPath(const QString& suggestedFilename)
     return homeDir.filePath(fallbackFilename.arg(i));
 }
 
+void BrowserWindow::closeWindow()
+{
+    // This is a workaround because the Close event is not sent for this window when close() is called.
+    // See https://bugreports.qt-project.org/browse/QTBUG-26266.
+    close();
+    deleteLater();
+}
+
 void BrowserWindow::moveEvent(QMoveEvent* event)
 {
     m_stateTracker.setWindowGeometry(geometry());

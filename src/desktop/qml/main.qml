@@ -192,7 +192,7 @@ Item {
 
     Shortcut {
         key: "Ctrl+Shift+Q"
-        onTriggered: Qt.quit()
+        onTriggered: BrowserWindow.closeWindow()
     }
 
     Shortcut {

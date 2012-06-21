@@ -106,7 +106,7 @@ function closeTab(tab)
     if (tabArray.length == 1) {
         tabArray.pop()
         updateUrlsOpened()
-        Qt.quit()
+        BrowserWindow.closeWindow()
         return
     }
 
