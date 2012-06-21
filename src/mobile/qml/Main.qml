@@ -36,7 +36,8 @@ Rectangle {
             topMargin: 32
             horizontalCenter: parent.horizontalCenter
         }
-        navigationEnabled: navigationPanel.hasOpennedTabs
+        topSitesEnabled: BookmarkModel.count
+        navigationEnabled: navigationPanel.hasOpennedTabs || !topSitesEnabled || panelToggle.overrideNavigationEnabled
         onTopSitesSelected: {
             rootPage.state = "favorites";
         }
@@ -78,6 +79,7 @@ Rectangle {
 
         onWebViewMaximized: {
             rootPage.state = "navigationFullScreen";
+            panelToggle.overrideNavigationEnabled = true;
         }
         onWebViewMinimized: {
             rootPage.state = "navigation";
@@ -162,7 +164,12 @@ Rectangle {
 //       then to true on start up causing a cascade misbehaviour, the workaround
 //       is to set the state of the root element on Component.onCompleted.
 //  state: "favorites"
-    Component.onCompleted: state = "favorites"
+    Component.onCompleted: {
+        if (panelToggle.topSitesEnabled)
+            state = "favorites";
+        else
+            state = "navigation";
+    }
 
     states: [
         State {
