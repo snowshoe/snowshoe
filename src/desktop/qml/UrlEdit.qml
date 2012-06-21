@@ -94,7 +94,7 @@ Item {
                     return;
                 if (parent.isBookmarked) {
                     parent.isBookmarked = false;
-                    BookmarkModel.remove(pageWidget.webView.url)
+                    BookmarkModel.remove(pageWidget.webView.url);
                 } else {
                     parent.isBookmarked = true;
                     BookmarkModel.insert(pageWidget.webView.title, pageWidget.webView.url);
