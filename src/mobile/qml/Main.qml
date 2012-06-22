@@ -39,10 +39,12 @@ Rectangle {
         topSitesEnabled: BookmarkModel.count
         navigationEnabled: navigationPanel.hasOpennedTabs || !topSitesEnabled || panelToggle.overrideNavigationEnabled
         onTopSitesSelected: {
-            rootPage.state = "favorites";
+            if (state !== "navigationFullScreen")
+                rootPage.state = "favorites";
         }
         onTabsSelected: {
-            rootPage.state = "navigation";
+            if (state !== "navigationFullScreen")
+                rootPage.state = "navigation";
         }
     }
 
@@ -55,7 +57,10 @@ Rectangle {
             right: parent.right
             topMargin: 32
         }
-        onUrlSelected: navigationPanel.openUrlInNewTab(UrlTools.fromUserInput(url))
+        onUrlSelected: {
+            navigationPanel.openUrlInNewTab(UrlTools.fromUserInput(url));
+            panelToggle.topSitesButtonSelected = false;
+        }
     }
 
     TabsPanel {
@@ -174,7 +179,6 @@ Rectangle {
     states: [
         State {
             name: "favorites"
-            PropertyChanges { target: panelToggle; topSitesButtonSelected: true }
             PropertyChanges { target: plusButton; opacity: 1 }
             PropertyChanges { target: panelToggle; opacity: 1 }
             PropertyChanges { target: topSitesPanel; opacity: 1 }
@@ -183,7 +187,6 @@ Rectangle {
         },
         State {
             name: "navigation"
-            PropertyChanges { target: panelToggle; topSitesButtonSelected: false }
             PropertyChanges { target: plusButton; opacity: 1 }
             PropertyChanges { target: panelToggle; opacity: 1 }
             PropertyChanges { target: topSitesPanel; opacity: 0 }
@@ -192,7 +195,6 @@ Rectangle {
         },
         State {
             name: "navigationFullScreen"
-            PropertyChanges { target: panelToggle; topSitesButtonSelected: false }
             PropertyChanges { target: plusButton; opacity: 0 }
             PropertyChanges { target: panelToggle; opacity: 0 }
             PropertyChanges { target: topSitesPanel; opacity: 0 }

@@ -29,14 +29,13 @@ Image {
 
     onTopSitesEnabledChanged: {
         if (!topSitesEnabled) {
-            tabs.visible = true;
             topsites.visible = false;
+            tabsSelected();
         }
     }
 
     onNavigationEnabledChanged: {
-        if (!navigationEnabled && topSitesEnabled)
-            topsites.visible = true;
+        topsites.visible = !navigationEnabled && topSitesEnabled;
     }
 
     source: topSitesEnabled && navigationEnabled ? "qrc:///mobile/app/menu_unpressed" : "qrc:///mobile/app/menu_disabled"
@@ -44,12 +43,15 @@ Image {
     Image {
         id: topsites
         source: "qrc:///mobile/app/mysites_pressed"
-        onVisibleChanged: visible ? topSitesSelected() : tabsSelected()
+        visible: false
     }
     MouseArea {
         anchors.fill: topsites
         visible: topSitesEnabled
-        onClicked: topsites.visible = true
+        onClicked: {
+            topsites.visible = true;
+            topSitesSelected();
+        }
     }
 
     Image {
@@ -62,7 +64,10 @@ Image {
     MouseArea {
         anchors.fill: tabs
         visible: navigationEnabled || !topSitesEnabled
-        onClicked: topsites.visible = false
+        onClicked: {
+            topsites.visible = false;
+            tabsSelected();
+        }
     }
 }
 
