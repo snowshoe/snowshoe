@@ -49,7 +49,7 @@ Item {
         text: ""
         inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
 
-        onFocusChanged: if (!focus) closeSoftwareInputPanel()
+        onFocusChanged: if (!focus && Qt.inputMethod) Qt.inputMethod.hide();
         onAccepted: root.accepted()
 
         Text {
