@@ -4,6 +4,9 @@ TARGET= snowshoe
 
 QT += sql widgets quick
 
+QMAKE_CFLAGS += -fPIC
+QMAKE_CXXFLAGS += -fPIC
+
 SOURCES += \
     ApplicationStateTracker.cpp \
     RowsRangeFilter.cpp \
