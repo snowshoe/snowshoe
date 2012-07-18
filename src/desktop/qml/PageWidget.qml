@@ -104,6 +104,21 @@ Item {
             }
         }
 
+        experimental.colorChooser: Item {
+            id: colorChooser
+            // We can't use the model directly in the Connection below.
+            property QtObject colorChooserModel: model
+            Connections {
+                target: DialogRunner
+                onColorDialogAccepted: colorChooser.colorChooserModel.accept(selectedColor)
+                onColorDialogRejected: colorChooser.colorChooserModel.reject()
+            }
+
+            Component.onCompleted: {
+                DialogRunner.openColorDialog(colorChooserModel)
+            }
+        }
+
         experimental.onDownloadRequested: {
             downloadItem.destinationPath = BrowserWindow.decideDownloadPath(downloadItem.suggestedFilename)
             downloadItem.start()

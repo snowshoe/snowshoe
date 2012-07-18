@@ -44,3 +44,19 @@ void DialogRunner::openFileDialog(QObject* filePickerModel)
     m_fileDialog->open();
 }
 
+void DialogRunner::openColorDialog(QObject* colorDialogModel)
+{
+    if (!colorDialogModel)
+        return;
+
+    if (!m_colorDialog) {
+        m_colorDialog.reset(new QColorDialog);
+        connect(m_colorDialog.data(), SIGNAL(rejected()), this, SIGNAL(colorDialogRejected()));
+        connect(m_colorDialog.data(), SIGNAL(colorSelected(const QColor&)), this, SIGNAL(colorDialogAccepted(const QColor&)));
+    }
+
+    m_colorDialog->setCurrentColor(colorDialogModel->property("currentColor").value<QColor>());
+    m_colorDialog->setWindowTitle(QLatin1String("Choose Color - Snowshoe"));
+    m_colorDialog->open();
+}
+

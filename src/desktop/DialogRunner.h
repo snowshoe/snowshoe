@@ -17,6 +17,7 @@
 #ifndef DialogRunner_h
 #define DialogRunner_h
 
+#include <QColorDialog>
 #include <QFileDialog>
 #include <QObject>
 #include <QStringList>
@@ -27,13 +28,18 @@ public:
     explicit DialogRunner(QObject* parent = 0);
 
     Q_INVOKABLE void openFileDialog(QObject* filePickerModel);
+    Q_INVOKABLE void openColorDialog(QObject* colorDialogModel);
 
 Q_SIGNALS:
     void fileDialogAccepted(const QStringList& selectedFiles);
     void fileDialogRejected();
 
+    void colorDialogAccepted(const QColor& selectedColor);
+    void colorDialogRejected();
+
 private:
     QScopedPointer<QFileDialog> m_fileDialog;
+    QScopedPointer<QColorDialog> m_colorDialog;
 };
 
 #endif // DialogRunner_h
