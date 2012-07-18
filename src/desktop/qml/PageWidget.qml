@@ -51,7 +51,7 @@ Item {
                     root.isLoading = true;
                     visible = true;
                     newTab.visible = false;
-                    if (tab.active && !focus)
+                    if (tab && tab.active && !focus)
                         forceActiveFocus();
                     break;
                 }
