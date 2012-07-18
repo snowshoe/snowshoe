@@ -3,10 +3,14 @@
 
 SBOX_HOME=/scratchbox/users/$USER/home/$USER
 PROJECTFOLDER_HOST=$(pwd -P)
+if [ $(basename $PROJECTFOLDER_HOST) = "tools" ]; then
+    PROJECTFOLDER_HOST=$(cd .. && pwd -P)
+fi
 
 # Options
 PROJECTFOLDER=$(basename $PROJECTFOLDER_HOST)-tmp
 IP=192.168.2.15
+USERNAME="developer"
 
 # Flags
 BUILD_ONLY=0
@@ -25,15 +29,17 @@ Options:\n
 -d\t\t\tgenerate debian package instead of single executable\n
 -h\t\t\tshows this help message.\n
 -i IP\t\t\tip of the target N9/N950 device\n
+-u USERNAME\t\tset username to connect\n
 -p FOLDER\t\tname of the temporary folder\n
 -r\t\t\trun the executable after copying (without -b)
 "
 
 
-while getopts p:i:bdrch ARG
+while getopts p:i:u:bdrch ARG
 do case "$ARG" in
     p) PROJECTFOLDER="$OPTARG";;
     i) IP="$OPTARG";;
+    u) USERNAME="$OPTARG";;
     b) BUILD_ONLY=1;;
     d) DEBIAN=1;;
     r) RUN=1;;
@@ -44,8 +50,8 @@ esac
 done
 
 # N9 configuration. This is the default ip for USB connections.
-N9=developer@$IP
-N9HOME=/home/developer
+N9=$USERNAME@$IP
+N9HOME=/home/$USERNAME
 
 # Sync with build folder
 echo "rsync $PROJECTFOLDER_HOST to $SBOX_HOME/$PROJECTFOLDER"
