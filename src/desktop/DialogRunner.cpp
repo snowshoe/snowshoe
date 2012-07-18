@@ -60,3 +60,63 @@ void DialogRunner::openColorDialog(QObject* colorDialogModel)
     m_colorDialog->open();
 }
 
+void DialogRunner::openAlert(QObject* alertModel)
+{
+    if (!alertModel)
+        return;
+    ensureMessageBox();
+    m_messageBox->setText(alertModel->property("message").toString());
+    m_messageBox->setIcon(QMessageBox::Warning);
+    m_messageBox->setStandardButtons(QMessageBox::Ok);
+    openMessageBox();
+}
+
+void DialogRunner::openConfirm(QObject* confirmModel)
+{
+    if (!confirmModel)
+        return;
+    ensureMessageBox();
+    m_messageBox->setText(confirmModel->property("message").toString());
+    m_messageBox->setIcon(QMessageBox::Question);
+    m_messageBox->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    openMessageBox();
+}
+
+void DialogRunner::openPrompt(QObject* promptModel)
+{
+    if (!promptModel)
+        return;
+
+    if (!m_inputDialog)
+        m_inputDialog.reset(new QInputDialog);
+
+    m_inputDialog->setInputMode(QInputDialog::TextInput);
+    m_inputDialog->setLabelText(promptModel->property("message").toString());
+    m_inputDialog->setTextValue(promptModel->property("defaultValue").toString());
+    connect(m_inputDialog.data(), SIGNAL(rejected()), this, SIGNAL(inputDialogRejected()));
+    connect(m_inputDialog.data(), SIGNAL(textValueSelected(const QString&)), this, SIGNAL(inputDialogAccepted(const QString&)));
+    m_inputDialog->open();
+}
+
+void DialogRunner::ensureMessageBox()
+{
+    if (!m_messageBox)
+        m_messageBox.reset(new QMessageBox);
+}
+
+void DialogRunner::openMessageBox()
+{
+    connect(m_messageBox.data(), SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(onMessageBoxButtonClicked(QAbstractButton*)));
+
+    m_messageBox->setWindowTitle(QLatin1String("Snowshoe"));
+    m_messageBox->open();
+}
+
+void DialogRunner::onMessageBoxButtonClicked(QAbstractButton* button)
+{
+    QMessageBox::ButtonRole role = m_messageBox->buttonRole(button);
+    if (role == QMessageBox::AcceptRole)
+        emit messageBoxAccepted();
+    if (role == QMessageBox::RejectRole)
+        emit messageBoxRejected();
+}

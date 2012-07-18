@@ -119,6 +119,51 @@ Item {
             }
         }
 
+        experimental.alertDialog: Item {
+            id: alertBox
+            // We can't use the model directly in the Connection below.
+            property QtObject alertBoxModel: model
+            Connections {
+                target: DialogRunner
+                onMessageBoxRejected: alertBox.alertBoxModel.dismiss()
+                onMessageBoxAccepted: alertBox.alertBoxModel.dismiss()
+            }
+
+            Component.onCompleted: {
+                DialogRunner.openAlert(alertBoxModel)
+            }
+        }
+
+        experimental.confirmDialog: Item {
+            id: confirmBox
+            // We can't use the model directly in the Connection below.
+            property QtObject confirmBoxModel: model
+            Connections {
+                target: DialogRunner
+                onMessageBoxRejected: confirmBox.confirmBoxModel.reject()
+                onMessageBoxAccepted: confirmBox.confirmBoxModel.accept()
+            }
+
+            Component.onCompleted: {
+                DialogRunner.openConfirm(confirmBoxModel)
+            }
+        }
+
+        experimental.promptDialog: Item {
+            id: promptDialog
+            // We can't use the model directly in the Connection below.
+            property QtObject promptDialogModel: model
+            Connections {
+                target: DialogRunner
+                onInputDialogRejected: promptDialog.promptDialogModel.reject()
+                onInputDialogAccepted: promptDialog.promptDialogModel.accept(text)
+            }
+
+            Component.onCompleted: {
+                DialogRunner.openPrompt(promptDialogModel)
+            }
+        }
+
         experimental.onDownloadRequested: {
             downloadItem.destinationPath = BrowserWindow.decideDownloadPath(downloadItem.suggestedFilename)
             downloadItem.start()

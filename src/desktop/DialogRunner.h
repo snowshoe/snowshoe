@@ -19,6 +19,8 @@
 
 #include <QColorDialog>
 #include <QFileDialog>
+#include <QInputDialog>
+#include <QMessageBox>
 #include <QObject>
 #include <QStringList>
 
@@ -29,6 +31,9 @@ public:
 
     Q_INVOKABLE void openFileDialog(QObject* filePickerModel);
     Q_INVOKABLE void openColorDialog(QObject* colorDialogModel);
+    Q_INVOKABLE void openAlert(QObject* alertModel);
+    Q_INVOKABLE void openConfirm(QObject* confirmModel);
+    Q_INVOKABLE void openPrompt(QObject* promptModel);
 
 Q_SIGNALS:
     void fileDialogAccepted(const QStringList& selectedFiles);
@@ -37,9 +42,22 @@ Q_SIGNALS:
     void colorDialogAccepted(const QColor& selectedColor);
     void colorDialogRejected();
 
+    void messageBoxAccepted();
+    void messageBoxRejected();
+
+    void inputDialogAccepted(const QString& text);
+    void inputDialogRejected();
+
+private slots:
+    void onMessageBoxButtonClicked(QAbstractButton*);
+
 private:
+    void ensureMessageBox();
+    void openMessageBox();
     QScopedPointer<QFileDialog> m_fileDialog;
     QScopedPointer<QColorDialog> m_colorDialog;
+    QScopedPointer<QMessageBox> m_messageBox;
+    QScopedPointer<QInputDialog> m_inputDialog;
 };
 
 #endif // DialogRunner_h
