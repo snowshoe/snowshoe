@@ -47,7 +47,6 @@ Item {
         BorderImage {
             source: "qrc:///urlbar/progress_bar_url"
             border { left: 3; top: 3; right: 3; bottom: 3 }
-            horizontalTileMode: BorderImage.Repeat
             width: parent.width * pageWidget.webView.loadProgress / 100.0
             opacity: pageWidget.webView.loadProgress / 100.0 == 1.0 ? 0.0 : 1.0
         }
