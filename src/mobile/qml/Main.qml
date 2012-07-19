@@ -31,6 +31,7 @@ Rectangle {
 
     PanelToggle {
         id: panelToggle
+        enabled: opacity > 0
         anchors {
             top: parent.top
             topMargin: 32
@@ -50,6 +51,7 @@ Rectangle {
 
     TopSitesPanel {
         id: topSitesPanel
+        enabled: opacity > 0
         opacity: 0
         anchors {
             top: panelToggle.bottom
@@ -65,6 +67,7 @@ Rectangle {
 
     TabsPanel {
         id: tabsPanel
+        enabled: opacity > 0
         opacity: 0
         anchors {
             top: panelToggle.bottom
@@ -76,6 +79,7 @@ Rectangle {
 
     NavigationPanel {
         id: navigationPanel
+        enabled: opacity > 0
         opacity: 0
         anchors.fill: parent
 
@@ -112,6 +116,7 @@ Rectangle {
 
     Image {
         id: plusButton
+        enabled: opacity > 0
         opacity: 0
         source: plusButtonMouseArea.pressed ? "qrc:///mobile/nav/btn_plus_pressed" : "qrc:///mobile/nav/btn_plus_unpressed"
 
@@ -128,7 +133,7 @@ Rectangle {
 
     UrlInputPanel {
         id: urlInputPanel
-
+        enabled: opacity > 0
         property bool shouldOpenNewTab: false
 
         function showForNewTab() {
