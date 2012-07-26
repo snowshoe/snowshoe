@@ -43,7 +43,7 @@ BrowserWindow::BrowserWindow(const QStringList& arguments)
     surfaceFormat.setAlphaBufferSize(8);
     setFormat(surfaceFormat);
     setClearBeforeRendering(true);
-    setClearColor(QColor(Qt::transparent));
+    setColor(QColor(Qt::transparent));
     qmlRegisterType<Shortcut>("Snowshoe", 1, 0, "Shortcut");
     restoreWindowGeometry();
     setupDeclarativeEnvironment();

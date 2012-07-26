@@ -26,7 +26,7 @@ PopupWindow::PopupWindow(QWindow* parent)
     surfaceFormat.setAlphaBufferSize(8);
     setFormat(surfaceFormat);
     setClearBeforeRendering(true);
-    setClearColor(QColor(Qt::transparent));
+    setColor(QColor(Qt::transparent));
 }
 
 void PopupWindow::showEvent(QShowEvent* ev)
