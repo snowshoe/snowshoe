@@ -17,9 +17,9 @@
 #ifndef PopupWindow_h
 #define PopupWindow_h
 
-#include <QtQuick/QQuickCanvas>
+#include <QtQuick/QQuickWindow>
 
-class PopupWindow : public QQuickCanvas {
+class PopupWindow : public QQuickWindow {
     Q_OBJECT
 
 public:

@@ -19,7 +19,7 @@
 #include <QtCore/QTimer>
 
 PopupWindow::PopupWindow(QWindow* parent)
-    : QQuickCanvas(parent)
+    : QQuickWindow(parent)
 {
     setWindowFlags(Qt::Popup);
     QSurfaceFormat surfaceFormat;
@@ -31,7 +31,7 @@ PopupWindow::PopupWindow(QWindow* parent)
 
 void PopupWindow::showEvent(QShowEvent* ev)
 {
-    QQuickCanvas::showEvent(ev);
+    QQuickWindow::showEvent(ev);
     // In XCB, we are only guaranteed to grab the mouse if there's a platformWindow
     // created. This happens right after this event is sent.
     QTimer::singleShot(0, this, SLOT(setMouseGrab()));
@@ -39,13 +39,13 @@ void PopupWindow::showEvent(QShowEvent* ev)
 
 void PopupWindow::hideEvent(QHideEvent* ev)
 {
-    QQuickCanvas::hideEvent(ev);
+    QQuickWindow::hideEvent(ev);
     setMouseGrabEnabled(false);
 }
 
 void PopupWindow::mousePressEvent(QMouseEvent* ev)
 {
-    QQuickCanvas::mousePressEvent(ev);
+    QQuickWindow::mousePressEvent(ev);
     const bool outsideWindow = ev->x() < 0 || ev->x() > width() || ev->y() < 0 || ev->y() > height();
     if (outsideWindow)
         hide();
