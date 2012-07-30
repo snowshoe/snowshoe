@@ -9,5 +9,8 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+export PATH := /opt/qt5/in:/usr/bin:$(PATH)
+export SBOX_REDIRECT_IGNORE := $(SBOX_REDIRECT_IGNORE):/usr/bin/perl
+
 %:
 	dh $@ 
