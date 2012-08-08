@@ -1,3 +1,9 @@
+snowshoe-mobile (0.2.6) unstable; urgency=low
+
+  * New version with updated Qt and WebKit.
+
+ -- Lauro Moura <lauro.neto@openbossa.org>  Wed, 08 Aug 2012 16:54:37 -0300
+
 snowshoe-mobile (0.2.5) unstable; urgency=low
 
   * UI reworked, updated Qt and WebKit.
