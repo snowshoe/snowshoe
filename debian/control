@@ -2,7 +2,7 @@ Source: snowshoe-mobile
 Section: user/other
 Priority: optional
 Maintainer: Lauro Moura <lauro.neto@openbossa.org>
-Build-Depends: debhelper (>= 5), webkit-snapshot
+Build-Depends: debhelper (>= 5), webkit-snapshot (>= 120000)
 Standards-Version: 3.7.3
 Homepage: https://github.com/snowshoe/snowshoe
 
