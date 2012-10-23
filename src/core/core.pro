@@ -7,6 +7,8 @@ QT += sql widgets quick
 QMAKE_CFLAGS += -fPIC
 QMAKE_CXXFLAGS += -fPIC
 
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
+
 SOURCES += \
     ApplicationStateTracker.cpp \
     RowsRangeFilter.cpp \
