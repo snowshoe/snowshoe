@@ -38,7 +38,7 @@ BrowserWindow::BrowserWindow(const QStringList& arguments)
     : m_urlsFromCommandLine(arguments)
     , m_browserView(0)
 {
-    setWindowFlags(Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint);
+    setFlags(Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint);
     QSurfaceFormat surfaceFormat;
     surfaceFormat.setAlphaBufferSize(8);
     setFormat(surfaceFormat);

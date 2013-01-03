@@ -21,7 +21,7 @@
 PopupWindow::PopupWindow(QWindow* parent)
     : QQuickWindow(parent)
 {
-    setWindowFlags(Qt::Popup);
+    setFlags(Qt::Popup);
     QSurfaceFormat surfaceFormat;
     surfaceFormat.setAlphaBufferSize(8);
     setFormat(surfaceFormat);

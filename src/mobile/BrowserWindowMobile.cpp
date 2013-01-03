@@ -30,7 +30,7 @@
 BrowserWindowMobile::BrowserWindowMobile()
     : m_browserView(0)
 {
-    setWindowFlags(Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint);
+    setFlags(Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint);
     setupDeclarativeEnvironment();
     m_browserView = qobject_cast<QQuickItem*>(rootObject());
     Q_ASSERT(m_browserView);
